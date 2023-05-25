@@ -164,6 +164,12 @@
             <b-form-checkbox v-model="importReplace">Replace existing data</b-form-checkbox>
           </div>
         </div>
+        <hr/>
+        <div size="small">
+          <p>Locations in the map and the game's data files have North as negative.</p>
+          <p>Locations reported on the map have North as positive to match those in the game.</p>
+          <p>Locations exported from the map currently have  North as negative.</p>
+        </div>
         <input type="file" id="fileinput" accept=".json" hidden @change="drawImportCb">
         <hr/>
         <div v-if="drawLayerOpts.length">

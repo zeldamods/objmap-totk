@@ -165,7 +165,7 @@ export class MapBase {
           text: 'Copy coordinates',
           callback: ({ latlng }: ui.LeafletContextMenuCbArg) => {
             const [x, y, z] = this.toXYZ(latlng);
-            ui.copyToClipboard(`${x},${z}`);
+            ui.copyToClipboard(`${x},${-z}`);
           },
         },
         {
@@ -237,6 +237,7 @@ export class MapBase {
       lngFirst: true,
       wrapLng: false,
       position: 'bottomright',
+      latFormatter: (x) => (-x).toString(),
     }).addTo(this.m);
 
   }
