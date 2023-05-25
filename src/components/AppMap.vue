@@ -56,104 +56,8 @@
           <code>actor</code>: Actor name (e.g. Weapon_Sword_001)<br>
           <code>name</code>: User visible name (e.g. Traveler's Sword)<br>
           <code>data</code>: Internal object data<br>
-          <code>drop</code>: Drops or treasure chest content<br>
-          <code>equip</code>: Enemy equipment<br>
-          <code>onehit</code>: Appears only during the One-Hit Obliterator challenge (1 or 0)<br>
-          <code>lastboss</code>: Spawns after entering Sanctum (1 or 0)<br>
-          <code>hard</code>: Only spawns in Master Mode (1 or 0)<br>
-          <code>no_rankup</code>: Won't rank up for Master Mode (1 or 0)<br>
-          <code>scale</code>: Will scale up (1 or 0)<br>
-          <code>bonus</code>: Minimum bonus modifier tier (0, 1, 2 or 3)<br>
-          <code>region</code>: Tower region name (e.g. Tabantha, Lanayru, Hateno) <br>
-          <code>fieldarea</code>: Field Map area (0 - 93)<br>
-          <code>lotm</code>: Spawns with Lord of the Mountain (1 or 0) <br>
-          <code>location</code>: Item possibly in, beneath or above something
 
-          <details class="ml-3">
-            <summary>Locations</summary>
-            <ul class="small">
-              <li>Castle Tower</li>
-              <li>Corridor</li>
-              <li>Cryonis Gate</li>
-              <li>Dining Hall</li>
-              <li>Docks</li>
-              <li>East Hallway</li>
-              <li>East Passage</li>
-              <li>First Gatehouse</li>
-              <li>Guards' Chambers</li>
-              <li>Guards' Chambers Annex</li>
-              <li>King's Study</li>
-              <li>Library</li>
-              <li>Library Corridor</li>
-              <li>Lockup</li>
-              <li>Lockup Upper</li>
-              <li>Observation Room</li>
-              <li>Observation Room Balcony</li>
-              <li>Sanctum</li>
-              <li>Second Gatehouse</li>
-              <li>Stairs</li>
-              <li>Watch Tower</li>
-              <li>West Main Corridor</li>
-              <li>West Passage</li>
-              <li>Zelda's Room</li>
-              <li>Zelda's Study</li>
-            </ul>
-          </details>
-
-          <code>korok_type</code>: Korok puzzle type<br>
-          <details class="ml-3">
-            <summary>Korok Types</summary>
-            <ul class="small">
-              <li>Acorn in a Hole</li>
-              <li>Ball and Chain</li>
-              <li>Burn the Leaves (Goatee)</li>
-              <li>Circle of Rocks</li>
-              <li>Cube Puzzle</li>
-              <li>Dive</li>
-              <li>Flower Order</li>
-              <li>Flower Trail</li>
-              <li>Goal Ring (Race)</li>
-              <li>Hanging Acorn</li>
-              <li>Jump the Fences</li>
-              <li>Light Torch</li>
-              <li>Matching Trees</li>
-              <li>Melt Ice Block</li>
-              <li>Moving Lights</li>
-              <li>Offering Plate</li>
-              <li>Pinwheel Acorns</li>
-              <li>Pinwheel Balloons</li>
-              <li>Remove Luminous Stone</li>
-              <li>Rock Lift</li>
-              <li>Rock Lift (Boulder)</li>
-              <li>Rock Lift (Door)</li>
-              <li>Rock Lift (Leaves)</li>
-              <li>Rock Lift (Rock Pile)
-                <ul>
-                  <li>Z54 is under Rock Pile</li>
-                </ul>
-              </li>
-              <li>Rock Lift (Slab)</li>
-              <li>Rock Pattern
-                <ul>
-                  <li>C51, L34, and N13 are not Rock Patterns</li>
-                </ul>
-              </li>
-              <li>Roll a Boulder
-                <ul>
-                  <li>C51, L34, and N13 are Roll a Boulder</li>
-                </ul>
-              </li>
-              <li>Shoot the Crest</li>
-              <li>Shoot the Targets</li>
-              <li>Stationary Balloon</li>
-              <li>Stationary Lights</li>
-              <li>Take Apple from Palm Tree</li>
-              <li>Take the Stick</li>
-            </ul>
-          </details>
         </div>
-        <p>For more information on columns <code>hard</code>, <code>no_rankup</code>, <code>scale</code> and <code>bonus</code>, please read <a href="https://zeldamods.org/wiki/Difficulty_scaling">the article on <i>difficulty scaling</i></a>.</p>
-
         <h4 class="subsection-heading">Boolean operators</h4>
         <p>
           <code>Lynel <b>OR</b> "Lynel Bow"</code> for Lynels or Lynel Bows<br>
@@ -223,8 +127,9 @@
         <div class="row">
           <AppMapFilterMainButton v-for="(v, type) in markerComponents" :key="type" :type="type" :label="v.filterLabel" :icon="v.filterIcon" @toggle="updateMarkers" />
         </div>
-        <b-checkbox switch v-model="showKorokIDs" @change="updateKorokIDs">Show Korok IDs</b-checkbox>
+        <!--<b-checkbox switch v-model="showKorokIDs" @change="updateKorokIDs">Show Korok IDs</b-checkbox>-->
         <hr>
+        <!--
         <h4 class="subsection-heading">Visible map areas</h4>
         <b-radio-group stacked class="mb-4" v-model="shownAreaMap" @change="onShownAreaMapChanged">
           <b-radio value="">None</b-radio>
@@ -238,26 +143,7 @@
             <b-btn size="sm" variant="primary" @click="updateAreaMapVisibility()"><i class="fa fa-filter"></i></b-btn>
           </div>
         </b-form-group>
-        <b-checkbox switch v-model="showSafeAreas" @change="onShowSafeAreas">Enemy non-search areas (safe zones)</b-checkbox>
-        <b-checkbox switch v-model="showMapUnitGrid" @change="onShowMapUnitGridChanged">Show map unit grid</b-checkbox>
-        <b-checkbox switch v-model="showCastleAreas" @change="onShowCastleAreas">Show Hyrule castle interior</b-checkbox>
-        <b-checkbox switch v-model="showBaseMap" @change="onShowBaseMap">Show base map</b-checkbox>
-        <b-checkbox switch v-model="showReferenceGrid" @change="onShowReferenceGrid">
-          <div title="Display an overlap map with region outlines and grid markers, similar to that before Tower activation. This map can be displayed over the base map.">
-            Show region outlines and grid
-          </div>
-        </b-checkbox>
-        <hr/>
-        <h4 class="subsection-heading">Item Auto Placement</h4>
-        <b-radio-group stacked class="mb-4" v-model="shownAutoItem" @change="onShownAutoItemChanged">
-          <b-radio value="">None</b-radio>
-          <b-radio value="AutoFish">Auto Fish</b-radio>
-          <b-radio value="AutoBird">Auto Bird</b-radio>
-          <b-radio value="AutoInsect">Auto Insect</b-radio>
-          <b-radio value="AutoAnimal">Auto Animal</b-radio>
-          <b-radio value="AutoEnemy">Auto Enemy</b-radio>
-          <b-radio value="AutoMaterial">Auto Material</b-radio>
-        </b-radio-group>
+        -->
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-draw">
@@ -298,10 +184,6 @@
       <div class="leaflet-sidebar-pane" id="spane-tools">
         <h1 class="leaflet-sidebar-header">Tools</h1>
         <b-button size="sm" variant="secondary" block @click="closeSidebar(); $refs.modalGoto.show()">Go to coordinates...</b-button>
-        <hr>
-        <p><b-button size="sm" variant="secondary" block @click="closeSidebar(); showGreatPlateauBarrier()" v-b-tooltip.hover title="Right click on the Plateau to hide the barrier.">Show Great Plateau barrier</b-button></p>
-        <p>The Great Plateau barrier prevents Link from leaving the Great Plateau before he has acquired the paraglider. For more information, read the <a href="https://zeldamods.org/wiki/The_Great_Plateau_barrier">article</a>.</p>
-
         <hr>
         <h4 class="subsection-heading">About this map</h4>
         <p>This object map is an <a href="https://github.com/zeldamods/objmap">open source project</a>. Contributions are welcome.</p>
@@ -490,6 +372,8 @@
 .inline-block {
     display: inline-block;
 }
-
+.leaflet-control-mouseposition {
+    color: white;
+}
 
 </style>

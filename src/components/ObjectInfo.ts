@@ -61,9 +61,9 @@ export default class ObjectInfo extends mixins(MixinUtil) {
       return this.drop();
 
     const objName = this.data.name;
-    if (objName === 'LocationTag' && this.data.messageid) {
-      const locationName = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', this.data.messageid)
-        || MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.data.messageid);
+    if ((objName === 'LocationMarker' || objName == 'LocationArea') && this.data.Location) {
+      const locationName = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', this.data.Location)
+        || MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.data.Location);
       return `Location: ${locationName}`;
     }
 

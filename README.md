@@ -1,10 +1,10 @@
-# botw-objmap
-_Breath of the Wild_ object map.
+# totk-objmap
+_Tears of the Kingdom_ object map.
 
 ## Features
-* Polished UI: clean BotW look.
+* Polished UI: clean TotK look.
 * Location texts
-  * Show them at the correct level. (Location.mubin)
+  * Show them at the correct level **FIX**
   * Map waypoints. (Static.mubin LocationPointer)
 * Common objects
   * groups:
@@ -12,12 +12,13 @@ _Breath of the Wild_ object map.
     * Tower
     * ShopJewel, ShopColor, ShopYorozu, ShopBougu, ShopYadoya
     * Hatago, Village, CheckPoint, Castle
-  * DLC shrines should have a different icon.
+    * Cave, Chasm
+    * Koroks
 * Shrine details
   * Shrine name
   * Shrine title
-  * CDungeon number
-  * All treasure chests
+  * Shrine number
+  * All treasure chests **FIX**
 * Search
   * search base locations too (no extra work required thanks to how LocationTags work)
   * object by ID
@@ -31,23 +32,18 @@ _Breath of the Wild_ object map.
   * Custom handling for:
     * weapons
     * enemies
-    * RememberTag
     * rafts
     * cooking pots
     * Koroks:
-      * TODO [low-priority] autogenerate information on puzzles if possible?
-      * TODO [low-priority] show colors, leaf shapes using embedded UMii data?
     * treasure chests (show contents)
     * Goddess Statues
-  * Presets
-    * BTB Enemies
-    * Launchable Objects
+  * Presets **FIX**
     * Treasure Chests
     * Arrows
-  * Custom presets
+  * Custom presets **FIX**
   * Search query syntax documentation
   * Show all objects in area.
-* Object details
+* Object details **FIX**
   * Respawn information, no-revival area...
   * Scaling information
   * Instance parameters
@@ -55,17 +51,14 @@ _Breath of the Wild_ object map.
   * Object shape
   * Object scale
 * Routes
-* Regions
+* Regions **FIX**
   * Tower regions
   * Map areas (internal)
-* TODO Region details
-  * TODO Climate information
-  * TODO Autogen information
-* TODO Dynamic map data
+* Region details **FIX**
+  * Climate information
+  * Autogen information
+* TODO Dynamic map data **FIX**
   * TODO Scaling slider (to scale enemies, weapons, etc.)
-  * Master Mode (auto rankup, Master Mode only actors)
-  * One-Hit Obliterator challenge mode
-  * Final boss placement mode
 * Polygon/line drawing
   * UI
   * Saving
@@ -91,5 +84,9 @@ _Breath of the Wild_ object map.
 ## Credit
 * The authors of the [Sheikah Complete](https://fontstruct.com/fontstructions/show/1371125/sheikah-complete) and [Calamity Sans](https://www.reddit.com/r/zelda/comments/5txuba/breath_of_the_wild_ui_font/) fonts
 * Yoshi.noir for the UI map marker icons
-* [Korok seed icon](https://www.zeldadungeon.net/breath-of-the-wild-interactive-map/markers/seed.png)
+* [Korok seed icon]
 * MrCheeze for the [list of names](https://github.com/MrCheeze/botw-tools/blob/master/botw_names.json)
+* Leo for the original BotW object map
+* Cave and Chasm icons were *borrowed* from the Zelda Dungeon TotK Map
+* The BotW and TotK communities for many numerous suggestions
+  * We appreciate you

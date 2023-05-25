@@ -1,11 +1,5 @@
 <template>
   <section>
-    <b-checkbox switch v-model="s.hardMode">Master Mode</b-checkbox>
-    <p>If enabled, show Master Mode only objects and automatically rank up enemies. Note: this does not affect search.</p>
-    <b-checkbox switch v-model="s.lastBossMode">LastBoss Mode</b-checkbox>
-    <p>If enabled, objects that do not spawn after entering the castle sanctum will be hidden.</p>
-    <b-checkbox switch v-model="s.ohoMode">Show One-Hit Obliterator mode actors</b-checkbox>
-    <hr>
 
     <h4 class="subsection-heading">Map</h4>
     <b-form-select v-model="s.mapType" class="mb-2" size="sm" :options="optionsMapType" @input="resetMapName"></b-form-select>

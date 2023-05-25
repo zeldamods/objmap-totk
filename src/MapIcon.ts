@@ -32,6 +32,16 @@ export const CASTLE = L.icon({
   iconSize: L.point(32, 32),
   tooltipAnchor: [0, 20],
 });
+export const CAVE = L.icon({
+  iconUrl: '/icons/cave.png',
+  iconSize: L.point(20, 20),
+  tooltipAnchor: [0, 18],
+});
+export const CHASM = L.icon({
+  iconUrl: '/icons/chasm.png',
+  iconSize: L.point(20, 20),
+  tooltipAnchor: [0, 18],
+});
 
 
 export const TOWER = L.icon({

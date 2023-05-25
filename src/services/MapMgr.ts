@@ -40,8 +40,8 @@ export interface ObjectMinData {
   one_hit_mode?: boolean;
   disable_rankup_for_hard_mode?: boolean;
 
-  // Only for LocationTags.
-  messageid?: string;
+  // Only for LocationMarker.
+  Location?: string;
 
   // Only for weapons and enemies.
   scale?: number;
@@ -83,8 +83,6 @@ export class MapMgr {
     await Promise.all([
       fetch(`${GAME_FILES}/map_summary/MainField/static.json`).then(r => r.json())
         .then((d) => {
-          d.markers["DungeonDLC"] = d.markers["Dungeon"].filter((l: any) => parseInt(l.SaveFlag.replace('Location_Dungeon', ''), 10) >= 120);
-          d.markers["Dungeon"] = d.markers["Dungeon"].filter((l: any) => parseInt(l.SaveFlag.replace('Location_Dungeon', ''), 10) < 120);
           this.infoMainField = Object.freeze(d);
         }),
     ]);

@@ -86,13 +86,6 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
     filterIcon: MapIcons.VILLAGE.options.iconUrl,
     filterLabel: 'Places',
   },
-  'DungeonDLC': {
-    cl: MapMarkers.MapMarkerDungeonDLC,
-    detailsComponent: 'AppMapDetailsDungeon',
-    enableUpdates: false,
-    filterIcon: MapIcons.DUNGEON_DLC.options.iconUrl,
-    filterLabel: 'DLC Shrines',
-  },
   'Tower': {
     cl: MapMarkers.MapMarkerTower,
     enableUpdates: false,
@@ -109,6 +102,16 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
     enableUpdates: false,
     filterIcon: MapIcons.LABO.options.iconUrl,
     filterLabel: 'Tech Labs',
+  },
+  'Chasm': {
+    cl: MapMarkers.MapMarkerCave,
+    filterIcon: MapIcons.CHASM.options.iconUrl,
+    filterLabel: 'Chasm',
+  },
+  'Cave': {
+    cl: MapMarkers.MapMarkerCave,
+    filterIcon: MapIcons.CAVE.options.iconUrl,
+    filterLabel: 'Cave',
   },
   'Korok': {
     cl: MapMarkers.MapMarkerKorok,
@@ -1053,14 +1056,6 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   initSettings() {
-    this.hardModeExcludeSet = new SearchExcludeSet('hard:1', '', true);
-    this.lastBossExcludeSet = new SearchExcludeSet('lastboss:0', '', true);
-    this.ohoExcludeSet = new SearchExcludeSet('onehit:1', '', true);
-    Promise.all([this.hardModeExcludeSet.init(), this.lastBossExcludeSet.init(), this.ohoExcludeSet.init()]).then(() => {
-      for (const group of this.searchGroups)
-        group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
-    });
-
     this.reloadSettings();
     Settings.getInstance().registerCallback(() => this.reloadSettings());
   }
@@ -1284,11 +1279,6 @@ export default class AppMap extends mixins(MixinUtil) {
     });
   }
 
-  onShowBaseMap() {
-    this.$nextTick(() => {
-      this.map.showBaseMap(this.showBaseMap);
-    });
-  }
   onShowReferenceGrid() {
     this.$nextTick(() => {
       this.map.showReferenceGrid(this.showReferenceGrid);

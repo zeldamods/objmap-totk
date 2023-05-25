@@ -3,6 +3,9 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-rastercoords';
 import 'leaflet-contextmenu';
 import 'leaflet-contextmenu/dist/leaflet.contextmenu.css';
+import 'leaflet.control.opacity/dist/L.Control.Opacity.css';
+import 'leaflet-mouse-position';
+
 
 import { CanvasMarker } from '@/util/CanvasMarker';
 import * as map from '@/util/map';
@@ -12,10 +15,14 @@ import '@/util/leaflet_tile_workaround.js';
 import { Settings } from './util/settings';
 import { MapMgr } from '@/services/MapMgr';
 
+import 'leaflet.control.opacity';
+
 declare module 'leaflet' {
   export type RasterCoords = any;
   export let RasterCoords: any;
 }
+
+const TOTK_MAP = "https://objmap.zeldamods.org/totk_files/map/";
 
 export const SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT = 'objmap::SHOW_ALL_OBJS_FOR_MAP_UNIT';
 export const MARKER_SELECTED_EVENT = 'objmap::markerSelected';
@@ -26,19 +33,12 @@ export class MapBase {
   center: Point = [0, 0, 0];
   zoom: number = map.DEFAULT_ZOOM;
   private zoomChangeCbs: Array<(zoom: number) => void> = [];
-  baseLayer!: L.Layer;
+  baseLayer: L.Layer[] = [];
   refGrid: Array<L.LayerGroup> = [];
   refGridOn: boolean = false;
 
-  showBaseMap(show: boolean) {
-    if (show) {
-      this.m.addLayer(this.baseLayer);
-    } else {
-      this.m.removeLayer(this.baseLayer);
-    }
-  }
-
   async loadTowerAreas() {
+    /*
     const areas = await MapMgr.getInstance().fetchAreaMap('MapTower');
     for (const [data, features] of Object.entries(areas)) {
       const layers: L.GeoJSON[] = features.map((feature) => {
@@ -51,6 +51,7 @@ export class MapBase {
       layers.forEach(layer => this.refGrid[3].addLayer(layer));
     }
     this.showReferenceGridInternal();
+    */
   }
 
   async showReferenceGridInternal() {
@@ -205,19 +206,39 @@ export class MapBase {
     });
     baseImage.addTo(this.m);
 
-    const baseLayer = L.tileLayer(`${map.GAME_FILES}/maptex/{z}/{x}/{y}.png`, {
-      maxNativeZoom: 7,
-    });
-    baseLayer.addTo(this.m);
-    this.baseLayer = baseLayer;
+    let baseMaps: any = {}
+    for (const area of ["Sky", "Ground", "Depths"]) {
+      const baseLayer = L.tileLayer(`${TOTK_MAP}/${area}/maptex/{z}/{x}/{y}.webp`, {
+        maxNativeZoom: 7,
+      });
+      this.baseLayer.push(baseLayer);
+      baseMaps[area] = baseLayer;
+    }
+    baseMaps.Ground.addTo(this.m);
 
+    // Empty Basemap (has the tower outlines included)
+    //    If desired, this can be added
+    //baseMaps.Empty = L.tileLayer(`${map.GAME_FILES}/totk/Empty/maptex/{z}/{x}/{y}.png`, {
+    //  maxNativeZoom: 7
+    //});
     this.m.createPane('front').style.zIndex = '1000';
     this.m.createPane('front2').style.zIndex = '1001';
 
-    this.refGridOn = false;
-    this.m.on("zoom", () => {
-      this.showReferenceGridInternal();
-    });
+    // Basic Switching
+    L.control.layers(baseMaps).addTo(this.m);
+
+    // Opacity Switching
+    //   Having control over the tile layer opacity is fun, but is it useful
+    //   Left here as an appendage; if requested and there is demand
+    // L.control.opacity(baseMaps, { label: '', collapsed: true }).addTo(this.m);
+
+    // Mouse Position (bottom right corner)
+    L.control.mousePosition({
+      lngFirst: true,
+      wrapLng: false,
+      position: 'bottomright',
+    }).addTo(this.m);
+
   }
   svgIconBase(width: number) {
     return L.divIcon({

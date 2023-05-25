@@ -2,8 +2,11 @@
   <div :class="className + (isStatic ? ' static' : '')">
     <section class="search-result-name">{{name(true)}}</section>
     <section class="search-result-location">
-      <i class="fa fa-map-marker-alt fa-fw"></i>
-      {{getMapNameForObj(data)}} {{getMapStaticStringForObj(data)}}
+      <!-- <i class="fa fa-map-marker-alt fa-fw"></i> -->
+      <span v-if="obj.map_name === 'Surface'"> <i class="fa fa-tree fa-fw" style="color: lightgreen"></i></span>
+      <span v-if="obj.map_name === 'Sky'"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></span>
+      <span v-if="obj.map_name === 'Depths'"> <i class="fa fa-circle fa-fw" style="color: lightpurple;"></i></span>
+      {{getMapNameForObj(data)}}
     </section>
     <section class="search-result-id">
       <i class="fas fa-hashtag fa-fw"></i> ID
@@ -53,12 +56,14 @@
       <i class="fas fa-fw fa-leaf" style="color:lightgreen"></i>
       {{data.korok_id}} - {{ data.korok_type }}
     </section>
+    <!-- 
     <section class="search-result-life" v-if="meta('life')">
       <i class="fas fa-fw fa-heart" style="color:white"></i> {{meta('life')}}
     </section>
     <section class="search-result-life" v-if="meta('attack')">
       <div class="swords fa-fw fa" style="color: white">&#9876;</div> {{meta('attack')}}
     </section>
+    -->
   </div>
 </template>
 <style lang="less">

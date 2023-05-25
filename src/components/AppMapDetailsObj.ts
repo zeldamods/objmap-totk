@@ -157,7 +157,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       this.minObj.korok_id = this.obj.korok_id;
     }
 
-    this.dropTables = await MapMgr.getInstance().getObjDropTables(this.getRankedUpActorNameForObj(this.minObj), this.getDropTableName());
+    //this.dropTables = await MapMgr.getInstance().getObjDropTables(this.getRankedUpActorNameForObj(this.minObj), this.getDropTableName());
     this.genGroup = await MapMgr.getInstance().getObjGenGroup(this.obj.map_type, this.obj.map_name, this.obj.hash_id);
     for (const obj of this.genGroup) {
       this.genGroupSet.set(obj.hash_id, obj);
@@ -288,9 +288,9 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
   getLocationSub() {
     const obj = this.marker.data.obj;
-    if (obj.name === 'LocationTag' && obj.messageid) {
-      const locationName = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', obj.messageid)
-        || MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', obj.messageid);
+    if (obj.name === 'LocationMarker' && obj.Location) {
+      const locationName = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', obj.Location)
+        || MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', obj.Location);
       return locationName;
     }
     return '';

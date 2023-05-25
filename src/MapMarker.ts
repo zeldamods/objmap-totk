@@ -89,6 +89,8 @@ class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     'ShopJewel': [MapIcons.SHOP_JEWEL, 'Jewelry Shop'],
     'ShopYadoya': [MapIcons.SHOP_YADOYA, 'Inn'],
     'ShopYorozu': [MapIcons.SHOP_YOROZU, 'General Store'],
+    'Cave': [MapIcons.CAVE, 'Cave Entrance'],
+    'Chasm': [MapIcons.CHASM, 'Chasm'],
   };
 
   constructor(mb: MapBase, l: any, showLabel: boolean, zIndexOffset?: number) {
@@ -130,10 +132,15 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
     const lp = new map.LocationPointer(l);
     const markerTypeStr = map.markerTypetoStr(lp.getType());
     const visibleMarkerTypeStr = l.PointerType ? 'Place' : markerTypeStr;
-    const msg = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', lp.getMessageId());
-
+    let msg = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', lp.getMessageId());
+    if (msg === undefined) {
+      msg = lp.getMessageId();
+    }
     super(mb, msg, lp.getXYZ(), { stroke: false, fill: false });
     this.marker.unbindTooltip();
+    if (msg === undefined || msg.length <= 0 || msg.trim().length <= 0) {
+      console.log("ERROR", msg, lp.getMessageId());
+    }
     this.marker.bindTooltip(msg + `<span class="location-marker-type">${visibleMarkerTypeStr}</span>`, {
       permanent: true,
       direction: 'center',
@@ -142,11 +149,49 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
     this.lp = lp;
   }
 
+  // Zoom level 2 -
+  //   This needs serious attention **FIX**
+  //   Location text has sections like Spot{Big, Middle, Small}*
+  //     see: make_static_list.py
+  // These include a TargetZoomLevel with the following (possibly multiple) values:
+  //    "", Far, Near, Nearest, Farthest
+  // Many times TargetZoomLevel = ""
+  // Assume: section value Big, Middle, or Small controls which zoom level the
+  //     text is shown at
   shouldBeShown() {
+    if (this.title == "Eldin" && 'l' in this.lp) {
+      // @ts-ignore
+      console.log(this.lp.l.ShowLevel, this.mb.zoom);
+    }
+    // @ts-ignore
+    if (this.lp.l && this.lp.l.ShowLevel !== undefined) {
+      // @ts-ignore
+      const pt = this.lp.l.Translate;
+      if (pt.Y >= 1000.0) { // Sky Elevation
+        return false;
+      }
+      // @ts-ignore
+      const level = this.lp.l.ShowLevel;
+      if (level.includes("Farthest") && this.mb.zoom <= 3) {
+        return true;
+      }
+      if (level == "" && (this.mb.zoom == 5 || this.mb.zoom == 6)) {
+        return true;
+      }
+      if (level == "Far" && this.mb.zoom == 3) {
+        return true
+      }
+      if (level == "Near" && this.mb.zoom == 4) {
+        return true
+      }
+      if (level == "Nearest" && (this.mb.zoom == 6 || this.mb.zoom >= 7)) {
+        return true
+      }
+      return false;
+    }
     return this.lp.shouldShowAtZoom(this.mb.zoom);
   }
 }
-
 export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
   public readonly dungeonNum: number;
 
@@ -154,7 +199,7 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     super(mb, l, false, 1000);
     // Yes, extracting the dungeon number from the save flag is what Nintendo does.
     const dungeonNum = parseInt(this.lm.getSaveFlag().replace('Location_Dungeon', ''), 10);
-    this.marker.setIcon(dungeonNum >= 120 ? MapIcons.DUNGEON_DLC : MapIcons.DUNGEON);
+    this.marker.setIcon(MapIcons.DUNGEON);
     this.setTitle(MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId()));
     this.marker.options.title = '';
     this.dungeonNum = dungeonNum;
@@ -188,6 +233,12 @@ export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
 export class MapMarkerTower extends MapMarkerGenericLocationMarker {
   constructor(mb: MapBase, l: any) {
     super(mb, l, false, 1001);
+    console.log(l);
+  }
+}
+export class MapMarkerCave extends MapMarkerGenericLocationMarker {
+  constructor(mb: MapBase, l: any) {
+    super(mb, l, false, 1001);
   }
 }
 
@@ -202,8 +253,9 @@ export class MapMarkerShop extends MapMarkerGenericLocationMarker {
     super(mb, l, false);
   }
 
+  // This needs attention **FIX**
   shouldBeShown() {
-    return this.mb.zoom >= 7;
+    return this.mb.zoom >= 6;
   }
 }
 
@@ -265,9 +317,9 @@ function getName(name: string) {
 
 function setObjMarkerTooltip(title: string, layer: L.Layer, obj: ObjectMinData) {
   const tooltipInfo = [title];
-  if (obj.name === 'LocationTag' && obj.messageid) {
-    const locationName = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', obj.messageid)
-      || MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', obj.messageid);
+  if (obj.name === 'LocationMarker' && obj.Location) {
+    const locationName = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', obj.Location)
+      || MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', obj.Location);
     tooltipInfo.push(`${locationName}`);
   }
   if (obj.drop) {
