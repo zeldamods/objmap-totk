@@ -1061,16 +1061,6 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   private reloadSettings() {
-    this.searchExcludedSets = this.searchExcludedSets.filter(set =>
-      set != this.hardModeExcludeSet && set != this.lastBossExcludeSet && set != this.ohoExcludeSet);
-
-    if (!Settings.getInstance().hardMode)
-      this.searchExcludedSets.push(this.hardModeExcludeSet);
-    if (Settings.getInstance().lastBossMode)
-      this.searchExcludedSets.push(this.lastBossExcludeSet);
-    if (!Settings.getInstance().ohoMode)
-      this.searchExcludedSets.push(this.ohoExcludeSet);
-
     for (const group of this.searchGroups)
       group.update(SearchResultUpdateMode.UpdateVisibility | SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateTitle, this.searchExcludedSets);
 
