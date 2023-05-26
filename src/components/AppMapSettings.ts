@@ -23,13 +23,13 @@ export default class AppMapSettings extends Vue {
   s: Settings | null = null;
 
   optionsMapType = Object.freeze([
-    { value: 'MainField', text: 'Sky, Ground and Depths' },
+    { value: 'Totk', text: 'Sky, Ground and Depths' },
     { value: 'MainFieldDungeon', text: 'Divine Beasts (MainFieldDungeon)' },
     { value: 'CDungeon', text: 'Shrines (CDungeon)' },
   ]);
 
   optionsMapNameForMapType: { [type: string]: any } = Object.freeze({
-    'MainField': [
+    'Totk': [
       { value: '', text: 'All' },
     ],
     'MainFieldDungeon': [{ value: '', text: 'All' }].concat(['RemainsWind', 'RemainsWater', 'RemainsElectric', 'RemainsFire', 'FinalTrial'].map(makeMainFieldDungeonEntry)),
