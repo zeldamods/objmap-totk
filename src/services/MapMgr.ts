@@ -100,7 +100,6 @@ export class MapMgr {
     return fetch(`${RADAR_URL}/obj/${objid}`).then(parse);
   }
   getObj(mapType: string, mapName: string, hashId: string): Promise<ObjectData | null> {
-    console.log('getObj', mapType, mapName, hashId);
     return fetch(`${RADAR_URL}/obj/${mapType}/${mapName}/${hashId}`).then(parse);
   }
 

@@ -862,9 +862,9 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   searchGetQuery() {
-    let query = this.searchQuery;
+    let query = this.searchQuery.trim();
     if (/^0x[0-9A-Fa-f]{6}/g.test(query))
-      query = parseInt(query, 16).toString(10);
+      query = BigInt(query).toString(10);
     return query;
   }
 
