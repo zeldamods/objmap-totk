@@ -42,9 +42,10 @@ export default class MixinUtil extends Vue {
     return this.getRankedUpActorNameForObj(obj) != obj.name;
   }
 
-  formatObjId(id: number) {
+  formatObjId(xid: string) {
+    const id = BigInt(xid);
     if (!Settings.getInstance().useHexForHashIds)
       return id.toString(10);
-    return '0x' + id.toString(16).padStart(8, '0');
+    return '0x' + id.toString(16).padStart(16, '0');
   }
 }

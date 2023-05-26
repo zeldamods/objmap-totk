@@ -8,7 +8,7 @@ export type Vec3 = [number, number, number];
 export interface ResPlacementObj {
   readonly '!Parameters'?: { [key: string]: any };
   readonly SRTHash: number;
-  readonly HashId: number;
+  readonly HashId: string;
   readonly OnlyOne?: boolean;
   readonly UniqueName?: string;
   readonly UnitConfigName: string;
@@ -26,7 +26,7 @@ export const enum ObjectDropType {
 
 export interface ObjectMinData {
   objid: number;
-  hash_id: number;
+  hash_id: string;
   map_type: string;
   map_name?: string;
   map_static: boolean;
@@ -99,11 +99,12 @@ export class MapMgr {
   getObjByObjId(objid: number): Promise<ObjectData | null> {
     return fetch(`${RADAR_URL}/obj/${objid}`).then(parse);
   }
-  getObj(mapType: string, mapName: string, hashId: number): Promise<ObjectData | null> {
+  getObj(mapType: string, mapName: string, hashId: string): Promise<ObjectData | null> {
+    console.log('getObj', mapType, mapName, hashId);
     return fetch(`${RADAR_URL}/obj/${mapType}/${mapName}/${hashId}`).then(parse);
   }
 
-  getObjGenGroup(mapType: string, mapName: string, hashId: number): Promise<ObjectData[]> {
+  getObjGenGroup(mapType: string, mapName: string, hashId: string): Promise<ObjectData[]> {
     return fetch(`${RADAR_URL}/obj/${mapType}/${mapName}/${hashId}/gen_group`).then(parse);
   }
 
@@ -115,7 +116,7 @@ export class MapMgr {
     return fetch(`${RADAR_URL}/drop/${unitConfigName}/${tableName}`).then(parse);
   }
 
-  getObjRails(hashId: number): Promise<any> {
+  getObjRails(hashId: string): Promise<any> {
     return fetch(`${RADAR_URL}/rail/${hashId}`).then(parse);
   }
 

@@ -48,7 +48,7 @@ import draggable from 'vuedraggable';
 interface ObjectIdentifier {
   mapType: string;
   mapName: string;
-  hashId: number;
+  hashId: string;
 }
 
 function valueOrDefault<T>(value: T | undefined, defaultValue: T) {
@@ -1304,7 +1304,7 @@ export default class AppMap extends mixins(MixinUtil) {
     if (this.$route.query.id) {
       // format: MapType,MapName,HashId
       const [mapType, mapName, hashId] = this.$route.query.id.toString().split(',');
-      MapMgr.getInstance().getObj(mapType, mapName, parseInt(hashId, 0)).then((obj) => {
+      MapMgr.getInstance().getObj(mapType, mapName, hashId).then((obj) => {
         if (obj)
           this.$emit('AppMap:open-obj', obj);
       });

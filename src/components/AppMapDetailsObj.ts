@@ -108,7 +108,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   private minObj: ObjectMinData | null = null;
   private obj: ObjectData | null = null;
   private genGroup: ObjectData[] = [];
-  private genGroupSet: Map<number, ObjectData> = new Map();
+  private genGroupSet: Map<string, ObjectData> = new Map();
 
   private dropTables: { [key: string]: any } = {};
   private shopData: { [key: string]: any } = {};
@@ -170,7 +170,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       }
     }
 
-    if (this.obj.data.LinksToRail || DRAGON_HASH_IDS.includes(this.obj.hash_id)) {
+    if (this.obj.data.LinksToRail) { // || DRAGON_HASH_IDS.includes(this.obj.hash_id)) {
       this.rails = await MapMgr.getInstance().getObjRails(this.obj.hash_id);
     }
 
@@ -419,13 +419,13 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     let radius = 0.0;
     if (obj.name == 'DgnObj_EntranceElevator_A_01') {
       radius = 64.0;
-      if (obj.hash_id == KUH_TAKKAR_ELEVATOR_HASH_ID) {
-        /* Kuh Takkar, elevator in the same gen group as the ice actor
-           which has an unload radius of 1500m -- so the elevator has
-           a 1500m radius.
-        */
-        radius = 1500.0;
-      }
+      //if (obj.hash_id == KUH_TAKKAR_ELEVATOR_HASH_ID) {
+      /* Kuh Takkar, elevator in the same gen group as the ice actor
+         which has an unload radius of 1500m -- so the elevator has
+         a 1500m radius.
+      */
+      //  radius = 1500.0;
+      //}
     } else if (obj.name == 'DgnObj_EntranceElevatorSP') {
       radius = 528.0;
       if (obj.data['!Parameters']!.EventFlowName == 'Demo603_0') {
