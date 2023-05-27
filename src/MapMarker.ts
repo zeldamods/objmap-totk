@@ -230,11 +230,15 @@ export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
 export class MapMarkerTower extends MapMarkerGenericLocationMarker {
   constructor(mb: MapBase, l: any) {
     super(mb, l, false, 1001);
+    this.marker.options.title = '';
+    this.marker.bindTooltip(this.title, { pane: 'front2' });
   }
 }
 export class MapMarkerCave extends MapMarkerGenericLocationMarker {
   constructor(mb: MapBase, l: any) {
     super(mb, l, false, 1001);
+    this.marker.options.title = '';
+    this.marker.bindTooltip(this.title, { pane: 'front2' });
   }
 }
 
@@ -247,6 +251,8 @@ export class MapMarkerLabo extends MapMarkerGenericLocationMarker {
 export class MapMarkerShop extends MapMarkerGenericLocationMarker {
   constructor(mb: MapBase, l: any) {
     super(mb, l, false);
+    this.marker.options.title = '';
+    this.marker.bindTooltip(this.title, { pane: 'front2' });
   }
 
   // This needs attention **FIX**

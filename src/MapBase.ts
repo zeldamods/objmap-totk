@@ -247,7 +247,6 @@ export class MapBase {
       latFormatter: (x) => (-x).toString(),
     }).addTo(this.m);
     this.m.on('baselayerchange', (ev: any) => {
-      console.log('BASE LAYER CHANGE')
       const url = ev.layer._url;
       this.activeLayer = areas.find(area => url.includes(area)) || "Ground";
       this.m.fireEvent('objmap:base-layer-change');
