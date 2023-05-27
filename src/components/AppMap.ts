@@ -1021,9 +1021,9 @@ export default class AppMap extends mixins(MixinUtil) {
       const quad = map.pointToMapUnit(xyz);
       const layer = this.map.activeLayer;
       if (this.map.activeLayer == "Surface") {
-        this.searchAddGroup(`map:"Surface/${quad}" OR map:"Cave/${quad}" OR map:"DeepHole/${quad}"`);
+        this.searchAddGroup(`map:"Surface_${quad}" OR map:"Cave_${quad}" OR map:"DeepHole_${quad}"`);
       } else {
-        this.searchAddGroup(`map:"${layer}/${quad}"`);
+        this.searchAddGroup(`map:"${layer}_${quad}"`);
       }
     });
   }
