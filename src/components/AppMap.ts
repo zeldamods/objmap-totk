@@ -1008,17 +1008,23 @@ export default class AppMap extends mixins(MixinUtil) {
   initContextMenu() {
     this.map.m.on(SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT, (e) => {
       let mapType = Settings.getInstance().mapType;
-      if (mapType !== 'MainField' && mapType !== 'AocField') {
-        this.searchAddGroup(`map:"${mapType}/${Settings.getInstance().mapName}"`);
-        return;
-      }
+      //if (mapType !== 'MainField' && mapType !== 'AocField') {
+      //  this.searchAddGroup(`map:"${mapType}/${Settings.getInstance().mapName}"`);
+      //  return;
+      //}
 
       // @ts-ignore
       const latlng: L.LatLng = e.latlng;
       const xyz = this.map.toXYZ(latlng);
       if (!map.isValidPoint(xyz))
         return;
-      this.searchAddGroup(`map:"${mapType}/${map.pointToMapUnit(xyz)}"`);
+      const quad = map.pointToMapUnit(xyz);
+      const layer = this.map.activeLayer;
+      if (this.map.activeLayer == "Surface") {
+        this.searchAddGroup(`map:"Surface/${quad}" OR map:"Cave/${quad}" OR map:"DeepHole/${quad}"`);
+      } else {
+        this.searchAddGroup(`map:"${layer}/${quad}"`);
+      }
     });
   }
 

@@ -3,9 +3,9 @@
     <section class="search-result-name">{{name(true)}}</section>
     <section class="search-result-location">
       <!-- <i class="fa fa-map-marker-alt fa-fw"></i> -->
-      <span v-if="obj.map_name === 'Surface'"> <i class="fa fa-tree fa-fw" style="color: lightgreen"></i></span>
-      <span v-if="obj.map_name === 'Sky'"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></span>
-      <span v-if="obj.map_name === 'Depths'"> <i class="fa fa-circle fa-fw" style="color: lightpurple;"></i></span>
+      <span v-if="obj.map_name.includes('Surface')"> <i class="fa fa-tree fa-fw" style="color: lightgreen"></i></span>
+      <span v-if="obj.map_name.includes('Sky')"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></span>
+      <span v-if="obj.map_name.includes('Depths')"> <i class="fa fa-circle fa-fw" style="color: lightpurple;"></i></span>
       {{getMapNameForObj(data)}}
     </section>
     <section class="search-result-id">

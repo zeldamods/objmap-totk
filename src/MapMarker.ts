@@ -172,7 +172,7 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
         return false;
       if (this.mb.activeLayer == "Depths" && pt.Y > -50)
         return false;
-      if (this.mb.activeLayer == "Ground" && (pt.Y < 0 || pt.Y > 950))
+      if (this.mb.activeLayer == "Surface" && (pt.Y < 0 || pt.Y > 950))
         return false;
       if (level.includes("Farthest") && this.mb.zoom <= 4)
         return true;

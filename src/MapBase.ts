@@ -201,7 +201,7 @@ export class MapBase {
   }
 
   private initBaseMap() {
-    const areas = ["Sky", "Ground", "Depths"];
+    const areas = ["Sky", "Surface", "Depths"];
     // Add a base image to make tile loading less noticeable.
     const BASE_PANE = 'base';
     this.m.createPane(BASE_PANE).style.zIndex = '0';
@@ -215,13 +215,14 @@ export class MapBase {
 
     let baseMaps: any = {}
     for (const area of areas) {
-      const baseLayer = L.tileLayer(`${TOTK_MAP}/${area}/maptex/{z}/{x}/{y}.webp`, {
+      const zarea = (area == "Surface") ? "Ground" : area;
+      const baseLayer = L.tileLayer(`${TOTK_MAP}/${zarea}/maptex/{z}/{x}/{y}.webp`, {
         maxNativeZoom: 7,
       });
       this.baseLayer.push(baseLayer);
       baseMaps[area] = baseLayer;
     }
-    baseMaps.Ground.addTo(this.m);
+    baseMaps.Surface.addTo(this.m);
 
     // Empty Basemap (has the tower outlines included)
     //    If desired, this can be added
@@ -248,7 +249,7 @@ export class MapBase {
     }).addTo(this.m);
     this.m.on('baselayerchange', (ev: any) => {
       const url = ev.layer._url;
-      this.activeLayer = areas.find(area => url.includes(area)) || "Ground";
+      this.activeLayer = areas.find(area => url.includes(area)) || "Surface";
       this.m.fireEvent('objmap:base-layer-change');
     });
   }

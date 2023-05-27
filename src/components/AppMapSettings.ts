@@ -23,7 +23,7 @@ export default class AppMapSettings extends Vue {
   s: Settings | null = null;
 
   optionsMapType = Object.freeze([
-    { value: 'Totk', text: 'Sky, Ground and Depths' },
+    { value: 'Totk', text: 'Sky, Surface and Depths' },
     { value: 'MainFieldDungeon', text: 'Divine Beasts (MainFieldDungeon)' },
     { value: 'CDungeon', text: 'Shrines (CDungeon)' },
   ]);
