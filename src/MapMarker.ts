@@ -233,7 +233,6 @@ export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
 export class MapMarkerTower extends MapMarkerGenericLocationMarker {
   constructor(mb: MapBase, l: any) {
     super(mb, l, false, 1001);
-    console.log(l);
   }
 }
 export class MapMarkerCave extends MapMarkerGenericLocationMarker {

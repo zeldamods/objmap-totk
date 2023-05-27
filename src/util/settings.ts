@@ -116,7 +116,7 @@ export class Settings {
     };
   }
 
-  private static KEY = 'storage';
+  private static KEY = 'storage-totk';
   private beforeSaveCallbacks: SettingBeforeSaveCb[] = [];
   private callbacks: SettingChangeCb[] = [];
 }
