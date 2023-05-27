@@ -36,6 +36,7 @@ export class MapBase {
   baseLayer: L.Layer[] = [];
   refGrid: Array<L.LayerGroup> = [];
   refGridOn: boolean = false;
+  activeLayer!: string;
 
   async loadTowerAreas() {
     /*
@@ -107,6 +108,11 @@ export class MapBase {
   // Fires shortly after zoomstart with the target zoom level.
   registerZoomAnimCb(cb: any) { this.m.on('zoomanim', cb); }
   registerZoomEndCb(cb: any) { this.m.on('zoomend', cb); }
+  registerBaseLayerChangeCb(cb: any) {
+    this.m.on('objmap:base-layer-change', () => {
+      cb()
+    })
+  }
 
   constructor(element: string) {
     this.constructMap(element);
@@ -195,6 +201,7 @@ export class MapBase {
   }
 
   private initBaseMap() {
+    const areas = ["Sky", "Ground", "Depths"];
     // Add a base image to make tile loading less noticeable.
     const BASE_PANE = 'base';
     this.m.createPane(BASE_PANE).style.zIndex = '0';
@@ -207,7 +214,7 @@ export class MapBase {
     baseImage.addTo(this.m);
 
     let baseMaps: any = {}
-    for (const area of ["Sky", "Ground", "Depths"]) {
+    for (const area of areas) {
       const baseLayer = L.tileLayer(`${TOTK_MAP}/${area}/maptex/{z}/{x}/{y}.webp`, {
         maxNativeZoom: 7,
       });
@@ -239,7 +246,12 @@ export class MapBase {
       position: 'bottomright',
       latFormatter: (x) => (-x).toString(),
     }).addTo(this.m);
-
+    this.m.on('baselayerchange', (ev: any) => {
+      console.log('BASE LAYER CHANGE')
+      const url = ev.layer._url;
+      this.activeLayer = areas.find(area => url.includes(area)) || "Ground";
+      this.m.fireEvent('objmap:base-layer-change');
+    });
   }
   svgIconBase(width: number) {
     return L.divIcon({

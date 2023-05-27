@@ -138,9 +138,6 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
     }
     super(mb, msg, lp.getXYZ(), { stroke: false, fill: false });
     this.marker.unbindTooltip();
-    if (msg === undefined || msg.length <= 0 || msg.trim().length <= 0) {
-      console.log("ERROR", msg, lp.getMessageId());
-    }
     this.marker.bindTooltip(msg + `<span class="location-marker-type">${visibleMarkerTypeStr}</span>`, {
       permanent: true,
       direction: 'center',
@@ -159,37 +156,37 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
   // Assume: section value Big, Middle, or Small controls which zoom level the
   //     text is shown at
   shouldBeShown() {
-    if (this.title == "Eldin" && 'l' in this.lp) {
-      // @ts-ignore
-      console.log(this.lp.l.ShowLevel, this.mb.zoom);
-    }
     // @ts-ignore
     if (this.lp.l && this.lp.l.ShowLevel !== undefined) {
       // @ts-ignore
-      const pt = this.lp.l.Translate;
-      if (pt.Y >= 1000.0) { // Sky Elevation
+      let label = this.lp.l;
+      const pt = label.Translate;
+      let level = [label.ShowLevel];
+      if (label.ShowLevel.includes(",")) {
+        level = label.ShowLevel.split(",");
+      }
+
+      if (label.MessageID == "Oasis") // No Kara Kara Bazaar
         return false;
-      }
-      // @ts-ignore
-      const level = this.lp.l.ShowLevel;
-      if (level.includes("Farthest") && this.mb.zoom <= 3) {
+      if (this.mb.activeLayer == "Sky" && pt.Y < 950)
+        return false;
+      if (this.mb.activeLayer == "Depths" && pt.Y > -50)
+        return false;
+      if (this.mb.activeLayer == "Ground" && (pt.Y < 0 || pt.Y > 950))
+        return false;
+      if (level.includes("Farthest") && this.mb.zoom <= 4)
         return true;
-      }
-      if (level == "" && (this.mb.zoom == 5 || this.mb.zoom == 6)) {
+      if (level.includes("Far") && this.mb.zoom == 5)
+        return true
+      if (level.includes("") && this.mb.zoom >= 6)
         return true;
-      }
-      if (level == "Far" && this.mb.zoom == 3) {
+      if (level.includes("Near") && this.mb.zoom == 5)
         return true
-      }
-      if (level == "Near" && this.mb.zoom == 4) {
+      if (level.includes("Nearest") && this.mb.zoom >= 6)
         return true
-      }
-      if (level == "Nearest" && (this.mb.zoom == 6 || this.mb.zoom >= 7)) {
-        return true
-      }
       return false;
     }
-    return this.lp.shouldShowAtZoom(this.mb.zoom);
+    return false;
   }
 }
 export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {

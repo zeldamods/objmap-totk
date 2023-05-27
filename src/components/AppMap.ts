@@ -333,6 +333,7 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.registerMoveEndCb(() => this.updateRoute());
     this.map.registerZoomEndCb(() => this.updateRoute());
     this.updateRoute();
+    this.map.registerBaseLayerChangeCb(() => this.updateMarkers());
   }
 
   initMarkers() {
