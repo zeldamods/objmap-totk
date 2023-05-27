@@ -245,7 +245,8 @@ export class MapBase {
       lngFirst: true,
       wrapLng: false,
       position: 'bottomright',
-      latFormatter: (x) => (-x).toString(),
+      latFormatter: (x) => (-x).toFixed(0),
+      lngFormatter: (x) => x.toFixed(0),
     }).addTo(this.m);
     this.m.on('baselayerchange', (ev: any) => {
       const url = ev.layer._url;
