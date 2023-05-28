@@ -1,21 +1,18 @@
-import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-rastercoords';
 import 'leaflet-contextmenu';
 import 'leaflet-contextmenu/dist/leaflet.contextmenu.css';
 import 'leaflet.control.opacity/dist/L.Control.Opacity.css';
 import 'leaflet-mouse-position';
+import '@/util/leaflet_tile_workaround.js';
+import 'leaflet.control.opacity';
 
+import * as L from 'leaflet';
 
 import { CanvasMarker } from '@/util/CanvasMarker';
 import * as map from '@/util/map';
 import { Point } from '@/util/map';
 import * as ui from '@/util/ui';
-import '@/util/leaflet_tile_workaround.js';
-import { Settings } from './util/settings';
-import { MapMgr } from '@/services/MapMgr';
-
-import 'leaflet.control.opacity';
 
 declare module 'leaflet' {
   export type RasterCoords = any;
@@ -229,8 +226,8 @@ export class MapBase {
     //baseMaps.Empty = L.tileLayer(`${map.GAME_FILES}/totk/Empty/maptex/{z}/{x}/{y}.png`, {
     //  maxNativeZoom: 7
     //});
-    this.m.createPane('front').style.zIndex = '1000';
-    this.m.createPane('front2').style.zIndex = '1001';
+    this.m.createPane('front').style.zIndex = '1001';
+    this.m.createPane('front2').style.zIndex = '1002';
 
     // Basic Switching
     L.control.layers(baseMaps).addTo(this.m);
