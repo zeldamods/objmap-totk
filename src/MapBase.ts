@@ -22,7 +22,7 @@ declare module 'leaflet' {
   export let RasterCoords: any;
 }
 
-const TOTK_MAP = "https://objmap.zeldamods.org/totk_files/map/";
+const TOTK_MAP = map.GAME_FILES + "/map/";
 
 export const SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT = 'objmap::SHOW_ALL_OBJS_FOR_MAP_UNIT';
 export const MARKER_SELECTED_EVENT = 'objmap::markerSelected';
