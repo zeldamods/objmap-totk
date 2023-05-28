@@ -23,7 +23,6 @@
         <li><a href="#spane-settings" role="tab"><i class="fa fa-cog"></i></a></li>
       </ul>
       <ul role="tablist">
-        <li @click.capture.prevent.stop="toggleHylianMode()"><a href="#dummy" v-b-tooltip.hover.right title="Yahaha! You found me!"><i class="fas fa-seedling"></i></a></li>
         <li v-show="settings.left" @click.capture.prevent.stop="toggleSidebarSide()"><a href="#toggle-sidebar-side" v-b-tooltip.hover.right title="Move to the right side"><i class="far fa-caret-square-right"></i></a></li>
         <li v-show="!settings.left" @click.capture.prevent.stop="toggleSidebarSide()"><a href="#toggle-sidebar-side" v-b-tooltip.hover.left title="Move to the left side"><i class="far fa-caret-square-left"></i></a></li>
       </ul>
