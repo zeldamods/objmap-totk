@@ -1,4 +1,5 @@
 import Vue from 'vue';
+
 import Component from 'vue-class-component';
 
 import { rankUpEnemyForHardMode } from '@/level_scaling';
@@ -21,7 +22,7 @@ export default class MixinUtil extends Vue {
   }
 
   getMapNameForObj(obj: ObjectMinData) {
-    if (obj.map_type == 'CDungeon') {
+    if (obj.map_type == 'SmallDungeon') {
       const uiName = MsgMgr.getInstance().getMsg(`StaticMsg/Dungeon:${obj.map_name}`);
       return `${uiName} (${obj.map_name})`;
     }
