@@ -19,14 +19,28 @@ export default class AppMapSettings extends Vue {
 
   optionsMapType = Object.freeze([
     { value: 'Totk', text: 'Sky, Surface and Depths' },
-    { value: 'CDungeon', text: 'Shrines (CDungeon)' },
+    { value: 'SmallDungeon', text: 'Shrines (SmallDungeon)' },
+    { value: 'LargeDungeon', text: 'Temples (LargeDungeon)' },
+    { value: 'NormalStage', text: 'Special Maps (NormalStage)' },
   ]);
 
   optionsMapNameForMapType: { [type: string]: any } = Object.freeze({
     'Totk': [
       { value: '', text: 'All' },
     ],
-    'CDungeon': [{ value: '', text: 'All' }].concat([...Array(152).keys()].map(makeCDungeonEntry)),
+    'SmallDungeon': [{ value: '', text: 'All' }].concat([...Array(152).keys()].map(makeCDungeonEntry)),
+    'LargeDungeon': [
+      { value: 'LargeDungeonFire', text: 'Fire Temple' },
+      { value: 'LargeDungeonThunder', text: 'Lightning Temple' },
+      { value: 'LargeDungeonWater', text: 'Water Temple' },
+      { value: 'LargeDungeonWind', text: 'Wind Temple' },
+      { value: 'LargeDungeonSoul', text: 'Spirit Temple' },
+      { value: 'LargeDungeonHyruleCastle', text: 'Hyrule Castle (Sky)' },
+    ],
+    'NormalStage': [
+      { value: 'OpeningField', text: 'Prologue (OpeningField)' },
+      { value: 'TitleScene', text: 'TitleScene' },
+    ],
   });
 
   created() {

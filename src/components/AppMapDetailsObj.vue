@@ -70,10 +70,16 @@
         <ShopData :data="shopData[this.getLocationSub()]" />
       </section>
 
-      <section v-if="obj.data['!Parameters']">
+      <section v-if="obj.data.Dynamic">
         <hr>
-        <h4 class="subsection-heading">Parameters</h4>
-        <pre class="obj-params">{{JSON.stringify(obj.data['!Parameters'], undefined, 2)}}</pre>
+        <h4 class="subsection-heading">Dynamic params</h4>
+        <pre class="obj-params">{{JSON.stringify(obj.data.Dynamic, undefined, 2)}}</pre>
+      </section>
+
+      <section v-if="obj.data.Phive">
+        <hr>
+        <h4 class="subsection-heading">Physics params</h4>
+        <pre class="obj-params">{{JSON.stringify(obj.data.Phive, undefined, 2)}}</pre>
       </section>
 
       <section v-if="dropTableExists()">
