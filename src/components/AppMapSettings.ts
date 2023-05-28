@@ -26,7 +26,7 @@ export default class AppMapSettings extends Vue {
     'Totk': [
       { value: '', text: 'All' },
     ],
-    'CDungeon': [{ value: '', text: 'All' }].concat([...Array(136).keys()].map(makeCDungeonEntry)),
+    'CDungeon': [{ value: '', text: 'All' }].concat([...Array(152).keys()].map(makeCDungeonEntry)),
   });
 
   created() {
