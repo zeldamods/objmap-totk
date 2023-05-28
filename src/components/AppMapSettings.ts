@@ -1,14 +1,9 @@
 import Vue from 'vue';
-import { Prop } from 'vue-property-decorator';
+
 import Component from 'vue-class-component';
 
 import { MsgMgr } from '@/services/MsgMgr';
 import { Settings } from '@/util/settings';
-
-function makeMainFieldDungeonEntry(mapName: string) {
-  const text = MsgMgr.getInstance().getMsg(`StaticMsg/LocationMarker:${mapName}`);
-  return { value: mapName, text: `${text} (${mapName})` };
-}
 
 function makeCDungeonEntry(n: number) {
   const mapName = 'Dungeon' + n.toString().padStart(3, '0');
@@ -24,7 +19,6 @@ export default class AppMapSettings extends Vue {
 
   optionsMapType = Object.freeze([
     { value: 'Totk', text: 'Sky, Surface and Depths' },
-    { value: 'MainFieldDungeon', text: 'Divine Beasts (MainFieldDungeon)' },
     { value: 'CDungeon', text: 'Shrines (CDungeon)' },
   ]);
 
@@ -32,7 +26,6 @@ export default class AppMapSettings extends Vue {
     'Totk': [
       { value: '', text: 'All' },
     ],
-    'MainFieldDungeon': [{ value: '', text: 'All' }].concat(['RemainsWind', 'RemainsWater', 'RemainsElectric', 'RemainsFire', 'FinalTrial'].map(makeMainFieldDungeonEntry)),
     'CDungeon': [{ value: '', text: 'All' }].concat([...Array(136).keys()].map(makeCDungeonEntry)),
   });
 
