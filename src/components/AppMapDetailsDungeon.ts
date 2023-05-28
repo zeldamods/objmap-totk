@@ -1,11 +1,13 @@
 import Component from 'vue-class-component';
 
-import { MapMarkerDungeon } from '@/MapMarker';
 import AppMapDetailsBase from '@/components/AppMapDetailsBase';
 import ObjectInfo from '@/components/ObjectInfo';
-import { MapMgr, ObjectMinData } from '@/services/MapMgr';
+import { MapMarkerDungeon } from '@/MapMarker';
+import {
+  MapMgr,
+  ObjectMinData,
+} from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
-import * as ui from '@/util/ui';
 
 @Component({
   components: {
@@ -22,7 +24,7 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
     this.id = this.marker.data.lm.getMessageId();
     this.sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.id + '_sub');
 
-    MapMgr.getInstance().getObjs('CDungeon', this.id, 'actor:^"TBox_"').then(d => this.tboxObjs = d);
-    MapMgr.getInstance().getObjs('CDungeon', this.id, 'actor:^"Enemy_"').then(d => this.enemies = d);
+    MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"TBox_"').then(d => this.tboxObjs = d);
+    MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"Enemy_"').then(d => this.enemies = d);
   }
 }
