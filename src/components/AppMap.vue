@@ -88,7 +88,7 @@
             </div>
           </div>
 
-          <p class="text-center" v-show="settings.mapType !== 'MainField'">Searching map: {{settings.mapType}} {{settings.mapName}}</p>
+          <p class="text-center" v-show="settings.mapType !== 'Totk'">Searching map: {{settings.mapType}} {{settings.mapName}}</p>
 
           <section class="search-groups" v-show="searchGroups.length || searchExcludedSets.length">
             <div class="search-group d-flex align-items-center" v-for="(group, idx) in searchGroups" :key="'searchgroup' + idx">
