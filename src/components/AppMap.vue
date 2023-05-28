@@ -50,7 +50,7 @@
         <p>Available columns:</p>
 
         <div>
-          <code>map</code>: Map name (e.g. MainField/E-4)<br>
+          <code>map</code>: Map name (e.g. Surface/Depths/Sky, Surface_E-4, etc.)<br>
           <code>static</code>: 1 if the object is in a Static map unit, 0 if Dynamic<br>
           <code>actor</code>: Actor name (e.g. Weapon_Sword_001)<br>
           <code>name</code>: User visible name (e.g. Traveler's Sword)<br>
@@ -191,8 +191,7 @@
         <b-button size="sm" variant="secondary" block @click="closeSidebar(); $refs.modalGoto.show()">Go to coordinates...</b-button>
         <hr>
         <h4 class="subsection-heading">About this map</h4>
-        <p>This object map is an <a href="https://github.com/zeldamods/objmap">open source project</a>. Contributions are welcome.</p>
-        <p>For technical documentation about <i>Breath of the Wild</i> and mechanic breakdowns, refer to the <a href="https://zeldamods.org/">ZeldaMods wiki</a>.</p>
+        <p>This object map is an <a href="https://github.com/zeldamods/objmap-totk">open source project</a>. Contributions are welcome.</p>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-settings">
