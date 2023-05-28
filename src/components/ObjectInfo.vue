@@ -2,10 +2,10 @@
   <div :class="className + (isStatic ? ' static' : '')">
     <section class="search-result-name">{{name(true)}}</section>
     <section class="search-result-location">
-      <!-- <i class="fa fa-map-marker-alt fa-fw"></i> -->
       <span v-if="obj.map_name.includes('Surface')"> <i class="fa fa-tree fa-fw" style="color: lightgreen"></i></span>
-      <span v-if="obj.map_name.includes('Sky')"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></span>
-      <span v-if="obj.map_name.includes('Depths')"> <i class="fa fa-circle fa-fw" style="color: lightpurple;"></i></span>
+      <span v-else-if="obj.map_name.includes('Sky')"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></span>
+      <span v-else-if="obj.map_name.includes('Depths')"> <i class="fa fa-circle fa-fw" style="color: lightpurple;"></i></span>
+      <i v-else class="fa fa-map-marker-alt fa-fw"></i>
       {{getMapNameForObj(data)}}
     </section>
     <section class="search-result-id">
@@ -58,7 +58,7 @@
       <i class="fas fa-fw fa-leaf" style="color:lightgreen"></i>
       {{data.korok_id}} - {{ data.korok_type }}
     </section>
-    <!-- 
+    <!--
     <section class="search-result-life" v-if="meta('life')">
       <i class="fas fa-fw fa-heart" style="color:white"></i> {{meta('life')}}
     </section>
