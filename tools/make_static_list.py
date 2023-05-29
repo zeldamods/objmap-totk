@@ -60,6 +60,7 @@ markers = {}
 markers['Labo'] = []
 markers['Chasm'] = []
 markers['Korok'] = []
+markers['Place'] = []
 
 for field in ['MainField', 'MinusField']:
     data = json.load(open(f"{base}/Banc/{field}/LocationArea/{field}.locationarea.json","r"))
@@ -108,6 +109,18 @@ for field in ['MainField', 'MinusField']:
                 elif 'FigureGallery' == msg:
                     item['Icon'] = 'ShopBougu'
                     markers['Shop'].append(item)
+                elif 'DemonStatue' in msg:
+                    if msg.startswith('DemonStatue'):
+                        item['Icon'] = 'ShopBougu'
+                        if msg == 'DemonStatue_01':
+                            msg = 'MinusField_AncientTimeShrine'
+                        elif msg == 'DemonStatue_02':
+                            msg = 'MinusField_KingValley'
+                        elif msg == 'DemonStatue_00' and item['ShowLevel'] == 'Farthest':
+                            continue
+                        item['MessageID'] = msg
+                        markers['Place'].append(item)
+                        print(msg, pt)
                 else:
                     items.append(item)
         if not item_kind in markers:
