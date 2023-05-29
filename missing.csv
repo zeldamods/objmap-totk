@@ -2949,7 +2949,7 @@ FldObj_DesertRuin_A_24_Far,
 FldObj_DominoStoneBase_A_L_01, 
 FldObj_DominoStone_A_L_03, 
 FldObj_DominoStone_A_L_03_Far, 
-FldObj_DragonTears_01, 
+FldObj_DragonTears_01, Dragon Tear
 FldObj_DriftSandPlane_A_01, 
 FldObj_EnemyBaseBanana_S_A_01, 
 FldObj_EnemyBaseBanana_S_A_01_Far, 
@@ -6642,21 +6642,21 @@ Obj_Zonau_GolemParts_HeadBeamPoint,
 Obj_Zonau_GolemParts_HeadLookAtPoint, 
 Obj_Zonau_GolemPrats_HeadBase_A_01, 
 Obj_Zonau_GolemPrats_HeadBase_A_02, 
-Obj_Zonau_RockRelief_A_02, 
-Obj_Zonau_RockRelief_A_03, 
-Obj_Zonau_RockRelief_A_04, 
-Obj_Zonau_RockRelief_A_05, 
-Obj_Zonau_RockRelief_A_06, 
-Obj_Zonau_RockRelief_A_07, 
-Obj_Zonau_RockRelief_A_08, 
-Obj_Zonau_RockRelief_A_09, 
-Obj_Zonau_RockRelief_A_10, 
-Obj_Zonau_RockRelief_A_11, 
-Obj_Zonau_RockRelief_A_12, 
-Obj_Zonau_RockRelief_A_13, 
-Obj_Zonau_RockRelief_A_14, 
-Obj_Zonau_RuinStatue_A_01, 
-Obj_Zonau_RuinStatue_A_03, 
+Obj_Zonau_RockRelief_A_02, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_03, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_04, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_05, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_06, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_07, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_08, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_09, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_10, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_11, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_12, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_13, Ancient Stone Tablet
+Obj_Zonau_RockRelief_A_14, Ancient Stone Tablet
+Obj_Zonau_RuinStatue_A_01, Ancient Stone Tablet
+Obj_Zonau_RuinStatue_A_03, Ancient Stone Tablet
 ObservationAnchor, 
 OctObj_Grass_02, 
 OctObj_Grass_03, 
