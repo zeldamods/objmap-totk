@@ -38,15 +38,16 @@ function makeNameQuery(names: string[]): string {
 }
 
 export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
-  // {
-  //   label: '<i class="far fa-gem"></i>',
-  //   presets: [
-  //     {label: 'Treasure Chests', query: 'actor:^"TBox_"'},
-  //     {label: 'Arrows', query: 'Arrow'},
-  //     {label: 'Ore Deposits', query: 'name:"Ore Deposit"'},
-  //     {label: 'Weapons (excluding enemies)', query: 'Weapon_ NOT actor:^"Enemy_"'},
-  //   ],
-  // },
+  {
+    label: '<i class="far fa-gem"></i>',
+    presets: [
+      { label: 'Treasure Chests', query: 'actor:^"TBox_"' },
+      { label: 'Arrows', query: 'Arrow NOT Enemy' },
+      { label: 'Zonaite Deposits', query: 'Zonaite Deposit' },
+      { label: 'Ore Deposits', query: 'name:"Ore Deposit"' },
+      { label: 'Weapons (excluding enemies)', query: 'Weapon_ NOT actor:^"Enemy_"' },
+    ],
+  },
   // {
   //   label: '<i class="fas fa-apple-alt"></i>',
   //   presets: [
@@ -81,19 +82,21 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
   //     {label: 'Gray Dye Materials', query: makeNameQuery(['Smotherwing Butterfly', 'Fireproof Lizard', 'Moblin', 'Lizalfos'])+' OR actor:"enemy_bokoblin_*"'},
   //   ]
   // },
-  // {
-  //   label: '<i class="fa fa-ellipsis-h"></i>',
-  //   presets: [
-  //     {label: 'Memory Locations', query: 'name:"Memory"'},
-  //     {label: 'Goddess Statues', query: 'name:"Goddess Statue"'},
-  //     {label: 'Rafts', query: 'name:Raft'},
-  //     {label: 'Enemies', query: 'actor:^"Enemy_"'},
-  //     {label: 'BtB Enemies', query: '(' + makeActorQuery(['Enemy_Bokoblin', 'Enemy_Lizalfos', 'Enemy_Moriblin', 'Enemy_Giant', 'Enemy_Wizzrobe']) + ') NOT actor:bone'},
-  //     {label: 'Launchable Objects', query: makeActorQuery(LAUNCHABLE_OBJS.split('\n'))},
-  //     { label: 'Shrine Elevators', query: 'actor:EntranceElev*'},
-  //     { label: 'Zora Stone Monuments', query: 'actor:FldObj_RockZoraRelief' },
-  //   ],
-  // }
+  {
+    label: '<i class="fa fa-ellipsis-h"></i>',
+    presets: [
+      { label: 'Messages from an Ancient Era Stone Tablets', query: "Ancient Stone Tablet map: Sky" },
+      { label: 'Old Teasure Maps', query: 'Old Map' },
+      //     {label: 'Memory Locations', query: 'name:"Memory"'},
+      //     {label: 'Goddess Statues', query: 'name:"Goddess Statue"'},
+      //     {label: 'Rafts', query: 'name:Raft'},
+      //     {label: 'Enemies', query: 'actor:^"Enemy_"'},
+      //     {label: 'BtB Enemies', query: '(' + makeActorQuery(['Enemy_Bokoblin', 'Enemy_Lizalfos', 'Enemy_Moriblin', 'Enemy_Giant', 'Enemy_Wizzrobe']) + ') NOT actor:bone'},
+      //     {label: 'Launchable Objects', query: makeActorQuery(LAUNCHABLE_OBJS.split('\n'))},
+      //     { label: 'Shrine Elevators', query: 'actor:EntranceElev*'},
+      //     { label: 'Zora Stone Monuments', query: 'actor:FldObj_RockZoraRelief' },
+    ],
+  }
 ]);
 
 export class SearchExcludeSet {
