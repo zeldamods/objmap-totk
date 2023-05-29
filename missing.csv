@@ -6414,36 +6414,36 @@ Obj_TabantaMaze_RockRelief_A_01,
 Obj_TravelersGuardianDeityPlane_A_02, 
 Obj_TravelersGuardianDeity_A_02, 
 Obj_TravelersGuardianDeity_A_03, 
-Obj_TreasureMap_01, 
-Obj_TreasureMap_02, 
-Obj_TreasureMap_03, 
-Obj_TreasureMap_04, 
-Obj_TreasureMap_05, 
-Obj_TreasureMap_06, 
-Obj_TreasureMap_07, 
-Obj_TreasureMap_08, 
-Obj_TreasureMap_09, 
-Obj_TreasureMap_10, 
-Obj_TreasureMap_11, 
-Obj_TreasureMap_12, 
-Obj_TreasureMap_13, 
-Obj_TreasureMap_14, 
-Obj_TreasureMap_15, 
-Obj_TreasureMap_16, 
-Obj_TreasureMap_17, 
-Obj_TreasureMap_18, 
-Obj_TreasureMap_19, 
-Obj_TreasureMap_20, 
-Obj_TreasureMap_21, 
-Obj_TreasureMap_22, 
-Obj_TreasureMap_23, 
-Obj_TreasureMap_24, 
-Obj_TreasureMap_25, 
-Obj_TreasureMap_26, 
-Obj_TreasureMap_27, 
-Obj_TreasureMap_28, 
-Obj_TreasureMap_29, 
-Obj_TreasureMap_30, 
+Obj_TreasureMap_01, $Obj_TreasureMap_00
+Obj_TreasureMap_02, $Obj_TreasureMap_00
+Obj_TreasureMap_03, $Obj_TreasureMap_00
+Obj_TreasureMap_04, $Obj_TreasureMap_00
+Obj_TreasureMap_05, $Obj_TreasureMap_00
+Obj_TreasureMap_06, $Obj_TreasureMap_00
+Obj_TreasureMap_07, $Obj_TreasureMap_00
+Obj_TreasureMap_08, $Obj_TreasureMap_00
+Obj_TreasureMap_09, $Obj_TreasureMap_00
+Obj_TreasureMap_10, $Obj_TreasureMap_00
+Obj_TreasureMap_11, $Obj_TreasureMap_00
+Obj_TreasureMap_12, $Obj_TreasureMap_00
+Obj_TreasureMap_13, $Obj_TreasureMap_00
+Obj_TreasureMap_14, $Obj_TreasureMap_00
+Obj_TreasureMap_15, $Obj_TreasureMap_00
+Obj_TreasureMap_16, $Obj_TreasureMap_00
+Obj_TreasureMap_17, $Obj_TreasureMap_00
+Obj_TreasureMap_18, $Obj_TreasureMap_00
+Obj_TreasureMap_19, $Obj_TreasureMap_00
+Obj_TreasureMap_20, $Obj_TreasureMap_00
+Obj_TreasureMap_21, $Obj_TreasureMap_00
+Obj_TreasureMap_22, $Obj_TreasureMap_00
+Obj_TreasureMap_23, $Obj_TreasureMap_00
+Obj_TreasureMap_24, $Obj_TreasureMap_00
+Obj_TreasureMap_25, $Obj_TreasureMap_00
+Obj_TreasureMap_26, $Obj_TreasureMap_00
+Obj_TreasureMap_27, $Obj_TreasureMap_00
+Obj_TreasureMap_28, $Obj_TreasureMap_00
+Obj_TreasureMap_29, $Obj_TreasureMap_00
+Obj_TreasureMap_30, $Obj_TreasureMap_00
 Obj_TreeApple_A_L_01, 
 Obj_TreeApple_A_L_01_Trunk_Aligned, 
 Obj_TreeApple_A_M_01, 

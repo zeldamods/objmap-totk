@@ -89,5 +89,5 @@ out['_doc_'] = {
     'notes2': 'missing.csv created by comparing unit_config_names from map.db (radar/build.ts) to names and outputting the missing values; check top of mssing.csv for more details and format',
 }
 
-json.dump(out, open("names.json",'w'))
+json.dump(out, open("names.json",'w'), indent=2)
 print("==> names.json")
