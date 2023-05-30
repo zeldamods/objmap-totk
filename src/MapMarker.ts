@@ -283,6 +283,9 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
     // @ts-ignore
     this.obj = info;
   }
+  shouldBeShown() {
+    return this.info.map_name == this.mb.activeLayer;
+  }
 }
 
 // Convert first letter of Korok ID to CSS classname

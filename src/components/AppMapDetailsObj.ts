@@ -14,6 +14,7 @@ import * as ui from '@/util/ui';
 
 import * as curves from '@/util/curves';
 import * as svg from '@/util/svg';
+import * as map from '@/util/map';
 
 import { ColorScale } from '@/util/colorscale';
 require('leaflet-hotline')
@@ -143,9 +144,14 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     if (this.minObj.objid) {
       this.obj = (await MapMgr.getInstance().getObjByObjId(this.minObj.objid))!;
     } else {
+      let pt = this.minObj.pos;
+      if (!pt) {
+        // @ts-ignore
+        pt = [this.minObj.Translate.X, this.minObj.Translate.Y, this.minObj.Translate.Z];
+      }
       this.obj = (await MapMgr.getInstance().getObj(this.minObj.map_type,
         // @ts-ignore ( map_name: string? )
-        this.minObj.map_name,
+        `${this.minObj.map_name}_${map.pointToMapUnit(pt)}`,
         this.minObj.hash_id))!;
       // Set the objid from the fetched data otherwise Vue does not update
       this.minObj.objid = this.obj.objid;
