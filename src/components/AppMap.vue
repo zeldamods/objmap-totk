@@ -128,14 +128,15 @@
         </div>
         <!--<b-checkbox switch v-model="showKorokIDs" @change="updateKorokIDs">Show Korok IDs</b-checkbox>-->
         <hr>
-        <!--
+
         <h4 class="subsection-heading">Visible map areas</h4>
         <b-radio-group stacked class="mb-4" v-model="shownAreaMap" @change="onShownAreaMapChanged">
           <b-radio value="">None</b-radio>
-          <b-radio value="FieldMapArea">Field map areas</b-radio>
+          <!-- <b-radio value="FieldMapArea">Field map areas</b-radio> -->
           <b-radio value="MapTower">Map tower areas</b-radio>
-          <b-radio value="LoadBalancer">Load balancer areas</b-radio>
+          <!-- <b-radio value="LoadBalancer">Load balancer areas</b-radio> -->
         </b-radio-group>
+        <!--
         <b-form-group label="Filter map areas" label-for="mapareafilter">
           <div class="d-flex mb-1">
             <input type="search" style="flex: 1" class="form-control form-control-sm mr-2" id="mapareafilter" placeholder="Example: 1,2,3,64" v-model="areaWhitelist">

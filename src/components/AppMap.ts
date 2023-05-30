@@ -1137,28 +1137,12 @@ export default class AppMap extends mixins(MixinUtil) {
           },
           // @ts-ignore
           contextmenu: true,
-        });
+          // @ts-ignore
+        }).bindTooltip(feature.properties.title);
       });
       this.areaMapLayersByData.data.set(data, layers);
+
       for (const layer of layers) {
-        let label = (name == "MapTower") ? mapTowerAreas[parseInt(data)] : 'Area ' + data.toString();
-        if (name == 'FieldMapArea') {
-          const area = await MsgMgr.getInstance().getAreaData(parseInt(data));
-          const climate = await MsgMgr.getInstance().getClimateData(climate_names.indexOf(area.Climate));
-          for (const kind of ['Bluesky', 'Cloudy', 'Rain', 'HeavyRain', 'Storm']) {
-            const name = `Weather${kind}Rate`;
-            if (climate[name] > 0) {
-              label += `<br>${climate[name]}%: ${kind}`;
-            }
-          }
-          if (climate.BlueSkyRainPat > 0) {
-            label += `<br>${climate.BlueSkyRainPat}: BlueSkyRain Pattern`;
-          }
-          if (climate.IgnitedLevel > 0) {
-            label += `<br>${climate.IgnitedLevel}: IgnitedLevel`;
-          }
-        }
-        layer.bindTooltip(label);
         layer.on('mouseover', () => {
           layers.forEach(l => {
             l.setStyle({ weight: 4, fillOpacity: 0.3 });
