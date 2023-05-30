@@ -89,6 +89,11 @@ class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     'ShopJewel': [MapIcons.SHOP_JEWEL, 'Jewelry Shop'],
     'ShopYadoya': [MapIcons.SHOP_YADOYA, 'Inn'],
     'ShopYorozu': [MapIcons.SHOP_YOROZU, 'General Store'],
+    'Bargainer': [MapIcons.BARGAINER, 'Bargainer Status'],
+    'Star': [MapIcons.STAR, ''],
+    'Drink': [MapIcons.DRINK, ''],
+    'Battery': [MapIcons.BATTERY, ''],
+    'Dispenser': [MapIcons.DISPENSER, ''],
     'Cave': [MapIcons.CAVE, 'Cave Entrance'],
     'Chasm': [MapIcons.CHASM, 'Chasm'],
     'Tear': [MapIcons.TOTK_TEAR, ''],
@@ -235,6 +240,23 @@ export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
     return this.mb.activeLayer == "Depths";
   }
 }
+export class MapMarkerDispenser extends MapMarkerGenericLocationMarker {
+  public readonly info: any;
+  constructor(mb: MapBase, info: any) {
+    super(mb, info, false, 1000)
+    this.marker.setIcon(MapIcons.DISPENSER);
+    this.setTitle('Device Dispenser');
+    this.marker.options.title = '';
+    const items = info.ui_equip.map((item: string) => `<div style="font-size: 0.9em">- ${item}</div>`).join("");
+    this.marker.bindTooltip(`Device Dispenser<br/>${items}`, { pane: 'front2' });
+    this.info = info;
+    // @ts-ignore
+    this.obj = info;
+  }
+  shouldBeShown() {
+    return this.info.map_name.includes(this.mb.activeLayer)
+  }
+}
 
 export class MapMarkerTear extends MapMarkerGenericLocationMarker {
   public readonly tearNum: number;
@@ -280,8 +302,8 @@ export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
   }
 
   shouldBeShown() {
-    if (this.isVillage)
-      return this.mb.zoom < 7;
+    //if (this.isVillage)
+    //  return this.mb.zoom < 7;
     return true;
   }
 }

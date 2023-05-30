@@ -132,6 +132,13 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
     filterIcon: MapIcons.TOTK_LIGHTROOT.options.iconUrl,
     filterLabel: 'Lightroots',
   },
+  'Dispensers': {
+    cl: MapMarkers.MapMarkerDispenser,
+    detailsComponent: 'AppMapDetailsObj',
+    enableUpdates: true,
+    filterIcon: MapIcons.DISPENSER.options.iconUrl,
+    filterLabel: 'Device Dispenser',
+  },
 });
 
 function getMarkerDetailsComponent(marker: MapMarker): string {

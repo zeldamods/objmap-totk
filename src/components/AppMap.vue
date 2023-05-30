@@ -396,4 +396,7 @@
 .map-filter-icon-Tower {
     padding: 2px;
 }
+.map-filter-icon-Dispensers {
+    padding: 4px;
+}
 </style>

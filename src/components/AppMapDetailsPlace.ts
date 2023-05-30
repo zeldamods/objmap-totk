@@ -46,10 +46,9 @@ export default class AppMapDetailsPlace extends AppMapDetailsBase<MapMarkerPlace
     this.id = this.marker.data.lm.getMessageId();
     this.sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', this.id);
     this.shopData = {};
-    if (this.sub.includes('Stable') || this.sub == 'Kara Kara Bazaar') {
-      this.shopData = await MapMgr.getInstance().getObjShopData();
-    }
-
+    //if (this.sub.includes('Stable') || this.sub == 'Kara Kara Bazaar') {
+    //  this.shopData = await MapMgr.getInstance().getObjShopData();
+    //}
     MapMgr.getInstance().getObjs('MainField', '', this.id + ' actor: LocationTag').then(d => {
       this.minobj = d[0];
     });

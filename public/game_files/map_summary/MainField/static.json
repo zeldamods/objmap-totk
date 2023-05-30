@@ -4302,7 +4302,7 @@
         },
         "hash_id": "14757309007463301702",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -5058,7 +5058,7 @@
         },
         "hash_id": "16011403532607734144",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -5238,7 +5238,7 @@
         },
         "hash_id": "16434480431839867737",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -6738,7 +6738,7 @@
         },
         "hash_id": "2587961335290322890",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -7170,7 +7170,7 @@
         },
         "hash_id": "3494902862536172994",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -7206,7 +7206,7 @@
         },
         "hash_id": "3539367211902723417",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -8910,7 +8910,7 @@
         },
         "hash_id": "6243010643562084701",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -9150,7 +9150,7 @@
         },
         "hash_id": "6577590198901788531",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -9246,7 +9246,7 @@
         },
         "hash_id": "6722214705378214632",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -9954,7 +9954,7 @@
         },
         "hash_id": "796898737269458719",
         "map_static": 1,
-        "map_name": "Surface",
+        "map_name": "Sky",
         "map_type": "Totk"
       },
       {
@@ -11209,28 +11209,6 @@
         "MessageID": "Gerudo",
         "Priority": 1,
         "Translate": {
-          "X": -3858.96044921875,
-          "Y": 138.3000030517578,
-          "Z": 2940.52294921875
-        },
-        "SaveFlag": "Location_Gerudo",
-        "Icon": "Village"
-      },
-      {
-        "MessageID": "Gerudo",
-        "Priority": 1,
-        "Translate": {
-          "X": -3866.0,
-          "Y": 116.65480041503906,
-          "Z": 2942.0
-        },
-        "SaveFlag": "Location_Gerudo",
-        "Icon": "Village"
-      },
-      {
-        "MessageID": "Gerudo",
-        "Priority": 1,
-        "Translate": {
           "X": -3844.5,
           "Y": 149.16891479492188,
           "Z": 2926.196533203125
@@ -11316,6 +11294,30 @@
         "Icon": "Village"
       },
       {
+        "MessageID": "HorseStableBranchOffice_Gerudo",
+        "Priority": 1,
+        "Translate": {
+          "X": -1693.1605224609375,
+          "Y": 116.15699768066406,
+          "Z": 1663.9627685546875
+        },
+        "SaveFlag": "Location_HorseStableBranchOffice_Gerudo",
+        "ShowLevel": "",
+        "Icon": "Hatago"
+      },
+      {
+        "MessageID": "HorseStableBranchOffice_BaseCamp",
+        "Priority": 1,
+        "Translate": {
+          "X": -248.69700622558594,
+          "Y": 124.51065063476562,
+          "Z": -52.30645751953125
+        },
+        "SaveFlag": "Location_HorseStableBranchOffice_BaseCamp",
+        "ShowLevel": "",
+        "Icon": "Hatago"
+      },
+      {
         "MessageID": "DeathMountainHatago",
         "Priority": 1,
         "Translate": {
@@ -11324,17 +11326,6 @@
           "Z": -1143.5126953125
         },
         "SaveFlag": "Location_DeathMountainHatago",
-        "Icon": "Hatago"
-      },
-      {
-        "MessageID": "FaronHatago000",
-        "Priority": 1,
-        "Translate": {
-          "X": 1756.50048828125,
-          "Y": 158.98223876953125,
-          "Z": 1924.37353515625
-        },
-        "SaveFlag": "Location_FaronHatago000",
         "Icon": "Hatago"
       },
       {
@@ -11407,17 +11398,6 @@
         "MessageID": "NewHyruleWestHatago",
         "Priority": 1,
         "Translate": {
-          "X": -1293.84033203125,
-          "Y": 188.7130126953125,
-          "Z": -678.5620727539062
-        },
-        "SaveFlag": "Location_NewHyruleWestHatago",
-        "Icon": "Hatago"
-      },
-      {
-        "MessageID": "NewHyruleWestHatago",
-        "Priority": 1,
-        "Translate": {
           "X": -1361.0,
           "Y": 191.5,
           "Z": -724.0
@@ -11470,17 +11450,6 @@
         "Icon": "Hatago"
       },
       {
-        "MessageID": "TabantaHatago",
-        "Priority": 1,
-        "Translate": {
-          "X": -1654.22998046875,
-          "Y": 347.93182373046875,
-          "Z": -2565.628662109375
-        },
-        "SaveFlag": "Location_TabantaHatago",
-        "Icon": "Hatago"
-      },
-      {
         "MessageID": "TamourHatago",
         "Priority": 1,
         "Translate": {
@@ -11512,7 +11481,7 @@
         },
         "SaveFlag": "Location_DemonStatue_00",
         "ShowLevel": "Nearest,Near,Far",
-        "Icon": "ShopBougu"
+        "Icon": "Bargainer"
       },
       {
         "MessageID": "MinusField_AncientTimeShrine",
@@ -11524,7 +11493,7 @@
         },
         "SaveFlag": "Location_DemonStatue_01",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Bargainer"
       },
       {
         "MessageID": "MinusField_KingValley",
@@ -11536,7 +11505,7 @@
         },
         "SaveFlag": "Location_DemonStatue_02",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Bargainer"
       },
       {
         "MessageID": "DemonStatue_03",
@@ -11548,7 +11517,7 @@
         },
         "SaveFlag": "Location_DemonStatue_03",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Bargainer"
       },
       {
         "MessageID": "DemonStatue_03",
@@ -11560,7 +11529,7 @@
         },
         "SaveFlag": "Location_DemonStatue_03",
         "ShowLevel": "Near",
-        "Icon": "ShopBougu"
+        "Icon": "Bargainer"
       },
       {
         "MessageID": "DemonStatue_04",
@@ -11572,7 +11541,7 @@
         },
         "SaveFlag": "Location_DemonStatue_04",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Bargainer"
       },
       {
         "MessageID": "DemonStatue_05",
@@ -11584,7 +11553,18 @@
         },
         "SaveFlag": "Location_DemonStatue_05",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Bargainer"
+      },
+      {
+        "MessageID": "DemonStatue_01",
+        "Priority": 1,
+        "Translate": {
+          "X": -251,
+          "Y": 125,
+          "Z": -154.39
+        },
+        "SaveFlag": "Location_DemonStatue_01",
+        "Icon": "Bargainer"
       }
     ],
     "Cave": [
@@ -15430,17 +15410,6 @@
         "ShowLevel": ""
       },
       {
-        "MessageID": "HorseStableBranchOffice_Gerudo",
-        "Priority": 1,
-        "Translate": {
-          "X": -1693.1605224609375,
-          "Y": 116.15699768066406,
-          "Z": 1663.9627685546875
-        },
-        "SaveFlag": "Location_HorseStableBranchOffice_Gerudo",
-        "ShowLevel": ""
-      },
-      {
         "MessageID": "HyralBridge",
         "Priority": 1,
         "Translate": {
@@ -16739,17 +16708,6 @@
         "ShowLevel": ""
       },
       {
-        "MessageID": "Bar",
-        "Priority": 1,
-        "Translate": {
-          "X": -3856.77783203125,
-          "Y": 153.72743225097656,
-          "Z": 2857.137939453125
-        },
-        "SaveFlag": "Location_Bar",
-        "ShowLevel": ""
-      },
-      {
         "MessageID": "Circuit_Ichikara",
         "Priority": 1,
         "Translate": {
@@ -16813,17 +16771,6 @@
           "Z": 1974.68359375
         },
         "SaveFlag": "Location_HatenoSchool",
-        "ShowLevel": ""
-      },
-      {
-        "MessageID": "HorseStableBranchOffice_BaseCamp",
-        "Priority": 1,
-        "Translate": {
-          "X": -248.69700622558594,
-          "Y": 124.51065063476562,
-          "Z": -52.30645751953125
-        },
-        "SaveFlag": "Location_HorseStableBranchOffice_BaseCamp",
         "ShowLevel": ""
       },
       {
@@ -24242,7 +24189,7 @@
           "Z": -76.56111145019531
         },
         "SaveFlag": "Location_ShopGeneral_BaseCamp",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Gerudo",
@@ -24253,7 +24200,7 @@
           "Z": 2936.28759765625
         },
         "SaveFlag": "Location_ShopGeneral_Gerudo",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Gerudo",
@@ -24264,7 +24211,7 @@
           "Z": 2903.615478515625
         },
         "SaveFlag": "Location_ShopGeneral_Gerudo",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Gerudo",
@@ -24275,7 +24222,7 @@
           "Z": 2913.248046875
         },
         "SaveFlag": "Location_ShopGeneral_Gerudo",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Gerudo",
@@ -24286,7 +24233,7 @@
           "Z": 2878.6328125
         },
         "SaveFlag": "Location_ShopGeneral_Gerudo",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Gerudo",
@@ -24297,7 +24244,7 @@
           "Z": 2925.89501953125
         },
         "SaveFlag": "Location_ShopGeneral_Gerudo",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Goron",
@@ -24308,7 +24255,7 @@
           "Z": -2463.488525390625
         },
         "SaveFlag": "Location_ShopGeneral_Goron",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Hateno",
@@ -24319,7 +24266,7 @@
           "Z": 2171.5625
         },
         "SaveFlag": "Location_ShopGeneral_Hateno",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Kakariko",
@@ -24330,7 +24277,7 @@
           "Z": 1041.0015869140625
         },
         "SaveFlag": "Location_ShopGeneral_Kakariko",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Kakariko",
@@ -24341,7 +24288,7 @@
           "Z": 1029.263671875
         },
         "SaveFlag": "Location_ShopGeneral_Kakariko",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Korok",
@@ -24352,7 +24299,7 @@
           "Z": -2173.997802734375
         },
         "SaveFlag": "Location_ShopGeneral_Korok",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Oasis",
@@ -24363,7 +24310,7 @@
           "Z": 2604.25
         },
         "SaveFlag": "Location_ShopGeneral_Oasis",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Oasis",
@@ -24374,7 +24321,7 @@
           "Z": 2564.52587890625
         },
         "SaveFlag": "Location_ShopGeneral_Oasis",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Oasis",
@@ -24385,7 +24332,7 @@
           "Z": 2535.9951171875
         },
         "SaveFlag": "Location_ShopGeneral_Oasis",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Rito",
@@ -24396,7 +24343,7 @@
           "Z": -1820.4560546875
         },
         "SaveFlag": "Location_ShopGeneral_Rito",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_UMiiVillage",
@@ -24407,7 +24354,7 @@
           "Z": -1634.1474609375
         },
         "SaveFlag": "Location_ShopGeneral_UMiiVillage",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Uotori",
@@ -24418,7 +24365,7 @@
           "Z": 3493.90869140625
         },
         "SaveFlag": "Location_ShopGeneral_Uotori",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopGeneral_Zora",
@@ -24429,7 +24376,7 @@
           "Z": -490.7428894042969
         },
         "SaveFlag": "Location_ShopGeneral_Zora",
-        "Icon": "ShopBougu"
+        "Icon": "ShopYorozu"
       },
       {
         "MessageID": "ShopInn_Gerudo",
@@ -24553,6 +24500,18 @@
         "Icon": "ShopJewel"
       },
       {
+        "MessageID": "Bar",
+        "Priority": 1,
+        "Translate": {
+          "X": -3856.77783203125,
+          "Y": 153.72743225097656,
+          "Z": 2857.137939453125
+        },
+        "SaveFlag": "Location_Bar",
+        "ShowLevel": "",
+        "Icon": "Drink"
+      },
+      {
         "MessageID": "BatteryExchangeShop_00",
         "Priority": 1,
         "Translate": {
@@ -24562,7 +24521,7 @@
         },
         "SaveFlag": "Location_BatteryExchangeShop_00",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Battery"
       },
       {
         "MessageID": "BatteryExchangeShop_01",
@@ -24574,7 +24533,7 @@
         },
         "SaveFlag": "Location_BatteryExchangeShop_01",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Battery"
       },
       {
         "MessageID": "CookingShop",
@@ -24589,18 +24548,6 @@
         "Icon": "ShopBougu"
       },
       {
-        "MessageID": "FigureGallery",
-        "Priority": 1,
-        "Translate": {
-          "X": 3960.15673828125,
-          "Y": 234.09300231933594,
-          "Z": -1653.429443359375
-        },
-        "SaveFlag": "Location_FigureGallery",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
         "MessageID": "RentalZarashiShop_Gerudo",
         "Priority": 1,
         "Translate": {
@@ -24610,7 +24557,7 @@
         },
         "SaveFlag": "Location_RentalZarashiShop_Gerudo",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Star"
       },
       {
         "MessageID": "RentalZarashiShop_Gerudo",
@@ -24622,7 +24569,7 @@
         },
         "SaveFlag": "Location_RentalZarashiShop_Gerudo",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Star"
       },
       {
         "MessageID": "RentalZarashiShop_GerudoDesert",
@@ -24634,7 +24581,7 @@
         },
         "SaveFlag": "Location_RentalZarashiShop_GerudoDesert",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Star"
       },
       {
         "MessageID": "ScrapShop",
@@ -24646,19 +24593,7 @@
         },
         "SaveFlag": "Location_ScrapShop",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_00",
-        "Priority": 1,
-        "Translate": {
-          "X": 470.0407409667969,
-          "Y": 1476.31787109375,
-          "Z": 1685.6962890625
-        },
-        "SaveFlag": "Location_SmeltShopGolem_00",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
+        "Icon": "Star"
       },
       {
         "MessageID": "TreasureBoxShop",
@@ -24682,186 +24617,6 @@
         },
         "SaveFlag": "Location_ForgeShopGolem",
         "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_01",
-        "Priority": 1,
-        "Translate": {
-          "X": -3810.27197265625,
-          "Y": -382.39306640625,
-          "Z": 2960.9931640625
-        },
-        "SaveFlag": "Location_SmeltShopGolem_01",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_01",
-        "Priority": 1,
-        "Translate": {
-          "X": -3810.48974609375,
-          "Y": -305.68353271484375,
-          "Z": 3062.599853515625
-        },
-        "SaveFlag": "Location_SmeltShopGolem_01",
-        "ShowLevel": "Farthest",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_02",
-        "Priority": 1,
-        "Translate": {
-          "X": -3190.319580078125,
-          "Y": -370.1600036621094,
-          "Z": 2515.126953125
-        },
-        "SaveFlag": "Location_SmeltShopGolem_02",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_03",
-        "Priority": 1,
-        "Translate": {
-          "X": 3243.86572265625,
-          "Y": -644.9224243164062,
-          "Z": -556.7123413085938
-        },
-        "SaveFlag": "Location_SmeltShopGolem_03",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_04",
-        "Priority": 1,
-        "Translate": {
-          "X": -3423.907470703125,
-          "Y": -200.0,
-          "Z": -1846.76611328125
-        },
-        "SaveFlag": "Location_SmeltShopGolem_04",
-        "ShowLevel": "Farthest",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_04",
-        "Priority": 1,
-        "Translate": {
-          "X": -3463.403564453125,
-          "Y": -311.5219421386719,
-          "Z": -1917.1038818359375
-        },
-        "SaveFlag": "Location_SmeltShopGolem_04",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_05",
-        "Priority": 1,
-        "Translate": {
-          "X": 1697.77001953125,
-          "Y": -718.8489990234375,
-          "Z": -2382.51513671875
-        },
-        "SaveFlag": "Location_SmeltShopGolem_05",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_05",
-        "Priority": 1,
-        "Translate": {
-          "X": 1675.6304931640625,
-          "Y": -778.21728515625,
-          "Z": -2279.717041015625
-        },
-        "SaveFlag": "Location_SmeltShopGolem_05",
-        "ShowLevel": "Farthest",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_06",
-        "Priority": 1,
-        "Translate": {
-          "X": 3957.398193359375,
-          "Y": -470.8330078125,
-          "Z": -1557.183349609375
-        },
-        "SaveFlag": "Location_SmeltShopGolem_06",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_06",
-        "Priority": 1,
-        "Translate": {
-          "X": 3968.26318359375,
-          "Y": -492.97027587890625,
-          "Z": -1400.94775390625
-        },
-        "SaveFlag": "Location_SmeltShopGolem_06",
-        "ShowLevel": "Farthest",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_07",
-        "Priority": 1,
-        "Translate": {
-          "X": 1767.344970703125,
-          "Y": -523.6549682617188,
-          "Z": 1178.614501953125
-        },
-        "SaveFlag": "Location_SmeltShopGolem_07",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_08",
-        "Priority": 1,
-        "Translate": {
-          "X": 3526.719970703125,
-          "Y": -482.5,
-          "Z": 2185.2890625
-        },
-        "SaveFlag": "Location_SmeltShopGolem_08",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_09",
-        "Priority": 1,
-        "Translate": {
-          "X": 2952.729736328125,
-          "Y": -347.531005859375,
-          "Z": 3379.310791015625
-        },
-        "SaveFlag": "Location_SmeltShopGolem_09",
-        "ShowLevel": "",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_10",
-        "Priority": 1,
-        "Translate": {
-          "X": -856.231201171875,
-          "Y": -417.52960205078125,
-          "Z": 1935.3607177734375
-        },
-        "SaveFlag": "Location_SmeltShopGolem_10",
-        "ShowLevel": "Nearest,Near,Far",
-        "Icon": "ShopBougu"
-      },
-      {
-        "MessageID": "SmeltShopGolem_10",
-        "Priority": 1,
-        "Translate": {
-          "X": -856.2030029296875,
-          "Y": -417.4844970703125,
-          "Z": 1970.0
-        },
-        "SaveFlag": "Location_SmeltShopGolem_10",
-        "ShowLevel": "Farthest",
         "Icon": "ShopBougu"
       }
     ],
@@ -28278,6 +28033,932 @@
         },
         "SaveFlag": "Location_CheckPoint147",
         "Icon": "Lightroot"
+      }
+    ],
+    "Dispensers": [
+      {
+        "MessageID": [
+          "RBox_Field_H_02"
+        ],
+        "id": "15467851743395390442",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": -1619.7186279296875,
+          "Y": 107.4786148071289,
+          "Z": 1888.9764404296875
+        },
+        "hash_id": "15467851743395390442",
+        "SaveFlag": "Location_('RBox_Field_H_02',)",
+        "equip": [
+          "SpObj_Pile_Capsule_A_01",
+          "SpObj_FastWheel_Capsule_B_01",
+          "SpObj_SpringPiston_Capsule_A_01",
+          "SpObj_CookSet_Capsule_A_01",
+          "SpObj_EnergyBank_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Stake",
+          "Big Wheel",
+          "Spring",
+          "Portable Pot",
+          "Battery"
+        ],
+        "map_name": "Surface_D-6",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_R_02"
+        ],
+        "id": "18210954504481072128",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 1838.052978515625,
+          "Y": 260.22393798828125,
+          "Z": 1093.6290283203125
+        },
+        "hash_id": "18210954504481072128",
+        "SaveFlag": "Location_('RBox_Field_R_02',)",
+        "equip": [
+          "SpObj_BalloonEnvelope_Capsule_A_01",
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_FastWheel_Capsule_B_01",
+          "SpObj_TiltingDoll_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Balloon",
+          "Fan",
+          "Big Wheel",
+          "Stabilizer"
+        ],
+        "map_name": "Surface_G-6",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_L_02"
+        ],
+        "id": "16070251021340899088",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 3807.617919921875,
+          "Y": 195.44741821289062,
+          "Z": -1561.541259765625
+        },
+        "hash_id": "16070251021340899088",
+        "SaveFlag": "Location_('RBox_Field_L_02',)",
+        "equip": [
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_FastWheel_Capsule_A_01",
+          "SpObj_BalloonEnvelope_Capsule_A_01",
+          "SpObj_FastWheel_Capsule_B_01",
+          "SpObj_Rocket_Capsule_A_01",
+          "SpObj_ControlStick_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Fan",
+          "Small Wheel",
+          "Balloon",
+          "Big Wheel",
+          "Rocket",
+          "Steering Stick"
+        ],
+        "map_name": "Surface_I-3",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_K_03"
+        ],
+        "id": "18046809928678434263",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 1058.038818359375,
+          "Y": -447.9834289550781,
+          "Z": 2320.69775390625
+        },
+        "hash_id": "18046809928678434263",
+        "SaveFlag": "Location_('RBox_Field_K_03',)",
+        "equip": [
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_FastWheel_Capsule_A_01",
+          "SpObj_FastWheel_Capsule_B_01",
+          "SpObj_Rocket_Capsule_A_01",
+          "SpObj_ControlStick_Capsule_A_01",
+          "SpObj_GolemHead_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Wing",
+          "Small Wheel",
+          "Big Wheel",
+          "Rocket",
+          "Steering Stick",
+          "Construct Head"
+        ],
+        "map_name": "Depths_F-7",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_F_02"
+        ],
+        "id": "1366206746798740666",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 2190.6142578125,
+          "Y": -857.7455444335938,
+          "Z": -2640.770751953125
+        },
+        "hash_id": "1366206746798740666",
+        "SaveFlag": "Location_('RBox_Field_F_02',)",
+        "equip": [
+          "SpObj_FastWheel_Capsule_B_01",
+          "SpObj_ControlStick_Capsule_A_01",
+          "SpObj_CookSet_Capsule_A_01",
+          "SpObj_EnergyBank_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Big Wheel",
+          "Steering Stick",
+          "Portable Pot",
+          "Battery"
+        ],
+        "map_name": "Depths_H-2",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_K"
+        ],
+        "id": "5029380551850697234",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 1104.4814453125,
+          "Y": 932.9644165039062,
+          "Z": 3331.83642578125
+        },
+        "hash_id": "5029380551850697234",
+        "SaveFlag": "Location_('RBox_Field_K',)",
+        "equip": [
+          "SpObj_ElectricBoxGenerator_Capsule_A_01",
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_CookSet_Capsule_A_01",
+          "SpObj_EnergyBank_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Shock Emitter",
+          "Fan",
+          "Portable Pot",
+          "Battery"
+        ],
+        "map_name": "Sky_F-7",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_J_02"
+        ],
+        "id": "12031291170945200222",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 1390.920654296875,
+          "Y": 522.4623413085938,
+          "Z": 3239.024169921875
+        },
+        "hash_id": "12031291170945200222",
+        "SaveFlag": "Location_('RBox_Field_J_02',)",
+        "equip": [
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_Cart_Capsule_A_01",
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_ControlStick_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Wing",
+          "Cart",
+          "Fan",
+          "Steering Stick"
+        ],
+        "map_name": "Sky_G-8",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_C"
+        ],
+        "id": "15575356905878991466",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 3430.200439453125,
+          "Y": 1421.6004638671875,
+          "Z": -636.958740234375
+        },
+        "hash_id": "15575356905878991466",
+        "SaveFlag": "Location_('RBox_Field_C',)",
+        "equip": [
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_FloatingStone_Capsule_A_01",
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_EnergyBank_Capsule_A_01",
+          "SpObj_TiltingDoll_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Fan",
+          "Hover Stone",
+          "Wing",
+          "Battery",
+          "Stabilizer"
+        ],
+        "map_name": "Sky_I-4",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_L"
+        ],
+        "id": "5618536671597422861",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 3755.34326171875,
+          "Y": 1262.4793701171875,
+          "Z": -1542.743896484375
+        },
+        "hash_id": "5618536671597422861",
+        "SaveFlag": "Location_('RBox_Field_L',)",
+        "equip": [
+          "SpObj_Chaser_Capsule_A_01",
+          "SpObj_Pile_Capsule_A_01",
+          "SpObj_Cart_Capsule_A_01",
+          "SpObj_Cannon_Capsule_A_01",
+          "SpObj_GolemHead_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Homing Cart",
+          "Stake",
+          "Cart",
+          "Cannon",
+          "Construct Head"
+        ],
+        "map_name": "Sky_I-3",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_Q"
+        ],
+        "id": "18116875701019036673",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 4557.787109375,
+          "Y": 1259.6009521484375,
+          "Z": -2076.31298828125
+        },
+        "hash_id": "18116875701019036673",
+        "SaveFlag": "Location_('RBox_Field_Q',)",
+        "equip": [
+          "SpObj_FloatingStone_Capsule_A_01",
+          "SpObj_TimerBomb_Capsule_A_01",
+          "SpObj_Chaser_Capsule_A_01",
+          "SpObj_LiftableWaterPump_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Hover Stone",
+          "Time Bomb",
+          "Homing Cart",
+          "Hydrant"
+        ],
+        "map_name": "Sky_J-2",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_D_02"
+        ],
+        "id": "17433148769607751574",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": -1212.886962890625,
+          "Y": 1112.4267578125,
+          "Z": 1585.2501220703125
+        },
+        "hash_id": "17433148769607751574",
+        "SaveFlag": "Location_('RBox_Field_D_02',)",
+        "equip": [
+          "SpObj_TimerBomb_Capsule_A_01",
+          "SpObj_FastWheel_Capsule_A_01",
+          "SpObj_FlashLight_Capsule_A_01",
+          "SpObj_Rocket_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Time Bomb",
+          "Small Wheel",
+          "Light",
+          "Rocket"
+        ],
+        "map_name": "Sky_D-6",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_F"
+        ],
+        "id": "5456563061356513399",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 1983.384765625,
+          "Y": 1355.6827392578125,
+          "Z": -1221.953857421875
+        },
+        "hash_id": "5456563061356513399",
+        "SaveFlag": "Location_('RBox_Field_F',)",
+        "equip": [
+          "SpObj_FastWheel_Capsule_B_01",
+          "SpObj_LiftableWaterPump_Capsule_A_01",
+          "SpObj_EnergyBank_Capsule_A_01",
+          "SpObj_WindGenerator_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Big Wheel",
+          "Hydrant",
+          "Battery",
+          "Fan"
+        ],
+        "map_name": "Sky_G-3",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_J"
+        ],
+        "id": "1356218468874614116",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 1344.172607421875,
+          "Y": 689.9794921875,
+          "Z": 2151.279541015625
+        },
+        "hash_id": "1356218468874614116",
+        "SaveFlag": "Location_('RBox_Field_J',)",
+        "equip": [
+          "SpObj_GolemHead_Capsule_A_01",
+          "SpObj_Cart_Capsule_A_01",
+          "SpObj_BalloonEnvelope_Capsule_A_01",
+          "SpObj_TiltingDoll_Capsule_A_01",
+          "SpObj_LiftableWaterPump_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Construct Head",
+          "Cart",
+          "Balloon",
+          "Stabilizer",
+          "Hydrant"
+        ],
+        "map_name": "Sky_F-7",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_T"
+        ],
+        "id": "11115447318048549580",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 2320.989990234375,
+          "Y": 1590.1898193359375,
+          "Z": 1718.796630859375
+        },
+        "hash_id": "11115447318048549580",
+        "SaveFlag": "Location_('RBox_Field_T',)",
+        "equip": [
+          "SpObj_Chaser_Capsule_A_01",
+          "SpObj_Beamos_Capsule_A_01",
+          "SpObj_FlameThrower_Capsule_A_01",
+          "SpObj_SnowMachine_Capsule_A_01",
+          "SpObj_TimerBomb_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Homing Cart",
+          "Beam Emitter",
+          "Flame Emitter",
+          "Frost Emitter",
+          "Time Bomb"
+        ],
+        "map_name": "Sky_H-7",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_K_02"
+        ],
+        "id": "3335311452256716214",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 2851.89404296875,
+          "Y": 1316.6044921875,
+          "Z": 2958.556884765625
+        },
+        "hash_id": "3335311452256716214",
+        "SaveFlag": "Location_('RBox_Field_K_02',)",
+        "equip": [
+          "SpObj_ControlStick_Capsule_A_01",
+          "SpObj_FastWheel_Capsule_A_01",
+          "SpObj_Cannon_Capsule_A_01",
+          "SpObj_FlashLight_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Steering Stick",
+          "Small Wheel",
+          "Cannon",
+          "Light"
+        ],
+        "map_name": "Sky_H-7",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_H"
+        ],
+        "id": "2797201585583573628",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": -1771.541259765625,
+          "Y": 1253.4794921875,
+          "Z": 2019.2620849609375
+        },
+        "hash_id": "2797201585583573628",
+        "SaveFlag": "Location_('RBox_Field_H',)",
+        "equip": [
+          "SpObj_Beamos_Capsule_A_01",
+          "SpObj_SlipBoard_Capsule_A_01",
+          "SpObj_LightMirror_Capsule_A_01",
+          "SpObj_ControlStick_Capsule_A_01",
+          "SpObj_Pile_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Beam Emitter",
+          "Sled",
+          "Mirror",
+          "Steering Stick",
+          "Stake"
+        ],
+        "map_name": "Sky_C-7",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_E_02"
+        ],
+        "id": "1295595582221552811",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": -1705.080078125,
+          "Y": 1053.4794921875,
+          "Z": -3371.393798828125
+        },
+        "hash_id": "1295595582221552811",
+        "SaveFlag": "Location_('RBox_Field_E_02',)",
+        "equip": [
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_SlipBoard_Capsule_A_01",
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_Cart_Capsule_A_01",
+          "SpObj_FlashLight_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Wing",
+          "Sled",
+          "Fan",
+          "Cart",
+          "Light"
+        ],
+        "map_name": "Sky_D-1",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_M"
+        ],
+        "id": "16384479221673125997",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 443.35638427734375,
+          "Y": 1925.4794921875,
+          "Z": -2821.7724609375
+        },
+        "hash_id": "16384479221673125997",
+        "SaveFlag": "Location_('RBox_Field_M',)",
+        "equip": [
+          "SpObj_ElectricBoxGenerator_Capsule_A_01",
+          "SpObj_FlashLight_Capsule_A_01",
+          "SpObj_ControlStick_Capsule_A_01",
+          "SpObj_Chaser_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Shock Emitter",
+          "Light",
+          "Steering Stick",
+          "Homing Cart"
+        ],
+        "map_name": "Sky_F-2",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_M_02"
+        ],
+        "id": "1974508051681740815",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 215.11813354492188,
+          "Y": 859.6864624023438,
+          "Z": -1981.921875
+        },
+        "hash_id": "1974508051681740815",
+        "SaveFlag": "Location_('RBox_Field_M_02',)",
+        "equip": [
+          "SpObj_FlashLight_Capsule_A_01",
+          "SpObj_FlameThrower_Capsule_A_01",
+          "SpObj_EnergyBank_Capsule_A_01",
+          "SpObj_GolemHead_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Light",
+          "Flame Emitter",
+          "Battery",
+          "Construct Head"
+        ],
+        "map_name": "Sky_F-2",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_D"
+        ],
+        "id": "6574360356613525746",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": -2370.5458984375,
+          "Y": 716.0794067382812,
+          "Z": -781.6613159179688
+        },
+        "hash_id": "6574360356613525746",
+        "SaveFlag": "Location_('RBox_Field_D',)",
+        "equip": [
+          "SpObj_BalloonEnvelope_Capsule_A_01",
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_CookSet_Capsule_A_01",
+          "SpObj_TimerBomb_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Balloon",
+          "Fan",
+          "Portable Pot",
+          "Time Bomb"
+        ],
+        "map_name": "Sky_C-3",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_R"
+        ],
+        "id": "18338342182923259111",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 1778.3809814453125,
+          "Y": 1022.69384765625,
+          "Z": 1096.4464111328125
+        },
+        "hash_id": "18338342182923259111",
+        "SaveFlag": "Location_('RBox_Field_R',)",
+        "equip": [
+          "SpObj_Cannon_Capsule_A_01",
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_SpringPiston_Capsule_A_01",
+          "SpObj_TimerBomb_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Cannon",
+          "Wing",
+          "Spring",
+          "Time Bomb"
+        ],
+        "map_name": "Sky_G-6",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_G"
+        ],
+        "id": "9420253473696152512",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 4510.5986328125,
+          "Y": 1221.7044677734375,
+          "Z": 805.6314086914062
+        },
+        "hash_id": "9420253473696152512",
+        "SaveFlag": "Location_('RBox_Field_G',)",
+        "equip": [
+          "SpObj_SpringPiston_Capsule_A_01",
+          "SpObj_LiftableWaterPump_Capsule_A_01",
+          "SpObj_Beamos_Capsule_A_01",
+          "SpObj_ControlStick_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Spring",
+          "Hydrant",
+          "Beam Emitter",
+          "Steering Stick"
+        ],
+        "map_name": "Sky_J-5",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_N"
+        ],
+        "id": "15451615410629823334",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 4675.3134765625,
+          "Y": 1894.4794921875,
+          "Z": 1029.6307373046875
+        },
+        "hash_id": "15451615410629823334",
+        "SaveFlag": "Location_('RBox_Field_N',)",
+        "equip": [
+          "SpObj_SnowMachine_Capsule_A_01",
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_EnergyBank_Capsule_A_01",
+          "SpObj_LightMirror_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Frost Emitter",
+          "Wing",
+          "Battery",
+          "Mirror"
+        ],
+        "map_name": "Sky_J-5",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_E"
+        ],
+        "id": "17664154686634921768",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": -3803.229248046875,
+          "Y": 807.336181640625,
+          "Z": -2766.939697265625
+        },
+        "hash_id": "17664154686634921768",
+        "SaveFlag": "Location_('RBox_Field_E',)",
+        "equip": [
+          "SpObj_Rocket_Capsule_A_01",
+          "SpObj_FlameThrower_Capsule_A_01",
+          "SpObj_CookSet_Capsule_A_01",
+          "SpObj_TimerBomb_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Rocket",
+          "Flame Emitter",
+          "Portable Pot",
+          "Time Bomb"
+        ],
+        "map_name": "Sky_B-2",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_I_02"
+        ],
+        "id": "18190666740725697704",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": -3455.3115234375,
+          "Y": 1799.5528564453125,
+          "Z": -393.5799560546875
+        },
+        "hash_id": "18190666740725697704",
+        "SaveFlag": "Location_('RBox_Field_I_02',)",
+        "equip": [
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_SnowMachine_Capsule_A_01",
+          "SpObj_FastWheel_Capsule_A_01",
+          "SpObj_LightMirror_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Wing",
+          "Frost Emitter",
+          "Small Wheel",
+          "Mirror"
+        ],
+        "map_name": "Sky_B-4",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_S"
+        ],
+        "id": "11015094637093146118",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": -3612.14501953125,
+          "Y": 1761.0838623046875,
+          "Z": -1066.3760986328125
+        },
+        "hash_id": "11015094637093146118",
+        "SaveFlag": "Location_('RBox_Field_S',)",
+        "equip": [
+          "SpObj_LightMirror_Capsule_A_01",
+          "SpObj_BalloonEnvelope_Capsule_A_01",
+          "SpObj_SpringPiston_Capsule_A_01",
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_FloatingStone_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Mirror",
+          "Balloon",
+          "Spring",
+          "Wing",
+          "Hover Stone"
+        ],
+        "map_name": "Sky_B-4",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_G_02"
+        ],
+        "id": "7833620787124592938",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 2915.6572265625,
+          "Y": 1055.8607177734375,
+          "Z": -502.27838134765625
+        },
+        "hash_id": "7833620787124592938",
+        "SaveFlag": "Location_('RBox_Field_G_02',)",
+        "equip": [
+          "SpObj_Cart_Capsule_A_01",
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_Beamos_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Cart",
+          "Wing",
+          "Fan",
+          "Beam Emitter"
+        ],
+        "map_name": "Sky_H-4",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_I"
+        ],
+        "id": "81618141019492151",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": -3457.10107421875,
+          "Y": 2048.4951171875,
+          "Z": 373.6962585449219
+        },
+        "hash_id": "81618141019492151",
+        "SaveFlag": "Location_('RBox_Field_I',)",
+        "equip": [
+          "SpObj_Pile_Capsule_A_01",
+          "SpObj_ElectricBoxGenerator_Capsule_A_01",
+          "SpObj_SlipBoard_Capsule_A_01",
+          "SpObj_TiltingDoll_Capsule_A_01",
+          "SpObj_SnowMachine_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Stake",
+          "Shock Emitter",
+          "Sled",
+          "Stabilizer",
+          "Frost Emitter"
+        ],
+        "map_name": "Sky_A-6",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_A"
+        ],
+        "id": "15205531352253250869",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 435.44427490234375,
+          "Y": 1547.82080078125,
+          "Z": 1686.1851806640625
+        },
+        "hash_id": "15205531352253250869",
+        "SaveFlag": "Location_('RBox_Field_A',)",
+        "equip": [
+          "SpObj_FlameThrower_Capsule_A_01",
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_CookSet_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Flame Emitter",
+          "Fan",
+          "Portable Pot"
+        ],
+        "map_name": "Sky_F-6",
+        "map_static": 1,
+        "map_type": "Totk"
+      },
+      {
+        "MessageID": [
+          "RBox_Field_B"
+        ],
+        "id": "1239041309371073748",
+        "Icon": "Dispenser",
+        "Priority": 1,
+        "Translate": {
+          "X": 769.092041015625,
+          "Y": 1684.458984375,
+          "Z": 1259.5401611328125
+        },
+        "hash_id": "1239041309371073748",
+        "SaveFlag": "Location_('RBox_Field_B',)",
+        "equip": [
+          "SpObj_FlameThrower_Capsule_A_01",
+          "SpObj_LiftGeneratorWing_Capsule_A_01",
+          "SpObj_WindGenerator_Capsule_A_01",
+          "SpObj_CookSet_Capsule_A_01"
+        ],
+        "ui_equip": [
+          "Flame Emitter",
+          "Wing",
+          "Fan",
+          "Portable Pot"
+        ],
+        "map_name": "Sky_F-6",
+        "map_static": 1,
+        "map_type": "Totk"
       }
     ]
   },

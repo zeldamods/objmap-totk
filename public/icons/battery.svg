@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="28.530869mm"
+   height="28.573393mm"
+   viewBox="0 0 28.530867 28.573394"
+   version="1.1"
+   id="svg5"
+   xml:space="preserve"
+   inkscape:export-filename="Desktop/junk/botw/totk/objmap-totk/public/icons/battery.svg"
+   inkscape:export-xdpi="36.285713"
+   inkscape:export-ydpi="36.285713"
+   inkscape:version="1.2.2 (b0a8486, 2022-12-01)"
+   sodipodi:docname="drawing.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="true"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="9.5097947"
+     inkscape:cx="53.523763"
+     inkscape:cy="54.627888"
+     inkscape:window-width="1818"
+     inkscape:window-height="1205"
+     inkscape:window-x="6"
+     inkscape:window-y="74"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer9"
+     showborder="true" /><defs
+     id="defs2" /><g
+     inkscape:groupmode="layer"
+     id="layer10"
+     inkscape:label="Battery"
+     transform="translate(0.10393867,-0.16693318)"><rect
+       style="display:inline;fill:#c4b577;fill-opacity:1;stroke-width:0.260704"
+       id="rect364-9-7-4-1"
+       width="28.530869"
+       height="28.573391"
+       x="-0.10393867"
+       y="0.16693318"
+       ry="6.3516469"
+       inkscape:label="rect364" /><path
+       id="path33410"
+       style="display:inline;fill:#947a47;fill-opacity:1;stroke:none;stroke-width:0.165;stroke-dasharray:none;stroke-opacity:1"
+       d="M 3.0881836,7.2894775 3.1160889,21.172868 H 23.982515 l -0.02739,-4.118095 h 2.280998 V 11.991516 H 24.010421 V 7.2894775 Z M 4.8689535,9.0423421 H 22.452376 V 19.920748 H 4.8131429 Z M 5.4530816,9.9601156 5.4251763,18.835543 H 21.617802 V 9.9601156 Z"
+       sodipodi:nodetypes="ccccccccccccccccccc" /></g></svg>

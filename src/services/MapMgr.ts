@@ -102,6 +102,9 @@ export class MapMgr {
   getObj(mapType: string, mapName: string, hashId: string): Promise<ObjectData | null> {
     return fetch(`${RADAR_URL}/obj/${mapType}/${mapName}/${hashId}`).then(parse);
   }
+  getObjByHashId(hashId: string): Promise<ObjectData | null> {
+    return fetch(`${RADAR_URL}/obj_by_hash/${hashId}`).then(parse);
+  }
 
   getObjGenGroup(mapType: string, mapName: string, hashId: string): Promise<ObjectData[]> {
     return fetch(`${RADAR_URL}/obj/${mapType}/${mapName}/${hashId}/gen_group`).then(parse);

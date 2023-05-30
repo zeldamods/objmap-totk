@@ -12,7 +12,7 @@ icons = {
     "City": "Village",
     "ShopArmor": "ShopBougu",
     "ShopDye": "ShopColor",
-    "ShopGeneral": "ShopBougu",
+    "ShopGeneral": "ShopYorozu",
     "ShopInn": "ShopYadoya",
     "ShopJewelry": "ShopJewel",
     "Stable": "Hatago",
@@ -64,6 +64,14 @@ markers['Chasm'] = []
 markers['Korok'] = []
 markers['Place'] = []
 
+# Multiple locations exist for Cities and Stables
+skips = {
+    'TabantaHatago': [1],
+    'NewHyruleWestHatago': [0],
+    'FaronHatago000': [0],
+    'Gerudo': [0, 1],
+}
+
 for field in ['MainField', 'MinusField']:
     data = json.load(open(f"{base}/Banc/{field}/LocationArea/{field}.locationarea.json","r"))
 
@@ -82,6 +90,8 @@ for field in ['MainField', 'MinusField']:
             if msg == "": # Not sure if this a bug in the data files
                 continue
             for i in range(len(v['InstanceID'])):
+                if msg in skips and i in skips[msg]:
+                    continue
                 pt = v['Trans'][i]
                 item = {
                     'MessageID': msg,
@@ -96,23 +106,35 @@ for field in ['MainField', 'MinusField']:
                         item['ShowLevel'] = v['TargetZoomLevel'][i]
                 if kind == 'District':
                     item['ShowLevel'] = 'Farthest'
-                # Show level is likely based on Spot size
+
                 if msg in ['AncientLabo','HatenoLabo']:
                     item['Icon'] = 'Labo'
                     markers['Labo'].append(item)
                 elif "DeepHole" in msg:
                     item['Icon'] = 'Chasm'
                     markers['Chasm'].append(item)
+                elif msg == 'Bar':
+                    item['Icon'] = 'Drink'
+                    markers['Shop'].append(item)
                 elif 'Shop' in msg and item_kind == 'Location':
-                    #print(msg)
-                    item['Icon'] = 'ShopBougu'
-                    markers['Shop'].append(item)
-                elif 'FigureGallery' == msg:
-                    item['Icon'] = 'ShopBougu'
-                    markers['Shop'].append(item)
+                    if not msg.startswith('SmeltShopGolem'): # Forge Construct
+                        if msg in ['ScrapShop', 'RentalZarashiShop_Gerudo', 'RentalZarashiShop_GerudoDesert']:
+                            item['Icon'] = 'Star'
+                        elif 'BatteryExchangeShop_' in msg:
+                            item['Icon'] = 'Battery'
+                        else:
+                            item['Icon'] = 'ShopBougu'
+                        markers['Shop'].append(item)
+                elif 'FigureGallery' == msg: # Monster Gallery
+                    #item['Icon'] = 'ShopBougu'
+                    #markers['Shop'].append(item)
+                    pass
+                elif 'HorseStableBranch' in msg:
+                    item['Icon'] = 'Hatago'
+                    markers['Place'].append(item)
                 elif 'DemonStatue' in msg:
                     if msg.startswith('DemonStatue'):
-                        item['Icon'] = 'ShopBougu'
+                        item['Icon'] = 'Bargainer'
                         if msg == 'DemonStatue_01':
                             msg = 'MinusField_AncientTimeShrine'
                         elif msg == 'DemonStatue_02':
@@ -125,7 +147,6 @@ for field in ['MainField', 'MinusField']:
                     items.append(item)
         if not item_kind in markers:
             markers[item_kind] = []
-
         markers[item_kind].extend(items)
 
     data = json.load(open(f"{base}/Banc/{field}/HiddenKorok/{field}.hiddenkorok.json", "r"))
@@ -146,6 +167,35 @@ for field in ['MainField', 'MinusField']:
             })
     markers['Korok'].extend(items)
 
+markers['Dispensers'] = []
+rboxes =json.load(open('tools/rbox.json', 'r'))
+for rbox in rboxes:
+    pt = rbox['data']['Translate']
+    msg = rbox['unit_config_name'],
+    markers['Dispensers'].append({
+        'MessageID': msg,
+        'id': rbox['hash_id'],
+        'Icon': 'Dispenser',
+        'Priority': 1,
+        'Translate': { 'X': pt[0], 'Y': pt[1], 'Z': pt[2] },
+        'hash_id': rbox['hash_id'],
+        'SaveFlag': f'Location_{msg}',
+        'equip': rbox['equip'],
+        'ui_equip': rbox['ui_equip'],
+        'map_name': rbox['map_name'],
+        'map_static': rbox['map_static'],
+        'map_type': 'Totk',
+    })
+
+# The Bargainer Statue does not appear to be in the LocationArea
+#  Adding it here
+markers['Place'].append({
+    'MessageID': 'DemonStatue_01',
+    'Priority': 1,
+    'Translate': {'X': -251, 'Y': 125, 'Z': -154.39 },
+    'SaveFlag': 'Location_DemonStatue_01',
+    'Icon': 'Bargainer',
+})
 
 out['markers'] = markers
 out['_doc_'] = {

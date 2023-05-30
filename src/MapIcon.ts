@@ -30,6 +30,26 @@ export const TOTK_LIGHTROOT = L.icon({
   iconSize: L.point(32, 32),
   className: 'mapicon-totk-Lightroot'
 });
+export const BARGAINER = L.icon({
+  iconUrl: '/icons/bargainer_statue.svg',
+  iconSize: L.point(20, 20),
+});
+export const DISPENSER = L.icon({
+  iconUrl: '/icons/dispenser.svg',
+  iconSize: L.point(20, 20),
+});
+export const STAR = L.icon({
+  iconUrl: '/icons/star.svg',
+  iconSize: L.point(20, 20),
+});
+export const BATTERY = L.icon({
+  iconUrl: '/icons/battery.svg',
+  iconSize: L.point(20, 20),
+});
+export const DRINK = L.icon({
+  iconUrl: '/icons/drink.svg',
+  iconSize: L.point(20, 20),
+});
 
 export const VILLAGE = L.icon({
   iconUrl: '/icons/mapicon_village.svg',
