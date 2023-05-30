@@ -10,7 +10,26 @@ export const DUNGEON_DLC = L.icon({
   iconSize: L.point(36, 36),
   className: 'mapicon-Dungeon',
 });
-
+export const TOTK_SHRINE = L.icon({
+  iconUrl: '/icons/shrine.svg',
+  iconSize: L.point(32, 32),
+  className: 'mapicon-totk-Shrine'
+});
+export const TOTK_TOWER = L.icon({
+  iconUrl: '/icons/tower.svg',
+  iconSize: L.point(32, 32),
+  className: 'mapicon-totk-Tower'
+});
+export const TOTK_TEAR = L.icon({
+  iconUrl: '/icons/tear.svg',
+  iconSize: L.point(24, 24),
+  className: 'mapicon-totk-Tear'
+});
+export const TOTK_LIGHTROOT = L.icon({
+  iconUrl: '/icons/lightroot.svg',
+  iconSize: L.point(32, 32),
+  className: 'mapicon-totk-Lightroot'
+});
 
 export const VILLAGE = L.icon({
   iconUrl: '/icons/mapicon_village.svg',

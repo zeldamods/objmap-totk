@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+    class="box"
+width="13.567mm"
+   height="17.346998mm"
+   viewBox="0 0 13.567 17.346999"
+   version="1.1"
+   id="svg5"
+   xml:space="preserve"
+   inkscape:export-filename="Desktop/junk/botw/totk/objmap-totk/public/icons/tear.svg"
+   inkscape:export-xdpi="36.285713"
+   inkscape:export-ydpi="36.285713"
+   inkscape:version="1.2.2 (b0a8486, 2022-12-01)"
+   sodipodi:docname="drawing.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="true"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="12.22619"
+     inkscape:cx="36.029212"
+     inkscape:cy="51.569621"
+     inkscape:window-width="1818"
+     inkscape:window-height="1205"
+     inkscape:window-x="18"
+     inkscape:window-y="75"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer4"
+     showborder="true" />
+<style>
+  .box {
+  filter: drop-shadow(0 0 5px #fbfbe780) drop-shadow(0 0 5px #fbfbe780);
+  }
+</style>
+
+<defs
+     id="defs2" /><g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Tear"
+     transform="translate(-5.3691179,-6.2109904)"><path
+       id="path24103"
+       style="display:inline;fill:#fbfbe7;fill-opacity:1;stroke:none;stroke-width:0.0649999;stroke-dasharray:none;stroke-opacity:0.787234"
+       d="m 12.054033,7.5527139 c -0.605439,0 -1.491495,4.2379311 -2.6184453,5.0203651 -2.4407883,1.694622 -3.5712191,9.327079 2.6830403,9.327079 6.319678,0 5.825742,-7.180637 2.683557,-9.261967 -1.431618,-0.948279 -2.206703,-5.0854771 -2.748152,-5.0854771 z m 0.735872,4.5227211 c 0.822345,1.23352 3.245797,2.791584 3.245797,4.739245 0,2.369649 -1.759368,3.809788 -2.380217,3.289722 -0.998718,-0.836595 1.124996,-1.644814 1.124996,-3.268018 0,-1.687973 -1.726754,-1.969165 -2.055688,-2.553332 -0.02069,-0.08653 -0.08472,-2.216435 0.06511,-2.207617 z" /></g></svg>

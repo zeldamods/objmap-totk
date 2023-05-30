@@ -81,9 +81,9 @@ class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     'Hatago': [MapIcons.HATAGO, ''],
     'Castle': [MapIcons.CASTLE, ''],
     'CheckPoint': [MapIcons.CHECKPOINT, ''],
-    'Tower': [MapIcons.TOWER, ''],
+    'Tower': [MapIcons.TOTK_TOWER, ''],
     'Labo': [MapIcons.LABO, ''],
-    'Dungeon': [MapIcons.DUNGEON, ''],
+    'Dungeon': [MapIcons.TOTK_SHRINE, ''],
     'ShopBougu': [MapIcons.SHOP_BOUGU, 'Armor Shop'],
     'ShopColor': [MapIcons.SHOP_COLOR, 'Dye Shop'],
     'ShopJewel': [MapIcons.SHOP_JEWEL, 'Jewelry Shop'],
@@ -91,6 +91,8 @@ class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     'ShopYorozu': [MapIcons.SHOP_YOROZU, 'General Store'],
     'Cave': [MapIcons.CAVE, 'Cave Entrance'],
     'Chasm': [MapIcons.CHASM, 'Chasm'],
+    'Tear': [MapIcons.TOTK_TEAR, ''],
+    'Lightroot': [MapIcons.TOTK_LIGHTROOT, ''],
   };
 
   constructor(mb: MapBase, l: any, showLabel: boolean, zIndexOffset?: number) {
@@ -196,12 +198,69 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     super(mb, l, false, 1000);
     // Yes, extracting the dungeon number from the save flag is what Nintendo does.
     const dungeonNum = parseInt(this.lm.getSaveFlag().replace('Location_Dungeon', ''), 10);
-    this.marker.setIcon(MapIcons.DUNGEON);
+    this.marker.setIcon(MapIcons.TOTK_SHRINE);
     this.setTitle(MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId()));
     this.marker.options.title = '';
     this.dungeonNum = dungeonNum;
     const sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId() + '_sub');
     this.marker.bindTooltip(`${this.title}<br>${sub}`, { pane: 'front2' });
+  }
+  shouldBeShown() {
+    let layer = this.mb.activeLayer;
+    const inSky = [
+      38, 105, 43, 151, 34, 149, 82,
+      128, 117, 148, 121, 145, 15, 55,
+      60, 62, 63, 61, 71, 109, 150, 127,
+      83, 93, 66, 146, 45, 50, 69,
+      110, 99, 52];
+    if (inSky.includes(this.dungeonNum)) {
+      return layer == "Sky";
+    }
+    return layer == "Surface";
+  }
+}
+
+export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
+  public readonly checkpointNum: number;
+  constructor(mb: MapBase, l: any) {
+    super(mb, l, false, 1000)
+    this.checkpointNum = parseInt(this.lm.getSaveFlag().replace('Location_CheckPoint', ''), 10);
+    this.marker.setIcon(MapIcons.TOTK_LIGHTROOT);
+    const msg = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', l.MessageID);
+    this.setTitle(msg);
+    this.marker.options.title = '';
+    this.marker.bindTooltip(msg, { pane: 'front2' });
+  }
+  shouldBeShown() {
+    return this.mb.activeLayer == "Depths";
+  }
+}
+
+export class MapMarkerTear extends MapMarkerGenericLocationMarker {
+  public readonly tearNum: number;
+  constructor(mb: MapBase, l: any) {
+    super(mb, l, false, 1001);
+    this.tearNum = parseInt(this.lm.getSaveFlag().replace('Location_DragonTears', ''), 10);
+    const titles = ["empty",  // 0
+      "Where Am I?",         // 1
+      "An Unfamiliar World", // 2
+      "Mineru's Counsel",    // 3
+      "The Gerudo Assault",  // 4
+      "A Show of Fealty",    // 5
+      "Zelda and Sonia",     // 6
+      "Sonia is Caught by Treachery", //7
+      "Birth of the Demon King", //8
+      "The Sages' Vow",      // 9
+      "A King's Duty",       // 10
+      "A Master Sword in Time", // 11
+      "Tears of the Dragon"  // 12
+    ];
+    this.setTitle(`${titles[this.tearNum]} (#${this.tearNum})`);
+    this.marker.options.title = '';
+    this.marker.bindTooltip(`${titles[this.tearNum]}<br>Tear of the Dragon #${this.tearNum}`, { pane: 'front2' });
+  }
+  shouldBeShown() {
+    return this.mb.activeLayer == "Surface";
   }
 }
 
@@ -232,6 +291,9 @@ export class MapMarkerTower extends MapMarkerGenericLocationMarker {
     super(mb, l, false, 1001);
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
+  }
+  shouldBeShown() {
+    return this.mb.activeLayer == "Surface";
   }
 }
 export class MapMarkerCave extends MapMarkerGenericLocationMarker {

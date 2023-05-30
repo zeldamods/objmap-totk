@@ -19,6 +19,8 @@ icons = {
     "Shrine": "Dungeon",
     "Tower": "Tower",
     "Labo": "Labo",
+    "DragonTears": "Tear",
+    "CheckPoint": "Lightroot",
 }
 types = {
     "CaveEntranceNormal": "Cave",
@@ -95,7 +97,6 @@ for field in ['MainField', 'MinusField']:
                 if kind == 'District':
                     item['ShowLevel'] = 'Farthest'
                 # Show level is likely based on Spot size
-
                 if "Labo" in msg:
                     item['Icon'] = 'Labo'
                     markers['Labo'].append(item)
@@ -120,7 +121,6 @@ for field in ['MainField', 'MinusField']:
                             continue
                         item['MessageID'] = msg
                         markers['Place'].append(item)
-                        print(msg, pt)
                 else:
                     items.append(item)
         if not item_kind in markers:
@@ -157,5 +157,5 @@ out['_doc_'] = {
     ],
     'notes': 'json input files created by decompressing from zstd -D ZsDic/zs.zsdic -d file.byml.zs -o file.byml, then converting to yaml and json with byml_to_yml'
 }
-json.dump(out, open("static.json", "w"))
+json.dump(out, open("static.json", "w"), indent=2)
 print("==> static.json")

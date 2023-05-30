@@ -75,8 +75,8 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   'Dungeon': {
     cl: MapMarkers.MapMarkerDungeon,
     detailsComponent: 'AppMapDetailsDungeon',
-    enableUpdates: false,
-    filterIcon: MapIcons.DUNGEON.options.iconUrl,
+    enableUpdates: true,
+    filterIcon: MapIcons.TOTK_SHRINE.options.iconUrl,
     filterLabel: 'Shrines',
   },
   'Place': {
@@ -88,8 +88,8 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   },
   'Tower': {
     cl: MapMarkers.MapMarkerTower,
-    enableUpdates: false,
-    filterIcon: MapIcons.TOWER.options.iconUrl,
+    enableUpdates: true,
+    filterIcon: MapIcons.TOTK_TOWER.options.iconUrl,
     filterLabel: 'Towers',
   },
   'Shop': {
@@ -99,7 +99,7 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   },
   'Labo': {
     cl: MapMarkers.MapMarkerLabo,
-    enableUpdates: false,
+    enableUpdates: true,
     filterIcon: MapIcons.LABO.options.iconUrl,
     filterLabel: 'Tech Labs',
   },
@@ -116,9 +116,21 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   'Korok': {
     cl: MapMarkers.MapMarkerKorok,
     detailsComponent: 'AppMapDetailsObj',
-    enableUpdates: false,
+    enableUpdates: true,
     filterIcon: MapIcons.KOROK.options.iconUrl,
     filterLabel: 'Koroks',
+  },
+  'DragonTears': {
+    cl: MapMarkers.MapMarkerTear,
+    enableUpdates: true,
+    filterIcon: MapIcons.TOTK_TEAR.options.iconUrl,
+    filterLabel: 'Dragon Tears',
+  },
+  'CheckPoint': {
+    cl: MapMarkers.MapMarkerLightroot,
+    enableUpdates: true,
+    filterIcon: MapIcons.TOTK_LIGHTROOT.options.iconUrl,
+    filterLabel: 'Lightroots',
   },
 });
 

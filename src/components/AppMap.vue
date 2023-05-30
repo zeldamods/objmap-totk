@@ -380,5 +380,20 @@
 .leaflet-control-mouseposition {
     color: white;
 }
-
+.map-filter-icon-DragonTears {
+    padding: 4px;
+}
+.map-filter-icon-Chasm {
+    padding: 4px;
+}
+.map-filter-icon-Cave {
+    padding: 5px;
+}
+.map-filter-icon-Dungeon {
+    padding: 1px;
+    margin-left: -1px;
+}
+.map-filter-icon-Tower {
+    padding: 2px;
+}
 </style>
