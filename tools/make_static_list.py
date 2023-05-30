@@ -97,7 +97,7 @@ for field in ['MainField', 'MinusField']:
                 if kind == 'District':
                     item['ShowLevel'] = 'Farthest'
                 # Show level is likely based on Spot size
-                if "Labo" in msg:
+                if msg in ['AncientLabo','HatenoLabo']:
                     item['Icon'] = 'Labo'
                     markers['Labo'].append(item)
                 elif "DeepHole" in msg:

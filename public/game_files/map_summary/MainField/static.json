@@ -14,18 +14,6 @@
         "Icon": "Labo"
       },
       {
-        "MessageID": "HyruleLabo",
-        "Priority": 1,
-        "Translate": {
-          "X": -1249.5008544921875,
-          "Y": 200.0,
-          "Z": -1023.3812255859375
-        },
-        "SaveFlag": "Location_HyruleLabo",
-        "ShowLevel": "",
-        "Icon": "Labo"
-      },
-      {
         "MessageID": "AncientLabo",
         "Priority": 1,
         "Translate": {
@@ -16451,6 +16439,17 @@
           "Z": 3456.955810546875
         },
         "SaveFlag": "Location_GutinizaPlainTomb",
+        "ShowLevel": ""
+      },
+      {
+        "MessageID": "HyruleLabo",
+        "Priority": 1,
+        "Translate": {
+          "X": -1249.5008544921875,
+          "Y": 200.0,
+          "Z": -1023.3812255859375
+        },
+        "SaveFlag": "Location_HyruleLabo",
         "ShowLevel": ""
       },
       {
