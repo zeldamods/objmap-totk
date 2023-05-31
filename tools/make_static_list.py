@@ -72,6 +72,13 @@ skips = {
     'Gerudo': [0, 1],
 }
 
+chasms_not_caves = [
+    'Cave_HyruleRidge_0004',
+    'Cave_GerudoDesert_0043',
+    'Cave_Lanayru_0050',
+    'Cave_Lanayru_0063'
+]
+
 for field in ['MainField', 'MinusField']:
     data = json.load(open(f"{base}/Banc/{field}/LocationArea/{field}.locationarea.json","r"))
 
@@ -132,6 +139,9 @@ for field in ['MainField', 'MinusField']:
                 elif 'HorseStableBranch' in msg:
                     item['Icon'] = 'Hatago'
                     markers['Place'].append(item)
+                elif msg in chasms_not_caves:
+                    item['Icon'] = 'Chasm'
+                    markers['Chasm'].append(item)
                 elif 'DemonStatue' in msg:
                     if msg.startswith('DemonStatue'):
                         item['Icon'] = 'Bargainer'

@@ -28,6 +28,50 @@
     ],
     "Chasm": [
       {
+        "MessageID": "Cave_GerudoDesert_0043",
+        "Priority": 1,
+        "Translate": {
+          "X": -2491.193115234375,
+          "Y": 111.23987579345703,
+          "Z": 3067.738037109375
+        },
+        "SaveFlag": "Location_Cave_GerudoDesert_0043",
+        "Icon": "Chasm"
+      },
+      {
+        "MessageID": "Cave_HyruleRidge_0004",
+        "Priority": 1,
+        "Translate": {
+          "X": -2644.244384765625,
+          "Y": 247.63172912597656,
+          "Z": -1126.0235595703125
+        },
+        "SaveFlag": "Location_Cave_HyruleRidge_0004",
+        "Icon": "Chasm"
+      },
+      {
+        "MessageID": "Cave_Lanayru_0050",
+        "Priority": 1,
+        "Translate": {
+          "X": 1726.9169921875,
+          "Y": 100.1859130859375,
+          "Z": -162.0548095703125
+        },
+        "SaveFlag": "Location_Cave_Lanayru_0050",
+        "Icon": "Chasm"
+      },
+      {
+        "MessageID": "Cave_Lanayru_0063",
+        "Priority": 1,
+        "Translate": {
+          "X": 3271.5498046875,
+          "Y": 84.30599975585938,
+          "Z": -441.587158203125
+        },
+        "SaveFlag": "Location_Cave_Lanayru_0063",
+        "Icon": "Chasm"
+      },
+      {
         "MessageID": "DeepHole_AkkareSkull",
         "Priority": 1,
         "Translate": {
@@ -13733,50 +13777,6 @@
           "Z": -122.20181274414062
         },
         "SaveFlag": "Location_ZoraZonauTerminal",
-        "Icon": "Cave"
-      },
-      {
-        "MessageID": "Cave_GerudoDesert_0043",
-        "Priority": 1,
-        "Translate": {
-          "X": -2491.193115234375,
-          "Y": 111.23987579345703,
-          "Z": 3067.738037109375
-        },
-        "SaveFlag": "Location_Cave_GerudoDesert_0043",
-        "Icon": "Cave"
-      },
-      {
-        "MessageID": "Cave_HyruleRidge_0004",
-        "Priority": 1,
-        "Translate": {
-          "X": -2644.244384765625,
-          "Y": 247.63172912597656,
-          "Z": -1126.0235595703125
-        },
-        "SaveFlag": "Location_Cave_HyruleRidge_0004",
-        "Icon": "Cave"
-      },
-      {
-        "MessageID": "Cave_Lanayru_0050",
-        "Priority": 1,
-        "Translate": {
-          "X": 1726.9169921875,
-          "Y": 100.1859130859375,
-          "Z": -162.0548095703125
-        },
-        "SaveFlag": "Location_Cave_Lanayru_0050",
-        "Icon": "Cave"
-      },
-      {
-        "MessageID": "Cave_Lanayru_0063",
-        "Priority": 1,
-        "Translate": {
-          "X": 3271.5498046875,
-          "Y": 84.30599975585938,
-          "Z": -441.587158203125
-        },
-        "SaveFlag": "Location_Cave_Lanayru_0063",
         "Icon": "Cave"
       },
       {
