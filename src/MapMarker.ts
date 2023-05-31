@@ -3,14 +3,17 @@ import * as L from 'leaflet';
 import { rankUpEnemyForHardMode } from '@/level_scaling';
 import { MapBase } from '@/MapBase';
 import * as MapIcons from '@/MapIcon';
-import { MapMgr, ObjectData, ObjectMinData } from '@/services/MapMgr';
+import { ObjectMinData } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
-import { CanvasMarker, CanvasMarkerOptions } from '@/util/CanvasMarker';
+import {
+  CanvasMarker,
+  CanvasMarkerOptions,
+} from '@/util/CanvasMarker';
+import * as map from '@/util/map';
 import { Point } from '@/util/map';
 import * as math from '@/util/math';
-import * as map from '@/util/map';
-import * as ui from '@/util/ui';
 import { Settings } from '@/util/settings';
+import * as ui from '@/util/ui';
 
 export abstract class MapMarker {
   public title = '';
@@ -331,11 +334,19 @@ export class MapMarkerCave extends MapMarkerGenericLocationMarker {
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
   }
+
+  shouldBeShown() {
+    return this.mb.activeLayer == "Surface";
+  }
 }
 
 export class MapMarkerLabo extends MapMarkerGenericLocationMarker {
   constructor(mb: MapBase, l: any) {
     super(mb, l, false);
+  }
+
+  shouldBeShown() {
+    return this.mb.activeLayer == "Surface";
   }
 }
 
