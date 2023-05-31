@@ -82,7 +82,7 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   'Place': {
     cl: MapMarkers.MapMarkerPlace,
     detailsComponent: 'AppMapDetailsPlace',
-    enableUpdates: false,
+    enableUpdates: true,
     filterIcon: MapIcons.VILLAGE.options.iconUrl,
     filterLabel: 'Places',
   },

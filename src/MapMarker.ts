@@ -294,17 +294,24 @@ export class MapMarkerDungeonDLC extends MapMarkerDungeon {
 
 export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
   private isVillage: boolean;
-
+  private info: any;
   constructor(mb: MapBase, l: any) {
     const isVillage = l['Icon'] == 'Village';
     super(mb, l, isVillage);
     this.isVillage = isVillage;
+    this.info = l;
   }
 
   shouldBeShown() {
-    //if (this.isVillage)
-    //  return this.mb.zoom < 7;
-    return true;
+    const layer = this.mb.activeLayer;
+    const y = this.info.Translate.Y;
+    if (layer == 'Sky')
+      return false;
+    if (layer == 'Depths' && y < 0)
+      return true;
+    if (layer == 'Surface' && y >= 0)
+      return true;
+    return false;
   }
 }
 
@@ -333,15 +340,30 @@ export class MapMarkerLabo extends MapMarkerGenericLocationMarker {
 }
 
 export class MapMarkerShop extends MapMarkerGenericLocationMarker {
+  private info: any;
   constructor(mb: MapBase, l: any) {
     super(mb, l, false);
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
+    this.info = l;
   }
 
   // This needs attention **FIX**
   shouldBeShown() {
-    return this.mb.zoom >= 6;
+    const layer = this.mb.activeLayer;
+    const y = this.info.Translate.Y;
+    if (layer == 'Sky' && y > 1000)
+      return true;
+    if (layer == 'Depths' && y < 0)
+      return true;
+    if (layer == 'Surface' && y >= 0) {
+      if (this.info.MessageID == 'BatteryExchangeShop_01') {
+        return true;
+      }
+      return this.mb.zoom >= 6;
+    }
+
+    return false;
   }
 }
 
