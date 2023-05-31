@@ -286,7 +286,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
   getLocationSub() {
     const obj = this.marker.data.obj;
-    if (obj.name === 'LocationMarker' && obj.Location) {
+    if ((obj.name === 'LocationMarker' || obj.name == 'LocationArea') && obj.Location) {
       const locationName = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', obj.Location)
         || MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', obj.Location);
       return locationName;

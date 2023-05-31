@@ -155,8 +155,12 @@ for field in ['MainField', 'MinusField']:
         for key, pt in values.items():
             #print(kind, key)
             map_name = 'Surface'
-            if pt[1] >= 1000:
+            if pt[1] >= 750:
                 map_name = 'Sky'
+            if key in ['6577590198901788531','2587961335290322890','3494902862536172994']:
+                map_name = 'Sky'
+            if key in ['15262678164833260129', '18194949317466592174']:
+                map_name = 'Surface'
             items.append({
                 'id': key,
                 'Translate': { 'X': pt[0], 'Y': pt[1], 'Z': pt[2] },
