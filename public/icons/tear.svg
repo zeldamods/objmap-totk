@@ -40,7 +40,7 @@ width="13.567mm"
      showborder="true" />
 <style>
   .box {
-  filter: drop-shadow(0 0 5px #fbfbe780) drop-shadow(0 0 5px #fbfbe780);
+  filter: drop-shadow(0 0 3px #fbfbe7a0) drop-shadow(0 0 3px #fbfbe7a0);
   }
 </style>
 

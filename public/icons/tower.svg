@@ -39,7 +39,7 @@
      inkscape:current-layer="layer1" />
 <style>
 .box {
- filter: drop-shadow(0 0 5px #3f90fc) drop-shadow(0 0 5px #3f90fc);
+ filter: drop-shadow(0 0 4px #3f90fcc0) drop-shadow(0 0 4px #3f90fcc0);
 }
 </style>
 
