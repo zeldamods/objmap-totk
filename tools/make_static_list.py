@@ -5,6 +5,10 @@ import sys
 
 base = sys.argv[1]
 
+def parseHash(value):
+    v = int(value)
+    return f"0x{v:016x}"
+
 icons = {
     "CaveEntranceNormal": "Cave",
     "CaveEntranceSpecial": "Cave",
@@ -172,9 +176,9 @@ for field in ['MainField', 'MinusField']:
             if key in ['15262678164833260129', '18194949317466592174']:
                 map_name = 'Surface'
             items.append({
-                'id': key,
+                'id': parseHash(key),
                 'Translate': { 'X': pt[0], 'Y': pt[1], 'Z': pt[2] },
-                'hash_id': key,
+                'hash_id': parseHash(key),
                 'map_static': 1,
                 'map_name': map_name,
                 'map_type': 'Totk'
@@ -188,11 +192,11 @@ for rbox in rboxes:
     msg = rbox['unit_config_name'],
     markers['Dispensers'].append({
         'MessageID': msg,
-        'id': rbox['hash_id'],
+        'id': parseHash(rbox['hash_id']),
         'Icon': 'Dispenser',
         'Priority': 1,
         'Translate': { 'X': pt[0], 'Y': pt[1], 'Z': pt[2] },
-        'hash_id': rbox['hash_id'],
+        'hash_id': parseHash(rbox['hash_id']),
         'SaveFlag': f'Location_{msg}',
         'equip': rbox['equip'],
         'ui_equip': rbox['ui_equip'],
