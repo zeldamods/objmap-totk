@@ -250,6 +250,40 @@ export class MapBase {
       this.activeLayer = areas.find(area => url.includes(area)) || "Surface";
       this.m.fireEvent('objmap:base-layer-change');
     });
+
+    // Keyboard control over Layer switching
+    const switchTileLayer = (name: string) => {
+      if (this.activeLayer == name) {
+        return;
+      }
+      this.m.removeLayer(baseMaps[this.activeLayer]);
+      baseMaps[name].addTo(this.m);
+    };
+    const switchTileLayerDir = (up: boolean) => {
+      const k = areas.findIndex(area => area == this.activeLayer);
+      const dir = (up) ? -1 : 1;
+      if (k + dir < 0 || k + dir >= areas.length)
+        return;
+      switchTileLayer(areas[k + dir]);
+    };
+
+    this.m.on('keyup', (ev: any) => {
+      const moveUp = ['PageUp'];
+      const moveDown = ['PageDown'];
+      const move: { [key: string]: string } = {
+        'F1': 'Sky',
+        'F2': 'Surface',
+        'F3': 'Depths',
+      }
+      var charCode = ev.originalEvent.code;
+      if (charCode in move) {
+        switchTileLayer(move[charCode]);
+      } else if (moveUp.includes(charCode)) {
+        switchTileLayerDir(true)
+      } else if (moveDown.includes(charCode)) {
+        switchTileLayerDir(false)
+      }
+    });
   }
   svgIconBase(width: number) {
     return L.divIcon({
