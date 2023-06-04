@@ -329,14 +329,23 @@ export class MapMarkerTower extends MapMarkerGenericLocationMarker {
   }
 }
 export class MapMarkerCave extends MapMarkerGenericLocationMarker {
+  private info: any;
   constructor(mb: MapBase, l: any) {
     super(mb, l, false, 1001);
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
+    this.info = l;
   }
 
   shouldBeShown() {
-    return this.mb.activeLayer == "Surface";
+    let y = this.info.Translate.Y;
+    if (this.mb.activeLayer == 'Sky' && y > 1000) {
+      return true;
+    }
+    if (this.mb.activeLayer == 'Surface' && y < 1000 && y > -50) {
+      return true;
+    }
+    return false;
   }
 }
 
