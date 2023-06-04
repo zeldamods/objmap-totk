@@ -1,22 +1,26 @@
-import * as L from 'leaflet';
-import Vue from 'vue';
-import { Prop } from 'vue-property-decorator';
-import Component from 'vue-class-component';
 import 'leaflet-path-transform';
 
-import { MapMarkerObj, MapMarkerSearchResult } from '@/MapMarker';
+import * as L from 'leaflet';
+import Component from 'vue-class-component';
+
 import AppMapDetailsBase from '@/components/AppMapDetailsBase';
 import ObjectInfo from '@/components/ObjectInfo';
 import ShopData from '@/components/ShopData';
-import { MapMgr, ObjectData, ObjectMinData, PlacementLink } from '@/services/MapMgr';
+import {
+  MapMarkerObj,
+  MapMarkerSearchResult,
+} from '@/MapMarker';
+import {
+  MapMgr,
+  ObjectData,
+  ObjectMinData,
+  PlacementLink,
+} from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
-import * as ui from '@/util/ui';
-
+import { ColorScale } from '@/util/colorscale';
 import * as curves from '@/util/curves';
 import * as svg from '@/util/svg';
-import * as map from '@/util/map';
 
-import { ColorScale } from '@/util/colorscale';
 require('leaflet-hotline')
 
 const KUH_TAKKAR_ELEVATOR_HASH_ID = 0x96d181a0;
@@ -555,7 +559,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       } else {
         lines.push(`<span style="text-decoration: underline;"><b>${names[i]}</b> - x${repeatNum[0]}-${repeatNum[1]}</span>`);
       }
-      let items = Object.keys(table.items).sort(function(a, b) { return table.items[b] - table.items[a]; });
+      let items = Object.keys(table.items).sort(function (a, b) { return table.items[b] - table.items[a]; });
       for (var j = 0; j < items.length; j++) {
         lines.push(`  ${table.items[items[j]].toFixed(1).padStart(4, ' ')}% - ${this.getName(items[j])}`);
       }
