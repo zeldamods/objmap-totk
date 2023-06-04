@@ -179,6 +179,7 @@ for field in ['MainField', 'MinusField']:
                 'id': parseHash(key),
                 'Translate': { 'X': pt[0], 'Y': pt[1], 'Z': pt[2] },
                 'hash_id': parseHash(key),
+                'name': 'Korok',
                 'map_static': 1,
                 'map_name': map_name,
                 'map_type': 'Totk'
@@ -195,6 +196,7 @@ for rbox in rboxes:
         'id': parseHash(rbox['hash_id']),
         'Icon': 'Dispenser',
         'Priority': 1,
+        'name': 'Device Dispenser',
         'Translate': { 'X': pt[0], 'Y': pt[1], 'Z': pt[2] },
         'hash_id': parseHash(rbox['hash_id']),
         'SaveFlag': f'Location_{msg}',
