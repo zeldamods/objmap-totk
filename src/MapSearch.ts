@@ -1,8 +1,12 @@
 import * as L from 'leaflet';
+
 import { MapBase } from '@/MapBase';
-import { SearchResultUpdateMode } from '@/MapMarker';
 import * as MapMarkers from '@/MapMarker';
-import { MapMgr, ObjectMinData } from '@/services/MapMgr';
+import { SearchResultUpdateMode } from '@/MapMarker';
+import {
+  MapMgr,
+  ObjectMinData,
+} from '@/services/MapMgr';
 import { Settings } from '@/util/settings';
 import * as ui from '@/util/ui';
 
@@ -86,7 +90,7 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
     label: '<i class="fa fa-ellipsis-h"></i>',
     presets: [
       { label: 'Messages from an Ancient Era Stone Tablets', query: "Ancient Stone Tablet map: Sky" },
-      { label: 'Old Teasure Maps', query: 'Old Map' },
+      { label: 'Old Maps', query: 'Old Map' },
       //     {label: 'Memory Locations', query: 'name:"Memory"'},
       //     {label: 'Goddess Statues', query: 'name:"Goddess Statue"'},
       //     {label: 'Rafts', query: 'name:Raft'},
