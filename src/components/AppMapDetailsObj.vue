@@ -13,7 +13,9 @@
       <section v-if="obj.data.Rotate != null">Rotate: {{arrayOrNumToStr(obj.data.Rotate, 5)}}</section>
       <section v-if="obj.data.UniqueName">Unique name: {{obj.data.UniqueName}}</section>
 
-      <p v-if="isAreaReprPossiblyWrong()"><i class="fa fa-exclamation-circle"></i> Area representation may be inaccurate.</p>
+      <p class="my-1" v-if="isPossibleConditionalSpawn()" style="color: orange"><i class="fa fa-exclamation-circle"></i> This object might be a conditional spawn, or it might have custom logic.</p>
+
+      <p class="my-1" v-if="isAreaReprPossiblyWrong()"><i class="fa fa-exclamation-circle"></i> Area representation may be inaccurate.</p>
 
       <section class="mt-2" v-show="areaMarkers.length || staticData.persistentAreaMarkers.length">
         <b-btn v-show="areaMarkers.length" size="sm" block variant="dark" @click="keepAreaMarkersAlive()">Keep area representation loaded</b-btn>
@@ -64,6 +66,27 @@
     <section v-if="isSearchResult()">
       <br>
       <b-btn size="sm" block @click="emitBackToSearch()"><i class="fa fa-chevron-circle-left"></i> Back to search</b-btn>
+    </section>
+
+    <section v-for="group in aiGroups" :key="group.hash_id">
+      <hr>
+      <h4 class="subsection-heading">AI group {{formatObjId(group.hash_id)}}</h4>
+      <p v-if="group.data.Logic">Logic: <code>{{group.data.Logic}}</code></p>
+      <p v-if="group.data.Meta">Meta: <code>{{group.data.Meta}}</code></p>
+      <p v-if="group.data.Blackboard">Blackboards: {{group.data.Blackboards}}</p>
+      <div class="search-results">
+        <div class="search-result"
+          v-for="ref in group.data.References"
+          :key="ref.Path + ref.Reference"
+          @click="onAiGroupReferenceClicked(group, ref)"
+        >
+          <section class="search-result-name">{{getAiGroupReferenceName(group, ref)}}</section>
+          <section v-if="ref.Id"><i class="fas fa-hashtag fa-fw"></i> ID: {{ref.Id}}</section>
+          <section v-if="ref.Reference"><i class="fas fa-hashtag fa-fw"></i> Ref: {{formatObjId(ref.Reference)}}</section>
+          <section v-if="ref.InstanceName"><i class="fas fa-hashtag fa-fw"></i> Instance: {{ref.InstanceName}}</section>
+          <section v-if="ref.Logic"><i class="fas fa-lightbulb fa-fw"></i> Logic: {{ref.Logic}}</section>
+        </div>
+      </div>
     </section>
 
     <section v-show="genGroup.length">

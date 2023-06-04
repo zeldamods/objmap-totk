@@ -11,9 +11,11 @@ import {
   MapMarkerSearchResult,
 } from '@/MapMarker';
 import {
+  AiGroup,
   MapMgr,
   ObjectData,
   ObjectMinData,
+  parseHash,
 } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 import { ColorScale } from '@/util/colorscale';
@@ -65,6 +67,9 @@ const staticData = new StaticData();
 export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | MapMarkerSearchResult> {
   private minObj: ObjectMinData | null = null;
   private obj: ObjectData | null = null;
+
+  private aiGroups: AiGroup[] = [];
+
   private genGroup: ObjectData[] = [];
   private genGroupSet: Map<string, ObjectData> = new Map();
 
@@ -84,6 +89,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.obj = null;
     this.genGroup = [];
     this.genGroupSet.clear();
+    this.aiGroups = [];
     this.dropTables = {};
     this.areaMarkers.forEach(m => m.remove());
     this.areaMarkers = [];
@@ -106,6 +112,9 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     }
 
     //this.dropTables = await MapMgr.getInstance().getObjDropTables(this.getRankedUpActorNameForObj(this.minObj), this.getDropTableName());
+
+    this.aiGroups = await MapMgr.getInstance().getObjAiGroups(this.obj.map_type, this.obj.map_name, this.obj.hash_id);
+
     this.genGroup = await MapMgr.getInstance().getObjGenGroup(this.obj.map_type, this.obj.map_name, this.obj.hash_id);
     for (const obj of this.genGroup) {
       this.genGroupSet.set(obj.hash_id, obj);
@@ -550,5 +559,68 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.staticData.persistentRailMarkers = [];
     this.staticData.persistentRailLimits = {};
     this.forgetColorScale();
+  }
+
+  isPossibleConditionalSpawn() {
+    if (this.aiGroups.length === 0) {
+      return false;
+    }
+
+    if (this.aiGroups.length !== 1) {
+      // This object is in more than one AI group. This is unusual and indicates that it is
+      // likely to be conditionally spawned.
+      return true;
+    }
+
+    const group = this.aiGroups[0];
+    if (!group.data) {
+      return false;
+    }
+
+    if (group.data.Meta && group.data.Meta.includes("EnemyCampNormal")) {
+      return false;
+    }
+
+    return true;
+  }
+
+  getAiGroupReferenceName(group: AiGroup, ref: any) {
+    if (ref.Reference) {
+      const entity = group.referenced_entities[parseHash(ref.Reference)];
+      if (entity) {
+        return this.getName(entity.name);
+      }
+    }
+
+    if (ref.InstanceName) {
+      return "AI group: " + ref.InstanceName;
+    }
+
+    if (ref.Path) {
+      return ref.Path;
+    }
+
+    if (ref.Id) {
+      return ref.Id;
+    }
+
+    return "???";
+  }
+
+  onAiGroupReferenceClicked(group: AiGroup, ref: any) {
+    if (!ref.Reference) {
+      return;
+    }
+
+    if (parseHash(ref.Reference) == parseHash(this.obj!.hash_id)) {
+      return;
+    }
+
+    const entity = group.referenced_entities[parseHash(ref.Reference)];
+    if (!entity) {
+      return;
+    }
+
+    this.jumpToObj(entity);
   }
 }

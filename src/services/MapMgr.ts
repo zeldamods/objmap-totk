@@ -52,6 +52,12 @@ export interface ObjectData extends ObjectMinData {
   data: ResPlacementObj;
 }
 
+export interface AiGroup {
+  hash_id: string;
+  data: { [key: string]: any };
+  referenced_entities: { [hash_id: string]: ObjectData | undefined };
+}
+
 function parse(r: Response) {
   if (r.status == 404)
     return null;
@@ -99,6 +105,11 @@ export class MapMgr {
     return fetch(`${RADAR_URL}/obj/${mapType}/${mapName}/${hashId}/gen_group`).then(parse);
   }
 
+  async getObjAiGroups(mapType: string, mapName: string, hashId: string): Promise<AiGroup[]> {
+    const res = await fetch(`${RADAR_URL}/obj/${mapType}/${mapName}/${hashId}/ai_groups`);
+    return parse(res);
+  }
+
   getObjShopData() {
     return fetch(`${GAME_FILES}/ecosystem/beedle_shop_data.json`).then(parse);
   }
@@ -128,4 +139,8 @@ export class MapMgr {
     }).toString();
     return fetch(url.toString()).then(parse);
   }
+}
+
+export function parseHash(hash: string) {
+  return '0x' + BigInt(hash).toString(16).padStart(16, '0');
 }
