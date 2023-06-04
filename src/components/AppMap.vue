@@ -48,15 +48,15 @@
           Syntax: <code>COLUMN<b>:</b>QUERY</code><br>
           Example: <code>^Bokoblin scale:0</code></p>
         <p>Available columns:</p>
-
-        <div>
+        <p>
           <code>map</code>: Map name (e.g. Surface/Depths/Sky, Surface_E-4, etc.)<br>
           <code>static</code>: 1 if the object is in a Static map unit, 0 if Dynamic<br>
           <code>actor</code>: Actor name (e.g. Weapon_Sword_001)<br>
           <code>name</code>: User visible name (e.g. Traveler's Sword)<br>
           <code>data</code>: Internal object data<br>
+          <code>scale</code>: 1 if the enemy/weapon will scale up, 0 otherwise<br>
+        </p>
 
-        </div>
         <h4 class="subsection-heading">Boolean operators</h4>
         <p>
           <code>Lynel <b>OR</b> "Lynel Bow"</code> for Lynels or Lynel Bows<br>

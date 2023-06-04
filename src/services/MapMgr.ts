@@ -1,4 +1,3 @@
-
 import { GAME_FILES } from '@/util/map';
 
 const RADAR_URL = process.env.VUE_APP_RADAR_URL;
@@ -45,7 +44,6 @@ export interface ObjectMinData {
 
   // Only for weapons and enemies.
   scale?: number;
-  sharp_weapon_judge_type?: number;
 
   korok_type?: string;
   korok_id?: string;
