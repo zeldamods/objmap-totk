@@ -321,6 +321,7 @@ preserveAspectRatio="none"  xmlns="http://www.w3.org/2000/svg" >
 
     this.m.removeLayer(this.baseMapLayers[this.activeLayer]);
     this.baseMapLayers[name].addTo(this.m);
+    this.activeLayer = name;
   }
 
   switchBaseTileLayerDir(dir: -1 | 1) {
