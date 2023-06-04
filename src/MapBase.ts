@@ -20,6 +20,7 @@ declare module 'leaflet' {
 }
 
 const TOTK_MAP = map.GAME_FILES + "/map/";
+const AREAS = ["Sky", "Surface", "Depths"];
 
 export const SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT = 'objmap::SHOW_ALL_OBJS_FOR_MAP_UNIT';
 export const MARKER_SELECTED_EVENT = 'objmap::markerSelected';
@@ -31,6 +32,7 @@ export class MapBase {
   zoom: number = map.DEFAULT_ZOOM;
   private zoomChangeCbs: Array<(zoom: number) => void> = [];
   baseLayer: L.Layer[] = [];
+  baseMapLayers: any = {};
   refGrid: Array<L.LayerGroup> = [];
   refGridOn: boolean = false;
   activeLayer!: string;
@@ -198,7 +200,6 @@ export class MapBase {
   }
 
   private initBaseMap() {
-    const areas = ["Sky", "Surface", "Depths"];
     // Add a base image to make tile loading less noticeable.
     const BASE_PANE = 'base';
     this.m.createPane(BASE_PANE).style.zIndex = '0';
@@ -210,16 +211,16 @@ export class MapBase {
     });
     baseImage.addTo(this.m);
 
-    let baseMaps: any = {}
-    for (const area of areas) {
+    this.baseMapLayers = {};
+    for (const area of AREAS) {
       const zarea = (area == "Surface") ? "Ground" : area;
       const baseLayer = L.tileLayer(`${TOTK_MAP}/${zarea}/maptex/{z}/{x}/{y}.webp`, {
         maxNativeZoom: 7,
       });
       this.baseLayer.push(baseLayer);
-      baseMaps[area] = baseLayer;
+      this.baseMapLayers[area] = baseLayer;
     }
-    baseMaps.Surface.addTo(this.m);
+    this.baseMapLayers.Surface.addTo(this.m);
 
     // Empty Basemap (has the tower outlines included)
     //    If desired, this can be added
@@ -230,7 +231,7 @@ export class MapBase {
     this.m.createPane('front2').style.zIndex = '1002';
 
     // Basic Switching
-    L.control.layers(baseMaps).addTo(this.m);
+    L.control.layers(this.baseMapLayers).addTo(this.m);
 
     // Opacity Switching
     //   Having control over the tile layer opacity is fun, but is it useful
@@ -247,26 +248,11 @@ export class MapBase {
     }).addTo(this.m);
     this.m.on('baselayerchange', (ev: any) => {
       const url = ev.layer._url;
-      this.activeLayer = areas.find(area => url.includes(area)) || "Surface";
+      this.activeLayer = AREAS.find(area => url.includes(area)) || "Surface";
       this.m.fireEvent('objmap:base-layer-change');
     });
 
     // Keyboard control over Layer switching
-    const switchTileLayer = (name: string) => {
-      if (this.activeLayer == name) {
-        return;
-      }
-      this.m.removeLayer(baseMaps[this.activeLayer]);
-      baseMaps[name].addTo(this.m);
-    };
-    const switchTileLayerDir = (up: boolean) => {
-      const k = areas.findIndex(area => area == this.activeLayer);
-      const dir = (up) ? -1 : 1;
-      if (k + dir < 0 || k + dir >= areas.length)
-        return;
-      switchTileLayer(areas[k + dir]);
-    };
-
     this.m.on('keyup', (ev: any) => {
       const moveUp = ['PageUp'];
       const moveDown = ['PageDown'];
@@ -277,11 +263,11 @@ export class MapBase {
       }
       var charCode = ev.originalEvent.code;
       if (charCode in move) {
-        switchTileLayer(move[charCode]);
+        this.switchBaseTileLayer(move[charCode]);
       } else if (moveUp.includes(charCode)) {
-        switchTileLayerDir(true)
+        this.switchBaseTileLayerDir(-1);
       } else if (moveDown.includes(charCode)) {
-        switchTileLayerDir(false)
+        this.switchBaseTileLayerDir(1);
       }
     });
   }
@@ -326,5 +312,22 @@ preserveAspectRatio="none"  xmlns="http://www.w3.org/2000/svg" >
     this.zoom = zoom;
     for (const cb of this.zoomChangeCbs)
       cb(zoom);
+  }
+
+  switchBaseTileLayer(name: string) {
+    if (this.activeLayer == name) {
+      return;
+    }
+
+    this.m.removeLayer(this.baseMapLayers[this.activeLayer]);
+    this.baseMapLayers[name].addTo(this.m);
+  }
+
+  switchBaseTileLayerDir(dir: -1 | 1) {
+    const k = AREAS.findIndex(area => area == this.activeLayer);
+    if (k + dir < 0 || k + dir >= AREAS.length)
+      return;
+
+    this.switchBaseTileLayer(AREAS[k + dir]);
   }
 }

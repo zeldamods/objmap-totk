@@ -386,6 +386,7 @@ const KOROK_ICON = (() => {
 
 export class MapMarkerKorok extends MapMarkerCanvasImpl {
   public readonly info: any;
+  public readonly obj: ObjectMinData;
 
   constructor(mb: MapBase, info: any, extra: any) {
     let id = info.id || 'Korok';
@@ -397,7 +398,6 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
       className: classToColor(id),
     });
     this.info = info;
-    // @ts-ignore
     this.obj = info;
   }
   shouldBeShown() {

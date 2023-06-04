@@ -1,49 +1,56 @@
-import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
 import 'leaflet-defaulticon-compatibility';
 import 'leaflet-sidebar-v2';
 import 'leaflet-sidebar-v2/css/leaflet-sidebar.css';
-
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
+import '@/util/leaflet_tile_workaround.js';
 
-import VueRouter from 'vue-router';
-const { isNavigationFailure, NavigationFailureType } = VueRouter;
-
+import * as L from 'leaflet';
 import debounce from 'lodash/debounce';
-import Vue from 'vue';
 import Component, { mixins } from 'vue-class-component';
+import VueRouter from 'vue-router';
+import draggable from 'vuedraggable';
 
-import { MapBase, SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT } from '@/MapBase';
-import * as MapIcons from '@/MapIcon';
-import * as MapMarkers from '@/MapMarker';
-import { MapMarker, SearchResultUpdateMode } from '@/MapMarker';
-import { MapMarkerGroup } from '@/MapMarkerGroup';
-import { SearchResultGroup, SearchExcludeSet, SEARCH_PRESETS } from '@/MapSearch';
-import * as save from '@/save';
-
-import MixinUtil from '@/components/MixinUtil';
 import AppMapDetailsDungeon from '@/components/AppMapDetailsDungeon';
 import AppMapDetailsObj from '@/components/AppMapDetailsObj';
 import AppMapDetailsPlace from '@/components/AppMapDetailsPlace';
 import AppMapFilterMainButton from '@/components/AppMapFilterMainButton';
+import AppMapPopup from '@/components/AppMapPopup';
 import AppMapSettings from '@/components/AppMapSettings';
+import MixinUtil from '@/components/MixinUtil';
 import ModalGotoCoords from '@/components/ModalGotoCoords';
 import ObjectInfo from '@/components/ObjectInfo';
-
-import { MapMgr, ObjectData, ObjectMinData } from '@/services/MapMgr';
-import { MsgMgr } from '@/services/MsgMgr';
-
+import {
+  MapBase,
+  SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT,
+} from '@/MapBase';
+import * as MapIcons from '@/MapIcon';
+import * as MapMarkers from '@/MapMarker';
+import {
+  MapMarker,
+  SearchResultUpdateMode,
+} from '@/MapMarker';
+import { MapMarkerGroup } from '@/MapMarkerGroup';
+import {
+  SEARCH_PRESETS,
+  SearchExcludeSet,
+  SearchResultGroup,
+} from '@/MapSearch';
+import * as save from '@/save';
+import {
+  MapMgr,
+  ObjectData,
+  ObjectMinData,
+} from '@/services/MapMgr';
 import * as map from '@/util/map';
 import { Point } from '@/util/map';
+import { calcLayerLength } from '@/util/polyline';
 import { Settings } from '@/util/settings';
 import * as ui from '@/util/ui';
-import { calcLayerLength } from '@/util/polyline';
-import '@/util/leaflet_tile_workaround.js';
-import AppMapPopup from '@/components/AppMapPopup';
 
-import draggable from 'vuedraggable';
+const { isNavigationFailure, NavigationFailureType } = VueRouter;
 
 interface ObjectIdentifier {
   mapType: string;
@@ -851,10 +858,15 @@ export default class AppMap extends mixins(MixinUtil) {
     this.detailsPinMarker = new ui.Unobservable(L.marker(marker.getMarker().getLatLng(), {
       pane: 'front',
     }).addTo(this.map.m));
+
     if (zoom == -1)
       this.map.m.panTo(marker.getMarker().getLatLng());
     else
       this.map.m.setView(marker.getMarker().getLatLng(), zoom);
+
+    if (marker instanceof MapMarkers.MapMarkerObj || marker instanceof MapMarkers.MapMarkerKorok) {
+      this.switchToObjectLayer(marker.obj);
+    }
   }
 
   closeMarkerDetails(forOpen = false) {
@@ -1283,6 +1295,24 @@ export default class AppMap extends mixins(MixinUtil) {
     this.$nextTick(() => {
       this.map.showReferenceGrid(this.showReferenceGrid);
     });
+  }
+
+  private switchToObjectLayer(obj: ObjectMinData) {
+    if (obj.map_type != "Totk") {
+      return;
+    }
+
+    if (!obj.map_name) {
+      return;
+    }
+
+    if (obj.map_name.startsWith("Depths")) {
+      this.map.switchBaseTileLayer("Depths");
+    } else if (obj.map_name.startsWith("Sky")) {
+      this.map.switchBaseTileLayer("Sky");
+    } else {
+      this.map.switchBaseTileLayer("Surface");
+    }
   }
 
   created() {
