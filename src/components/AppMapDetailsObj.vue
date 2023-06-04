@@ -91,10 +91,14 @@
 
     <section v-show="genGroup.length">
       <hr>
-      <h4 class="subsection-heading">Generation group</h4>
-      <div class="search-results">
-        <ObjectInfo v-for="otherObj in genGroup" :key="otherObj.objid" :obj="otherObj" :isStatic="false" @click.native="jumpToObj(otherObj)" />
-      </div>
+      <details>
+        <summary>
+          <h4 class="subsection-heading">Generation group</h4>
+        </summary>
+        <div class="search-results">
+          <ObjectInfo v-for="otherObj in genGroup" :key="otherObj.objid" :obj="otherObj" :isStatic="false" @click.native="jumpToObj(otherObj)" />
+        </div>
+      </details>
     </section>
   </div>
 </template>
