@@ -5,18 +5,15 @@ const RADAR_URL = process.env.VUE_APP_RADAR_URL;
 export type Vec3 = [number, number, number];
 
 export interface ResPlacementObj {
-  readonly '!Parameters'?: { [key: string]: any };
+  readonly Dynamic?: { [key: string]: any };
+  readonly Phive?: { [key: string]: any };
   readonly SRTHash: number;
-  readonly HashId: string;
-  readonly OnlyOne?: boolean;
-  readonly UniqueName?: string;
-  readonly UnitConfigName: string;
-  readonly LinksToObj?: any;
-  readonly LinksToRail?: any;
+  readonly Hash: string;
+  readonly Gyaml: string;
+  readonly Links?: any;
   readonly Translate: Vec3;
   readonly Scale?: Vec3 | number;
   readonly Rotate?: Vec3 | number;
-  readonly Dynamic?: { [key: string]: any };
 }
 
 export const enum ObjectDropType {
@@ -53,13 +50,6 @@ export interface ObjectMinData {
 export interface ObjectData extends ObjectMinData {
   map_name: string;
   data: ResPlacementObj;
-}
-
-export class PlacementLink {
-  constructor(public readonly otherObj: ObjectData,
-    public readonly linkIter: any,
-    public readonly ltype: string,
-  ) { }
 }
 
 function parse(r: Response) {

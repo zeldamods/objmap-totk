@@ -14,7 +14,6 @@ import {
   MapMgr,
   ObjectData,
   ObjectMinData,
-  PlacementLink,
 } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 import { ColorScale } from '@/util/colorscale';
@@ -35,52 +34,6 @@ const DRAGON_HASH_IDS = [
 
 const rock_target = ["Obj_LiftRockWhite_Korok_A_01", "Obj_LiftRockGerudo_Korok_A_01", "Obj_LiftRockEldin_Korok_A_01"];
 const rock_source = ["Obj_LiftRockWhite_A_01", "Obj_LiftRockGerudo_A_01", "Obj_LiftRockEldin_A_01"];
-
-enum MapLinkDefType {
-  BasicSig = 0x0,
-  AxisX = 0x1,
-  AxisY = 0x2,
-  AxisZ = 0x3,
-  '-AxisX' = 0x4,
-  '-AxisY' = 0x5,
-  '-AxisZ' = 0x6,
-  GimmickSuccess = 0x7,
-  VelocityControl = 0x8,
-  BasicSigOnOnly = 0x9,
-  Remains = 0xA,
-  DeadUp = 0xB,
-  LifeZero = 0xC,
-  Stable = 0xD,
-  ChangeAtnSig = 0xE,
-  Create = 0xF,
-  Delete = 0x10,
-  MtxCopyCreate = 0x11,
-  Freeze = 0x12,
-  ForbidAttention = 0x13,
-  SyncLink = 0x14,
-  CopyWaitRevival = 0x15,
-  OffWaitRevival = 0x16,
-  Recreate = 0x17,
-  AreaCol = 0x18,
-  SensorBind = 0x19,
-  ForSale = 0x1A,
-  ModelBind = 0x1B,
-  PlacementLOD = 0x1C,
-  DemoMember = 0x1D,
-  PhysSystemGroup = 0x1E,
-  StackLink = 0x1F,
-  FixedCs = 0x20,
-  HingeCs = 0x21,
-  LimitHingeCs = 0x22,
-  SliderCs = 0x23,
-  PulleyCs = 0x24,
-  BAndSCs = 0x25,
-  BAndSLimitAngYCs = 0x26,
-  CogWheelCs = 0x27,
-  RackAndPinionCs = 0x28,
-  Reference = 0x29,
-  Invalid = 0x2A,
-}
 
 function numOrArrayToArray(x: number | [number, number, number] | undefined): [number, number, number] | undefined {
   return typeof x == 'number' ? [x, x, x] : x;
@@ -117,10 +70,6 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
   private dropTables: { [key: string]: any } = {};
   private shopData: { [key: string]: any } = {};
-  private links: PlacementLink[] = [];
-  private linksToSelf: PlacementLink[] = [];
-  private linkTagInputs: PlacementLink[] = [];
-  private isInvertedLogicTag = false;
 
   private areaMarkers: L.Path[] = [];
   private staticData = staticData;
@@ -136,9 +85,6 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.genGroup = [];
     this.genGroupSet.clear();
     this.dropTables = {};
-    this.links = [];
-    this.linksToSelf = [];
-    this.linkTagInputs = [];
     this.areaMarkers.forEach(m => m.remove());
     this.areaMarkers = [];
     this.rails = [];
@@ -171,15 +117,6 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
         this.shopData = await MapMgr.getInstance().getObjShopData();
       }
     }
-
-    if (this.obj.data.LinksToRail) { // || DRAGON_HASH_IDS.includes(this.obj.hash_id)) {
-      this.rails = await MapMgr.getInstance().getObjRails(this.obj.hash_id);
-    }
-
-    this.initLinks();
-    this.initLinksToSelf();
-    this.initLinkTagLinks();
-    this.isInvertedLogicTag = this.obj.name === 'LinkTagNAnd' || this.obj.name === 'LinkTagNOr';
 
     this.initAreaMarkers();
 
@@ -324,125 +261,18 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     return d.toFixed(digits);
   }
 
-  linkTagSaveFlagAction(): string {
-    if (!this.obj)
-      return '???';
-    if (this.obj.data['!Parameters']!.IncrementSave || this.obj.name == 'LinkTagCount')
-      return 'Increments';
-    switch (this.obj.data['!Parameters']!.SaveFlagOnOffType) {
-      case 0:
-        if (this.obj.name == 'LinkTagAnd' || this.obj.name == 'LinkTagNAnd' || this.obj.name == 'LinkTagXOr')
-          return 'Sets';
-        if (this.obj.name == 'LinkTagOr' || this.obj.name == 'LinkTagNOr')
-          return 'Clears';
-        return '???';
-      case 1:
-        return 'Sets';
-      case 2:
-        return 'Clears';
-      default:
-        return '???';
-    }
-  }
-
-  linkTagSaveFlag(): string {
-    if (!this.obj)
-      return '';
-    switch (this.obj.data['!Parameters']!.MakeSaveFlag) {
-      case 0:
-        return this.obj.data['!Parameters']!.SaveFlag || '';
-      case 1:
-        return 'Clear_{CURRENT_MAP_NAME}';
-      case 2:
-        return 'Open_{DUNGEON_NAME}';
-      case 3:
-        return `${this.obj.map_type}_${this.obj.name}_${this.obj.hash_id}`;
-      default:
-        return 'UNEXPECTED_MAKE_SAVE_FLAG';
-    }
-  }
-
-  private initLinks() {
-    const links = this.obj!.data.LinksToObj;
-    if (!links)
-      return;
-
-    for (const link of links) {
-      const destObj = (this.genGroupSet.get(link.DestUnitHashId))!;
-      this.links.push(new PlacementLink(destObj, link, link.DefinitionName));
-    }
-  }
-
-  private initLinksToSelf() {
-    for (const obj of this.genGroup) {
-      const links = obj.data.LinksToObj;
-      if (!links)
-        continue;
-
-      for (const link of links) {
-        if (link.DestUnitHashId === this.obj!.hash_id)
-          this.linksToSelf.push(new PlacementLink(obj, link, link.DefinitionName));
-      }
-    }
-  }
-
-  private initLinkTagLinks() {
-    if (!this.obj!.name.startsWith('LinkTag'))
-      return;
-
-    for (const link of this.linksToSelf) {
-      const type: number = (<any>MapLinkDefType)[link.ltype];
-      if (type <= 0xe)
-        this.linkTagInputs.push(link);
-    }
-  }
-
   private initAreaMarkers() {
     if (!this.obj)
       return;
 
-    this.addDungeonElevatorLoadAreaMarker(this.obj);
-
     if (isAreaObject(this.obj))
       this.addAreaMarker(this.obj);
-
-    this.linksToSelf.filter(l => isAreaObject(l.otherObj)).forEach((link) => {
-      this.addAreaMarker(link.otherObj);
-    });
 
     if (this.obj.name == 'LocationTag') {
       this.genGroup.filter(isAreaObject).forEach((o) => {
         this.addAreaMarker(o);
       });
     }
-  }
-
-  private addDungeonElevatorLoadAreaMarker(obj: ObjectData) {
-    let radius = 0.0;
-    if (obj.name == 'DgnObj_EntranceElevator_A_01') {
-      radius = 64.0;
-      //if (obj.hash_id == KUH_TAKKAR_ELEVATOR_HASH_ID) {
-      /* Kuh Takkar, elevator in the same gen group as the ice actor
-         which has an unload radius of 1500m -- so the elevator has
-         a 1500m radius.
-      */
-      //  radius = 1500.0;
-      //}
-    } else if (obj.name == 'DgnObj_EntranceElevatorSP') {
-      radius = 528.0;
-      if (obj.data['!Parameters']!.EventFlowName == 'Demo603_0') {
-        radius = 1500.0;
-      }
-    }
-
-    if (radius == 0.0)
-      return;
-
-    const mb = this.marker.data.mb;
-    const [x, y, z] = obj.data.Translate;
-    const areaMarker = L.circle(mb.fromXYZ([x, 0, z]), { radius }).addTo(mb.m);
-    areaMarker.bringToBack();
-    this.areaMarkers.push(areaMarker);
   }
 
   private addAreaMarker(obj: ObjectData) {
@@ -502,20 +332,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     if (!this.obj || !isAreaObject(this.obj))
       return false;
 
-    const params = this.obj.data['!Parameters'];
-
-    const shape: string = (params && params.Shape) ? params.Shape : 'Box';
-
-    if (!this.obj.data.Rotate)
-      return false;
-
-    if (shape == 'Sphere' || shape == 'Hull')
-      return false;
-
-    if (shape == 'Box') {
-      return typeof this.obj.data.Rotate != 'number';
-    }
-
+    // TODO: check object shape correctly
     return true;
   }
 
@@ -567,21 +384,6 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       }
     }
     return lines.join("\n");
-  }
-
-  getDropTableName() {
-    if (!this.obj || !this.obj.data || !this.obj.data['!Parameters']) {
-      return "";
-    }
-    const params: { [key: string]: any } = this.obj.data['!Parameters'];
-    let dropTableName = "Normal";
-    let keys = ['ArrowName', 'DropTable'];
-    for (var i = 0; i < keys.length; i++) {
-      if (keys[i] in params) {
-        return params[keys[i]];
-      }
-    }
-    return "Normal";
   }
 
   findItemByHash(group: any[], links: any[], name: string): any {

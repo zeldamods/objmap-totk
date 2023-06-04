@@ -1,20 +1,18 @@
-import Vue from 'vue';
-import { Prop } from 'vue-property-decorator';
 import Component, { mixins } from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
-import { rankUpEnemyForHardMode } from '@/level_scaling';
 import MixinUtil from '@/components/MixinUtil';
+import {
+  ObjectData,
+  ObjectMinData,
+} from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
-import { ObjectData, ObjectMinData, PlacementLink } from '@/services/MapMgr';
 import { Settings } from '@/util/settings';
 
 @Component
 export default class ObjectInfo extends mixins(MixinUtil) {
   @Prop()
   private obj!: ObjectData | ObjectMinData | null;
-
-  @Prop()
-  private link!: PlacementLink | null;
 
   @Prop({ type: String, default: 'search-result' })
   private className!: string;
@@ -33,11 +31,6 @@ export default class ObjectInfo extends mixins(MixinUtil) {
   private metadata: any | null = null;
 
   private created() {
-    if ((!this.obj && !this.link) || (this.obj && this.link))
-      throw new Error('needs an object *or* a placement link');
-
-    if (this.link)
-      this.data = this.link.otherObj;
     if (this.obj)
       this.data = this.obj;
   }
