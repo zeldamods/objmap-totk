@@ -16,6 +16,7 @@ export interface ResPlacementObj {
   readonly Translate: Vec3;
   readonly Scale?: Vec3 | number;
   readonly Rotate?: Vec3 | number;
+  readonly Dynamic?: { [key: string]: any };
 }
 
 export const enum ObjectDropType {

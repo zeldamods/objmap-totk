@@ -88,7 +88,7 @@ function numOrArrayToArray(x: number | [number, number, number] | undefined): [n
 
 function isAreaObject(obj: ObjectMinData) {
   const areaObjectNames = ["Area", "BoxWater", "SpotBgmTag", "PointWindSetTag", "AreaCulling_InnerHide",
-    "AreaCulling_InnerOn", "AreaCulling_OuterNPCMementary", "FarModelCullingArea"];
+    "AreaCulling_InnerOn", "AreaCulling_OuterNPCMementary", "FarModelCullingArea", 'LocationArea'];
   return areaObjectNames.includes(obj.name) || obj.name.startsWith('AirWall');
 }
 
@@ -446,10 +446,12 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   }
 
   private addAreaMarker(obj: ObjectData) {
+    const shapes = ['Sphere', 'Capsule', 'Box', 'Cylinder'];
     const mb = this.marker.data.mb;
     const [x, y, z] = obj.data.Translate;
-    const params = obj.data['!Parameters'];
-    const shape: string = (params && params.Shape) ? params.Shape : 'Box';
+    const dyn = obj.data.Dynamic;
+    let shapeNum = (dyn && dyn.RigidBodyShapeType !== undefined) ? dyn.RigidBodyShapeType : 2;
+    const shape = (shapeNum <= 3) ? shapes[shapeNum] : shapes[2];
     const scale = numOrArrayToArray(obj.data.Scale);
     const rotate = numOrArrayToArray(obj.data.Rotate);
 
@@ -483,7 +485,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
         areaMarker.transform._map = areaMarker._map;
         const center = (<L.Rectangle>(areaMarker)).getCenter();
         // @ts-ignore
-        areaMarker.transform._transformPoints(areaMarker, -rotate[0], null, center, center);
+        areaMarker.transform._transformPoints(areaMarker, -rotate[1], null, center, center);
       }
     } else if (shape == 'Hull') {
       // Deliberately unhandled.
