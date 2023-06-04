@@ -615,7 +615,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     return flowers;
   }
 
-  getKorokIcon(obj_name: string, style: string = "", text: string = ""): L.DivIcon {
+  getKorokIcon(obj_name: string, style: string = "", text: string = ""): L.DivIcon | L.Icon {
     let html = "";
     let className = "";
     if (obj_name == "FldObj_KorokStartingBlock_A_01") {
@@ -628,6 +628,13 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       html = '<i class="fa fa-bullseye" style="font-size: 1.6em; color: rgba(255,255,255,0.6);"></i>';
     } else if (rock_source.includes(obj_name)) {
       html = '<i class="fa fa-cloud" style="font-size: 1.6em; color: #bbb; text-shadow: black 0px 0px 3px; "></i>';
+    } else if (obj_name == "KorokCarryPassenger_Pair" || obj_name == "KorokCarry_Destination") {
+      if (style == "smoke") {
+        const w = 35;
+        const h = w * 1.43;
+        return L.icon({ iconUrl: '/icons/smoke.svg', iconSize: [w, h], iconAnchor: [w / 2, h] });
+      }
+      return L.icon({ iconUrl: '/icons/mapicon_korok.png', iconSize: [20, 20], iconAnchor: [10, 10] });
     }
     return L.divIcon({
       html: html, className: className, iconSize: [30, 30], iconAnchor: [15, 15],
@@ -635,7 +642,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   }
 
   getKorokMarkerWithIcon(obj: any, style: string = "", text: string = "") {
-    let icon = this.getKorokIcon(obj.data.UnitConfigName, style, text);
+    let icon = this.getKorokIcon(obj.name, style, text);
     return L.marker([obj.data.Translate[2], obj.data.Translate[0]], { icon: icon });
   }
 
@@ -691,6 +698,24 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       });
       let line = L.polyline(ll, { color: "#cccccc", weight: 1.5 }).addTo(map.m);
       this.korokMarkers.push(line);
+    } else if (this.obj.name == "KorokCarryProgressKeeper" ||
+      this.obj.name == "KorokCarry_Destination" ||
+      this.obj.name == "KorokCarryPassenger_Pair") {
+      const names: { [key: string]: any } = {
+        'KorokCarry_Destination': { text: "I'm waiting here for my friend.", },
+        'KorokCarryPassenger_Pair': { text: 'I need to reach my friend!' },
+      }
+      const objs = this.genGroup.filter(obj => obj.name in names);
+      const markers = objs.map(obj =>
+        this.getKorokMarkerWithIcon(obj).addTo(map.m).bindTooltip(names[obj.name].text)
+      );
+      this.korokMarkers.push(...markers);
+      const ll = objs.map((obj: any) => { return [obj.data.Translate[2], obj.data.Translate[0]] });
+      const line = L.polyline(ll, { color: '#cccccc', weight: 1.5 }).addTo(map.m);
+      this.korokMarkers.push(line);
+      const m = objs.filter(obj => obj.name.includes("Destination"))
+        .map(obj => this.getKorokMarkerWithIcon(obj, "smoke").addTo(map.m));
+      this.korokMarkers.push(...m);
     }
   }
 
