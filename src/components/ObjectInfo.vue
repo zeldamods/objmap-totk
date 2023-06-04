@@ -27,7 +27,7 @@
       <i class="fas fa-fw fa-location-arrow" aria-hidden="true" style="color: honeydew"></i>
       {{data.location}}
     </section>
-    <section class="search-result-scale" v-if="data.scale === 0">
+    <section class="search-result-scale" v-if="(data.name.startsWith('Enemy_') || data.name.startsWith('Weapon_') || data.name.startsWith('TBox_')) && data.scale === 0">
       <i class="fas fa-fw fa-ban" style="color:tomato"></i>
       {{data.name.includes('Enemy_Giant') ? 'No enemy scaling' : 'No scaling'}}
     </section>
