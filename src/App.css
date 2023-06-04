@@ -76,11 +76,11 @@ code {
   box-shadow: 0 1px 3px #ffffff00;
   color: black;
 }
-.leaflet-tooltip.akkala {
+.leaflet-tooltip.ulri {
   text-shadow:    1px 1px #FBFE53 ,  1px -1px #FBFE53 ,
                  -1px 1px #FBFE53 , -1px -1px #FBFE53 ;
 }
-.leaflet-tooltip.central {
+.leaflet-tooltip.hyrulefield {
   text-shadow:    1px 1px #E1FF8E ,  1px -1px #E1FF8E ,
                  -1px 1px #E1FF8E , -1px -1px #E1FF8E ;
 }
@@ -88,31 +88,39 @@ code {
   text-shadow:    1px 1px #F29F5D ,  1px -1px #F29F5D ,
                  -1px 1px #F29F5D , -1px -1px #F29F5D ;
 }
-.leaflet-tooltip.duelingpeaks {
+.leaflet-tooltip.sahasra {
   text-shadow:    1px 1px #CB6987 ,  1px -1px #CB6987 ,
                  -1px 1px #CB6987 , -1px -1px #CB6987 ;
 }
-.leaflet-tooltip.faron {
+.leaflet-tooltip.rabella {
   text-shadow:    1px 1px #5FBD52 ,  1px -1px #5FBD52 ,
                  -1px 1px #5FBD52 , -1px -1px #5FBD52 ;
 }
-.leaflet-tooltip.gerudo {
+.leaflet-tooltip.gerudohigh {
   text-shadow:    1px 1px #8ACBE0 ,  1px -1px #8ACBE0 ,
                  -1px 1px #8ACBE0 , -1px -1px #8ACBE0 ;
 }
-.leaflet-tooltip.hebra {
+.leaflet-tooltip.rospro {
   text-shadow:    1px 1px  #7FD0E0,  1px -1px  #7FD0E0,
                  -1px 1px  #7FD0E0, -1px -1px  #7FD0E0;
 }
-.leaflet-tooltip.woodland {
+.leaflet-tooltip.sky {
+  text-shadow:    1px 1px  #7FD0E0,  1px -1px  #7FD0E0,
+                 -1px 1px  #7FD0E0, -1px -1px  #7FD0E0;
+}
+.leaflet-tooltip.greatskyisland {
+  text-shadow:    1px 1px #efef9e ,  1px -1px #efef9e ,
+                 -1px 1px #efef9e , -1px -1px #efef9e ;
+}
+.leaflet-tooltip.thyphlo {
   text-shadow:    1px 1px #6ACF3D ,  1px -1px #6ACF3D ,
                  -1px 1px #6ACF3D , -1px -1px #6ACF3D ;
 }
-.leaflet-tooltip.lake {
+.leaflet-tooltip.popla {
   text-shadow:    1px 1px #7AA2F8 ,  1px -1px #7AA2F8 ,
                  -1px 1px #7AA2F8 , -1px -1px #7AA2F8 ;
 }
-.leaflet-tooltip.hateno {
+.leaflet-tooltip.lanayru {
   text-shadow:    1px 1px #E99E37 ,  1px -1px #E99E37 ,
                  -1px 1px #E99E37 , -1px -1px #E99E37 ;
 }
@@ -120,7 +128,7 @@ code {
   text-shadow:    1px 1px #9DCCC3 ,  1px -1px #9DCCC3 ,
                  -1px 1px #9DCCC3 , -1px -1px #9DCCC3 ;
 }
-.leaflet-tooltip.ridgeland {
+.leaflet-tooltip.xhyrulefield {
   text-shadow:    1px 1px  #BD6681,  1px -1px  #BD6681,
                  -1px 1px  #BD6681, -1px -1px  #BD6681;
 }
@@ -128,17 +136,25 @@ code {
   text-shadow:    1px 1px  #5CBC4F,  1px -1px  #5CBC4F,
                  -1px 1px  #5CBC4F, -1px -1px  #5CBC4F;
 }
-.leaflet-tooltip.wasteland {
+.leaflet-tooltip.gerudo {
   text-shadow:    1px 1px #F2A33A ,  1px -1px #F2A33A ,
                  -1px 1px #F2A33A , -1px -1px #F2A33A ;
 }
-.leaflet-tooltip.castle {
+.leaflet-tooltip.lookout {
   text-shadow:    1px 1px #B2653F ,  1px -1px #B2653F ,
                  -1px 1px #B2653F , -1px -1px #B2653F ;
 }
-.leaflet-tooltip.lanayru {
+.leaflet-tooltip.zorana {
   text-shadow:    1px 1px #C6B1FF ,  1px -1px #C6B1FF ,
                  -1px 1px #C6B1FF , -1px -1px #C6B1FF ;
+}
+.leaflet-tooltip.lindor {
+  text-shadow:    1px 1px #e08f7f ,  1px -1px #e08f7f ,
+                 -1px 1px #e08f7f , -1px -1px #e08f7f ;
+}
+.leaflet-tooltip.pikida {
+  text-shadow:    1px 1px #efef9e ,  1px -1px #efef9e ,
+                 -1px 1px #efef9e , -1px -1px #efef9e ;
 }
 
 

@@ -140,6 +140,9 @@ for field in ['MainField', 'MinusField']:
                     #item['Icon'] = 'ShopBougu'
                     #markers['Shop'].append(item)
                     pass
+                elif 'ArmorOfLambda' in msg:
+                    #print(msg)
+                    pass
                 elif 'HorseStableBranch' in msg:
                     item['Icon'] = 'Hatago'
                     markers['Place'].append(item)
@@ -164,6 +167,7 @@ for field in ['MainField', 'MinusField']:
         markers[item_kind].extend(items)
 
     data = json.load(open(f"{base}/Banc/{field}/HiddenKorok/{field}.hiddenkorok.json", "r"))
+    xkoroks = json.load(open("tools/koroks_id.json","r"))
     items = []
     for kind, values in data.items():
         for key, pt in values.items():
@@ -175,11 +179,15 @@ for field in ['MainField', 'MinusField']:
                 map_name = 'Sky'
             if key in ['15262678164833260129', '18194949317466592174']:
                 map_name = 'Surface'
+            hash_id = parseHash(key)
+            ID = hash_id
+            if ID in xkoroks:
+                ID = xkoroks[ID]['id']
             items.append({
-                'id': parseHash(key),
+                'id': ID,
                 'Translate': { 'X': pt[0], 'Y': pt[1], 'Z': pt[2] },
                 'hash_id': parseHash(key),
-                'name': 'Korok',
+                'name': ID,
                 'map_static': 1,
                 'map_name': map_name,
                 'map_type': 'Totk'

@@ -417,25 +417,30 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
 // Convert first letter of Korok ID to CSS classname
 function classToColor(id: string): string {
   let classes: any = {
-    'A': 'akkala',
-    'C': 'central',
-    'E': 'eldin',
-    'D': 'duelingpeaks',
-    'F': 'faron',
-    'G': 'gerudo',
-    'H': 'hebra',
-    'K': 'woodland',
-    'L': 'lake',
-    'N': 'hateno',
+    'UM': 'ulri',
+    'LL': 'lookout',
+    'EC': 'eldin',
+    'SS': 'sahasra',
+    'RW': 'rabella',
+    'GH': 'gerudohigh',
+    'RP': 'rospro',
+    'TR': 'thyphlo',
+    'PF': 'popla',
+    'ML': 'lanayru',
+    'HF': 'hyrulefield',
+    'LB': 'lindor',
+    'PS': 'pikida',
     'P': 'plateau',
-    'R': 'ridgeland',
     'T': 'tabantha',
-    'W': 'wasteland',
     'X': 'castle',
-    'Z': 'lanayru',
+    'GC': 'gerudo',
+    'UZ': 'zorana',
+    'SK': 'sky',
+    'GS': 'greatskyisland',
   };
-  if (id[0] in classes) {
-    return classes[id[0]] + ' korok';
+  const ID = id.slice(0, 2);
+  if (ID in classes) {
+    return classes[ID] + ' korok';
   }
   return 'default';
 }
