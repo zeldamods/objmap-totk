@@ -127,6 +127,10 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       }
     }
 
+    if (this.obj.data.Rails) {
+      this.rails = await MapMgr.getInstance().getObjRails(this.obj.hash_id) || [];
+    }
+
     this.initAreaMarkers();
 
     this.marker.data.mb.m.on('ColorScale:change', async (args: any) => {
@@ -168,16 +172,23 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.railLimits = {};
     this.railMarkers = this.rails.map((rail: any) => {
       let pts = curves.railPath(rail); //[x,y,z] y is UpDown
+      if (pts.length == 0) {
+        return undefined;
+      }
       let yvals = pts.map((pt: any) => pt[1]);
       if (this.railLimits.min === undefined) { this.railLimits.min = yvals[0]; }
       if (this.railLimits.max === undefined) { this.railLimits.max = yvals[0]; }
       this.railLimits.min = Math.min(this.railLimits.min, ...yvals);
       this.railLimits.max = Math.max(this.railLimits.max, ...yvals);
+      if (this.railLimits.max - this.railLimits.min < 1e-3) {
+        this.railLimits.min = this.railLimits.max - 5;
+        this.railLimits.max = this.railLimits.max + 5;
+      }
       // Draw polyline [x,z,y] but z is North-South and y is Up-Down
       pts = pts.map((pt: any) => [pt[2], pt[0], pt[1]]);
       // @ts-ignore
       return L.hotline(pts, opts).addTo(map.m);
-    });
+    }).filter((x: any) => x);
     if (this.railMarkers.length) {
       if (!this.staticData.colorScale) {
         this.staticData.colorScale = new ColorScale(opts, { position: 'bottomleft' }).addTo(map.m);
@@ -387,7 +398,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       } else {
         lines.push(`<span style="text-decoration: underline;"><b>${names[i]}</b> - x${repeatNum[0]}-${repeatNum[1]}</span>`);
       }
-      let items = Object.keys(table.items).sort(function (a, b) { return table.items[b] - table.items[a]; });
+      let items = Object.keys(table.items).sort(function(a, b) { return table.items[b] - table.items[a]; });
       for (var j = 0; j < items.length; j++) {
         lines.push(`  ${table.items[items[j]].toFixed(1).padStart(4, ' ')}% - ${this.getName(items[j])}`);
       }

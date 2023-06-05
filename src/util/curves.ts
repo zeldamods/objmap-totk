@@ -93,7 +93,7 @@ function railPathLinear(rail: any): any {
 //
 function railPathBezier(rail: any): any {
   let out = [];
-  let n = rail.RailPoints.length;
+  let n = rail.Points.length;
   if (!rail['IsClosed']) {
     n -= 1;
   }
@@ -103,14 +103,14 @@ function railPathBezier(rail: any): any {
     if (rail['IsClosed']) {
       j = j % n;
     }
-    let p0 = rail.RailPoints[i].Translate;
-    let p1 = rail.RailPoints[j].Translate;
+    let p0 = rail.Points[i].Translate;
+    let p1 = rail.Points[j].Translate;
     let bez = [p0];
-    if (rail.RailPoints[i].ControlPoints) {
-      bez.push(ptAdd(p0, rail.RailPoints[i].ControlPoints[1]));
+    if (rail.Points[i].Control1) {
+      bez.push(rail.Points[i].Control1);
     }
-    if (rail.RailPoints[j].ControlPoints) {
-      bez.push(ptAdd(p1, rail.RailPoints[j].ControlPoints[0]));
+    if (rail.Points[j].Control0) {
+      bez.push(rail.Points[j].Control0);
     }
     bez.push(p1);
     out.push(...bezier(bez))
@@ -119,10 +119,5 @@ function railPathBezier(rail: any): any {
 }
 
 export function railPath(rail: any): any {
-  if (rail.RailType == "Linear") {
-    return railPathLinear(rail);
-  } else if (rail.RailType == "Bezier") {
-    return railPathBezier(rail);
-  }
-  return null;
+  return railPathBezier(rail);
 }

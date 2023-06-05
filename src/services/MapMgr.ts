@@ -14,6 +14,7 @@ export interface ResPlacementObj {
   readonly Translate: Vec3;
   readonly Scale?: Vec3 | number;
   readonly Rotate?: Vec3 | number;
+  readonly Rails?: any;
 }
 
 export const enum ObjectDropType {
