@@ -1346,10 +1346,28 @@ export default class AppMap extends mixins(MixinUtil) {
     if (this.$route.query.id) {
       // format: MapType,MapName,HashId
       const [mapType, mapName, hashId] = this.$route.query.id.toString().split(',');
-      MapMgr.getInstance().getObj(mapType, mapName, hashId).then((obj) => {
-        if (obj)
-          this.$emit('AppMap:open-obj', obj);
-      });
+      MapMgr.getInstance().getObj(mapType, mapName, hashId)
+        .then(async (obj) => {
+          if (!obj) {
+            obj = await MapMgr.getInstance().getObjByHashId(hashId);
+
+            // The user messed up the map type or map name.
+            // Fix the query string for them.
+            if (obj) {
+              this.$router.replace({
+                path: this.$route.fullPath,
+                query: {
+                  ...this.$route.query,
+                  id: [obj.map_type, obj.map_name, obj.hash_id].join(","),
+                },
+              });
+            }
+          }
+
+          if (obj) {
+            this.$emit('AppMap:open-obj', obj);
+          }
+        });
     }
   }
 
