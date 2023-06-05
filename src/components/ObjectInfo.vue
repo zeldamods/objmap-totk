@@ -76,6 +76,7 @@
   margin-bottom: 10px;
   font-size: 85%;
   transition: background 0.2s, border 0.2s;
+  overflow-wrap: break-word;
 
   &:not(.static) {
     cursor: pointer;
