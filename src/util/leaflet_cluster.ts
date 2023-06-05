@@ -1,5 +1,6 @@
-import L from 'leaflet';
 import 'leaflet.markercluster';
+
+import L from 'leaflet';
 
 /// Returns a MarkerClusterGroup whose main purpose is to cull invisible objects.
 export function makeClusterGroup(pad: number = 1, disableCluster = true): L.MarkerClusterGroup {
@@ -10,8 +11,6 @@ export function makeClusterGroup(pad: number = 1, disableCluster = true): L.Mark
     removeOutsideVisibleBounds: true,
     spiderfyOnMaxZoom: false,
     chunkedLoading: true,
-    // @ts-ignore
-    chunkInterval: 0,
   });
   // Override _getExpandedVisibleBounds to reduce the number of rendered markers for better perf.
   // @ts-ignore

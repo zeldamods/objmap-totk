@@ -34,7 +34,7 @@ export class MapBase {
   baseMapLayers: any = {};
   refGrid: Array<L.LayerGroup> = [];
   refGridOn: boolean = false;
-  activeLayer!: string;
+  activeLayer: string = "Surface";
 
   async loadTowerAreas() {
     /*
