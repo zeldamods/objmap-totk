@@ -249,6 +249,8 @@ function addPopupAndTooltip(layer: L.Marker | L.Polyline, root: any) {
   },
 })
 export default class AppMap extends mixins(MixinUtil) {
+  readonly OBJMAP_VERSION = process.env.VUE_APP_GIT_HASH;
+
   private map!: MapBase;
   private updatingRoute = false;
   private zoom = map.DEFAULT_ZOOM;

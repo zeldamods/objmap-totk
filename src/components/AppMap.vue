@@ -193,6 +193,7 @@
         <hr>
         <h4 class="subsection-heading">About this map</h4>
         <p>This object map is an <a href="https://github.com/zeldamods/objmap-totk">open source project</a>. Contributions are welcome.</p>
+        <p>Version <code>{{OBJMAP_VERSION || '???'}}</code></p>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-settings">
