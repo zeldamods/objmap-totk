@@ -73,7 +73,7 @@ export default class ObjectInfo extends mixins(MixinUtil) {
       return s;
 
     s += this.data.drop[0] == 2 ? 'Drop table: ' : '';
-    s += this.getName(this.data.drop[1]);
+    s += this.data.drop.slice(1).map((name: any) => this.getName(name)).join(", ");
 
     return s;
   }
