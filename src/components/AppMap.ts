@@ -1040,11 +1040,16 @@ export default class AppMap extends mixins(MixinUtil) {
 
   initContextMenu() {
     this.map.m.on(SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT, (e) => {
-      let mapType = Settings.getInstance().mapType;
-      //if (mapType !== 'MainField' && mapType !== 'AocField') {
-      //  this.searchAddGroup(`map:"${mapType}/${Settings.getInstance().mapName}"`);
-      //  return;
-      //}
+      const mapType = Settings.getInstance().mapType;
+      const mapName = Settings.getInstance().mapName;
+
+      if (mapType != "Totk") {
+        if (mapName.length !== 0)
+          this.searchAddGroup("*", `Map: ${mapType}/${mapName}`);
+        else
+          this.searchAddGroup("*", `Maps: ${mapType}`);
+        return;
+      }
 
       // @ts-ignore
       const latlng: L.LatLng = e.latlng;
@@ -1052,12 +1057,7 @@ export default class AppMap extends mixins(MixinUtil) {
       if (!map.isValidPoint(xyz))
         return;
       const quad = map.pointToMapUnit(xyz);
-      const layer = this.map.activeLayer;
-      if (this.map.activeLayer == "Surface") {
-        this.searchAddGroup(`map:"Surface_${quad}" OR map:"Cave_${quad}" OR map:"DeepHole_${quad}"`);
-      } else {
-        this.searchAddGroup(`map:"${layer}_${quad}"`);
-      }
+      this.searchAddGroup(`map:"${quad}"`, `Map: Sky/Surface/Depths ${quad}`);
     });
   }
 
