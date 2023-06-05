@@ -31,7 +31,6 @@ export class MapBase {
   center: Point = [0, 0, 0];
   zoom: number = map.DEFAULT_ZOOM;
   private zoomChangeCbs: Array<(zoom: number) => void> = [];
-  baseLayer: L.Layer[] = [];
   baseMapLayers: any = {};
   refGrid: Array<L.LayerGroup> = [];
   refGridOn: boolean = false;
@@ -217,7 +216,6 @@ export class MapBase {
       const baseLayer = L.tileLayer(`${TOTK_MAP}/${zarea}/maptex/{z}/{x}/{y}.webp`, {
         maxNativeZoom: 7,
       });
-      this.baseLayer.push(baseLayer);
       this.baseMapLayers[area] = baseLayer;
     }
     this.baseMapLayers.Surface.addTo(this.m);
