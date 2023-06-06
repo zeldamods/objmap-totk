@@ -67,6 +67,7 @@ markers['Labo'] = []
 markers['Chasm'] = []
 markers['Korok'] = []
 markers['Place'] = []
+markers['Cave'] = []
 
 # Multiple locations exist for Cities and Stables
 skips = {
@@ -149,6 +150,9 @@ for field in ['MainField', 'MinusField']:
                 elif msg in chasms_not_caves:
                     item['Icon'] = 'Chasm'
                     markers['Chasm'].append(item)
+                elif msg.startswith('Well_'):
+                    item['Icon'] = 'Well'
+                    markers['Cave'].append( item )
                 elif 'DemonStatue' in msg:
                     if msg.startswith('DemonStatue'):
                         item['Icon'] = 'Bargainer'

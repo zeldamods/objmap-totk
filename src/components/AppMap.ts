@@ -118,7 +118,7 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   'Cave': {
     cl: MapMarkers.MapMarkerCave,
     filterIcon: MapIcons.CAVE.options.iconUrl,
-    filterLabel: 'Cave',
+    filterLabel: 'Cave/Well',
   },
   'Korok': {
     cl: MapMarkers.MapMarkerKorok,

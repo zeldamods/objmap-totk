@@ -98,6 +98,7 @@ class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     'Battery': [MapIcons.BATTERY, ''],
     'Dispenser': [MapIcons.DISPENSER, ''],
     'Cave': [MapIcons.CAVE, 'Cave Entrance'],
+    'Well': [MapIcons.WELL, 'Well'],
     'Chasm': [MapIcons.CHASM, 'Chasm'],
     'Tear': [MapIcons.TOTK_TEAR, ''],
     'Lightroot': [MapIcons.TOTK_LIGHTROOT, ''],

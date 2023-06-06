@@ -76,6 +76,11 @@ export const CAVE = L.icon({
   iconSize: L.point(20, 20),
   tooltipAnchor: [0, 18],
 });
+export const WELL = L.icon({
+  iconUrl: '/icons/well.svg',
+  iconSize: L.point(20, 20),
+  tooltipAnchor: [0, 18],
+});
 export const CHASM = L.icon({
   iconUrl: '/icons/chasm.png',
   iconSize: L.point(20, 20),
