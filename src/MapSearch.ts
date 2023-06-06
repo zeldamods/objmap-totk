@@ -52,20 +52,20 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
       { label: 'Weapons (excluding enemies)', query: 'Weapon_ NOT actor:^"Enemy_"' },
     ],
   },
-  // {
-  //   label: '<i class="fas fa-apple-alt"></i>',
-  //   presets: [
-  //     {label: 'Cooking Pots', query: 'actor:Item_CookSet'},
-  //     {label: 'Fruits', query: 'actor:^Item_Fruit_*'},
-  //     {label: 'Enduring Ingredients', query: makeNameQuery(['Endura', 'Tireless Frog'])},
-  //     {label: 'Fireproof Ingredients', query: makeNameQuery(['Fireproof', 'Smotherwing Butterfly'])},
-  //     {label: 'Hasty Ingredients', query: makeNameQuery(['Hightail Lizard', 'Hot-Footed Frog', 'Fleet-Lotus Seeds', 'Rushroom', 'Swift Carrot', 'Swift Violet'])},
-  //     {label: 'Hasty Ingredients (Lvl2 only)', query: makeNameQuery(['Hot-Footed Frog', 'Fleet-Lotus Seeds', 'Swift Violet'])},
-  //     {label: 'Hearty Ingredients', query: 'name:Hearty'},
-  //     {label: 'Mighty Ingredients', query: makeNameQuery(['Mighty', 'Razorshroom', 'Razorclaw Crab', 'Bladed Rhino Beetle']),},
-  //     {label: 'Tough Ingredients', query: makeNameQuery(['Ironshroom', 'Fortified Pumpkin', 'Rugged Rhino Beetle', 'Ironshell Crab', 'Armored', 'Armoranth'])},
-  //   ],
-  // },
+  {
+    label: '<i class="fas fa-apple-alt"></i>',
+    presets: [
+      { label: 'Cooking Pots', query: 'actor:Item_CookSet*' },
+      { label: 'Fruits', query: 'Fruit' },
+      { label: 'Enduring Ingredients', query: makeNameQuery(['Endura', 'Tireless Frog']) },
+      { label: 'Fireproof Ingredients', query: makeNameQuery(['Fireproof', 'Smotherwing Butterfly']) },
+      { label: 'Hasty Ingredients', query: makeNameQuery(['Hightail Lizard', 'Hot-Footed Frog', 'Fleet-Lotus Seeds', 'Rushroom', 'Swift Carrot', 'Swift Violet']) },
+      //{label: 'Hasty Ingredients (Lvl2 only)', query: makeNameQuery(['Hot-Footed Frog', 'Fleet-Lotus Seeds', 'Swift Violet'])},
+      { label: 'Hearty Ingredients', query: 'name:Hearty' },
+      { label: 'Mighty Ingredients', query: makeNameQuery(['Mighty Item', 'Razorshroom', 'Razorclaw Crab', 'Bladed Rhino Beetle']), },
+      { label: 'Tough Ingredients', query: makeNameQuery(['Ironshroom', 'Fortified Pumpkin', 'Rugged Rhino Beetle', 'Ironshell Crab', 'Armored', 'Armoranth']) },
+    ],
+  },
   // {
   //   label: '<i class="fa fa-vial"></i>',
   //   presets: [
@@ -91,14 +91,10 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
     presets: [
       { label: 'Messages from an Ancient Era Stone Tablets', query: "Ancient Stone Tablet map: Sky" },
       { label: 'Old Maps', query: 'Old Map' },
-      //     {label: 'Memory Locations', query: 'name:"Memory"'},
-      //     {label: 'Goddess Statues', query: 'name:"Goddess Statue"'},
-      //     {label: 'Rafts', query: 'name:Raft'},
-      //     {label: 'Enemies', query: 'actor:^"Enemy_"'},
-      //     {label: 'BtB Enemies', query: '(' + makeActorQuery(['Enemy_Bokoblin', 'Enemy_Lizalfos', 'Enemy_Moriblin', 'Enemy_Giant', 'Enemy_Wizzrobe']) + ') NOT actor:bone'},
-      //     {label: 'Launchable Objects', query: makeActorQuery(LAUNCHABLE_OBJS.split('\n'))},
-      //     { label: 'Shrine Elevators', query: 'actor:EntranceElev*'},
-      //     { label: 'Zora Stone Monuments', query: 'actor:FldObj_RockZoraRelief' },
+      { label: 'Shadowy Figures with Weapons', query: 'Npc_MinusFieldGhost_000' },
+      { label: 'Statues Paths', query: 'WisemanStatue' },
+      { label: 'Bargainer Statue', query: 'Bargainer Statue' },
+      { label: 'Enemies', query: 'actor:^"Enemy_"' },
     ],
   }
 ]);
