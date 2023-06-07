@@ -94,6 +94,7 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
       { label: 'Shadowy Figures with Weapons', query: 'Npc_MinusFieldGhost_000' },
       { label: 'Statues Paths', query: 'WisemanStatue' },
       { label: 'Bargainer Statue', query: 'Bargainer Statue' },
+      { label: 'Addison', query: 'Addison' },
       { label: 'Enemies', query: 'actor:^"Enemy_"' },
     ],
   }
