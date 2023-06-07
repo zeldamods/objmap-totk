@@ -15,6 +15,8 @@ for v, val in data['entries'].items():
     if len(val['contents']) != 1:
         print(v, ">1")
     out[v] = val['contents'][0]['text']
+for i in range(3,15):
+    out[f'ZonauRelief_{i:02d}'] = "Ancient Tablet"
 out['_doc_'] = {
     'path': 'objmap/public/game_files/text/LocationMarker.json',
     'created': 'make_location_list.py',
@@ -24,5 +26,5 @@ out['_doc_'] = {
     'notes': 'msyt files created by msyt export file.msbt. Modified version in 2023-05-22 to accomdate variation in totk data structures',
 }
 
-json.dump(out, open("LocationMarker.json",'w'))
+json.dump(out, open("LocationMarker.json",'w'), indent=2)
 print("==> LocationMarker.json")

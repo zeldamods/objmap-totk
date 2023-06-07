@@ -118,9 +118,6 @@ for field in ['MainField', 'MinusField']:
                         item['ShowLevel'] = v['TargetZoomLevel'][i]
                 if kind == 'District':
                     item['ShowLevel'] = 'Farthest'
-                if 'ZonauRelief' in msg:
-                    item['MessageID'] = 'Anicent Tablet'
-
                 if msg in ['AncientLabo','HatenoLabo']:
                     item['Icon'] = 'Labo'
                     markers['Labo'].append(item)
