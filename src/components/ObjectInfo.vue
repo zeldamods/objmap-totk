@@ -85,6 +85,12 @@
       border: 1px solid #c2c2c27a;
     }
   }
+
+  &.active {
+    background-color: #009bff5c !important;
+    -webkit-box-shadow: inset 0 0 5px 2px #ffffffa1;
+    box-shadow: inset 0 0 5px 2px #ffffffa1;
+  }
 }
 
 .search-result-name {

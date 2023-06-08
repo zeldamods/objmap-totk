@@ -68,6 +68,25 @@
       <b-btn size="sm" block @click="emitBackToSearch()"><i class="fa fa-chevron-circle-left"></i> Back to search</b-btn>
     </section>
 
+    <section v-if="railsWithMarkers.length">
+      <hr>
+      <h4 class="subsection-heading">Rails</h4>
+      <div class="search-results">
+        <div class="search-result"
+          v-for="(rail, idx) in rails"
+          :key="rail.Hash"
+          @click="onRailClicked(idx)"
+          :class="{'active': idx === selectedRailIdx}"
+        >
+          <section class="search-result-name">{{getRailUiName(rail)}}</section>
+          <section v-if="rail.Gyaml && rail.Gyaml !== rail.Name"><i class="fas fa-hashtag fa-fw"></i> Gyaml: {{rail.Gyaml}}</section>
+          <section v-if="rail.Name"><i class="fas fa-hashtag fa-fw"></i> Name: {{rail.Name}}</section>
+          <section v-if="rail.Hash"><i class="fas fa-hashtag fa-fw"></i> Hash: {{formatObjId(rail.Hash)}}</section>
+          <section v-if="rail.Dynamic && rail.Dynamic.IsEnabledGameDataFlagName"><i class="fas fa-lightbulb fa-fw"></i> Enabled if <code>{{rail.Dynamic.IsEnabledGameDataFlagName}}</code></section>
+        </div>
+      </div>
+    </section>
+
     <section v-for="group in aiGroups" :key="group.hash_id">
       <hr>
       <h4 class="subsection-heading">AI group {{formatObjId(group.hash_id)}}</h4>

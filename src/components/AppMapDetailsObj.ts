@@ -80,9 +80,12 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   private staticData = staticData;
 
   private korokMarkers: any[] = [];
-  private rails: { [key: string]: any }[] = [];
-  private railMarkers: any[] = [];
+
+  rails: { [key: string]: any }[] = [];
+  railsWithMarkers: { [key: string]: any }[] = [];
+  private railMarkers: L.Polyline[] = [];
   private railLimits: { [key: string]: any } = {};
+  selectedRailIdx = -1;
 
   async init() {
     this.minObj = this.marker.data.obj;
@@ -96,6 +99,8 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.rails = [];
     this.railMarkers.forEach(m => m.remove());
     this.railMarkers = [];
+    this.railsWithMarkers = [];
+    this.selectedRailIdx = -1;
     this.shopData = {};
     if (this.minObj.objid) {
       this.obj = (await MapMgr.getInstance().getObjByObjId(this.minObj.objid))!;
@@ -169,12 +174,15 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     };
 
     let map = this.marker.data.mb;
+
     this.railLimits = {};
-    this.railMarkers = this.rails.map((rail: any) => {
+
+    for (const rail of this.rails) {
       let pts = curves.railPath(rail); //[x,y,z] y is UpDown
       if (pts.length == 0) {
-        return undefined;
+        continue;
       }
+
       let yvals = pts.map((pt: any) => pt[1]);
       if (this.railLimits.min === undefined) { this.railLimits.min = yvals[0]; }
       if (this.railLimits.max === undefined) { this.railLimits.max = yvals[0]; }
@@ -186,9 +194,12 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       }
       // Draw polyline [x,z,y] but z is North-South and y is Up-Down
       pts = pts.map((pt: any) => [pt[2], pt[0], pt[1]]);
+
+      this.railsWithMarkers.push(rail);
       // @ts-ignore
-      return L.hotline(pts, opts).addTo(map.m);
-    }).filter((x: any) => x);
+      this.railMarkers.push(L.hotline(pts, opts).addTo(map.m));
+    }
+
     if (this.railMarkers.length) {
       if (!this.staticData.colorScale) {
         this.staticData.colorScale = new ColorScale(opts, { position: 'bottomleft' }).addTo(map.m);
@@ -633,5 +644,46 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     }
 
     this.jumpToObj(entity);
+  }
+
+  getRailUiName(rail: any): string {
+    if (rail.Dynamic && rail.Dynamic.UniqueName) {
+      return rail.Dynamic.UniqueName;
+    }
+
+    if (rail.Name) {
+      return rail.Name;
+    }
+
+    if (rail.Gyaml) {
+      return rail.Gyaml;
+    }
+
+    return "???";
+  }
+
+  onRailClicked(railIdx: number) {
+    if (this.selectedRailIdx === railIdx) {
+      this.deselectRail(railIdx);
+    } else if (this.selectedRailIdx !== -1) {
+      this.deselectRail(this.selectedRailIdx);
+      this.selectRail(railIdx);
+    } else {
+      this.selectRail(railIdx);
+    }
+  }
+
+  private selectRail(railIdx: number) {
+    const marker = this.railMarkers[railIdx];
+    this.selectedRailIdx = railIdx;
+    this.railMarkers.forEach(m => m.remove());
+    marker.addTo(this.marker.data.mb.m);
+  }
+
+  private deselectRail(railIdx: number) {
+    const marker = this.railMarkers[railIdx];
+    marker.remove();
+    this.selectedRailIdx = -1;
+    this.railMarkers.forEach(m => m.addTo(this.marker.data.mb.m));
   }
 }
