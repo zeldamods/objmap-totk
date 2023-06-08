@@ -7558,7 +7558,7 @@ TBox_Field_Stone, Treasure Chest
 TBox_Field_Stone_CanNotOpen, Treasure Chest
 TBox_Field_Stone_Zonau, Treasure Chest
 TBox_Field_Stone_Zonau_NoDelete, Treasure Chest
-TBox_Field_Wood, Treasure ChestTreasure Chest
+TBox_Field_Wood, Treasure Chest
 TBox_Field_Wood_For_Enemy_Carrier, Treasure Chest
 TBox_Field_Wood_Liftable_CreateToby, Treasure Chest
 TBox_Field_Wood_Zonau, Treasure Chest
