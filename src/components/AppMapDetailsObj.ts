@@ -603,6 +603,12 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       return false;
     }
 
+    if (this.obj!.data.Presence) {
+      // This is not just a "possible" conditional spawn, it is guaranteed to be one.
+      // Return false because we are already going to tell the user this is a conditional spawn.
+      return false;
+    }
+
     return true;
   }
 

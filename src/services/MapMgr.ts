@@ -7,6 +7,11 @@ export type Vec3 = [number, number, number];
 export interface ResPlacementObj {
   readonly Dynamic?: { [key: string]: any };
   readonly Phive?: { [key: string]: any };
+  readonly Presence?: {
+    FlagName: string;
+    IsCheckLazy: boolean;
+    IsNegation: boolean;
+  };
   readonly SRTHash: number;
   readonly Hash: string;
   readonly Gyaml: string;

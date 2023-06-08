@@ -15,6 +15,8 @@
 
       <p class="my-1" v-if="isPossibleConditionalSpawn()" style="color: orange"><i class="fa fa-exclamation-circle"></i> This object might be a conditional spawn, or it might have custom logic.</p>
 
+      <p class="my-1" v-if="obj.data.Presence" style="color: orange"><i class="fa fa-exclamation-circle"></i> This object only spawns if the flag <code>{{obj.data.Presence.FlagName}}</code> is {{obj.data.Presence.IsNegation ? "not" : ""}} set.</p>
+
       <p class="my-1" v-if="isAreaReprPossiblyWrong()"><i class="fa fa-exclamation-circle"></i> Area representation may be inaccurate.</p>
 
       <section class="mt-2" v-show="areaMarkers.length || staticData.persistentAreaMarkers.length">
@@ -42,6 +44,12 @@
 
       <section v-if="shopDataExists()">
         <ShopData :data="shopData[this.getLocationSub()]" />
+      </section>
+
+      <section v-if="obj.data.Presence">
+        <hr>
+        <h4 class="subsection-heading">Presence params</h4>
+        <pre class="obj-params">{{JSON.stringify(obj.data.Presence, undefined, 2)}}</pre>
       </section>
 
       <section v-if="obj.data.Dynamic">
