@@ -16,29 +16,35 @@ base = sys.argv[1]
 # 5  Update missing.csv by hand or stop
 # 6  goto 1
 
+endswith = ['_BaseName', '_InstantTips', '_Adjective', '_Caption']
+skip_alias = ['Npc_Goron', 'Obj_AutoBuilderDraft', 'Ganondorf']
 
 out = {}
-for file in ["USen.Product.100/ActorMsg/PictureBook.msyt",
-             "USen.Product.100/ActorMsg/NPC.msyt",
+for file in ["USen.Product.100/ActorMsg/Attachment.msyt",
+             "USen.Product.100/ActorMsg/AutoBuilderDraft.msyt",
+             "USen.Product.100/ActorMsg/Boss.msyt",
              "USen.Product.100/ActorMsg/CharaDirectory.msyt",
-             "USen.Product.100/ActorMsg/PouchContent.msyt"]:
+             "USen.Product.100/ActorMsg/Horse.msyt",
+             "USen.Product.100/ActorMsg/LinkHouse.msyt",
+             "USen.Product.100/ActorMsg/Nickname.msyt",
+             "USen.Product.100/ActorMsg/Npc.msyt",
+             "USen.Product.100/ActorMsg/PictureBook.msyt",
+             "USen.Product.100/ActorMsg/PouchContent.msyt",
+             "USen.Product.100/ActorMsg/SheikahCameraTarget.msyt"
+             ]:
     with open(f"{base}/{file}","r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
 
     for v, val in data['entries'].items():
-        if v.endswith('_Caption'):
-            continue
+        skip = any([v.endswith(value) for value in endswith])
+        if skip:
+            continue;
         if '_Caption_' in v:
             continue
-        if v.endswith('_BaseName'):
+        if not v.endswith('_Name') and not v.endswith('_Alias') and not 'Nickname' in file:
+            print(v, val, file)
             continue
-        if v.endswith('_InstantTips'):
-            continue
-        if v.endswith('_Alias'):
-            continue
-        if not v.endswith('_Name') :
-            print(v, val)
-            continue
+        isAlias = v.endswith('_Alias')
         v = v.replace('_Name','').replace('_Alias','')
 
         if not 'text' in val['contents'][0]:
@@ -49,9 +55,10 @@ for file in ["USen.Product.100/ActorMsg/PictureBook.msyt",
 
         # Check for repeated key/values
         if v in out and out[v] != txt:
-            print("multiple versions of v")
-            print(f"  => {v}: {out[v]} <> {txt}")
-            continue
+            if isAlias or any([value in v for value in skip_alias]):
+                continue
+            #print(f"{v:35}: {out[v]:35} <> {txt:35}", isAlias, v)
+
         out[v] = txt
 
 missing = []
@@ -89,5 +96,5 @@ out['_doc_'] = {
     'notes2': 'missing.csv created by comparing unit_config_names from map.db (radar/build.ts) to names and outputting the missing values; check top of mssing.csv for more details and format',
 }
 
-json.dump(out, open("names.json",'w'), indent=2)
+json.dump(dict(sorted(out.items())), open("names.json",'w'), indent=2)
 print("==> names.json")
