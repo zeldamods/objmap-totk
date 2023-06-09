@@ -89,7 +89,7 @@ export class MapMgr {
     ]);
   }
 
-  fetchAreaMap(name: string): Promise<{ [data: number]: Array<GeoJSON.Polygon | GeoJSON.MultiPolygon> }> {
+  fetchAreaMap(name: string): Promise<{ [data: number]: Array<GeoJSON.Polygon | GeoJSON.MultiPolygon> }> | GeoJSON.FeatureCollection {
     return fetch(`${GAME_FILES}/ecosystem/${name}.json`).then(parse);
   }
 

@@ -1124,6 +1124,15 @@ export default class AppMap extends mixins(MixinUtil) {
     this.areaAutoItem.data.setZIndex(1000);
   }
 
+  featureCollectionToPolygons(areas: any) {
+    return Object.fromEntries(areas.features.map((feat: any) => {
+      feat.geometry.properties = { title: feat.properties.Area.toString() }
+      return [feat.properties.Area, [feat.geometry]]
+    }))
+  }
+  isFeatureCollection(area: any) {
+    return area && area.type && area.type == "FeatureCollection";
+  }
 
   async loadAreaMap(name: string) {
     this.areaMapLayer.data.clearLayers();
@@ -1159,11 +1168,14 @@ export default class AppMap extends mixins(MixinUtil) {
       'GerudoDesertClimateLv2'
     ];
 
-    const areas = await MapMgr.getInstance().fetchAreaMap(name);
+    let areas = await MapMgr.getInstance().fetchAreaMap(name);
+    if (this.isFeatureCollection(areas)) {
+      areas = this.featureCollectionToPolygons(areas as any)
+    }
     const entries = Object.entries(areas);
     let i = 0;
     for (const [data, features] of entries) {
-      const layers: L.GeoJSON[] = features.map((feature) => {
+      const layers: L.GeoJSON[] = features.map((feature: any) => {
         return L.geoJSON(feature, {
           style: function(_) {
             return { weight: 2, fillOpacity: 0.2, color: ui.genColor(entries.length, i) };

@@ -133,7 +133,12 @@
         <b-radio-group stacked class="mb-4" v-model="shownAreaMap" @change="onShownAreaMapChanged">
           <b-radio value="">None</b-radio>
           <!-- <b-radio value="FieldMapArea">Field map areas</b-radio> -->
-          <b-radio value="MapTower">Map tower areas</b-radio>
+          <b-radio value="MapTower">Map Tower Areas</b-radio>
+          <b-radio value="Ground">Surface Field Map Areas</b-radio>
+          <b-radio value="MinusField">Depths Field Map Areas</b-radio>
+          <b-radio value="Cave">Cave Field Map Areas</b-radio>
+          <b-radio value="Sky">Sky Field Map Areas</b-radio>
+
           <!-- <b-radio value="LoadBalancer">Load balancer areas</b-radio> -->
         </b-radio-group>
         <!--
