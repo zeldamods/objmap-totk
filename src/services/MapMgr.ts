@@ -22,11 +22,6 @@ export interface ResPlacementObj {
   readonly Rails?: any;
 }
 
-export const enum ObjectDropType {
-  Actor = 1,
-  Table = 2,
-}
-
 export interface ObjectMinData {
   objid: number;
   hash_id: string;
@@ -34,7 +29,7 @@ export interface ObjectMinData {
   map_name?: string;
   map_static: boolean;
   name: string;
-  drop?: [ObjectDropType, string];
+  drop?: { [key: string]: any };
   equip?: string[];
   pos: [number, number, number];
 
