@@ -116,7 +116,10 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       this.minObj.korok_id = this.obj.korok_id;
     }
 
-    //this.dropTables = await MapMgr.getInstance().getObjDropTables(this.getRankedUpActorNameForObj(this.minObj), this.getDropTableName());
+    const dropTableName = this.getDropTableName();
+    if (dropTableName) {
+      this.dropTables = await MapMgr.getInstance().getObjDropTables(this.getRankedUpActorNameForObj(this.minObj), dropTableName);
+    }
 
     this.aiGroups = await MapMgr.getInstance().getObjAiGroups(this.obj.map_type, this.obj.map_name, this.obj.hash_id);
 
@@ -394,27 +397,32 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     return Object.keys(this.dropTables).length > 0;
   }
 
+  getDropTableName() {
+    if (!this.obj || !this.obj.drop || this.obj.drop.type != "Table")
+      return null;
+    return this.obj.drop.value[0];
+  }
+
   shopDataExists() {
     return Object.keys(this.shopData).length > 0;
   }
 
-  formatDropTable(): string {
-    let lines = [];
-    let names = Object.keys(this.dropTables);
-    for (var i = 0; i < names.length; i++) {
-      let table = this.dropTables[names[i]];
-      let repeatNum = table.repeat_num;
-      if (repeatNum[0] == repeatNum[1]) {
-        lines.push(`<span style="text-decoration: underline;"><b>${names[i]}</b> - x${repeatNum[0]}</span>`);
+  getDropTableGroupCount(group: any) {
+    const min_drop = group.MinNumberOfDropChance;
+    const max_drop = group.MaxNumberOfDropChance;
+    let num = "1";
+    if (min_drop && max_drop) {
+      if (min_drop != max_drop) {
+        num = `${min_drop} - ${max_drop}`;
       } else {
-        lines.push(`<span style="text-decoration: underline;"><b>${names[i]}</b> - x${repeatNum[0]}-${repeatNum[1]}</span>`);
+        num = `${min_drop}`;
       }
-      let items = Object.keys(table.items).sort(function(a, b) { return table.items[b] - table.items[a]; });
-      for (var j = 0; j < items.length; j++) {
-        lines.push(`  ${table.items[items[j]].toFixed(1).padStart(4, ' ')}% - ${this.getName(items[j])}`);
-      }
+    } else if (max_drop && max_drop != 1) {
+      num = `1 - ${max_drop}`;
+    } else if (min_drop) {
+      num = `${min_drop}`;
     }
-    return lines.join("\n");
+    return `Items: ${num}`;
   }
 
   findItemByHash(group: any[], links: any[], name: string): any {

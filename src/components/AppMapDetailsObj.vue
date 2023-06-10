@@ -64,9 +64,17 @@
         <pre class="obj-params">{{JSON.stringify(obj.data.Phive, undefined, 2)}}</pre>
       </section>
 
-      <section v-if="dropTableExists()">
-        <h4 class="subsection-heading">Drop Table</h4>
-        <pre class="obj-params" v-html="formatDropTable()"></pre>
+      <section v-if="dropTableExists()" class="droptable">
+        <h4 class="subsection-heading">Drop Table: {{this.dropTables.DropTableName || 'Default'}}</h4>
+        <div v-for="(group, igroup) in this.dropTables.items" :key="igroup">
+          <div v-if="group.DropTableElement.length" class="droptable_content">
+            <div class="droptable_group">{{getDropTableGroupCount(group)}}</div>
+            <div v-for="(item, kitem) in [...group.DropTableElement].sort((a,b) => b.DropProbability - a.DropProbability)" :key="kitem">
+              <div v-if="item.IsProxySetting" class="droptable_item">{{ item.DropProbability }}% {{item.ProxyType}} - {{item.WeaponType}}</div>
+              <div v-else class="droptable_item">{{ item.DropProbability }}% {{getName(item.DropActorName.split("/").pop().split(".")[0])}}</div>
+            </div>
+          </div>
+        </div>
       </section>
 
     </section>
@@ -158,6 +166,19 @@
   left: 50%;
   transform: translate(-60%, -50%) rotate(-45deg) ;
   position: absolute;
+}
+
+.droptable {
+    font-size: 0.9em;
+}
+.droptable_content {
+    padding-left: 1em;
+}
+ .droptable_item {
+    padding-left: 1em;
+}
+.droptable_group {
+    font-weight: bold;
 }
 
 </style>
