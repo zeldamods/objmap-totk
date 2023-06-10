@@ -98,6 +98,8 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
       { label: 'Bargainer Statue', query: 'Bargainer Statue' },
       { label: 'Addison', query: 'Addison' },
       { label: 'Enemies', query: 'actor:^"Enemy_"' },
+      { label: "Monster Forces", query: "Enemy_Army_Manager" },
+      { label: "Monster Control Crew", query: "Hoz OR Flaxel OR Toren" },
     ],
   }
 ]);
