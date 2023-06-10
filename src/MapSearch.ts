@@ -89,6 +89,8 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
   {
     label: '<i class="fa fa-ellipsis-h"></i>',
     presets: [
+      { label: 'Wild Horses', query: "WildHorse*" },
+      { label: 'Special Horses', query: "GameRomHorseZelda OR GameRomHorseGold OR GameRomHorse00L OR GameRomHorse01L" },
       { label: 'Messages from an Ancient Era Stone Tablets', query: "Ancient Stone Tablet map: Sky" },
       { label: 'Old Maps', query: 'Old Map' },
       { label: 'Shadowy Figures with Weapons', query: 'Npc_MinusFieldGhost_000' },
