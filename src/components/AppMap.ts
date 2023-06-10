@@ -22,6 +22,7 @@ import AppMapSettings from '@/components/AppMapSettings';
 import MixinUtil from '@/components/MixinUtil';
 import ModalGotoCoords from '@/components/ModalGotoCoords';
 import ObjectInfo from '@/components/ObjectInfo';
+import { MsgMgr } from '@/services/MsgMgr';
 import {
   MapBase,
   SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT,
@@ -1183,7 +1184,7 @@ export default class AppMap extends mixins(MixinUtil) {
           // @ts-ignore
           contextmenu: true,
           // @ts-ignore
-        }).bindTooltip(feature.properties.title);
+        });
       });
       this.areaMapLayersByData.data.set(data, layers);
 
@@ -1196,10 +1197,55 @@ export default class AppMap extends mixins(MixinUtil) {
         layer.on('mouseout', () => {
           layers.forEach(l => l.setStyle({ weight: 2, fillOpacity: 0.2 }));
         });
+        const area = await MsgMgr.getInstance().getAreaData(name, parseInt(data));
+        const climate = await MsgMgr.getInstance().getClimateData(area.Climate);
+        const area_name = MsgMgr.getInstance().getMsgWithFile("StaticMsg/LocationMarker", area.Name);
+        let label = (area_name) ? `${area_name} #${data}` : `Area #${data}`;
+        for (const kind of ['Bluesky', 'Cloudy', 'Rain', 'Storm', 'HeavyRain']) {
+          const rate = climate.Weather[`${kind}Rate`];
+          if (rate > 0) {
+            label += `<br/>${rate}%: ${kind}`;
+          }
+        }
+        if (climate.EnvFireLevel > 0) {
+          label += "<br/>"
+          for (let i = 0; i < climate.EnvFireLevel; i++)
+            label += `&#128293;`; // Ugh, Fire is not Lava
+          label += ` Fire Level ${climate.EnvFireLevel}`
+        }
+        if (name == "Sky" || name == "MinusField") {
+          let cname = (name == "Sky") ? "Sky" : "UnderGround";
+          let day = climate.DayTemperature[cname];
+          let night = climate.NightTemperature[cname]
+          let night_emoji = this.temperatureEmoji(night);
+          let day_emoji = this.temperatureEmoji(day);
+
+          if (day != night) {
+            label += `<br/>${day} ${day_emoji}/ ${night}&deg;C ${night_emoji}`;
+          } else {
+            label += `<br/>${day}&deg;C ${day_emoji}`;
+          }
+        }
+        layer.bindTooltip(label);
       }
       ++i;
     }
     this.updateAreaMapVisibility();
+  }
+
+  temperatureEmoji(temp: number) {
+    const cold = "&#129398;";
+    const hot = "&#129397;";
+
+    if (temp < -10)
+      return `${cold}${cold}`;
+    else if (temp < 0)
+      return cold
+    else if (temp > 50)
+      return `${hot}${hot}`
+    else if (temp > 40)
+      return hot
+    return "";
   }
 
   updateAreaMapVisibility() {

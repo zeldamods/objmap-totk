@@ -41,24 +41,24 @@ export class MsgMgr {
     return f === undefined ? "???" : f[label];
   }
 
-  async getAreaData(item: number) {
+  async getAreaData(layer: string, item: number) {
     if (!this.area) {
       const res = await fetch(`${GAME_FILES}/area_data.json`);
       this.area = await res.json();
     }
     if (this.area) {
-      return this.area.find((val: any) => val.AreaNumber == item);
+      return this.area[layer][item];//.find((val: any) => val.AreaNumber == item);
     }
     return null;
   }
 
-  async getClimateData(item: number) {
+  async getClimateData(item: string) {
     if (!this.climate) {
       const res = await fetch(`${GAME_FILES}/climate_data.json`);
       this.climate = await res.json();
     }
     if (this.climate) {
-      return this.climate[`ClimateDefines_${item}`];
+      return this.climate[item];
     }
     return null;
   }

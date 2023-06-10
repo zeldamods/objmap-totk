@@ -1,0 +1,2104 @@
+{
+  "GerudoFrostSkyClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30b2\u30eb\u30c9\u9ad8\u5730 \u5929\u7a7a\u6c17\u5019",
+    "MoistureMax": 12.0,
+    "MoistureMin": 12.0,
+    "NightTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 25.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.25,
+      "CalcSfParamAttenuation": 500.0,
+      "CalcSfParamNear": 120.0,
+      "CalcVolumeMaskIntencity": 1.5,
+      "EnvPaletteTimeTable": "",
+      "FeatureColorB": 1.1,
+      "FeatureColorG": 1.1,
+      "FeatureColorR": 1.1,
+      "StaticPalette": "Work/WorldMgr/ResClimate_StaticPalette/MainFieldSky.game__wm__ResClimate_StaticPalette.gyml",
+      "CavePalette": "Work/WorldMgr/CavePalette/GerudoDesert.game__wm__CavePalette.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 7.5,
+    "$parent": "Work/WorldMgr/ResClimate/ZonaiSkyClimate.game__wm__ResClimate.gyml"
+  },
+  "ZonaiSkyClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30be\u30ca\u30a6\u5929\u7a7a\u6c17\u5019",
+    "MoistureMax": 12.0,
+    "MoistureMin": 12.0,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.25,
+      "CalcSfParamAttenuation": 500.0,
+      "CalcSfParamNear": 120.0,
+      "CalcVolumeMaskIntencity": 1.5,
+      "EnvPaletteTimeTable": "",
+      "FeatureColorB": 1.1,
+      "FeatureColorG": 1.1,
+      "FeatureColorR": 1.1,
+      "StaticPalette": "Work/WorldMgr/ResClimate_StaticPalette/MainFieldSky.game__wm__ResClimate_StaticPalette.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 7.5
+  },
+  "HebraSkyClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -29.0,
+        -29.0,
+        -29.0,
+        -29.0,
+        -29.0,
+        -29.0,
+        -29.0,
+        -29.0,
+        -29.0,
+        -29.0,
+        -29.0
+      ],
+      "Sky": -29.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30d8\u30d6\u30e9\u5929\u7a7a\u6c17\u5019",
+    "MoistureMax": 12.0,
+    "MoistureMin": 12.0,
+    "NightTemperature": {
+      "Ground": [
+        -29.2,
+        -29.2,
+        -29.2,
+        -29.2,
+        -29.2,
+        -29.2,
+        -29.2,
+        -29.2,
+        -29.2,
+        -29.2,
+        -29.2
+      ],
+      "Sky": -29.2,
+      "UnderGround": 25.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.25,
+      "CalcSfParamAttenuation": 200.0,
+      "CalcSfParamNear": 60.0,
+      "CalcVolumeMaskIntencity": 1.5,
+      "EnvPaletteTimeTable": "",
+      "FeatureColorB": 1.0,
+      "FeatureColorG": 1.0,
+      "FeatureColorR": 1.0,
+      "StaticPalette": "Work/WorldMgr/ResClimate_StaticPalette/MainFieldSky.game__wm__ResClimate_StaticPalette.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 7.5,
+    "$parent": "Work/WorldMgr/ResClimate/ZonaiSkyClimate.game__wm__ResClimate.gyml"
+  },
+  "GerudoSkyClimate": {
+    "DayTemperature": {
+      "Ground": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "Sky": 25.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30b2\u30eb\u30c9\u5929\u7a7a\u6c17\u5019",
+    "MoistureMax": 12.0,
+    "MoistureMin": 12.0,
+    "NightTemperature": {
+      "Ground": [
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0
+      ],
+      "Sky": -7.0,
+      "UnderGround": 25.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.25,
+      "CalcSfParamAttenuation": 500.0,
+      "CalcSfParamNear": 120.0,
+      "CalcVolumeMaskIntencity": 1.5,
+      "EnvPaletteTimeTable": "",
+      "FeatureColorB": 1.1,
+      "FeatureColorG": 1.1,
+      "FeatureColorR": 1.1,
+      "StaticPalette": "Work/WorldMgr/ResClimate_StaticPalette/MainFieldSky.game__wm__ResClimate_StaticPalette.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 7.5,
+    "$parent": "Work/WorldMgr/ResClimate/ZonaiSkyClimate.game__wm__ResClimate.gyml"
+  },
+  "FrostSkyClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30e9\u30cd\u30fc\u30eb\u5c71\u5929\u7a7a\u6c17\u5019",
+    "MoistureMax": 12.0,
+    "MoistureMin": 12.0,
+    "NightTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 25.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.25,
+      "CalcSfParamAttenuation": 500.0,
+      "CalcSfParamNear": 120.0,
+      "CalcVolumeMaskIntencity": 1.5,
+      "EnvPaletteTimeTable": "",
+      "FeatureColorB": 1.1,
+      "FeatureColorG": 1.1,
+      "FeatureColorR": 1.1,
+      "StaticPalette": "Work/WorldMgr/ResClimate_StaticPalette/MainFieldSky.game__wm__ResClimate_StaticPalette.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 7.5,
+    "$parent": "Work/WorldMgr/ResClimate/ZonaiSkyClimate.game__wm__ResClimate.gyml"
+  },
+  "BeginningSkyClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u59cb\u307e\u308a\u306e\u7a7a\u5cf6\u5929\u7a7a\u6c17\u5019",
+    "MoistureMax": 12.0,
+    "MoistureMin": 12.0,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.25,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 120.0,
+      "CalcVolumeMaskIntencity": 1.5,
+      "EnvPaletteTimeTable": "",
+      "FeatureColorB": 1.1,
+      "FeatureColorG": 1.1,
+      "FeatureColorR": 1.1,
+      "StaticPalette": "Work/WorldMgr/ResClimate_StaticPalette/MainFieldSky.game__wm__ResClimate_StaticPalette.gyml",
+      "CavePalette": "Work/WorldMgr/CavePalette/BeginningSky.game__wm__CavePalette.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 7.5,
+    "$parent": "Work/WorldMgr/ResClimate/ZonaiSkyClimate.game__wm__ResClimate.gyml"
+  },
+  "DefaultUndergroundClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -20.0,
+        -10.0,
+        -5.0,
+        3.0,
+        9.0,
+        15.0,
+        18.0,
+        20.0,
+        25.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u5730\u5e95\u6c17\u5019",
+    "MoistureMax": 20.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -23.0,
+        -14.0,
+        -5.0,
+        -2.0,
+        6.0,
+        13.0,
+        16.0,
+        18.0,
+        23.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "EnvPaletteTimeTable": "Work/WorldMgr/ResEnvPaletteTimeTable/MainField_Underground.game__wm__ResEnvPaletteTimeTable.gyml",
+      "FeatureColorR": 1.0,
+      "StaticPalette": ""
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 2.0
+  },
+  "EldinUnderGroundClimateLv2": {
+    "DayTemperature": {
+      "Ground": [
+        18.0,
+        20.0,
+        25.0,
+        28.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0
+      ],
+      "Sky": 18.0,
+      "UnderGround": 39.0
+    },
+    "EnvFireLevel": 2,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "IsSunlightHeat": false,
+    "Label": "\u30aa\u30eb\u30c7\u30a3\u30f3\u5730\u5e95\u6c17\u5019 Lv2",
+    "MoistureMax": 20.0,
+    "MoistureMin": 20.0,
+    "NightTemperature": {
+      "Ground": [
+        17.0,
+        18.0,
+        24.0,
+        26.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0
+      ],
+      "Sky": 17.0,
+      "UnderGround": 39.0
+    },
+    "Palette": {
+      "CalcMie": 2.0,
+      "CalcMieSymmetrical": 0.75,
+      "CalcRayleigh": 0.85,
+      "CalcSfParamAttenuation": -15.0,
+      "CalcSfParamNear": -100.0,
+      "CalcVolumeMaskIntencity": 2.0,
+      "EnvPaletteTimeTable": "Work/WorldMgr/ResEnvPaletteTimeTable/MainField_Underground_Eldin.game__wm__ResEnvPaletteTimeTable.gyml",
+      "FeatureColorB": 0.65,
+      "FeatureColorG": 1.0,
+      "FeatureColorR": 0.85
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 2.0
+  },
+  "EldinUnderGroundClimateLv1": {
+    "DayTemperature": {
+      "Ground": [
+        18.0,
+        20.0,
+        25.0,
+        28.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0
+      ],
+      "Sky": 18.0,
+      "UnderGround": 39.0
+    },
+    "EnvFireLevel": 1,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "IsSunlightHeat": false,
+    "Label": "\u30aa\u30eb\u30c7\u30a3\u30f3\u5730\u5e95\u6c17\u5019 Lv1",
+    "MoistureMax": 15.0,
+    "MoistureMin": 15.0,
+    "NightTemperature": {
+      "Ground": [
+        17.0,
+        18.0,
+        24.0,
+        26.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0,
+        39.0
+      ],
+      "Sky": 17.0,
+      "UnderGround": 39.0
+    },
+    "Palette": {
+      "CalcMie": 2.0,
+      "CalcMieSymmetrical": 0.75,
+      "CalcRayleigh": 0.95,
+      "CalcSfParamAttenuation": -15.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.5,
+      "EnvPaletteTimeTable": "Work/WorldMgr/ResEnvPaletteTimeTable/MainField_Underground_Eldin.game__wm__ResEnvPaletteTimeTable.gyml",
+      "FeatureColorB": 0.65,
+      "FeatureColorG": 1.0,
+      "FeatureColorR": 0.85
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 2.0
+  },
+  "GerudoFrostClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -24.0,
+        -16.0,
+        -11.0,
+        -3.0,
+        -1.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 0.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "SandDust",
+    "ForbidComeback": false,
+    "Label": "\u30b2\u30eb\u30c9\u9ad8\u5730 \u6c37\u96ea\u6c17\u5019",
+    "MoistureMax": 20.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -26.0,
+        -17.0,
+        -14.0,
+        -5.0,
+        -2.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 0.0
+    },
+    "Palette": {
+      "CalcMie": 0.9,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 0.85,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": -50.0,
+      "CalcVolumeMaskIntencity": 3.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/GerudoDesert.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.104,
+      "FeatureColorG": 1.156,
+      "FeatureColorR": 0.874
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 5,
+      "CloudyRate": 20,
+      "DayLockBlueSky": true,
+      "HeavyRainRate": 35,
+      "NightLockBlueSky": false,
+      "RainRate": 40,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "HateruPlainClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        9.0,
+        11.0,
+        13.0,
+        17.0,
+        20.0,
+        22.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 22.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30cf\u30c6\u30fc\u30eb\u5e73\u539f\u6c17\u5019",
+    "MoistureMax": 30.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        8.0,
+        10.0,
+        12.0,
+        14.0,
+        18.0,
+        20.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 20.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/HateruPlain.game__wm__CavePalette.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "Lottery",
+      "BlueskyRate": 50,
+      "CloudyRate": 35,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 5,
+      "NightLockBlueSky": false,
+      "RainRate": 10,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "TamourPlainClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        12.0,
+        17.0,
+        20.0,
+        23.0,
+        25.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30bf\u30e0\u30fc\u30eb\u5e73\u539f\u6c17\u5019",
+    "MoistureMax": 37.5,
+    "MoistureMin": 7.5,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        8.0,
+        12.0,
+        17.0,
+        20.0,
+        23.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.25,
+      "CavePalette": "Work/WorldMgr/CavePalette/Akkala.game__wm__CavePalette.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "Lottery",
+      "BlueskyRate": 35,
+      "CloudyRate": 40,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 5,
+      "NightLockBlueSky": false,
+      "RainRate": 10,
+      "StormRate": 0,
+      "ThunderRainRate": 10
+    },
+    "WindPower": 10.0
+  },
+  "HebraFrostClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -29.0,
+        -28.0,
+        -25.0,
+        -23.0,
+        -20.0,
+        -14.0,
+        -6.5,
+        -6.5,
+        -6.5,
+        -6.5,
+        -6.5
+      ],
+      "Sky": -29.0,
+      "UnderGround": -6.5
+    },
+    "EnvFireLevel": 0,
+    "FogType": "SandDust",
+    "ForbidComeback": false,
+    "Label": "\u30d8\u30d6\u30e9\u6c37\u96ea\u6c17\u5019",
+    "MoistureMax": 2.5,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        -29.2,
+        -28.4,
+        -26.0,
+        -25.0,
+        -22.0,
+        -16.0,
+        -6.5,
+        -6.5,
+        -6.5,
+        -6.5,
+        -6.5
+      ],
+      "Sky": -29.2,
+      "UnderGround": -6.5
+    },
+    "Palette": {
+      "CalcMie": 0.9,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.2,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": -50.0,
+      "CalcVolumeMaskIntencity": 3.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/HebraFrost.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.32,
+      "FeatureColorG": 0.9658,
+      "FeatureColorR": 0.792
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 20,
+      "CloudyRate": 10,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 35,
+      "NightLockBlueSky": false,
+      "RainRate": 35,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "GerudoPlateauClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        10.0,
+        20.0,
+        35.0,
+        36.0,
+        47.5
+      ],
+      "Sky": 7.0,
+      "UnderGround": 47.5
+    },
+    "EnvFireLevel": 0,
+    "FogType": "SandDust",
+    "ForbidComeback": false,
+    "Label": "\u30b2\u30eb\u30c9\u9ad8\u5730 \u4e7e\u71e5\u6c17\u5019",
+    "MoistureMax": 0.0,
+    "MoistureMin": 0.0,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        9.0,
+        11.0,
+        14.0,
+        18.0,
+        25.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "Palette": {
+      "CalcMie": 1.2,
+      "CalcMieSymmetrical": 0.9,
+      "CalcRayleigh": 0.9,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": -75.0,
+      "CalcVolumeMaskIntencity": 2.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/GerudoDesert.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.224,
+      "FeatureColorG": 1.35,
+      "FeatureColorR": 1.332
+    },
+    "Temperature24": {
+      "Time24": [
+        -5.0,
+        -5.0,
+        -5.0,
+        -15.0,
+        -15.0,
+        -15.0,
+        -15.0,
+        -5.0,
+        20.0,
+        45.0,
+        45.0,
+        45.0,
+        55.0,
+        55.0,
+        55.0,
+        55.0,
+        45.0,
+        45.0,
+        45.0,
+        45.0,
+        20.0,
+        -5.0,
+        -5.0,
+        -5.0
+      ]
+    },
+    "TemperatureType": "Default",
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 95,
+      "CloudyRate": 5,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "HyrulePlainClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        9.0,
+        15.0,
+        18.0,
+        20.0,
+        25.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30cf\u30a4\u30e9\u30eb\u5e73\u539f\u6c17\u5019",
+    "MoistureMax": 20.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        13.0,
+        16.0,
+        18.0,
+        23.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "FeatureColorR": 1.0,
+      "StaticPalette": ""
+    },
+    "Weather": {
+      "BloodyMoonBluesky": true,
+      "BlueSkyRainType": "Lottery",
+      "BlueskyRate": 60,
+      "CloudyRate": 20,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 5,
+      "NightLockBlueSky": false,
+      "RainRate": 10,
+      "StormRate": 0,
+      "SuperHeavyRainRate": 0,
+      "ThunderRainRate": 5
+    },
+    "WindPower": 7.5
+  },
+  "LostWoodClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        10.0,
+        20.0,
+        23.0,
+        25.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "EnvEffect": "Spore",
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": true,
+    "Label": "\u307e\u3088\u3044\u306e\u68ee",
+    "MoistureMax": 0.0,
+    "MoistureMin": 0.0,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        17.0,
+        20.0,
+        23.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "EnvPaletteTimeTable": "Work/WorldMgr/ResEnvPaletteTimeTable/Prequel_LostWood.game__wm__ResEnvPaletteTimeTable.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 3.0
+  },
+  "KorogForest": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        10.0,
+        20.0,
+        23.0,
+        25.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30b3\u30ed\u30b0\u306e\u68ee",
+    "MoistureMax": 0.0,
+    "MoistureMin": 0.0,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        17.0,
+        20.0,
+        23.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "EnvPaletteTimeTable": "Work/WorldMgr/ResEnvPaletteTimeTable/Prequel_KorokForest.game__wm__ResEnvPaletteTimeTable.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 5.0
+  },
+  "NorthHyrulePlainClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        12.0,
+        20.0,
+        23.0,
+        25.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u5317\u30cf\u30a4\u30e9\u30eb\u5e73\u539f\u6c17\u5019",
+    "MoistureMax": 35.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        17.0,
+        20.0,
+        23.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.0
+    },
+    "Weather": {
+      "BlueSkyRainType": "Lottery",
+      "BlueskyRate": 45,
+      "CloudyRate": 35,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 5,
+      "NightLockBlueSky": false,
+      "RainRate": 15,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "TabantaAridClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -20.0,
+        -8.0,
+        -5.0,
+        5.0,
+        10.0,
+        20.0,
+        23.0,
+        25.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30bf\u30d0\u30f3\u30bf\u4e7e\u71e5\u6c17\u5019",
+    "MoistureMax": 20.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -22.0,
+        -13.0,
+        -8.0,
+        3.0,
+        7.0,
+        18.0,
+        20.0,
+        23.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 0.75,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.25,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/TabantaArid.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.1,
+      "FeatureColorG": 1.1,
+      "FeatureColorR": 1.1
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 94,
+      "CloudyRate": 4,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 2,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "GerudoDesertClimateLv2": {
+    "DayTemperature": {
+      "Ground": [
+        25.0,
+        26.0,
+        28.0,
+        30.0,
+        32.0,
+        36.0,
+        40.0,
+        48.0,
+        53.0,
+        55.0,
+        57.0
+      ],
+      "Sky": 25.0,
+      "UnderGround": 57.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "SandDust",
+    "ForbidComeback": false,
+    "Label": "\u30b2\u30eb\u30c9\u7802\u6f20\u6c17\u5019 Lv2",
+    "MoistureMax": 0.0,
+    "MoistureMin": 0.0,
+    "NightTemperature": {
+      "Ground": [
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -5.0,
+        -4.0
+      ],
+      "Sky": -7.0,
+      "UnderGround": -4.0
+    },
+    "Palette": {
+      "CalcMie": 2.0,
+      "CalcMieSymmetrical": 0.75,
+      "CalcRayleigh": 0.75,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": -100.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/GerudoDesert.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.09,
+      "FeatureColorG": 1.3072,
+      "FeatureColorR": 1.2521
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "SouthHateruHumidTempClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        15.0,
+        25.0,
+        30.0,
+        35.0,
+        38.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 38.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u5357\u30cf\u30c6\u30fc\u30eb\u6e29\u6e7f\u6c17\u5019",
+    "MoistureMax": 15.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        13.0,
+        22.0,
+        28.0,
+        32.0,
+        35.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 35.0
+    },
+    "Palette": {
+      "CalcMie": 0.5,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 0.75,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 0.5,
+      "CavePalette": "Work/WorldMgr/CavePalette/HateruPlain.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.424,
+      "FeatureColorG": 1.14,
+      "FeatureColorR": 1.206
+    },
+    "Weather": {
+      "BlueSkyRainType": "Tropics",
+      "BlueskyRate": 65,
+      "CloudyRate": 5,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 15,
+      "NightLockBlueSky": false,
+      "RainRate": 15,
+      "StormRate": 0
+    },
+    "WindPower": 7.5
+  },
+  "FiloneSubtropicalClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        10.0,
+        25.0,
+        28.0,
+        32.0,
+        35.0,
+        38.0,
+        39.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 39.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30d5\u30a3\u30ed\u30fc\u30cd\u4e9c\u71b1\u5e2f\u6c17\u5019",
+    "MoistureMax": 45.0,
+    "MoistureMin": 15.0,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        8.0,
+        23.0,
+        26.0,
+        30.0,
+        33.0,
+        38.0,
+        39.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 39.0
+    },
+    "Palette": {
+      "CalcMie": 2.5,
+      "CalcMieSymmetrical": 0.6,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": -75.0,
+      "CalcVolumeMaskIntencity": 2.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/FiloneSubtropical.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.1,
+      "FeatureColorG": 1.265,
+      "FeatureColorR": 0.99
+    },
+    "Weather": {
+      "BlueSkyRainType": "Tropics",
+      "BlueskyRate": 35,
+      "CloudyRate": 35,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 10,
+      "NightLockBlueSky": false,
+      "RainRate": 10,
+      "StormRate": 0,
+      "SuperHeavyRainRate": 0,
+      "ThunderRainRate": 10
+    },
+    "WindPower": 7.5
+  },
+  "ZoraTemperateClimate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        8.0,
+        10.0,
+        15.0,
+        20.0,
+        23.0,
+        25.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30be\u30fc\u30e9\u6e29\u5e2f\u6c17\u5019",
+    "MoistureMax": 27.5,
+    "MoistureMin": 5.0,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        8.0,
+        12.0,
+        17.0,
+        20.0,
+        23.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 0.85,
+      "CalcRayleigh": 1.25,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.5,
+      "CavePalette": "Work/WorldMgr/CavePalette/ZoraTemperate.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.222,
+      "FeatureColorG": 1.08,
+      "FeatureColorR": 0.912
+    },
+    "Weather": {
+      "BlueSkyRainType": "Lottery",
+      "BlueskyRate": 50,
+      "CloudyRate": 20,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 10,
+      "NightLockBlueSky": false,
+      "RainRate": 20,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "FrostClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -26.0,
+        -17.0,
+        -13.0,
+        -8.0,
+        -2.0,
+        0.0,
+        0.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 0.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "SandDust",
+    "ForbidComeback": false,
+    "Label": "\u30e9\u30cd\u30fc\u30eb\u5c71\u6c37\u96ea\u6c17\u5019",
+    "MoistureMax": 10.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -27.0,
+        -18.0,
+        -15.0,
+        -9.0,
+        -5.0,
+        0.0,
+        0.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 0.0
+    },
+    "Palette": {
+      "CalcMie": 0.9,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.2,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": -50.0,
+      "CalcVolumeMaskIntencity": 3.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/Frost.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.32,
+      "FeatureColorG": 0.9658,
+      "FeatureColorR": 0.792
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 10,
+      "CloudyRate": 20,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 50,
+      "NightLockBlueSky": false,
+      "RainRate": 20,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "EldinClimateLv0": {
+    "DayTemperature": {
+      "Ground": [
+        18.0,
+        20.0,
+        23.0,
+        25.0,
+        39.0,
+        39.0,
+        39.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "Sky": 18.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30aa\u30eb\u30c7\u30a3\u30f3\u6c17\u5019 Lv0",
+    "MoistureMax": 20.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        17.0,
+        18.0,
+        23.0,
+        25.0,
+        37.0,
+        37.0,
+        37.0,
+        23.0,
+        23.0,
+        23.0,
+        23.0
+      ],
+      "Sky": 17.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 0.85,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": -10.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 2.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/Eldin.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.1,
+      "FeatureColorG": 0.9,
+      "FeatureColorR": 0.9
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 5.0
+  },
+  "GerudoDesertClimate": {
+    "DayTemperature": {
+      "Ground": [
+        25.0,
+        26.0,
+        28.0,
+        30.0,
+        32.0,
+        34.0,
+        36.0,
+        38.0,
+        43.0,
+        45.0,
+        47.5
+      ],
+      "Sky": 25.0,
+      "UnderGround": 47.5
+    },
+    "EnvFireLevel": 0,
+    "FogType": "SandDust",
+    "ForbidComeback": false,
+    "Label": "\u30b2\u30eb\u30c9\u7802\u6f20\u6c17\u5019 Lv1",
+    "MoistureMax": 0.0,
+    "MoistureMin": 0.0,
+    "NightTemperature": {
+      "Ground": [
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -5.0,
+        -4.0
+      ],
+      "Sky": -7.0,
+      "UnderGround": -4.0
+    },
+    "Palette": {
+      "CalcMie": 2.0,
+      "CalcMieSymmetrical": 0.75,
+      "CalcRayleigh": 0.75,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": -100.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/GerudoDesert.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.09,
+      "FeatureColorG": 1.3072,
+      "FeatureColorR": 1.2521
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "DarkWoodsClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -28.0,
+        -28.0,
+        -28.0,
+        -28.0,
+        -13.0,
+        -7.0,
+        0.0,
+        10.0,
+        20.0,
+        23.0,
+        25.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u6697\u95c7\u306e\u68ee",
+    "MoistureMax": 0.0,
+    "MoistureMin": 0.0,
+    "NightTemperature": {
+      "Ground": [
+        -28.4,
+        -28.4,
+        -28.0,
+        -28.0,
+        -15.0,
+        -9.0,
+        -3.0,
+        7.0,
+        17.0,
+        20.0,
+        23.0
+      ],
+      "Sky": -28.4,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "EnvPaletteTimeTable": "Work/WorldMgr/ResEnvPaletteTimeTable/Prequel_Darkness.game__wm__ResEnvPaletteTimeTable.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "Lottery",
+      "BlueskyRate": 40,
+      "CloudyRate": 30,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 5,
+      "NightLockBlueSky": false,
+      "RainRate": 15,
+      "StormRate": 0,
+      "ThunderRainRate": 10
+    },
+    "WindPower": 10.0
+  },
+  "Ichikara_Climate": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        12.0,
+        17.0,
+        20.0,
+        23.0,
+        25.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u30a4\u30c1\u30ab\u30e9\u6751\u5468\u8fba\u6c17\u5019",
+    "MoistureMax": 37.5,
+    "MoistureMin": 7.5,
+    "NightTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        8.0,
+        12.0,
+        17.0,
+        20.0,
+        23.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.25,
+      "CavePalette": "Work/WorldMgr/CavePalette/Akkala.game__wm__CavePalette.gyml"
+    },
+    "Weather": {
+      "BlueSkyRainType": "Lottery",
+      "BlueskyRate": 85,
+      "CloudyRate": 10,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 5,
+      "StormRate": 0,
+      "ThunderRainRate": 0
+    },
+    "WindPower": 10.0,
+    "$parent": "Work/WorldMgr/ResClimate/TamourPlainClimate.game__wm__ResClimate.gyml"
+  },
+  "GerudoCanyon": {
+    "DayTemperature": {
+      "Ground": [
+        32.0,
+        35.0,
+        38.0,
+        41.0,
+        42.0,
+        43.0,
+        44.0,
+        45.0,
+        46.0,
+        47.0,
+        48.0
+      ],
+      "Sky": 28.0,
+      "UnderGround": 48.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "SandDust",
+    "ForbidComeback": false,
+    "Label": "\u30b2\u30eb\u30c9\u30ad\u30e3\u30cb\u30aa\u30f3\u6c17\u5019",
+    "MoistureMax": 0.0,
+    "MoistureMin": 0.0,
+    "NightTemperature": {
+      "Ground": [
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -7.0,
+        -5.0,
+        -4.0
+      ],
+      "Sky": -7.0,
+      "UnderGround": -4.0
+    },
+    "Palette": {
+      "CalcMie": 1.2,
+      "CalcMieSymmetrical": 0.9,
+      "CalcRayleigh": 0.9,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": -75.0,
+      "CalcVolumeMaskIntencity": 2.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/GerudoDesert.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.224,
+      "FeatureColorG": 1.35,
+      "FeatureColorR": 1.332
+    },
+    "Temperature24": {
+      "Time24": [
+        -5.0,
+        -5.0,
+        -5.0,
+        -15.0,
+        -15.0,
+        -15.0,
+        -15.0,
+        -5.0,
+        20.0,
+        45.0,
+        45.0,
+        45.0,
+        55.0,
+        55.0,
+        55.0,
+        55.0,
+        45.0,
+        45.0,
+        45.0,
+        45.0,
+        20.0,
+        -5.0,
+        -5.0,
+        -5.0
+      ]
+    },
+    "TemperatureType": "Default",
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 100,
+      "CloudyRate": 0,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  },
+  "BeginningPlateauFrostClimate": {
+    "DayTemperature": {
+      "Ground": [
+        -24.0,
+        -18.0,
+        -12.0,
+        -10.0,
+        -8.0,
+        -6.0,
+        -4.0,
+        -2.0,
+        -2.0,
+        -2.0,
+        -2.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 25.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "Mist",
+    "ForbidComeback": false,
+    "Label": "\u59cb\u307e\u308a\u306e\u53f0\u5730 \u6c37\u96ea\u6c17\u5019",
+    "MoistureMax": 20.0,
+    "MoistureMin": 2.5,
+    "NightTemperature": {
+      "Ground": [
+        -28.0,
+        -24.0,
+        -20.0,
+        -16.0,
+        -12.0,
+        -8.0,
+        -6.0,
+        -4.0,
+        -4.0,
+        -4.0,
+        -4.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": 23.0
+    },
+    "Palette": {
+      "CalcMie": 1.0,
+      "CalcMieSymmetrical": 1.0,
+      "CalcRayleigh": 1.0,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": 0.0,
+      "CalcVolumeMaskIntencity": 1.0,
+      "FeatureColorR": 1.0,
+      "StaticPalette": ""
+    },
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 60,
+      "CloudyRate": 20,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 5,
+      "NightLockBlueSky": false,
+      "RainRate": 10,
+      "StormRate": 0,
+      "SuperHeavyRainRate": 0,
+      "ThunderRainRate": 5
+    },
+    "WindPower": 7.5
+  },
+  "GerudoCanyon_BufferZone": {
+    "DayTemperature": {
+      "Ground": [
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        7.0,
+        8.0,
+        15.0,
+        20.0,
+        24.0,
+        27.0,
+        30.0
+      ],
+      "Sky": 7.0,
+      "UnderGround": 30.0
+    },
+    "EnvFireLevel": 0,
+    "FogType": "SandDust",
+    "ForbidComeback": false,
+    "Label": "\u30b2\u30eb\u30c9\u30ad\u30e3\u30cb\u30aa\u30f3\u7de9\u885d\u5730\u5e2f\u6c17\u5019",
+    "MoistureMax": 0.0,
+    "MoistureMin": 0.0,
+    "NightTemperature": {
+      "Ground": [
+        -28.0,
+        -24.0,
+        -20.0,
+        -16.0,
+        -12.0,
+        -9.0,
+        -8.0,
+        -6.0,
+        -5.0,
+        -4.0,
+        -4.0
+      ],
+      "Sky": -28.0,
+      "UnderGround": -4.0
+    },
+    "Palette": {
+      "CalcMie": 1.2,
+      "CalcMieSymmetrical": 0.9,
+      "CalcRayleigh": 0.9,
+      "CalcSfParamAttenuation": 0.0,
+      "CalcSfParamNear": -75.0,
+      "CalcVolumeMaskIntencity": 2.0,
+      "CavePalette": "Work/WorldMgr/CavePalette/GerudoDesert.game__wm__CavePalette.gyml",
+      "FeatureColorB": 1.224,
+      "FeatureColorG": 1.35,
+      "FeatureColorR": 1.332
+    },
+    "Temperature24": {
+      "Time24": [
+        -5.0,
+        -5.0,
+        -5.0,
+        -15.0,
+        -15.0,
+        -15.0,
+        -15.0,
+        -5.0,
+        20.0,
+        45.0,
+        45.0,
+        45.0,
+        55.0,
+        55.0,
+        55.0,
+        55.0,
+        45.0,
+        45.0,
+        45.0,
+        45.0,
+        20.0,
+        -5.0,
+        -5.0,
+        -5.0
+      ]
+    },
+    "TemperatureType": "Default",
+    "Weather": {
+      "BlueSkyRainType": "None",
+      "BlueskyRate": 95,
+      "CloudyRate": 5,
+      "DayLockBlueSky": false,
+      "HeavyRainRate": 0,
+      "NightLockBlueSky": false,
+      "RainRate": 0,
+      "StormRate": 0
+    },
+    "WindPower": 10.0
+  }
+}
