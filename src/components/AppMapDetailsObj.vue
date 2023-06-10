@@ -65,14 +65,20 @@
       </section>
 
       <section v-if="dropTableExists()" class="droptable">
+        <hr>
         <h4 class="subsection-heading">Drop Table: {{this.dropTables.DropTableName || 'Default'}}</h4>
         <div v-for="(group, igroup) in this.dropTables.items" :key="igroup">
           <div v-if="group.DropTableElement.length" class="droptable_content">
             <div class="droptable_group">{{getDropTableGroupCount(group)}}</div>
-            <div v-for="(item, kitem) in [...group.DropTableElement].sort((a,b) => b.DropProbability - a.DropProbability)" :key="kitem">
-              <div v-if="item.IsProxySetting" class="droptable_item">{{ item.DropProbability }}% {{item.ProxyType}} - {{item.WeaponType}}</div>
-              <div v-else class="droptable_item">{{ item.DropProbability }}% {{getName(item.DropActorName.split("/").pop().split(".")[0])}}</div>
-            </div>
+            <table>
+              <tr v-for="(item, kitem) in [...group.DropTableElement].sort((a,b) => b.DropProbability - a.DropProbability)" :key="kitem" class="droptable_item">
+                <td class="drop-probability">{{item.DropProbability}}%</td>
+                <td>
+                  <span v-if="item.IsProxySetting">{{item.ProxyType}} - {{item.WeaponType}}</span>
+                  <span v-else>{{getName(item.DropActorName.split("/").pop().split(".")[0])}}</span>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </section>
@@ -169,17 +175,18 @@
 }
 
 .droptable {
-    font-size: 0.9em;
-}
-.droptable_content {
-    padding-left: 1em;
-}
- .droptable_item {
-    padding-left: 1em;
-}
-.droptable_group {
-    font-weight: bold;
+  font-size: 0.9em;
 }
 
+.droptable_group {
+  font-weight: bold;
+}
+
+.drop-probability {
+  display: inline-block;
+  width: 5em;
+  text-align: right;
+  margin-right: 1em;
+}
 </style>
 <script src="./AppMapDetailsObj.ts"></script>
