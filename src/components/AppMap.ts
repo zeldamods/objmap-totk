@@ -1197,6 +1197,10 @@ export default class AppMap extends mixins(MixinUtil) {
         layer.on('mouseout', () => {
           layers.forEach(l => l.setStyle({ weight: 2, fillOpacity: 0.2 }));
         });
+        if (name == "MapTower") {
+          layer.bindTooltip(features[0].properties.title);
+          continue;
+        }
         const area = await MsgMgr.getInstance().getAreaData(name, parseInt(data));
         const climate = await MsgMgr.getInstance().getClimateData(area.Climate);
         const area_name = MsgMgr.getInstance().getMsgWithFile("StaticMsg/LocationMarker", area.Name);
