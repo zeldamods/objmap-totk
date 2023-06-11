@@ -66,7 +66,7 @@
 
       <section v-if="dropTableExists()" class="droptable">
         <hr>
-        <h4 class="subsection-heading">Drop Table: {{this.dropTables.DropTableName || 'Default'}}</h4>
+        <h4 class="subsection-heading">Drop table: {{this.dropTables.DropTableName || 'Default'}}</h4>
         <div v-for="(group, igroup) in this.dropTables.items" :key="igroup">
           <div v-if="group.DropTableElement.length" class="droptable_content">
             <div class="droptable_group">{{getDropTableGroupCount(group)}}</div>

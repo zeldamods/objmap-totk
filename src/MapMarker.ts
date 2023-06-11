@@ -3,7 +3,10 @@ import * as L from 'leaflet';
 import { rankUpEnemyForHardMode } from '@/level_scaling';
 import { MapBase } from '@/MapBase';
 import * as MapIcons from '@/MapIcon';
-import { ObjectMinData } from '@/services/MapMgr';
+import {
+  isDefaultDropTable,
+  ObjectMinData,
+} from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 import {
   CanvasMarker,
@@ -462,7 +465,7 @@ function setObjMarkerTooltip(title: string, layer: L.Layer, obj: ObjectMinData) 
   if (obj.drop) {
     if (obj.drop.type === "Actor")
       tooltipInfo.push(getName(obj.drop.value));
-    else if (obj.drop.type === "Table")
+    else if (obj.drop.type === "Table" && !isDefaultDropTable(obj.drop))
       tooltipInfo.push('Drop table: ' + obj.drop.value);
   }
   if (obj.equip) {

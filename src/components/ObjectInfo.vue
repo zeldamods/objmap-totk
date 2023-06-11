@@ -21,7 +21,7 @@
     <section class="search-result-oho">
       <span style="color: #ff3915" v-if="data.one_hit_mode"><i class="fa fa-infinity fa-fw"></i> One-Hit Obliterator Object</span>
     </section>
-    <section class="search-result-drop" v-if="!dropAsName && data.drop"><i class="fa fa-gem fa-fw"></i> {{drop()}}</section>
+    <section class="search-result-drop" v-if="!dropAsName && hasNonDefaultDropTable()"><i class="fa fa-gem fa-fw"></i> {{drop()}}</section>
     <section class="search-result-equip" v-if="data.equip">
       <div v-if="obj.name == 'Npc_MinusFieldGhost_000'" style="display: inline">
         <div class="swords fa-fw fa" style="color: white">&#9876;</div> Possible:

@@ -3,6 +3,7 @@ import { Prop } from 'vue-property-decorator';
 
 import MixinUtil from '@/components/MixinUtil';
 import {
+  isDefaultDropTable,
   ObjectData,
   ObjectMinData,
 } from '@/services/MapMgr';
@@ -76,5 +77,12 @@ export default class ObjectInfo extends mixins(MixinUtil) {
     s += this.data.drop.value.map((name: any) => this.getName(name)).join(", ");
 
     return s;
+  }
+
+  hasNonDefaultDropTable() {
+    if (!this.data.drop) {
+      return false;
+    }
+    return !isDefaultDropTable(this.data.drop);
   }
 }

@@ -22,6 +22,11 @@ export interface ResPlacementObj {
   readonly Rails?: any;
 }
 
+export interface ObjectDropInfo {
+  type: "Table" | "Actor";
+  value: any;
+}
+
 export interface ObjectMinData {
   objid: number;
   hash_id: string;
@@ -29,10 +34,7 @@ export interface ObjectMinData {
   map_name?: string;
   map_static: boolean;
   name: string;
-  drop?: {
-    type: "Table" | "Actor";
-    value: any;
-  };
+  drop?: ObjectDropInfo;
   equip?: string[];
   pos: [number, number, number];
 
@@ -147,4 +149,8 @@ export class MapMgr {
 
 export function parseHash(hash: string) {
   return '0x' + BigInt(hash).toString(16).padStart(16, '0');
+}
+
+export function isDefaultDropTable(drop: ObjectDropInfo) {
+  return drop.type === "Table" && drop.value.length === 1 && drop.value[0] === "Default";
 }
