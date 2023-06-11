@@ -460,10 +460,10 @@ function setObjMarkerTooltip(title: string, layer: L.Layer, obj: ObjectMinData) 
     tooltipInfo.push(`${locationName}`);
   }
   if (obj.drop) {
-    if (obj.drop[0] == 1)
-      tooltipInfo.push(getName(obj.drop[1]));
-    else if (obj.drop[0] == 2)
-      tooltipInfo.push('Drop table: ' + obj.drop[1]);
+    if (obj.drop.type === "Actor")
+      tooltipInfo.push(getName(obj.drop.value));
+    else if (obj.drop.type === "Table")
+      tooltipInfo.push('Drop table: ' + obj.drop.value);
   }
   if (obj.equip) {
     for (const e of obj.equip)

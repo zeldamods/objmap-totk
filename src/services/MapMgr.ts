@@ -29,7 +29,10 @@ export interface ObjectMinData {
   map_name?: string;
   map_static: boolean;
   name: string;
-  drop?: { [key: string]: any };
+  drop?: {
+    type: "Table" | "Actor";
+    value: any;
+  };
   equip?: string[];
   pos: [number, number, number];
 
