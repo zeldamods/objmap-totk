@@ -251,7 +251,7 @@ export class MapMarkerDispenser extends MapMarkerGenericLocationMarker {
     this.marker.setIcon(MapIcons.DISPENSER);
     this.setTitle('Device Dispenser');
     this.marker.options.title = '';
-    const items = info.ui_equip.map((item: string) => `<div style="font-size: 0.9em">- ${item}</div>`).join("");
+    const items = info.equip.map((item: string) => `<div style="font-size: 0.9em">- ${getName(item)}</div>`).join("");
     this.marker.bindTooltip(`Device Dispenser<br/>${items}`, { pane: 'front2' });
     this.info = info;
     // @ts-ignore
