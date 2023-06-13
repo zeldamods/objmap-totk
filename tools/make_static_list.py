@@ -151,6 +151,8 @@ for field in ['MainField', 'MinusField']:
                     markers['Chasm'].append(item)
                 elif msg.startswith('Well_'):
                     item['Icon'] = 'Well'
+                    if item['MessageID'] == 'Well_0043B':
+                        item['Icon'] = 'Cave'
                     markers['Cave'].append( item )
                 elif 'DemonStatue' in msg:
                     if msg.startswith('DemonStatue'):
