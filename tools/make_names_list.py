@@ -61,6 +61,12 @@ for file in ["USen.Product.100/ActorMsg/Attachment.msyt",
 
         out[v] = txt
 
+with open("tools/names_extra.json","r") as f:
+    extra = json.load(f)
+    for key, val in extra.items():
+        if key not in out:
+            out[key] = val
+
 missing = []
 
 with open("missing.csv", "r") as f:
@@ -76,11 +82,17 @@ with open("missing.csv", "r") as f:
         if val[0] == '$':
             val = val[1:]
             if val in out:
-                out[key] = out[val]
+                if not key in out:
+                    out[key] = out[val]
+                else:
+                    print(key, val)
             else:
                 raise ValueError('value does not exist', val)
         else:
-            out[key] = val
+            if not key in out:
+                out[key] = val
+            else:
+                print(key, val)
 
 out['_doc_'] = {
     'path': 'objmap/public/game_files/names.json',
