@@ -1,4 +1,4 @@
-export const CURRENT_OBJMAP_SV_VERSION = 3;
+export const CURRENT_OBJMAP_SV_VERSION = 4;
 
 export interface SearchGroup {
   label: string;
