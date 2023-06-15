@@ -665,6 +665,7 @@ export default class AppMap extends mixins(MixinUtil) {
         if (ui.leafletType(e.layer) == ui.LeafletType.Polyline) {
           const map_layers = this.drawVertexLayers.filter((value, index, self) => { return self.indexOf(value) == index; });
           if (map_layers.length != 1) {
+            const color = e.layer.options.color || this.drawLineColor;
             const latlngs = e.layer.getLatLngs();
             if (latlngs.length != this.drawVertexLayers.length) {
               console.error("Mismatch between polyline vertex and drawVertexLayer lengths");
@@ -680,20 +681,20 @@ export default class AppMap extends mixins(MixinUtil) {
                   const p1 = interp(latlngs[i - 1], latlngs[i], 1. / 3.);
                   const p2 = interp(latlngs[i - 1], latlngs[i], 2. / 3.);
                   const pts = (p0) ? [p0, ...latlngs.slice(k, i), p1] : [...latlngs.slice(k, i), p1];
-                  group.push({ layer: L.polyline(pts), map_layer: this.drawVertexLayers[k] });
-                  group.push({ layer: L.polyline([p1, p2]), map_layer: 'Surface' });
+                  group.push({ layer: L.polyline(pts, { color }), map_layer: this.drawVertexLayers[k] });
+                  group.push({ layer: L.polyline([p1, p2], { color }), map_layer: 'Surface' });
                   p0 = p2;
                 } else {
                   const pts = (p0) ? [p0, ...latlngs.slice(k, i)] : [...latlngs.slice(k, i)];
                   p0 = interp(latlngs[i - 1], latlngs[i], 0.5);
                   pts.push(p0);
-                  group.push({ layer: L.polyline(pts), map_layer: this.drawVertexLayers[k] });
+                  group.push({ layer: L.polyline(pts, { color }), map_layer: this.drawVertexLayers[k] });
                 }
                 k = i;
               }
             }
             const pts = [p0, ...latlngs.slice(k)];
-            group.push({ layer: L.polyline(pts), map_layer: this.drawVertexLayers[k] });
+            group.push({ layer: L.polyline(pts, { color }), map_layer: this.drawVertexLayers[k] });
           } else {
             group.push({ layer: e.layer, map_layer: this.drawVertexLayers[0] });
           }
