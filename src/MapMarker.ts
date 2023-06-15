@@ -210,12 +210,18 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     super(mb, l, false, 1000);
     // Yes, extracting the dungeon number from the save flag is what Nintendo does.
     const dungeonNum = parseInt(this.lm.getSaveFlag().replace('Location_Dungeon', ''), 10);
-    this.marker.setIcon(MapIcons.TOTK_SHRINE);
+    // Different marker for Shrine in Cave
+    if (l.ShrineInCave) {
+      this.marker.setIcon(MapIcons.TOTK_SHRINE_CAVE);
+    } else {
+      this.marker.setIcon(MapIcons.TOTK_SHRINE);
+    }
     this.setTitle(MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId()));
     this.marker.options.title = '';
     this.dungeonNum = dungeonNum;
     const sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId() + '_sub');
-    this.marker.bindTooltip(`${this.title}<br>${sub}`, { pane: 'front2' });
+    const cave = (l.ShrineInCave) ? "<br>Cave" : "";
+    this.marker.bindTooltip(`${this.title}<br>${sub}${cave}`, { pane: 'front2' });
   }
   shouldBeShown() {
     let layer = this.mb.activeLayer;

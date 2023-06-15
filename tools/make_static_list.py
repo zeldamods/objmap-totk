@@ -84,6 +84,13 @@ chasms_not_caves = [
     'Cave_Lanayru_0063'
 ]
 
+# Generate shrine_caves.json
+# sqlite> .mode json
+# sqlite> .output shrine_caves.json
+# sqlite> select map_name, json_extract(data, '$.Dynamic.Location') as Location from objs
+#            where unit_config_name = 'LocationMarker' and data like '%:"Dungeon%' ;
+shrine_maps = {val['Location']: val['map_name'].split("_")[0] for val in json.load(open("tools/shrine_caves.json", "r")) }
+
 for field in ['MainField', 'MinusField']:
     data = json.load(open(f"{base}/Banc/{field}/LocationArea/{field}.locationarea.json","r"))
 
@@ -111,6 +118,8 @@ for field in ['MainField', 'MinusField']:
                     'Translate': {'X': pt[0], 'Y': pt[1], 'Z': pt[2]},
                     'SaveFlag': f'Location_{msg}'
                 }
+                if kind == 'Shrine':
+                    item['ShrineInCave'] = shrine_maps[msg] == 'Cave'
                 if kind in icons :
                     item['Icon'] = icons[kind]
                 if kind.startswith("Spot") :

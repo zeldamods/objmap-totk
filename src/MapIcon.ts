@@ -15,6 +15,11 @@ export const TOTK_SHRINE = L.icon({
   iconSize: L.point(32, 32),
   className: 'mapicon-totk-Shrine'
 });
+export const TOTK_SHRINE_CAVE = L.icon({
+  iconUrl: '/icons/shrine_cave.svg',
+  iconSize: L.point(32, 32),
+  className: 'mapicon-totk-Shrine'
+});
 export const TOTK_TOWER = L.icon({
   iconUrl: '/icons/tower.svg',
   iconSize: L.point(32, 32),

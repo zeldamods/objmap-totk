@@ -25497,6 +25497,7 @@
           "Z": 1009.0260009765625
         },
         "SaveFlag": "Location_Dungeon000",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25508,6 +25509,7 @@
           "Z": -2876.19140625
         },
         "SaveFlag": "Location_Dungeon001",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25519,6 +25521,7 @@
           "Z": -2596.3544921875
         },
         "SaveFlag": "Location_Dungeon002",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25530,6 +25533,7 @@
           "Z": -1617.2672119140625
         },
         "SaveFlag": "Location_Dungeon003",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25541,6 +25545,7 @@
           "Z": 868.5
         },
         "SaveFlag": "Location_Dungeon004",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25552,6 +25557,7 @@
           "Z": -2133.729248046875
         },
         "SaveFlag": "Location_Dungeon005",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25563,6 +25569,7 @@
           "Z": -823.9371337890625
         },
         "SaveFlag": "Location_Dungeon006",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25574,6 +25581,7 @@
           "Z": -2386.2880859375
         },
         "SaveFlag": "Location_Dungeon007",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25585,6 +25593,7 @@
           "Z": 1363.142822265625
         },
         "SaveFlag": "Location_Dungeon008",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25596,6 +25605,7 @@
           "Z": 1513.2650146484375
         },
         "SaveFlag": "Location_Dungeon009",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25607,6 +25617,7 @@
           "Z": -1170.1190185546875
         },
         "SaveFlag": "Location_Dungeon010",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25618,6 +25629,7 @@
           "Z": -423.7898864746094
         },
         "SaveFlag": "Location_Dungeon011",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25629,6 +25641,7 @@
           "Z": 2180.77685546875
         },
         "SaveFlag": "Location_Dungeon012",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25640,6 +25653,7 @@
           "Z": 2278.39990234375
         },
         "SaveFlag": "Location_Dungeon013",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25651,6 +25665,7 @@
           "Z": -850.9972534179688
         },
         "SaveFlag": "Location_Dungeon014",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -25662,6 +25677,7 @@
           "Z": 2118.706298828125
         },
         "SaveFlag": "Location_Dungeon015",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25673,6 +25689,7 @@
           "Z": 2962.550537109375
         },
         "SaveFlag": "Location_Dungeon016",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25684,6 +25701,7 @@
           "Z": -3733.42578125
         },
         "SaveFlag": "Location_Dungeon017",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25695,6 +25713,7 @@
           "Z": -2115.70703125
         },
         "SaveFlag": "Location_Dungeon018",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25706,6 +25725,7 @@
           "Z": -2641.815185546875
         },
         "SaveFlag": "Location_Dungeon019",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25717,6 +25737,7 @@
           "Z": -756.8497924804688
         },
         "SaveFlag": "Location_Dungeon020",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25728,6 +25749,7 @@
           "Z": -2880.473876953125
         },
         "SaveFlag": "Location_Dungeon021",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25739,6 +25761,7 @@
           "Z": 251.00563049316406
         },
         "SaveFlag": "Location_Dungeon022",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25750,6 +25773,7 @@
           "Z": -2793.056396484375
         },
         "SaveFlag": "Location_Dungeon023",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25761,6 +25785,7 @@
           "Z": 3344.31982421875
         },
         "SaveFlag": "Location_Dungeon024",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25772,6 +25797,7 @@
           "Z": 197.19091796875
         },
         "SaveFlag": "Location_Dungeon025",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25783,6 +25809,7 @@
           "Z": 1616.0906982421875
         },
         "SaveFlag": "Location_Dungeon026",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25794,6 +25821,7 @@
           "Z": 2178.16796875
         },
         "SaveFlag": "Location_Dungeon027",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -25805,6 +25833,7 @@
           "Z": -2602.4267578125
         },
         "SaveFlag": "Location_Dungeon028",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25816,6 +25845,7 @@
           "Z": -422.5399169921875
         },
         "SaveFlag": "Location_Dungeon029",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25827,6 +25857,7 @@
           "Z": -2087.81396484375
         },
         "SaveFlag": "Location_Dungeon030",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25838,6 +25869,7 @@
           "Z": -1280.4586181640625
         },
         "SaveFlag": "Location_Dungeon031",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25849,6 +25881,7 @@
           "Z": 2186.94189453125
         },
         "SaveFlag": "Location_Dungeon032",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -25860,6 +25893,7 @@
           "Z": 3625.130126953125
         },
         "SaveFlag": "Location_Dungeon033",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25871,6 +25905,7 @@
           "Z": -3535.0
         },
         "SaveFlag": "Location_Dungeon034",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25882,6 +25917,7 @@
           "Z": -1245.9383544921875
         },
         "SaveFlag": "Location_Dungeon035",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25893,6 +25929,7 @@
           "Z": -3677.912841796875
         },
         "SaveFlag": "Location_Dungeon036",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25904,6 +25941,7 @@
           "Z": -98.2994155883789
         },
         "SaveFlag": "Location_Dungeon037",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25915,6 +25953,7 @@
           "Z": -2681.519775390625
         },
         "SaveFlag": "Location_Dungeon038",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25926,6 +25965,7 @@
           "Z": 2237.30078125
         },
         "SaveFlag": "Location_Dungeon039",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25937,6 +25977,7 @@
           "Z": -1806.0263671875
         },
         "SaveFlag": "Location_Dungeon040",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25948,6 +25989,7 @@
           "Z": -577.779541015625
         },
         "SaveFlag": "Location_Dungeon041",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25959,6 +26001,7 @@
           "Z": 1350.7542724609375
         },
         "SaveFlag": "Location_Dungeon042",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25970,6 +26013,7 @@
           "Z": -3050.674560546875
         },
         "SaveFlag": "Location_Dungeon043",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25981,6 +26025,7 @@
           "Z": -3356.71728515625
         },
         "SaveFlag": "Location_Dungeon044",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -25992,6 +26037,7 @@
           "Z": -534.3213500976562
         },
         "SaveFlag": "Location_Dungeon045",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26003,6 +26049,7 @@
           "Z": -1085.0509033203125
         },
         "SaveFlag": "Location_Dungeon046",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26014,6 +26061,7 @@
           "Z": 2512.205078125
         },
         "SaveFlag": "Location_Dungeon047",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26025,6 +26073,7 @@
           "Z": 434.0478820800781
         },
         "SaveFlag": "Location_Dungeon048",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26036,6 +26085,7 @@
           "Z": 216.77188110351562
         },
         "SaveFlag": "Location_Dungeon049",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26047,6 +26097,7 @@
           "Z": -1202.8160400390625
         },
         "SaveFlag": "Location_Dungeon050",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26058,6 +26109,7 @@
           "Z": -1442.9820556640625
         },
         "SaveFlag": "Location_Dungeon051",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26069,6 +26121,7 @@
           "Z": -3499.5439453125
         },
         "SaveFlag": "Location_Dungeon052",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26080,6 +26133,7 @@
           "Z": -2735.8486328125
         },
         "SaveFlag": "Location_Dungeon053",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26091,6 +26145,7 @@
           "Z": -3275.067138671875
         },
         "SaveFlag": "Location_Dungeon054",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26102,6 +26157,7 @@
           "Z": 3294.6005859375
         },
         "SaveFlag": "Location_Dungeon055",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26113,6 +26169,7 @@
           "Z": 3358.3935546875
         },
         "SaveFlag": "Location_Dungeon056",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26124,6 +26181,7 @@
           "Z": 1673.4398193359375
         },
         "SaveFlag": "Location_Dungeon057",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26135,6 +26193,7 @@
           "Z": 2928.763916015625
         },
         "SaveFlag": "Location_Dungeon058",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26146,6 +26205,7 @@
           "Z": 358.5
         },
         "SaveFlag": "Location_Dungeon059",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26157,6 +26217,7 @@
           "Z": 912.7083740234375
         },
         "SaveFlag": "Location_Dungeon060",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26168,6 +26229,7 @@
           "Z": 1382.6861572265625
         },
         "SaveFlag": "Location_Dungeon061",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26179,6 +26241,7 @@
           "Z": 1503.59814453125
         },
         "SaveFlag": "Location_Dungeon062",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26190,6 +26253,7 @@
           "Z": 1661.45361328125
         },
         "SaveFlag": "Location_Dungeon063",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26201,6 +26265,7 @@
           "Z": -2509.65478515625
         },
         "SaveFlag": "Location_Dungeon064",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26212,6 +26277,7 @@
           "Z": -1170.1737060546875
         },
         "SaveFlag": "Location_Dungeon065",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26223,6 +26289,7 @@
           "Z": 947.1262817382812
         },
         "SaveFlag": "Location_Dungeon066",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26234,6 +26301,7 @@
           "Z": -1990.004150390625
         },
         "SaveFlag": "Location_Dungeon067",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26245,6 +26313,7 @@
           "Z": 1551.04296875
         },
         "SaveFlag": "Location_Dungeon068",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26256,6 +26325,7 @@
           "Z": -665.8784790039062
         },
         "SaveFlag": "Location_Dungeon069",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26267,6 +26337,7 @@
           "Z": -2201.20703125
         },
         "SaveFlag": "Location_Dungeon070",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26278,6 +26349,7 @@
           "Z": 3347.772216796875
         },
         "SaveFlag": "Location_Dungeon071",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26289,6 +26361,7 @@
           "Z": -3569.997802734375
         },
         "SaveFlag": "Location_Dungeon072",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26300,6 +26373,7 @@
           "Z": -2842.03466796875
         },
         "SaveFlag": "Location_Dungeon073",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26311,6 +26385,7 @@
           "Z": -1824.018798828125
         },
         "SaveFlag": "Location_Dungeon074",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26322,6 +26397,7 @@
           "Z": 671.4673461914062
         },
         "SaveFlag": "Location_Dungeon075",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26333,6 +26409,7 @@
           "Z": 2543.1630859375
         },
         "SaveFlag": "Location_Dungeon076",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26344,6 +26421,7 @@
           "Z": 1558.2928466796875
         },
         "SaveFlag": "Location_Dungeon077",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26355,6 +26433,7 @@
           "Z": 1770.1156005859375
         },
         "SaveFlag": "Location_Dungeon078",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26366,6 +26445,7 @@
           "Z": 1853.401123046875
         },
         "SaveFlag": "Location_Dungeon079",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26377,6 +26457,7 @@
           "Z": -1322.7413330078125
         },
         "SaveFlag": "Location_Dungeon080",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26388,6 +26469,7 @@
           "Z": 1482.2869873046875
         },
         "SaveFlag": "Location_Dungeon081",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26399,6 +26481,7 @@
           "Z": -1971.65478515625
         },
         "SaveFlag": "Location_Dungeon082",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26410,6 +26493,7 @@
           "Z": 1782.8067626953125
         },
         "SaveFlag": "Location_Dungeon083",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26421,6 +26505,7 @@
           "Z": -329.73126220703125
         },
         "SaveFlag": "Location_Dungeon084",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26432,6 +26517,7 @@
           "Z": 3270.348388671875
         },
         "SaveFlag": "Location_Dungeon085",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26443,6 +26529,7 @@
           "Z": -3714.1005859375
         },
         "SaveFlag": "Location_Dungeon086",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26454,6 +26541,7 @@
           "Z": 3086.435791015625
         },
         "SaveFlag": "Location_Dungeon087",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26465,6 +26553,7 @@
           "Z": -3638.216064453125
         },
         "SaveFlag": "Location_Dungeon088",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26476,6 +26565,7 @@
           "Z": -2758.110595703125
         },
         "SaveFlag": "Location_Dungeon089",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26487,6 +26577,7 @@
           "Z": -3713.8359375
         },
         "SaveFlag": "Location_Dungeon090",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26498,6 +26589,7 @@
           "Z": -1195.26611328125
         },
         "SaveFlag": "Location_Dungeon091",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26509,6 +26601,7 @@
           "Z": 2518.05224609375
         },
         "SaveFlag": "Location_Dungeon092",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26520,6 +26613,7 @@
           "Z": 2856.47412109375
         },
         "SaveFlag": "Location_Dungeon093",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26531,6 +26625,7 @@
           "Z": 613.1249389648438
         },
         "SaveFlag": "Location_Dungeon094",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26542,6 +26637,7 @@
           "Z": 2058.657958984375
         },
         "SaveFlag": "Location_Dungeon095",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26553,6 +26649,7 @@
           "Z": 3486.5615234375
         },
         "SaveFlag": "Location_Dungeon096",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26564,6 +26661,7 @@
           "Z": -147.35279846191406
         },
         "SaveFlag": "Location_Dungeon097",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26575,6 +26673,7 @@
           "Z": -1904.451904296875
         },
         "SaveFlag": "Location_Dungeon098",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26586,6 +26685,7 @@
           "Z": -2166.015869140625
         },
         "SaveFlag": "Location_Dungeon099",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26597,6 +26697,7 @@
           "Z": 874.44140625
         },
         "SaveFlag": "Location_Dungeon100",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26608,6 +26709,7 @@
           "Z": -507.0
         },
         "SaveFlag": "Location_Dungeon101",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26619,6 +26721,7 @@
           "Z": -3180.345703125
         },
         "SaveFlag": "Location_Dungeon102",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26630,6 +26733,7 @@
           "Z": -1139.0799560546875
         },
         "SaveFlag": "Location_Dungeon103",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26641,6 +26745,7 @@
           "Z": 3006.5
         },
         "SaveFlag": "Location_Dungeon104",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26652,6 +26757,7 @@
           "Z": -3431.505615234375
         },
         "SaveFlag": "Location_Dungeon105",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26663,6 +26769,7 @@
           "Z": -1891.894287109375
         },
         "SaveFlag": "Location_Dungeon106",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26674,6 +26781,7 @@
           "Z": 2377.931396484375
         },
         "SaveFlag": "Location_Dungeon107",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26685,6 +26793,7 @@
           "Z": -2320.125732421875
         },
         "SaveFlag": "Location_Dungeon108",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26696,6 +26805,7 @@
           "Z": 3339.8603515625
         },
         "SaveFlag": "Location_Dungeon109",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26707,6 +26817,7 @@
           "Z": -1483.6973876953125
         },
         "SaveFlag": "Location_Dungeon110",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26718,6 +26829,7 @@
           "Z": -3101.62744140625
         },
         "SaveFlag": "Location_Dungeon111",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26729,6 +26841,7 @@
           "Z": 1089.252685546875
         },
         "SaveFlag": "Location_Dungeon112",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26740,6 +26853,7 @@
           "Z": 1186.894287109375
         },
         "SaveFlag": "Location_Dungeon113",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26751,6 +26865,7 @@
           "Z": 3712.00927734375
         },
         "SaveFlag": "Location_Dungeon114",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26762,6 +26877,7 @@
           "Z": -2211.410888671875
         },
         "SaveFlag": "Location_Dungeon115",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26773,6 +26889,7 @@
           "Z": 3209.681884765625
         },
         "SaveFlag": "Location_Dungeon116",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26784,6 +26901,7 @@
           "Z": -467.49017333984375
         },
         "SaveFlag": "Location_Dungeon117",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26795,6 +26913,7 @@
           "Z": 3825.29296875
         },
         "SaveFlag": "Location_Dungeon118",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26806,6 +26925,7 @@
           "Z": 510.7505187988281
         },
         "SaveFlag": "Location_Dungeon119",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26817,6 +26937,7 @@
           "Z": 2051.544189453125
         },
         "SaveFlag": "Location_Dungeon120",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26828,6 +26949,7 @@
           "Z": -825.2271118164062
         },
         "SaveFlag": "Location_Dungeon121",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26839,6 +26961,7 @@
           "Z": 1944.8074951171875
         },
         "SaveFlag": "Location_Dungeon122",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26850,6 +26973,7 @@
           "Z": -470.0058898925781
         },
         "SaveFlag": "Location_Dungeon123",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26861,6 +26985,7 @@
           "Z": 1115.7230224609375
         },
         "SaveFlag": "Location_Dungeon124",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26872,6 +26997,7 @@
           "Z": -3535.034423828125
         },
         "SaveFlag": "Location_Dungeon125",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26883,6 +27009,7 @@
           "Z": -629.7911376953125
         },
         "SaveFlag": "Location_Dungeon126",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26894,6 +27021,7 @@
           "Z": 1208.3843994140625
         },
         "SaveFlag": "Location_Dungeon127",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26905,6 +27033,7 @@
           "Z": -960.786865234375
         },
         "SaveFlag": "Location_Dungeon128",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26916,6 +27045,7 @@
           "Z": -2300.29248046875
         },
         "SaveFlag": "Location_Dungeon129",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26927,6 +27057,7 @@
           "Z": 1903.416015625
         },
         "SaveFlag": "Location_Dungeon130",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26938,6 +27069,7 @@
           "Z": 3524.0
         },
         "SaveFlag": "Location_Dungeon131",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26949,6 +27081,7 @@
           "Z": -3353.757080078125
         },
         "SaveFlag": "Location_Dungeon132",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26960,6 +27093,7 @@
           "Z": -1550.6224365234375
         },
         "SaveFlag": "Location_Dungeon133",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -26971,6 +27105,7 @@
           "Z": -1219.11279296875
         },
         "SaveFlag": "Location_Dungeon134",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26982,6 +27117,7 @@
           "Z": 1051.932861328125
         },
         "SaveFlag": "Location_Dungeon135",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -26993,6 +27129,7 @@
           "Z": -451.4667053222656
         },
         "SaveFlag": "Location_Dungeon136",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27004,6 +27141,7 @@
           "Z": -1639.5355224609375
         },
         "SaveFlag": "Location_Dungeon137",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27015,6 +27153,7 @@
           "Z": -17.586030960083008
         },
         "SaveFlag": "Location_Dungeon138",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27026,6 +27165,7 @@
           "Z": -3263.21826171875
         },
         "SaveFlag": "Location_Dungeon139",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27037,6 +27177,7 @@
           "Z": 2143.19921875
         },
         "SaveFlag": "Location_Dungeon140",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27048,6 +27189,7 @@
           "Z": 3577.113525390625
         },
         "SaveFlag": "Location_Dungeon141",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27059,6 +27201,7 @@
           "Z": 371.0340881347656
         },
         "SaveFlag": "Location_Dungeon142",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27070,6 +27213,7 @@
           "Z": -826.4054565429688
         },
         "SaveFlag": "Location_Dungeon143",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27081,6 +27225,7 @@
           "Z": 779.3939819335938
         },
         "SaveFlag": "Location_Dungeon144",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27092,6 +27237,7 @@
           "Z": 1486.95947265625
         },
         "SaveFlag": "Location_Dungeon145",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27103,6 +27249,7 @@
           "Z": 846.0948486328125
         },
         "SaveFlag": "Location_Dungeon146",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27114,6 +27261,7 @@
           "Z": -3484.64453125
         },
         "SaveFlag": "Location_Dungeon147",
+        "ShrineInCave": true,
         "Icon": "Dungeon"
       },
       {
@@ -27125,6 +27273,7 @@
           "Z": 320.6548156738281
         },
         "SaveFlag": "Location_Dungeon148",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27136,6 +27285,7 @@
           "Z": -2814.732421875
         },
         "SaveFlag": "Location_Dungeon149",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27147,6 +27297,7 @@
           "Z": 2168.892578125
         },
         "SaveFlag": "Location_Dungeon150",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       },
       {
@@ -27158,6 +27309,7 @@
           "Z": -3406.80712890625
         },
         "SaveFlag": "Location_Dungeon151",
+        "ShrineInCave": false,
         "Icon": "Dungeon"
       }
     ],
