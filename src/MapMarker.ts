@@ -597,7 +597,203 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
 }
 
 export class MapMarkerSearchResult extends MapMarkerObj {
+  private marked: boolean;
   constructor(mb: MapBase, obj: ObjectMinData) {
     super(mb, obj, '#e02500', '#ff2a00');
+    this.marked = false;
+    // @ts-ignore
+    this.marker.badge({
+      name: 'checkmark',
+      type: 'checkmark',
+      radius: 6,
+      fillColor: '#645838',
+      fillOpacity: 1,
+      checkmark: {
+        weight: 2,
+        color: "#B08844",
+        lineCap: 'square',
+      },
+    });
+    // @ts-ignore
+    this.marker.badge({
+      type: 'alert',
+      name: 'alert',
+      position: 'upper-left',
+      fillColor: 'orange',
+      fillOpacity: 1,
+      color: 'white',
+    })
+    // @ts-ignore
+    this.marker.badge({
+      type: 'alert',
+      name: 'alert3',
+      position: 'lower-left',
+      fillColor: 'red',
+      fillOpacity: 1,
+      color: 'white',
+    })
+    // @ts-ignore
+    this.marker.badge({
+      type: 'alert',
+      name: 'alert2',
+      position: 'lower-right',
+      fillColor: 'yellow',
+      fillOpacity: 1,
+      color: 'white',
+    })
   }
+  setMarked(marked: boolean) {
+    this.marked = marked;
+    this.marker.setStyle({});
+  }
+}
+
+L.CircleMarker.include({
+  badge: function(options: any = {}) {
+    const defaults = {
+      position: 'upper-right',
+      radius: 6,
+      offset: 10,
+      stroke: true,
+      color: 'white',
+      weight: 0,
+      opacity: 1.0,
+      fill: true,
+      fillColor: 'white',
+      fillOpacity: 0.5,
+      name: "default",
+      type: "checkmark",
+      checkmark: {
+        color: 'black',
+        weight: 2,
+        opacity: 1,
+        stroke: true,
+        dx: 1,
+        dy: 1,
+      }
+    }
+
+    const badge_options = Object.assign({}, defaults, options);
+
+    badge_options.checkmark = Object.assign({}, defaults.checkmark, options.checkmark);
+    if (!this._badges) {
+      this._badges = {};
+    }
+    this._badges[badge_options.name] = badge_options;
+    return this;
+  },
+  getPosition(badge: any) {
+    const p = this._point;
+    const r = this.getRadius();
+    let dx = r;
+    let dy = r;
+    if (badge.position == 'upper-right') {
+      dx = r;
+      dy = -r;
+    } else if (badge.position == 'upper-left') {
+      dx = -r;
+      dy = -r;
+    } else if (badge.position == 'lower-right') {
+      dx = r;
+      dy = r;
+    } else if (badge.position == 'lower-left') {
+      dx = -r;
+      dy = r;
+    }
+    const x = p.x + dx;
+    const y = p.y + dy;
+    return { x, y }
+  },
+  drawAlert(badge: any) {
+    const ctx = this.getCtx();
+    let p = this.getPosition(badge);
+    // Circle
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, badge.radius, 0, Math.PI * 2, true);
+    this._renderer._fillStroke(ctx, { options: badge });
+    // Point
+    ctx.font = `bold ${badge.radius * 1.8}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = badge.color;
+    ctx.fillText("!", p.x, p.y + badge.radius * 0.7);
+  },
+  drawCheckmark(badge: any) {
+    const ctx = this.getCtx();
+    let p = this.getPosition(badge);
+    // Circle
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, badge.radius, 0, Math.PI * 2, true);
+    this._renderer._fillStroke(ctx, { options: badge });
+    // Checkmark
+    const s = badge.radius / 3;
+    p.x += badge.checkmark.dx;
+    p.y += badge.checkmark.dy;
+    ctx.beginPath();
+    ctx.moveTo(p.x + s, p.y - s);
+    ctx.lineTo(p.x - s, p.y + s);
+    ctx.lineTo(p.x - s - s, p.y);
+    this._renderer._fillStroke(ctx, { options: badge.checkmark });
+  },
+  getCtx: function() {
+    return this._renderer._ctx;
+  },
+  drawBadges: function() {
+    Object.values(this._badges).forEach((badge: any) => {
+
+      if (badge.type == 'checkmark') {
+        this.drawCheckmark(badge);
+      } else if (badge.type == 'alert') {
+        this.drawAlert(badge);
+      } else if (badge.draw) {
+        badge.draw(this, badge);
+      }
+    });
+  },
+  _updatePath: function() {
+    //console.log("update circle");
+    this._renderer._updateCircle(this);
+    this.drawBadges();
+  },
+  fillStroke(ctx: any, layer: any) {
+    this._renderer._fillStroke(ctx, layer);
+  },
+})
+function addCheckMark(layer: any, badge: any) {
+  const renderer = layer._renderer;
+  if (layer._empty() || !renderer._drawing) {
+    return;
+  }
+  const p = layer._point, radius = layer._radius;
+  const ctx = renderer._ctx;
+  if (!ctx) {
+    return;
+  }
+  if (badge) {
+    if (badge.draw) {
+      return badge.draw(ctx, layer, badge);
+    }
+    ctx.beginPath();
+    ctx.arc(p.x + radius, p.y - radius, 6, 0, Math.PI * 2, true);
+    renderer._fillStroke(ctx, { options: badge })
+    return;
+  }
+
+
+  // Enclosing Circle
+  ctx.beginPath();
+  ctx.arc(p.x + radius, p.y - radius, 6, 0, Math.PI * 2, true);
+  ctx.fillStyle = "#645838";
+  ctx.fill();
+
+  // Checkmark
+  ctx.beginPath();
+  const s = 2;
+  ctx.moveTo(p.x + 1 + radius + s, p.y - radius - s + 1);
+  ctx.lineTo(p.x + 1 + radius - s, p.y - radius + s + 1);
+  ctx.lineTo(p.x + 1 + radius - s - s, p.y - radius + s - s + 1);
+  ctx.strokeStyle = "#B08844";
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'square';
+  ctx.stroke();
+
 }

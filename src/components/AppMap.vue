@@ -115,8 +115,12 @@
                 <span v-show="this.searchResults.length >= this.MAX_SEARCH_RESULT_COUNT">Showing only the first {{MAX_SEARCH_RESULT_COUNT}} results.<br></span>
                 <b-btn size="sm" variant="link" @click="searchOnAdd"><i class="fa fa-plus"></i> Add to map</b-btn>
                 <b-btn size="sm" variant="link" @click="searchOnExclude"><i class="far fa-eye-slash"></i> Hide</b-btn>
+                <b-checkbox style="display: inline-block; vertical-align: middle; accent-color: #29d1fc; color: #29d1fc;" switch v-model="skipMarked" > Skip marked</b-checkbox>
+
               </p>
-              <ObjectInfo v-for="(result, idx) in searchResults" :obj="result" :is-static="false" :key="result.objid" @click.native="searchJumpToResult(idx)" />
+              <div v-for="(result, idx) in searchResults" :key="result.objid">
+                <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false" @click.native="searchJumpToResult(idx)" />
+              </div>
             </div>
           </section>
       </div>
@@ -149,6 +153,24 @@
           </div>
         </b-form-group>
         -->
+        <div style="display: flex; flex: row nowrap; align-items: top">
+          <h4 class="subsection-heading">Checklists</h4>
+          <b-btn size="sm" variant="link" style="padding-top: 0px" @click="clearChecklists()">Clear</b-btn>
+          <b-btn size="sm" variant="link" style="padding-top: 0px" @click="addChecklists()">Add to Map</b-btn>
+        </div>
+        
+        <ul >
+          <li class="small" v-for="(item, key) in settings.checklists" :key="key">
+            <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
+                   variant="link" @click='searchOnValue(`"${item.name}"`)'>{{item.name}}</b-btn>
+            <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
+                   variant="link" @click='searchOnValue(`map:"${item.map_name}"`)'>{{item.map_name}}</b-btn>
+            {{item.marked}}
+            <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
+                   variant="link"
+                   @click="searchOnHash(item.hash_id)">view</b-btn>
+          </li>
+        </ul>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-draw">
