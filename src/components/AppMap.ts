@@ -505,6 +505,11 @@ export default class AppMap extends mixins(MixinUtil) {
         index: 0,
         callback: () => {
           layer.setStyle({ color: this.drawLineColor });
+          const id = this.drawLayer.getLayerId(layer);
+          const opts = this.drawLayerOpts.find((layer: any) => layer.id == id);
+          if (opts) {
+            opts.color = this.drawLineColor;
+          }
         },
       }, {
         separator: true,
