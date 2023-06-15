@@ -59,6 +59,9 @@ interface ObjectIdentifier {
   hashId: string;
 }
 
+const StyleSelected = { fillColor: '#59c5f7', color: '#029be2' };
+const StyleNormal = { fillColor: '#e02500', color: '#ff2a00' }; // MapMarkerSearchResult
+
 function valueOrDefault<T>(value: T | undefined, defaultValue: T) {
   return value === undefined ? defaultValue : value;
 }
@@ -187,7 +190,7 @@ class LayerProps {
     this.order = (feat.properties.order !== undefined) ? feat.properties.order : -1;
   }
 }
-function addGeoJSONFeatureToLayer(layer: any) {
+export function addGeoJSONFeatureToLayer(layer: any) {
   if (!layer.feature) {
     layer.feature = { type: 'Feature' };
   }
@@ -296,6 +299,8 @@ export default class AppMap extends mixins(MixinUtil) {
   private areaMapLayersByData: ui.Unobservable<Map<any, L.Layer[]>> = new ui.Unobservable(new Map());
   private areaAutoItem = new ui.Unobservable(L.layerGroup());
 
+  private skipMarked: boolean = false;
+
   shownAreaMap = '';
   areaWhitelist = '';
   showKorokIDs = false;
@@ -320,6 +325,17 @@ export default class AppMap extends mixins(MixinUtil) {
 
   // Replace current markers
   private importReplace: boolean = true;
+
+  filterResults(result: any) {
+    if (!this.skipMarked) {
+      return true;
+    }
+    if (this.settings!.checklists[result.hash_id]) { // If found, skip
+      return false;
+    }
+    return true;
+  }
+
 
   setViewFromRoute(route: any) {
     const x = parseFloat(route.params.x);
@@ -646,7 +662,10 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.m.on({
       // @ts-ignore
       'draw:created': (e: any) => {
+        console.log('draw:created', e.layer);
+        console.log('draw:created', e.layer.feature);
         addGeoJSONFeatureToLayer(e.layer);
+        console.log('draw:created', e.layer.feature);
         calcLayerLength(e.layer);
         addPopupAndTooltip(e.layer, this);
         this.drawLayer.addLayer(e.layer);
@@ -926,9 +945,32 @@ export default class AppMap extends mixins(MixinUtil) {
     return query;
   }
 
+  clearChecklists() {
+    this.settings!.checklists = {};
+  }
+  async addChecklists() {
+    const group = new SearchResultGroup('', 'Marked Objs');
+    await group.init(this.map);
+    group.setObjects(this.map, Object.values(this.settings!.checklists));
+    group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
+    this.searchGroups.push(group);
+  }
+
   searchJumpToResult(idx: number) {
     const marker = this.searchResultMarkers[idx];
     this.openMarkerDetails(getMarkerDetailsComponent(marker.data), marker.data, 6);
+  }
+
+  newChecklist() {
+    const prefix = "new checklist";
+    let name = prefix;
+    let i = 0;
+    while (name in this.settings!.checklists) {
+      i += 1;
+      name = `${prefix} ${i}`;
+    }
+    console.log("=>", name);
+    this.settings!.checklists[name] = {};
   }
 
   searchOnInput() {
@@ -1007,8 +1049,13 @@ export default class AppMap extends mixins(MixinUtil) {
       this.searchLastSearchFailed = true;
     }
 
+    const checklists = this.settings!.checklists;
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
+      if (checklists[result.hash_id] && checklists[result.hash_id].marked) {
+        //marker.data.getMarker().setStyle(StyleSelected);
+        marker.data.setMarked(true);
+      }
       this.searchResultMarkers.push(marker);
       marker.data.getMarker().addTo(this.map.m);
     }
@@ -1062,6 +1109,17 @@ export default class AppMap extends mixins(MixinUtil) {
     this.updateTooltips();
   }
 
+  updateSearchResultMarkers(item: any) {
+    const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
+    if (!marker) {
+      return;
+    }
+    // @ts-ignore
+    //const style = (item.marked) ? StyleSelected : StyleNormal;
+    //marker.data.getMarker().setStyle(style);
+    marker.data.setMarked(item.marked);
+  }
+
   initContextMenu() {
     this.map.m.on(SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT, (e) => {
       const mapType = Settings.getInstance().mapType;
@@ -1092,7 +1150,9 @@ export default class AppMap extends mixins(MixinUtil) {
     this.$on('AppMap:toggle-y-values', () => {
       this.toggleY();
     });
-
+    this.$on('AppMap:update-search-markers', (value: any) => {
+      this.updateSearchResultMarkers(value);
+    });
     this.$on('AppMap:open-obj', async (obj: ObjectData) => {
       if (this.tempObjMarker)
         this.tempObjMarker.data.getMarker().remove();
@@ -1454,6 +1514,17 @@ export default class AppMap extends mixins(MixinUtil) {
           }
         });
     }
+  }
+
+  searchOnHash(hash: string) {
+    this.searchQuery = `hash_id: ${hash}`;
+    this.search();
+    this.switchPane('spane-search');
+  }
+  searchOnValue(value: string) {
+    this.searchQuery = value;
+    this.search();
+    this.switchPane('spane-search');
   }
 
   beforeDestroy() {

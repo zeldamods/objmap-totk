@@ -43,6 +43,8 @@ export class Settings {
   decompBannerHidden!: boolean;
   noTouchScreen!: boolean;
 
+  checklists!: { [key: string]: any };
+
   private constructor() {
     this.load();
     window.addEventListener('beforeunload', (event) => {
@@ -71,11 +73,12 @@ export class Settings {
     this.drawControlsShown = parse(data.drawControlsShown, Id, false);
     this.decompBannerHidden = parse(data.decompBannerHidden, Id, false);
     this.noTouchScreen = parse(data.noTouchScreen, Id, false);
-
+    this.checklists = parse(data.checklists, Id, {});
     this.invokeCallbacks();
   }
 
   private save() {
+    console.log("settings save");
     for (const cb of this.beforeSaveCallbacks)
       cb();
     const data = {
@@ -95,6 +98,7 @@ export class Settings {
       drawControlsShown: this.drawControlsShown,
       decompBannerHidden: this.decompBannerHidden,
       noTouchScreen: this.noTouchScreen,
+      checklists: this.checklists,
     };
     // Merge with existing data to avoid data loss.
     const existingDataStr = localStorage.getItem(Settings.KEY);
