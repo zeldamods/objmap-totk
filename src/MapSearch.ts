@@ -107,6 +107,7 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
       { label: 'Special Horses', query: "GameRomHorseZelda OR GameRomHorseGold OR GameRomHorse00L OR GameRomHorse01L" },
       { label: 'Shadowy Figures with Weapons', query: 'Npc_MinusFieldGhost_000' },
       { label: 'Bubbulfrogs', query: 'Bubbulfrog' },
+      { label: 'Koltin', query: 'Koltin' },
       { label: 'Bargainer Statue', query: 'Bargainer Statue' },
       { label: 'Addison', query: 'Addison NOT Complete' },
       { label: 'Schema Stones', query: 'Josha OR (Servant_Minus00* NOT Forge NOT Minus0005 NOT Minus0004 NOT Minus0001)' },
