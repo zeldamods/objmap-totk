@@ -87,19 +87,35 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
   //   ]
   // },
   {
+    label: '<i class="fas fa-skull"></i>',
+    presets: [
+      { label: "Hinox/Stalnox", query: "Enemy_Giant" },
+      { label: "Talus", query: "Enemy_Golem NOT Little" },
+      { label: "Moldugas", query: "Molduga" },
+      { label: "Flux Constructs", query: "Flux Construct" },
+      { label: "Frox", query: "Frox NOT Baby" },
+      { label: "Gleeoks", query: "Enemy_Drake" },
+      { label: "Monster Forces", query: "Enemy_Army_Manager" },
+      { label: "Monster Control Crew", query: "Hoz OR Flaxel OR Toren" },
+      { label: 'Enemies', query: 'actor:^"Enemy_"' },
+    ]
+  },
+  {
     label: '<i class="fa fa-ellipsis-h"></i>',
     presets: [
       { label: 'Wild Horses', query: "WildHorse*" },
       { label: 'Special Horses', query: "GameRomHorseZelda OR GameRomHorseGold OR GameRomHorse00L OR GameRomHorse01L" },
-      { label: 'Messages from an Ancient Era Stone Tablets', query: "Ancient Stone Tablet map: Sky" },
-      { label: 'Old Maps', query: 'Old Map' },
       { label: 'Shadowy Figures with Weapons', query: 'Npc_MinusFieldGhost_000' },
-      { label: 'Statues Paths', query: 'WisemanStatue' },
+      { label: 'Bubbulfrogs', query: 'Bubbulfrog' },
       { label: 'Bargainer Statue', query: 'Bargainer Statue' },
-      { label: 'Addison', query: 'Addison' },
-      { label: 'Enemies', query: 'actor:^"Enemy_"' },
-      { label: "Monster Forces", query: "Enemy_Army_Manager" },
-      { label: "Monster Control Crew", query: "Hoz OR Flaxel OR Toren" },
+      { label: 'Addison', query: 'Addison NOT Complete' },
+      { label: 'Schema Stones', query: 'Josha OR (Servant_Minus00* NOT Forge NOT Minus0005 NOT Minus0004 NOT Minus0001)' },
+      { label: 'Yiga Schematics', query: 'Obj_AutoBuilderDraftAssassin' },
+      { label: "Sage's Will", query: `"Sage's Will"` },
+      { label: 'Old Maps', query: 'Old Map' },
+      { label: 'Statues Paths', query: 'WisemanStatue' },
+      { label: 'Messages from an Ancient Era Stone Tablets', query: "Ancient Stone Tablet map: Sky" },
+
     ],
   }
 ]);
