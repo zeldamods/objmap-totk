@@ -31,31 +31,17 @@ export default class ObjectInfo extends mixins(MixinUtil) {
 
   private metadata: any | null = null;
 
-  private isChecked: boolean = false;
+  @Prop({ type: Boolean, default: false })
+  private isChecked!: boolean;
 
   private created() {
     if (this.obj)
       this.data = this.obj;
-    this.isChecked = this.isCheckedInSettings();
-  }
-  private isCheckedInSettings() {
-    const item = Settings.getInstance().checklists[this.data.hash_id];
-    if (item && item.marked) {
-      return true;
-    }
-    return false;
   }
   toggleCheck() {
-    const settings = Settings.getInstance();
-    if (!(this.data.hash_id in settings.checklists)) {
-      settings.checklists[this.data.hash_id] = { ... this.data };
-      settings.checklists[this.data.hash_id].marked = false;
-      settings.checklists[this.data.hash_id].name = this.name(true);
-    }
-    const item = settings.checklists[this.data.hash_id];
-    item.marked = !item.marked;
-    this.isChecked = item.marked;
-    this.$parent.$emit('AppMap:update-search-markers', item);
+    this.$parent.$emit('AppMap:update-search-markers', {
+      hash_id: this.data.hash_id,
+    });
   }
   async loadMetaIfNeeded() {
     if (!this.metadata) {

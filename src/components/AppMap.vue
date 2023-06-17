@@ -17,7 +17,7 @@
         <li class="d-none"><a href="#spane-search-help" role="tab"></a></li>
         <li><a href="#spane-search" role="tab"><i class="fa fa-search"></i></a></li>
         <li><a href="#spane-filter" role="tab"><i class="fa fa-filter"></i></a></li>
-        <li class="disabled"><a href="#spane-dummy" role="tab"><i class="fa fa-tasks"></i></a></li>
+        <li><a href="#spane-dummy" role="tab"><i class="fa fa-tasks"></i></a></li>
         <li><a href="#spane-draw" role="tab"><i class="fa fa-draw-polygon"></i></a></li>
         <li><a href="#spane-tools" role="tab"><i class="fa fa-tools"></i></a></li>
         <li><a href="#spane-settings" role="tab"><i class="fa fa-cog"></i></a></li>
@@ -119,7 +119,7 @@
 
               </p>
               <div v-for="(result, idx) in searchResults" :key="result.objid">
-                <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false" @click.native="searchJumpToResult(idx)" />
+                <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false" @click.native="searchJumpToResult(idx)" :is-checked="settings.checklists[result.hash_id]"/>
               </div>
             </div>
           </section>
@@ -153,24 +153,40 @@
           </div>
         </b-form-group>
         -->
+      </div>
+
+      <div class="leaflet-sidebar-pane" id="spane-dummy">
+        <h1 class="leaflet-sidebar-header">Checklists</h1>
         <div style="display: flex; flex: row nowrap; align-items: top">
-          <h4 class="subsection-heading">Checklists</h4>
-          <b-btn size="sm" variant="link" style="padding-top: 0px" @click="clearChecklists()">Clear</b-btn>
+          <!-- <b-btn size="sm" variant="link" style="padding-top: 0px" @click="clearChecklists()">Clear</b-btn> -->
           <b-btn size="sm" variant="link" style="padding-top: 0px" @click="addChecklists()">Add to Map</b-btn>
+          <b-btn size="sm" variant="link" style="padding-top: 0px" @click="addNewChecklist()">New List</b-btn>
+          <input type="checkbox" v-model="skipMarked" id="skippedMarked">
+          <label for="skippedMarked" style="color: #29d1fc; margin-bottom: 0px; margin-left: 0.5em;">Show Marked</label>
         </div>
-        
-        <ul >
-          <li class="small" v-for="(item, key) in settings.checklists" :key="key">
-            <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
-                   variant="link" @click='searchOnValue(`"${item.name}"`)'>{{item.name}}</b-btn>
-            <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
-                   variant="link" @click='searchOnValue(`map:"${item.map_name}"`)'>{{item.map_name}}</b-btn>
-            {{item.marked}}
-            <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
-                   variant="link"
-                   @click="searchOnHash(item.hash_id)">view</b-btn>
-          </li>
-        </ul>
+
+        <details v-for="(list) in settings.checklists.lists" :key="list.id">
+          <summary>{{list.name}} {{clMarked(list)}}/{{clLength(list)}}</summary>
+          <details class="small" style="margin-left: 2em">
+            <summary style="margin-left: -1em">Meta</summary>
+            <div>Name: <input type="text" v-model="list.name"></div>
+            <div>Query: <input type="text" v-model="list.query" ></div>
+            <div><button @click="checklistChangeQuery(list)">Update</button></div>
+            <div><button @click="checklistRemove(list)">Remove</button></div>
+          </details>
+          <ul >
+            <li class="small" v-for="(item) in list.items" :key="item.hash_id">
+              <input type="checkbox" v-model="settings.checklists[item.hash_id]">
+              <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
+                     variant="link" @click='searchOnValue(`"${item.name}"`)'>{{getName(item.name)}}</b-btn>
+              <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
+                     variant="link" @click='searchOnValue(`map:"${item.map_name}"`)'>{{item.map_name}}</b-btn>
+              <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
+                     variant="link"
+                     @click="searchOnHash(item.hash_id)">view</b-btn>
+            </li>
+          </ul>
+        </details>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-draw">
@@ -242,9 +258,6 @@
         <div class="leaflet-sidebar-close" @click="closeSidebar()"><i class="fa fa-times"></i></div>
         <h1 v-if="detailsMarker" class="location-title leaflet-sidebar-header" :title="detailsMarker.data.title"><span>{{detailsMarker.data.title}}</span></h1>
         <component v-if="detailsComponent" :is="detailsComponent" v-bind:marker="detailsMarker"></component>
-      </div>
-
-      <div class="leaflet-sidebar-pane" id="spane-dummy">
       </div>
 
     </div>
