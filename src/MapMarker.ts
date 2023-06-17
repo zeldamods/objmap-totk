@@ -557,6 +557,16 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
           },
           index: 0,
         },
+        {
+          text: 'Mark as Completed',
+          callback: () => {
+            console.log('Mark', this.obj.hash_id);
+            mb.m.fire('AppMap:update-search-markers', {
+              hash_id: this.obj.hash_id,
+            });
+          },
+          index: 0,
+        },
       ],
     });
     this.marker.bringToFront();
@@ -603,6 +613,7 @@ export class MapMarkerSearchResult extends MapMarkerObj {
     super(mb, obj, '#e02500', '#ff2a00');
     this.marked = false;
     // @ts-ignore
+    /*
     this.marker.badge({
       name: 'checkmark',
       type: 'checkmark',
@@ -642,6 +653,7 @@ export class MapMarkerSearchResult extends MapMarkerObj {
       fillOpacity: 1,
       color: 'white',
     })
+    */
   }
   setMarked(marked: boolean) {
     this.marked = marked;
@@ -739,6 +751,9 @@ L.CircleMarker.include({
     return this._renderer._ctx;
   },
   drawBadges: function() {
+    if (!this._badges) {
+      return;
+    }
     Object.values(this._badges).forEach((badge: any) => {
 
       if (badge.type == 'checkmark') {

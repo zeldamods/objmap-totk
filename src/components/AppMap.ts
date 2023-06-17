@@ -947,6 +947,42 @@ export default class AppMap extends mixins(MixinUtil) {
 
   clearChecklists() {
     this.settings!.checklists = {};
+    this.settings!.checklists.lists = []
+    this.settings!.checklists.max_id = 0;
+  }
+  addNewChecklist() {
+    this.$nextTick(() => {
+      const id = this.settings!.checklists.max_id;
+      this.settings!.checklists.lists.push({ name: 'New List', query: '', id, items: {} });
+      this.settings!.checklists.max_id += 1;
+    });
+  }
+  checklistRemove(remove: any) {
+    this.settings!.checklists.lists = this.settings!.checklists.lists.filter((list: any) => list.id != remove.id);
+  }
+  getName(name: string) {
+    return ui.getName(name);
+  }
+  checklistItemUpdated(item: any) {
+    if (!(item.hash_id in this.settings!.checklists)) {
+      this.settings!.checklists[item.hash_id] = false;
+    }
+    this.settings!.checklists[item.hash_id] = item.marked;
+  }
+  async checklistChangeQuery(list: any) {
+    const query = list.query;
+    let results = [];
+    try {
+      results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false, 200);
+    } catch (e) {
+      console.log("empty list");
+      list.items = [];
+      return;
+    }
+    console.log("list items", results.length);
+    // @ts-ignore
+    list.items = [...results];//.map(item => { item.ui_name = this.getName(item.name); return item; });
+    list.items.sort((a: any, b: any) => a.name.localeCompare(b.name));
   }
   async addChecklists() {
     const group = new SearchResultGroup('', 'Marked Objs');
@@ -961,17 +997,6 @@ export default class AppMap extends mixins(MixinUtil) {
     this.openMarkerDetails(getMarkerDetailsComponent(marker.data), marker.data, 6);
   }
 
-  newChecklist() {
-    const prefix = "new checklist";
-    let name = prefix;
-    let i = 0;
-    while (name in this.settings!.checklists) {
-      i += 1;
-      name = `${prefix} ${i}`;
-    }
-    console.log("=>", name);
-    this.settings!.checklists[name] = {};
-  }
 
   searchOnInput() {
     this.searching = true;
@@ -1052,7 +1077,7 @@ export default class AppMap extends mixins(MixinUtil) {
     const checklists = this.settings!.checklists;
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
-      if (checklists[result.hash_id] && checklists[result.hash_id].marked) {
+      if (checklists[result.hash_id]) {
         //marker.data.getMarker().setStyle(StyleSelected);
         marker.data.setMarked(true);
       }
@@ -1108,16 +1133,41 @@ export default class AppMap extends mixins(MixinUtil) {
     this.staticTooltip = !this.staticTooltip;
     this.updateTooltips();
   }
+  clMarked(list: any) {
+    return list.items
+      .map((item: any) => item.hash_id)
+      .filter((hash_id: string) => this.settings!.checklists[hash_id]).length;
+  }
+  clLength(list: any) {
+    return Object.keys(list.items).length;
+  }
+  clToggle(hash_id: string) {
+    const settings = this.settings!;
+
+    if (!(hash_id in settings.checklists)) {
+      this.settings!.checklists[hash_id] = false;
+    }
+    this.settings!.checklists[hash_id] = !settings.checklists[hash_id];
+    return this.clToggle2(hash_id);
+  }
+
+  clToggle2(hash_id: string) {
+    //for (let i = 0; i < this.settings!.checklists.lists.length; i++) {
+    //   if (this.settings!.checklists.lists[i].items.some((item: any) => item.hash_id == hash_id)) {
+    //this.settings!.checklists.lists[i] = { ... this.settings!.checklists.lists[i] };
+    //   }
+    // }
+    //this.settings!.checklists.lists = [...this.settings!.checklists.lists];
+    return this.settings!.checklists[hash_id];
+
+  }
 
   updateSearchResultMarkers(item: any) {
     const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
-    if (!marker) {
-      return;
-    }
-    // @ts-ignore
-    //const style = (item.marked) ? StyleSelected : StyleNormal;
-    //marker.data.getMarker().setStyle(style);
-    marker.data.setMarked(item.marked);
+    const value = this.clToggle(item.hash_id);
+    console.log(item.hash_id, value);
+    if (marker)
+      marker.data.setMarked(value);
   }
 
   initContextMenu() {
@@ -1152,6 +1202,9 @@ export default class AppMap extends mixins(MixinUtil) {
     });
     this.$on('AppMap:update-search-markers', (value: any) => {
       this.updateSearchResultMarkers(value);
+    });
+    this.map.m.on('AppMap:update-search-markers', (args) => {
+      this.$emit('AppMap:update-search-markers', args);
     });
     this.$on('AppMap:open-obj', async (obj: ObjectData) => {
       if (this.tempObjMarker)
