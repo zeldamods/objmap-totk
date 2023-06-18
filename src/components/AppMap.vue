@@ -157,36 +157,75 @@
 
       <div class="leaflet-sidebar-pane" id="spane-dummy">
         <h1 class="leaflet-sidebar-header">Checklists</h1>
-        <div style="display: flex; flex: row nowrap; align-items: top">
+        <div class="clButtonRow">
           <!-- <b-btn size="sm" variant="link" style="padding-top: 0px" @click="clearChecklists()">Clear</b-btn> -->
-          <b-btn size="sm" variant="link" style="padding-top: 0px" @click="addChecklists()">Add to Map</b-btn>
-          <b-btn size="sm" variant="link" style="padding-top: 0px" @click="addNewChecklist()">New List</b-btn>
-          <input type="checkbox" v-model="skipMarked" id="skippedMarked">
-          <label for="skippedMarked" style="color: #29d1fc; margin-bottom: 0px; margin-left: 0.5em;">Show Marked</label>
+          <!-- <b-btn size="sm" variant="link" style="padding-top: 0px" @click="addChecklists()">Add to Map</b-btn>-->
+          <b-btn size="sm clButton" variant="link" @click="clCreate()">New List</b-btn>
+          <div>
+            <input type="checkbox" v-model="skipMarked" id="skippedMarked">
+            <label for="skippedMarked" style="color: #29d1fc; margin-bottom: 0px; margin-left: 0.5em;">Show Marked</label>
+          </div>
+          <b-btn size="sm clButton" variant="link" @click="clClearAsk()">Reset</b-btn>
         </div>
 
         <details v-for="(list) in settings.checklists.lists" :key="list.id">
-          <summary>{{list.name}} {{clMarked(list)}}/{{clLength(list)}}</summary>
+          <summary>{{list.name}}: {{clMarked(list)}}/{{clLength(list)}}
+            <b-btn class="sm clButton" variant="link" @click="clShow(list)">
+              <i class="fas fa-eye"></i>
+            </b-btn>
+          </summary>
           <details class="small" style="margin-left: 2em">
-            <summary style="margin-left: -1em">Meta</summary>
-            <div>Name: <input type="text" v-model="list.name"></div>
-            <div>Query: <input type="text" v-model="list.query" ></div>
-            <div><button @click="checklistChangeQuery(list)">Update</button></div>
-            <div><button @click="checklistRemove(list)">Remove</button></div>
+            <summary style="margin-left: -1em">Details</summary>
+            <div class="clMeta">
+              <div class="clMetaTable">
+                <div class="clMetaRow">
+                  <div>Name</div>
+                  <input type="text" v-model="list.name"  class="clForm">
+                </div>
+                <div class="clMetaRow">
+                  <div>Query</div>
+                  <input type="search" v-model="list.query" class="clForm" >
+                </div>
+              </div>
+              <div class="clButtonRow">
+                <b-btn size="sm" variant="link" @click="checklistChangeQuery(list)">Update</b-btn>
+                <b-btn size="sm" variant="link" @click="clRemove(list)">Remove</b-btn>
+              </div>
+            </div>
           </details>
-          <ul >
+          <ul class="clList">
             <li class="small" v-for="(item) in list.items" :key="item.hash_id">
               <input type="checkbox" v-model="settings.checklists[item.hash_id]">
-              <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
+              <b-btn class="small" size="sm"
+                     style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
                      variant="link" @click='searchOnValue(`"${item.name}"`)'>{{getName(item.name)}}</b-btn>
-              <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
+              <b-btn class="small" size="sm"
+                     style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
                      variant="link" @click='searchOnValue(`map:"${item.map_name}"`)'>{{item.map_name}}</b-btn>
-              <b-btn class="small" size="sm" style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
+              <b-btn class="small" size="sm"
+                     style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
                      variant="link"
                      @click="searchOnHash(item.hash_id)">view</b-btn>
             </li>
           </ul>
         </details>
+        <hr>
+        <div class="row no-gutters">
+          <div class="col mr-3">
+            <b-btn size="sm" variant="secondary" block @click="clExport()">
+              <i class="fas fa-file-export"></i>
+              Export
+            </b-btn>
+          </div>
+          <div class="col">
+            <b-btn size="sm" variant="danger" block @click="clImport()">
+              <i class="fas fa-file-import"></i>
+              Import
+            </b-btn>
+            <b-form-checkbox v-model="clImportReplace">Replace existing checklists</b-form-checkbox>
+          </div>
+          <input type="file" id="clFileinput" accept=".json" hidden @change="clImportCb">
+        </div>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-draw">
@@ -257,7 +296,10 @@
       <div class="leaflet-sidebar-pane" id="spane-details">
         <div class="leaflet-sidebar-close" @click="closeSidebar()"><i class="fa fa-times"></i></div>
         <h1 v-if="detailsMarker" class="location-title leaflet-sidebar-header" :title="detailsMarker.data.title"><span>{{detailsMarker.data.title}}</span></h1>
-        <component v-if="detailsComponent" :is="detailsComponent" v-bind:marker="detailsMarker"></component>
+        <component v-if="detailsComponent" :is="detailsComponent"
+                   v-bind:marker="detailsMarker"
+                   v-bind:is-checked="(detailsMarker.data && detailsMarker.data.obj) ? settings.checklists[detailsMarker.data.obj.hash_id] : false"
+                   ></component>
       </div>
 
     </div>
@@ -450,4 +492,43 @@
 .map-filter-icon-Dispensers {
     padding: 4px;
 }
+.clForm {
+    background-color: rgba(255, 255,255,0.3);
+    border: 1px solid rgba(255,255,255,0.2);
+    line-height: 2;
+    color: white;
+    border-radius: 0.25rem;
+    width: 100%;
+    display: table-cell;
+}
+.clMetaTable {
+    width: 100%;
+    display: table;
+}
+.clMetaRow {
+    display: table-row
+}
+.clMetaRow div {
+    display: table-cell;
+}
+.clButtonRow {
+    width: 100%;
+    display: flex;
+    flex: row nowrap;
+    align-items: top;
+    justify-content: center;
+    gap: 0.5em;
+}
+.clMeta {
+    padding: 0.2em;
+}
+.clList {
+    padding-left: 1.5em;
+}
+.clButton {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    vertical-align: baseline;
+}
+
 </style>

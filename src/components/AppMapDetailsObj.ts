@@ -2,6 +2,7 @@ import 'leaflet-path-transform';
 
 import * as L from 'leaflet';
 import Component from 'vue-class-component';
+import { Prop } from 'vue-property-decorator';
 
 import AppMapDetailsBase from '@/components/AppMapDetailsBase';
 import ObjectInfo from '@/components/ObjectInfo';
@@ -87,6 +88,9 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   private railMarkers: L.Polyline[] = [];
   private railLimits: { [key: string]: any } = {};
   selectedRailIdx = -1;
+
+  @Prop({ type: Boolean, default: false })
+  private isChecked!: boolean;
 
   async init() {
     this.minObj = this.marker.data.obj;
