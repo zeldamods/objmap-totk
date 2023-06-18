@@ -71,10 +71,32 @@ class MapMarkerCanvasImpl extends MapMarker {
       contextmenu: true,
     }));
     this.marker.bindTooltip(title, { pane: 'front2', ...extra });
+    // @ts-ignore
+    this.marker.badge({
+      name: 'checkmark',
+      type: 'checkmark',
+      radius: 6,
+      fillColor: '#645838',
+      fillOpacity: 1,
+      show: false,
+      checkmark: {
+        weight: 2,
+        color: "#B08844",
+        lineCap: 'square',
+      },
+    });
+
     super.commonInit();
   }
 
   getMarker() { return this.marker; }
+
+  setMarked(marked: boolean) {
+    // @ts-ignore
+    this.marker.badgeShow('checkmark', marked);
+    this.marker.setStyle({});
+
+  }
 
   protected marker: L.CircleMarker;
 }
@@ -558,9 +580,8 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
           index: 0,
         },
         {
-          text: 'Mark as Completed',
+          text: 'Toggle Completed',
           callback: () => {
-            console.log('Mark', this.obj.hash_id);
             mb.m.fire('AppMap:update-search-markers', {
               hash_id: this.obj.hash_id,
             });
@@ -608,56 +629,8 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
 }
 
 export class MapMarkerSearchResult extends MapMarkerObj {
-  private marked: boolean;
   constructor(mb: MapBase, obj: ObjectMinData) {
     super(mb, obj, '#e02500', '#ff2a00');
-    this.marked = false;
-    // @ts-ignore
-    /*
-    this.marker.badge({
-      name: 'checkmark',
-      type: 'checkmark',
-      radius: 6,
-      fillColor: '#645838',
-      fillOpacity: 1,
-      checkmark: {
-        weight: 2,
-        color: "#B08844",
-        lineCap: 'square',
-      },
-    });
-    // @ts-ignore
-    this.marker.badge({
-      type: 'alert',
-      name: 'alert',
-      position: 'upper-left',
-      fillColor: 'orange',
-      fillOpacity: 1,
-      color: 'white',
-    })
-    // @ts-ignore
-    this.marker.badge({
-      type: 'alert',
-      name: 'alert3',
-      position: 'lower-left',
-      fillColor: 'red',
-      fillOpacity: 1,
-      color: 'white',
-    })
-    // @ts-ignore
-    this.marker.badge({
-      type: 'alert',
-      name: 'alert2',
-      position: 'lower-right',
-      fillColor: 'yellow',
-      fillOpacity: 1,
-      color: 'white',
-    })
-    */
-  }
-  setMarked(marked: boolean) {
-    this.marked = marked;
-    this.marker.setStyle({});
   }
 }
 
@@ -676,6 +649,7 @@ L.CircleMarker.include({
       fillOpacity: 0.5,
       name: "default",
       type: "checkmark",
+      show: true,
       checkmark: {
         color: 'black',
         weight: 2,
@@ -694,6 +668,11 @@ L.CircleMarker.include({
     }
     this._badges[badge_options.name] = badge_options;
     return this;
+  },
+  badgeShow(name: string, show: boolean) {
+    if (!(name in this._badges))
+      return;
+    this._badges[name].show = show;
   },
   getPosition(badge: any) {
     const p = this._point;
@@ -755,7 +734,9 @@ L.CircleMarker.include({
       return;
     }
     Object.values(this._badges).forEach((badge: any) => {
-
+      if (!badge.show) {
+        return;
+      }
       if (badge.type == 'checkmark') {
         this.drawCheckmark(badge);
       } else if (badge.type == 'alert') {
@@ -766,7 +747,6 @@ L.CircleMarker.include({
     });
   },
   _updatePath: function() {
-    //console.log("update circle");
     this._renderer._updateCircle(this);
     this.drawBadges();
   },
@@ -774,42 +754,3 @@ L.CircleMarker.include({
     this._renderer._fillStroke(ctx, layer);
   },
 })
-function addCheckMark(layer: any, badge: any) {
-  const renderer = layer._renderer;
-  if (layer._empty() || !renderer._drawing) {
-    return;
-  }
-  const p = layer._point, radius = layer._radius;
-  const ctx = renderer._ctx;
-  if (!ctx) {
-    return;
-  }
-  if (badge) {
-    if (badge.draw) {
-      return badge.draw(ctx, layer, badge);
-    }
-    ctx.beginPath();
-    ctx.arc(p.x + radius, p.y - radius, 6, 0, Math.PI * 2, true);
-    renderer._fillStroke(ctx, { options: badge })
-    return;
-  }
-
-
-  // Enclosing Circle
-  ctx.beginPath();
-  ctx.arc(p.x + radius, p.y - radius, 6, 0, Math.PI * 2, true);
-  ctx.fillStyle = "#645838";
-  ctx.fill();
-
-  // Checkmark
-  ctx.beginPath();
-  const s = 2;
-  ctx.moveTo(p.x + 1 + radius + s, p.y - radius - s + 1);
-  ctx.lineTo(p.x + 1 + radius - s, p.y - radius + s + 1);
-  ctx.lineTo(p.x + 1 + radius - s - s, p.y - radius + s - s + 1);
-  ctx.strokeStyle = "#B08844";
-  ctx.lineWidth = 2;
-  ctx.lineCap = 'square';
-  ctx.stroke();
-
-}
