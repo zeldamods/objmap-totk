@@ -53,4 +53,8 @@ export class MapMarkerGroup {
     this.markerGroup.addLayers(addMarkers);
     this.isInitialUpdate = false;
   }
+
+  find(func: (marker: MapMarker) => boolean) {
+    return this.markers.find(func)
+  }
 }

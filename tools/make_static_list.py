@@ -116,7 +116,8 @@ for field in ['MainField', 'MinusField']:
                     'MessageID': msg,
                     'Priority': 1,
                     'Translate': {'X': pt[0], 'Y': pt[1], 'Z': pt[2]},
-                    'SaveFlag': f'Location_{msg}'
+                    'SaveFlag': f'Location_{msg}',
+                    'hash_id': parseHash(v['InstanceID'][i])
                 }
                 if kind == 'Shrine':
                     item['ShrineInCave'] = shrine_maps[msg] == 'Cave'
@@ -237,6 +238,7 @@ markers['Place'].append({
     'Translate': {'X': -251, 'Y': 125, 'Z': -154.39 },
     'SaveFlag': 'Location_DemonStatue_01',
     'Icon': 'Bargainer',
+    'hash_id': parseHash('13371596173322305161')
 })
 
 out['markers'] = markers
