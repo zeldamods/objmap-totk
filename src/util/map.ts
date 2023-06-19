@@ -79,6 +79,7 @@ export class LocationMarker extends LocationMarkerBase {
   }
   getSaveFlag(): string { return this.l.SaveFlag; }
   getIcon(): string { return this.l.Icon; }
+  getHashID(): string { return this.l.hash_id; }
 }
 
 export class LocationPointer extends LocationMarkerBase {

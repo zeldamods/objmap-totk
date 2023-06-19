@@ -443,8 +443,22 @@ export default class AppMap extends mixins(MixinUtil) {
 
       const markers: any[] = info.markers[type];
       const component = MARKER_COMPONENTS[type];
+      console.log('Markers', type);
       const group = new MapMarkerGroup(
-        markers.map((m: any) => new (component.cl)(this.map, m, { showLabel: this.showKorokIDs })),
+        markers.map((m: any) => new (component.cl)(this.map, m, { showLabel: this.showKorokIDs }))
+          .map((marker: any) => {
+            if (marker instanceof MapMarkers.MapMarkerGenericLocationMarker) {
+              //console.log(marker);
+              const msg = marker.getHashID();
+              if (msg === undefined) {
+                console.log('undef', marker);
+              }
+              if (this.clIsMarked(msg)) {
+                marker.setMarked(true);
+              }
+            }
+            return marker;
+          }),
         valueOrDefault(component.preloadPad, 1.0),
         valueOrDefault(component.enableUpdates, true));
       this.markerGroups.set(type, group);
@@ -1200,6 +1214,7 @@ export default class AppMap extends mixins(MixinUtil) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
       if (checklists[result.hash_id]) {
         //marker.data.getMarker().setStyle(StyleSelected);
+        console.log(marker);
         marker.data.setMarked(true);
       }
       this.searchResultMarkers.push(marker);
@@ -1265,6 +1280,9 @@ export default class AppMap extends mixins(MixinUtil) {
   clLength(list: any) {
     return Object.keys(list.items).length;
   }
+  clIsMarked(hash_id: string) {
+    return (hash_id !== undefined) && this.settings!.checklists[hash_id];
+  }
   clToggle(hash_id: string) {
     const settings = this.settings!;
 
@@ -1325,19 +1343,33 @@ export default class AppMap extends mixins(MixinUtil) {
 
   updateSearchResultMarkers(item: any) {
     this.$nextTick(() => {
+      console.log('UPDATE MARKERS', item);
       const value = this.clToggle(item.hash_id);
       // Search Result Markers
       const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
       // console.log('update search result markers', item.hash_id, value);
-      if (marker)
+      if (marker) {
         marker.data.setMarked(value);
+        console.log('Marking', item.hash_id, value);
+      }
 
       // Group Marker (from Add to Map and Preset Searches)
       for (const group of this.searchGroups) {
         const marker = group.getMarkers().find(marker => marker.obj.hash_id == item.hash_id);
+        //console.log('MARKER', marker);
         if (marker) {
           //console.log('update group marker', item.hash_id);
           marker.setMarked(value);
+          console.log('Marking', item.hash_id, value);
+        }
+      }
+      for (const group of this.markerGroups.values()) {
+        // @ts-ignore
+        const marker = group.find((marker) => { return marker.getHashID() == item.hash_id });
+        if (marker) {
+          // @ts-ignore
+          marker.setMarked(value);
+          console.log('Marking', item.hash_id, value);
         }
       }
     })

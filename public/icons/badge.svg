@@ -1,0 +1,10 @@
+<svg viewBox="-10 -10 120 120" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="50" fill="#645838" stroke="goldenrod" stroke-width="6"/>
+  <path d="M 75 33.333 L 41.6666 66.666 L 25 50"
+        zstroke="#B08844"
+        stroke="goldenrod"
+        fill="none"
+        stroke-width="18"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>

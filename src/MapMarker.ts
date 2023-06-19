@@ -35,18 +35,41 @@ export abstract class MapMarker {
 }
 
 class MapMarkerImpl extends MapMarker {
-  constructor(mb: MapBase, title: string, xyz: Point, options: L.MarkerOptions = {}) {
+  private icons: L.Icon[] = [];
+  constructor(mb: MapBase, title: string, xyz: Point, options: L.MarkerOptions = {},
+    hash_id: string | undefined = undefined) {
     super(mb);
     this.title = title;
     this.marker = L.marker(this.mb.fromXYZ(xyz), Object.assign(options, {
       title,
       contextmenu: true,
+      contextmenuItems: [
+        {
+          text: 'Toggle Completed',
+          callback: () => {
+            console.log('toggle map item', this);
+            mb.m.fire('AppMap:update-search-markers', {
+              hash_id: hash_id
+            });
+          },
+          index: 0,
+        }
+      ]
     }));
     super.commonInit();
   }
 
   getMarker() { return this.marker; }
-
+  setIcons(icons: L.Icon[]) {
+    this.icons = icons;
+  }
+  setMarked(marked: boolean) {
+    const k = (marked) ? 1 : 0;
+    console.log('setMarked', marked, k);
+    if (k < this.icons.length) {
+      this.marker.setIcon(this.icons[k]);
+    }
+  }
   protected setTitle(title: string) {
     this.title = title;
     this.marker.options.title = title;
@@ -71,20 +94,6 @@ class MapMarkerCanvasImpl extends MapMarker {
       contextmenu: true,
     }));
     this.marker.bindTooltip(title, { pane: 'front2', ...extra });
-    // @ts-ignore
-    this.marker.badge({
-      name: 'checkmark',
-      type: 'checkmark',
-      radius: 6,
-      fillColor: '#645838',
-      fillOpacity: 1,
-      show: false,
-      checkmark: {
-        weight: 2,
-        color: "#B08844",
-        lineCap: 'square',
-      },
-    });
 
     super.commonInit();
   }
@@ -92,8 +101,9 @@ class MapMarkerCanvasImpl extends MapMarker {
   getMarker() { return this.marker; }
 
   setMarked(marked: boolean) {
+    console.log('setMarked', marked, 'canvas', this);
     // @ts-ignore
-    this.marker.badgeShow('checkmark', marked);
+    this.marker.setBadge(marked);
     this.marker.setStyle({});
 
   }
@@ -101,7 +111,7 @@ class MapMarkerCanvasImpl extends MapMarker {
   protected marker: L.CircleMarker;
 }
 
-class MapMarkerGenericLocationMarker extends MapMarkerImpl {
+export class MapMarkerGenericLocationMarker extends MapMarkerImpl {
   public readonly lm: map.LocationMarker;
 
   private static ICONS_AND_LABELS: { [type: string]: [L.Icon, string] } = {
@@ -137,7 +147,7 @@ class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     super(mb, msg, lm.getXYZ(), {
       icon,
       zIndexOffset,
-    });
+    }, lm.getHashID());
     if (showLabel) {
       this.marker.bindTooltip(msg, {
         permanent: true,
@@ -146,6 +156,12 @@ class MapMarkerGenericLocationMarker extends MapMarkerImpl {
       });
     }
     this.lm = lm;
+  }
+  getMessageId() {
+    return this.lm.getMessageId();
+  }
+  getHashID() {
+    return this.lm.getHashID();
   }
 }
 
@@ -232,17 +248,15 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     // Yes, extracting the dungeon number from the save flag is what Nintendo does.
     const dungeonNum = parseInt(this.lm.getSaveFlag().replace('Location_Dungeon', ''), 10);
     // Different marker for Shrine in Cave
-    if (l.ShrineInCave) {
-      this.marker.setIcon(MapIcons.TOTK_SHRINE_CAVE);
-    } else {
-      this.marker.setIcon(MapIcons.TOTK_SHRINE);
-    }
+    const icon = (l.ShrineInCave) ? MapIcons.TOTK_SHRINE_CAVE : MapIcons.TOTK_SHRINE;
+    this.marker.setIcon(icon);
     this.setTitle(MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId()));
     this.marker.options.title = '';
     this.dungeonNum = dungeonNum;
     const sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId() + '_sub');
     const cave = (l.ShrineInCave) ? "<br>Cave" : "";
     this.marker.bindTooltip(`${this.title}<br>${sub}${cave}`, { pane: 'front2' });
+    this.setIcons([MapIcons.TOTK_SHRINE, MapIcons.TOTK_SHRINE_MARK])
   }
   shouldBeShown() {
     let layer = this.mb.activeLayer;
@@ -354,6 +368,7 @@ export class MapMarkerTower extends MapMarkerGenericLocationMarker {
     super(mb, l, false, 1001);
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
+    this.setIcons([MapIcons.TOTK_TOWER, MapIcons.TOTK_TOWER_MARK])
   }
   shouldBeShown() {
     return this.mb.activeLayer == "Surface";
@@ -366,6 +381,15 @@ export class MapMarkerCave extends MapMarkerGenericLocationMarker {
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
     this.info = l;
+    if (this.info.Icon == "Cave") {
+      this.setIcons([MapIcons.CAVE, MapIcons.CAVE_MARK])
+    }
+    if (this.info.Icon == "Well") {
+      this.setIcons([MapIcons.WELL, MapIcons.WELL_MARK])
+    }
+    if (this.info.Icon == "Chasm") {
+      this.setIcons([MapIcons.CHASM, MapIcons.CHASM_MARK])
+    }
   }
 
   shouldBeShown() {
@@ -439,12 +463,27 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
       iconHeight: 20,
       showLabel: extra.showLabel,
       className: classToColor(id),
+      // @ts-ignore
+      contextmenuItems: [
+        {
+          text: 'Toggle Completed',
+          callback: () => {
+            mb.m.fire('AppMap:update-search-markers', {
+              hash_id: this.info.hash_id,
+            });
+          },
+          index: 0,
+        }
+      ],
     });
     this.info = info;
     this.obj = info;
   }
   shouldBeShown() {
     return this.info.map_name == this.mb.activeLayer;
+  }
+  getHashID() {
+    return this.info.hash_id;
   }
 }
 
@@ -531,7 +570,7 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
       fillOpacity: 0.7,
       fillColor,
       color: strokeColor,
-
+      badge: false,
       // @ts-ignore
       contextmenuItems: [
         {
@@ -632,124 +671,3 @@ export class MapMarkerSearchResult extends MapMarkerObj {
     super(mb, obj, '#e02500', '#ff2a00');
   }
 }
-
-L.CircleMarker.include({
-  badge: function(options: any = {}) {
-    const defaults = {
-      position: 'upper-right',
-      radius: 6,
-      offset: 10,
-      stroke: true,
-      color: 'white',
-      weight: 0,
-      opacity: 1.0,
-      fill: true,
-      fillColor: 'white',
-      fillOpacity: 0.5,
-      name: "default",
-      type: "checkmark",
-      show: true,
-      checkmark: {
-        color: 'black',
-        weight: 2,
-        opacity: 1,
-        stroke: true,
-        dx: 1,
-        dy: 1,
-      }
-    }
-
-    const badge_options = Object.assign({}, defaults, options);
-
-    badge_options.checkmark = Object.assign({}, defaults.checkmark, options.checkmark);
-    if (!this._badges) {
-      this._badges = {};
-    }
-    this._badges[badge_options.name] = badge_options;
-    return this;
-  },
-  badgeShow(name: string, show: boolean) {
-    if (!(name in this._badges))
-      return;
-    this._badges[name].show = show;
-  },
-  getPosition(badge: any) {
-    const p = this._point;
-    const r = this.getRadius();
-    let dx = r;
-    let dy = r;
-    if (badge.position == 'upper-right') {
-      dx = r;
-      dy = -r;
-    } else if (badge.position == 'upper-left') {
-      dx = -r;
-      dy = -r;
-    } else if (badge.position == 'lower-right') {
-      dx = r;
-      dy = r;
-    } else if (badge.position == 'lower-left') {
-      dx = -r;
-      dy = r;
-    }
-    const x = p.x + dx;
-    const y = p.y + dy;
-    return { x, y }
-  },
-  drawAlert(badge: any) {
-    const ctx = this.getCtx();
-    let p = this.getPosition(badge);
-    // Circle
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, badge.radius, 0, Math.PI * 2, true);
-    this._renderer._fillStroke(ctx, { options: badge });
-    // Point
-    ctx.font = `bold ${badge.radius * 1.8}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.fillStyle = badge.color;
-    ctx.fillText("!", p.x, p.y + badge.radius * 0.7);
-  },
-  drawCheckmark(badge: any) {
-    const ctx = this.getCtx();
-    let p = this.getPosition(badge);
-    // Circle
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, badge.radius, 0, Math.PI * 2, true);
-    this._renderer._fillStroke(ctx, { options: badge });
-    // Checkmark
-    const s = badge.radius / 3;
-    p.x += badge.checkmark.dx;
-    p.y += badge.checkmark.dy;
-    ctx.beginPath();
-    ctx.moveTo(p.x + s, p.y - s);
-    ctx.lineTo(p.x - s, p.y + s);
-    ctx.lineTo(p.x - s - s, p.y);
-    this._renderer._fillStroke(ctx, { options: badge.checkmark });
-  },
-  getCtx: function() {
-    return this._renderer._ctx;
-  },
-  drawBadges: function() {
-    if (!this._badges) {
-      return;
-    }
-    Object.values(this._badges).forEach((badge: any) => {
-      if (!badge.show) {
-        return;
-      }
-      if (badge.type == 'checkmark') {
-        this.drawCheckmark(badge);
-      } else if (badge.type == 'alert') {
-        this.drawAlert(badge);
-      } else if (badge.draw) {
-        badge.draw(this, badge);
-      }
-    });
-  },
-  _updatePath: function() {
-    this._renderer._updateCircle(this);
-    this.drawBadges();
-  },
-  fillStroke(ctx: any, layer: any) {
-    this._renderer._fillStroke(ctx, layer);
-  },
-})
