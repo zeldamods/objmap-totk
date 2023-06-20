@@ -355,6 +355,9 @@ export class MapMarkerCave extends MapMarkerGenericLocationMarker {
     if (this.mb.activeLayer == 'Surface' && y < 1000 && y > -50) {
       return true;
     }
+    if (this.mb.activeLayer == 'Depths' && this.info.Icon == 'Chasm') {
+      return true;
+    }
     return false;
   }
 }
