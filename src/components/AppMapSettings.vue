@@ -27,6 +27,12 @@
       </div>
       <b-btn class="mt-2" size="sm" @click="s.customSearchPresets.push(['', ''])"><i class="fa fa-plus"></i> Add</b-btn>
     </section>
+    <hr>
+    <h4 class="subsection-heading">Map Drawing</h4>
+    <b-checkbox switch v-model="s.noTouchScreen">Not using a touch screen</b-checkbox>
+    <p class="small">
+      Allows for clicking and dragging during line creation and markers are a more reasonable size. Reload the page for setting to take effect.
+    </p>
   </section>
 </template>
 <script src="./AppMapSettings.ts"></script>
