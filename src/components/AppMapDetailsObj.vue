@@ -52,6 +52,12 @@
         <pre class="obj-params">{{JSON.stringify(obj.data.Presence, undefined, 2)}}</pre>
       </section>
 
+      <section v-if="obj.data.MapPct">
+        <hr>
+        <h4 class="subsection-heading">Map%</h4>
+        <pre class="obj-params">{{JSON.stringify(obj.data.MapPct, undefined, 2)}}</pre>
+      </section>
+
       <section v-if="obj.data.Dynamic">
         <hr>
         <h4 class="subsection-heading">Dynamic params</h4>
