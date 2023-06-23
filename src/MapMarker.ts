@@ -34,6 +34,14 @@ export abstract class MapMarker {
   }
 }
 
+function iconAddBadge(icon: L.Icon, anchor: [number, number] | undefined = undefined) {
+  const options = Object.assign({}, icon.options);
+  options.shadowUrl = '/icons/badge.svg';
+  options.shadowSize = [12, 12];
+  options.shadowAnchor = (anchor) ? anchor : [-4, 18];
+  return L.icon(options);
+}
+
 class MapMarkerImpl extends MapMarker {
   private icons: L.Icon[] = [];
   constructor(mb: MapBase, title: string, xyz: Point, options: L.MarkerOptions = {},
@@ -47,9 +55,9 @@ class MapMarkerImpl extends MapMarker {
         {
           text: 'Toggle Completed',
           callback: () => {
-            console.log('toggle map item', this);
             mb.m.fire('AppMap:update-search-markers', {
-              hash_id: hash_id
+              hash_id: hash_id,
+              label: this.getLabel(),
             });
           },
           index: 0,
@@ -58,14 +66,13 @@ class MapMarkerImpl extends MapMarker {
     }));
     super.commonInit();
   }
-
+  getLabel() { return ""; }
   getMarker() { return this.marker; }
   setIcons(icons: L.Icon[]) {
     this.icons = icons;
   }
   setMarked(marked: boolean) {
     const k = (marked) ? 1 : 0;
-    console.log('setMarked', marked, k);
     if (k < this.icons.length) {
       this.marker.setIcon(this.icons[k]);
     }
@@ -101,7 +108,6 @@ class MapMarkerCanvasImpl extends MapMarker {
   getMarker() { return this.marker; }
 
   setMarked(marked: boolean) {
-    console.log('setMarked', marked, 'canvas', this);
     // @ts-ignore
     this.marker.setBadge(marked);
     this.marker.setStyle({});
@@ -156,12 +162,16 @@ export class MapMarkerGenericLocationMarker extends MapMarkerImpl {
       });
     }
     this.lm = lm;
+    this.setIcons([icon, iconAddBadge(icon)])
   }
   getMessageId() {
     return this.lm.getMessageId();
   }
   getHashID() {
     return this.lm.getHashID();
+  }
+  getLabel() {
+    return this.lm.getIcon();
   }
 }
 
@@ -196,6 +206,10 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
       className: `map-location show-level-${lp.getShowLevel()} type-${markerTypeStr}`,
     });
     this.lp = lp;
+  }
+
+  getHashID() {
+    return this.lp.getHashID();
   }
 
   // Zoom level 2 -
@@ -255,9 +269,10 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     this.marker.options.title = '';
     this.dungeonNum = dungeonNum;
     const sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId() + '_sub');
+
     const cave = (l.ShrineInCave) ? "<br>Cave" : "";
     this.marker.bindTooltip(`${this.title}<br>${sub}${cave}`, { pane: 'front2' });
-    this.setIcons([MapIcons.TOTK_SHRINE, MapIcons.TOTK_SHRINE_MARK])
+    this.setIcons([icon, iconAddBadge(icon, [-4, 15])])
   }
   shouldBeShown() {
     let layer = this.mb.activeLayer;
@@ -284,7 +299,13 @@ export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
     this.setTitle(msg);
     this.marker.options.title = '';
     this.marker.bindTooltip(msg, { pane: 'front2' });
+    this.setIcons([MapIcons.TOTK_LIGHTROOT, iconAddBadge(MapIcons.TOTK_LIGHTROOT, [-4, 15])])
   }
+
+  getLabel() {
+    return "CheckPoint";
+  }
+
   shouldBeShown() {
     return this.mb.activeLayer == "Depths";
   }
@@ -302,6 +323,11 @@ export class MapMarkerDispenser extends MapMarkerGenericLocationMarker {
     // @ts-ignore
     this.obj = info;
   }
+
+  getLabel() {
+    return "Dispensers";
+  }
+
   shouldBeShown() {
     return this.info.map_name.includes(this.mb.activeLayer)
   }
@@ -330,6 +356,11 @@ export class MapMarkerTear extends MapMarkerGenericLocationMarker {
     this.marker.options.title = '';
     this.marker.bindTooltip(`${titles[this.tearNum]}<br>Tear of the Dragon #${this.tearNum}`, { pane: 'front2' });
   }
+
+  getLabel() {
+    return "DragonTears";
+  }
+
   shouldBeShown() {
     return this.mb.activeLayer == "Surface";
   }
@@ -349,6 +380,9 @@ export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
     super(mb, l, isVillage);
     this.isVillage = isVillage;
     this.info = l;
+  }
+  getLabel() {
+    return "Place";
   }
 
   shouldBeShown() {
@@ -382,15 +416,12 @@ export class MapMarkerCave extends MapMarkerGenericLocationMarker {
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
     this.info = l;
-    if (this.info.Icon == "Cave") {
-      this.setIcons([MapIcons.CAVE, MapIcons.CAVE_MARK])
-    }
-    if (this.info.Icon == "Well") {
-      this.setIcons([MapIcons.WELL, MapIcons.WELL_MARK])
-    }
+  }
+  getLabel() {
     if (this.info.Icon == "Chasm") {
-      this.setIcons([MapIcons.CHASM, MapIcons.CHASM_MARK])
+      return "Chasm";
     }
+    return "Cave";
   }
 
   shouldBeShown() {
@@ -426,7 +457,9 @@ export class MapMarkerShop extends MapMarkerGenericLocationMarker {
     this.marker.bindTooltip(this.title, { pane: 'front2' });
     this.info = l;
   }
-
+  getLabel() {
+    return "Shop";
+  }
   // This needs attention **FIX**
   shouldBeShown() {
     const layer = this.mb.activeLayer;
@@ -471,6 +504,7 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
           callback: () => {
             mb.m.fire('AppMap:update-search-markers', {
               hash_id: this.info.hash_id,
+              label: "Korok",
             });
           },
           index: 0,
@@ -623,6 +657,7 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
           callback: () => {
             mb.m.fire('AppMap:update-search-markers', {
               hash_id: this.obj.hash_id,
+              label: "",
             });
           },
           index: 0,
