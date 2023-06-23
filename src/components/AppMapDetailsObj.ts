@@ -156,7 +156,6 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.initRails();
   }
   mounted() {
-    console.log('mounted')
     this.$on('AppMap:update-search-markers', (value: any) => {
       this.$parent.$emit('AppMap:update-search-markers', value);
     });

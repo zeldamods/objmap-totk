@@ -195,7 +195,7 @@
           </details>
           <ul class="clList">
             <li class="small" v-for="(item) in list.items" :key="item.hash_id">
-              <input type="checkbox" v-model="settings.checklists[item.hash_id]">
+              <input type="checkbox" v-model="settings.checklists[item.hash_id]" @change="clItemChange(item)">
               <b-btn class="small" size="sm"
                      style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
                      variant="link" @click='searchOnValue(`"${item.name}"`)'>{{getName(item.name)}}</b-btn>
