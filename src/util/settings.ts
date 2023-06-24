@@ -41,6 +41,7 @@ export class Settings {
   drawControlsShown!: boolean;
 
   decompBannerHidden!: boolean;
+  noTouchScreen!: boolean;
 
   private constructor() {
     this.load();
@@ -69,6 +70,7 @@ export class Settings {
     this.hylianMode = false;
     this.drawControlsShown = parse(data.drawControlsShown, Id, false);
     this.decompBannerHidden = parse(data.decompBannerHidden, Id, false);
+    this.noTouchScreen = parse(data.noTouchScreen, Id, false);
 
     this.invokeCallbacks();
   }
@@ -92,6 +94,7 @@ export class Settings {
       hylianMode: this.hylianMode,
       drawControlsShown: this.drawControlsShown,
       decompBannerHidden: this.decompBannerHidden,
+      noTouchScreen: this.noTouchScreen,
     };
     // Merge with existing data to avoid data loss.
     const existingDataStr = localStorage.getItem(Settings.KEY);

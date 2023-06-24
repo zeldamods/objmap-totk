@@ -597,7 +597,20 @@ export default class AppMap extends mixins(MixinUtil) {
     });
   }
 
+  forceLeafletDrawToAvoidTouchScreenBehavior() {
+    if (!this.settings!.noTouchScreen)
+      return;
+    if (this.drawControl && this.drawControl._toolbars.draw._modes.polyline) {
+      this.drawControl._toolbars.draw._modes.polyline.handler._onTouch = () => { };
+    }
+  }
+
   initDrawTools() {
+    const icon = new L.DivIcon({
+      iconSize: new L.Point(12, 12),
+      className: 'leaflet-div-icon leaflet-editing-icon'
+    });
+
     this.drawLayer = new L.GeoJSON(undefined, {
       style: (feature) => {
         // @ts-ignore
@@ -609,7 +622,7 @@ export default class AppMap extends mixins(MixinUtil) {
     if (savedData)
       this.drawFromGeojson(JSON.parse(savedData));
     this.drawLayer.addTo(this.map.m);
-    const options = {
+    let options: any = {
       position: 'topleft',
       draw: {
         circlemarker: false,
@@ -623,6 +636,10 @@ export default class AppMap extends mixins(MixinUtil) {
         featureGroup: this.drawLayer,
       },
     };
+    if (this.settings!.noTouchScreen) {
+      options.draw.polyline = { icon };
+      options.edit.poly = { icon };
+    }
     // @ts-ignore
     this.drawControl = new L.Control.Draw(options);
     this.setLineColorThrottler = debounce(() => this.setLineColor(), 100);
@@ -727,9 +744,10 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   updateDrawControlsVisibility() {
-    if (Settings.getInstance().drawControlsShown)
+    if (Settings.getInstance().drawControlsShown) {
       this.drawControl.addTo(this.map.m);
-    else
+      this.forceLeafletDrawToAvoidTouchScreenBehavior();
+    } else
       this.drawControl.remove();
   }
 
