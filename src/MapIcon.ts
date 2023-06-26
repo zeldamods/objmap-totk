@@ -20,26 +20,10 @@ export const TOTK_SHRINE_CAVE = L.icon({
   iconSize: L.point(32, 32),
   className: 'mapicon-totk-Shrine'
 });
-export const TOTK_SHRINE_MARK = L.icon({
-  iconUrl: '/icons/shrine.svg',
-  iconSize: L.point(32, 32),
-  className: 'mapicon-totk-Shrine',
-  shadowUrl: '/icons/badge.svg',
-  shadowSize: [12, 12],
-  shadowAnchor: [-4, 15],
-});
 export const TOTK_TOWER = L.icon({
   iconUrl: '/icons/tower.svg',
   iconSize: L.point(32, 32),
   className: 'mapicon-totk-Tower',
-});
-export const TOTK_TOWER_MARK = L.icon({
-  iconUrl: '/icons/tower.svg',
-  iconSize: L.point(32, 32),
-  className: 'mapicon-totk-Tower',
-  shadowUrl: '/icons/badge.svg',
-  shadowSize: [12, 12],
-  shadowAnchor: [-4, 18],
 });
 export const TOTK_TEAR = L.icon({
   iconUrl: '/icons/tear.svg',
@@ -97,39 +81,15 @@ export const CAVE = L.icon({
   iconSize: L.point(20, 20),
   tooltipAnchor: [0, 18],
 });
-export const CAVE_MARK = L.icon({
-  iconUrl: '/icons/cave.png',
-  iconSize: L.point(20, 20),
-  tooltipAnchor: [0, 18],
-  shadowUrl: '/icons/badge.svg',
-  shadowSize: [12, 12],
-  shadowAnchor: [-4, 18],
-});
 export const WELL = L.icon({
   iconUrl: '/icons/well.svg',
   iconSize: L.point(20, 20),
   tooltipAnchor: [0, 18],
 });
-export const WELL_MARK = L.icon({
-  iconUrl: '/icons/well.svg',
-  iconSize: L.point(20, 20),
-  tooltipAnchor: [0, 18],
-  shadowUrl: '/icons/badge.svg',
-  shadowSize: [12, 12],
-  shadowAnchor: [-4, 18],
-});
 export const CHASM = L.icon({
   iconUrl: '/icons/chasm.png',
   iconSize: L.point(20, 20),
   tooltipAnchor: [0, 18],
-});
-export const CHASM_MARK = L.icon({
-  iconUrl: '/icons/chasm.png',
-  iconSize: L.point(20, 20),
-  tooltipAnchor: [0, 18],
-  shadowUrl: '/icons/badge.svg',
-  shadowSize: [12, 12],
-  shadowAnchor: [-4, 18],
 });
 
 
