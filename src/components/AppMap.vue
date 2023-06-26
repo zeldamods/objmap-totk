@@ -198,7 +198,7 @@
               <input type="checkbox" v-model="settings.checklists[item.hash_id]" @change="clItemChange(item)">
               <b-btn class="small" size="sm"
                      style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
-                     variant="link" @click='searchOnValue(`"${item.name}"`)'>{{getName(item.name)}}</b-btn>
+                     variant="link" @click='searchOnValue(`"${item.name}"`)'>{{item.ui_name}}</b-btn>
               <b-btn class="small" size="sm"
                      style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
                      variant="link" @click='searchOnValue(`map:"${item.map_name}"`)'>{{item.map_name}}</b-btn>
@@ -514,6 +514,7 @@
 }
 .clList {
     padding-left: 1.5em;
+    list-style: none;
 }
 .clButton {
     padding-top: 0px;
