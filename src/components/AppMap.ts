@@ -59,9 +59,6 @@ interface ObjectIdentifier {
   hashId: string;
 }
 
-const StyleSelected = { fillColor: '#59c5f7', color: '#029be2' };
-const StyleNormal = { fillColor: '#e02500', color: '#ff2a00' }; // MapMarkerSearchResult
-
 function valueOrDefault<T>(value: T | undefined, defaultValue: T) {
   return value === undefined ? defaultValue : value;
 }
@@ -190,7 +187,7 @@ class LayerProps {
     this.order = (feat.properties.order !== undefined) ? feat.properties.order : -1;
   }
 }
-export function addGeoJSONFeatureToLayer(layer: any) {
+function addGeoJSONFeatureToLayer(layer: any) {
   if (!layer.feature) {
     layer.feature = { type: 'Feature' };
   }
@@ -331,7 +328,7 @@ export default class AppMap extends mixins(MixinUtil) {
     if (!this.skipMarked) {
       return true;
     }
-    if (this.settings!.checklists[result.hash_id]) { // If found, skip
+    if (this.clIsMarked(result.hash_id)) { // If found, skip
       return false;
     }
     return true;
@@ -1040,7 +1037,6 @@ export default class AppMap extends mixins(MixinUtil) {
     this.openMarkerDetails(getMarkerDetailsComponent(marker.data), marker.data, 6);
   }
 
-
   searchOnInput() {
     this.searching = true;
     this.searchThrottler();
@@ -1078,7 +1074,7 @@ export default class AppMap extends mixins(MixinUtil) {
     group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
     group.getMarkers().forEach((marker: any) => {
       const hash_id = marker.obj.hash_id;
-      if (this.settings!.checklists[hash_id]) {
+      if (this.clIsMarked(hash_id)) {
         marker.setMarked(true);
       }
     });
@@ -1123,10 +1119,9 @@ export default class AppMap extends mixins(MixinUtil) {
       this.searchLastSearchFailed = true;
     }
 
-    const checklists = this.settings!.checklists;
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
-      if (checklists[result.hash_id]) {
+      if (this.clIsMarked(result.hash_id)) {
         marker.data.setMarked(true);
       }
       this.searchResultMarkers.push(marker);

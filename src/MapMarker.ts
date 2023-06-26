@@ -101,7 +101,6 @@ class MapMarkerCanvasImpl extends MapMarker {
       contextmenu: true,
     }));
     this.marker.bindTooltip(title, { pane: 'front2', ...extra });
-
     super.commonInit();
   }
 
@@ -111,7 +110,6 @@ class MapMarkerCanvasImpl extends MapMarker {
     // @ts-ignore
     this.marker.setBadge(marked);
     this.marker.setStyle({});
-
   }
 
   protected marker: L.CircleMarker;
@@ -286,7 +284,6 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     this.marker.options.title = '';
     this.dungeonNum = dungeonNum;
     const sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId() + '_sub');
-
     const cave = (l.ShrineInCave) ? "<br>Cave" : "";
     this.marker.bindTooltip(`${this.title}<br>${sub}${cave}`, { pane: 'front2' });
     this.setIcons([icon, iconAddBadge(icon, shift)])
