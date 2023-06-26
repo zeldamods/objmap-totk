@@ -198,7 +198,23 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
     if (msg === undefined) {
       msg = lp.getMessageId();
     }
-    super(mb, msg, lp.getXYZ(), { stroke: false, fill: false });
+    super(mb, msg, lp.getXYZ(), {
+      stroke: false,
+      fill: false,
+      // @ts-ignore
+      contextmenuItems: [
+        {
+          text: 'Toggle Completed',
+          callback: () => {
+            mb.m.fire('AppMap:update-search-markers', {
+              hash_id: this.lp.getHashID(),
+              label: "Location",
+            });
+          },
+          index: 0,
+        }
+      ]
+    });
     this.marker.unbindTooltip();
     this.marker.bindTooltip(msg + `<span class="location-marker-type">${visibleMarkerTypeStr}</span>`, {
       permanent: true,
@@ -299,7 +315,6 @@ export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
     this.setTitle(msg);
     this.marker.options.title = '';
     this.marker.bindTooltip(msg, { pane: 'front2' });
-    this.setIcons([MapIcons.TOTK_LIGHTROOT, iconAddBadge(MapIcons.TOTK_LIGHTROOT, [-4, 15])])
   }
 
   getLabel() {
@@ -403,7 +418,6 @@ export class MapMarkerTower extends MapMarkerGenericLocationMarker {
     super(mb, l, false, 1001);
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
-    this.setIcons([MapIcons.TOTK_TOWER, MapIcons.TOTK_TOWER_MARK])
   }
   shouldBeShown() {
     return this.mb.activeLayer == "Surface";
