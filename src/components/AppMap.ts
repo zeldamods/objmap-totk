@@ -452,6 +452,12 @@ export default class AppMap extends mixins(MixinUtil) {
                 marker.setMarked(true);
               }
             }
+            if (marker instanceof MapMarkers.MapMarkerKorok || marker instanceof MapMarkers.MapMarkerLocation) {
+              const msg = marker.getHashID();
+              if (this.clIsMarked(msg)) {
+                marker.setMarked(true);
+              }
+            }
             return marker;
           }),
         valueOrDefault(component.preloadPad, 1.0),
@@ -1111,11 +1117,24 @@ export default class AppMap extends mixins(MixinUtil) {
     this.settings!.checklists[item.hash_id] = item.marked;
   }
   minObjToCL(obj: ObjectMinData) {
+    let ui_name = obj.name;
+    const location = obj.Location;
+    if (location && (obj.name == 'LocationMarker' || obj.name == 'LocationArea')) {
+      if (location.includes('Dungeon')) {
+        ui_name = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', location);
+      } else {
+        ui_name = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', location);
+      }
+    } else if (obj.korok_id) {
+      ui_name = obj.korok_id;
+    } else {
+      ui_name = this.getName(obj.name);
+    }
     return {
       hash_id: obj.hash_id,
       name: obj.name,
       map_name: obj.map_name,
-      ui_name: this.getName(obj.name),
+      ui_name: ui_name,
       pos: obj.pos,
     };
   }
@@ -1123,7 +1142,7 @@ export default class AppMap extends mixins(MixinUtil) {
     const query = list.query;
     let results = [];
     try {
-      results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false, 200);
+      results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false);
     } catch (e) {
       list.items = [];
       return;
@@ -1309,7 +1328,6 @@ export default class AppMap extends mixins(MixinUtil) {
     return this.settings!.checklists[hash_id];
   }
   clItemChange(item: any) {
-    console.log("clChange", item);
     this.updateSearchResultMarkers({ hash_id: item.hash_id, label: "" }, false);
   }
   clExport() {

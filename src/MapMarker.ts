@@ -263,6 +263,7 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     const dungeonNum = parseInt(this.lm.getSaveFlag().replace('Location_Dungeon', ''), 10);
     // Different marker for Shrine in Cave
     const icon = (l.ShrineInCave) ? MapIcons.TOTK_SHRINE_CAVE : MapIcons.TOTK_SHRINE;
+    const shift: [number, number] = (l.ShrineInCave) ? [-7, 18] : [-4, 15];
     this.marker.setIcon(icon);
     this.setTitle(MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId()));
     this.marker.options.title = '';
@@ -271,7 +272,7 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
 
     const cave = (l.ShrineInCave) ? "<br>Cave" : "";
     this.marker.bindTooltip(`${this.title}<br>${sub}${cave}`, { pane: 'front2' });
-    this.setIcons([icon, iconAddBadge(icon, [-4, 15])])
+    this.setIcons([icon, iconAddBadge(icon, shift)])
   }
   shouldBeShown() {
     let layer = this.mb.activeLayer;
