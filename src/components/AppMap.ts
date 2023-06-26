@@ -1176,7 +1176,7 @@ export default class AppMap extends mixins(MixinUtil) {
     this.staticTooltip = !this.staticTooltip;
     this.updateTooltips();
   }
-  clMarked(list: any) {
+  clMarkedLength(list: any) {
     if (!list) {
       return 0;
     }

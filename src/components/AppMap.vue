@@ -115,8 +115,8 @@
                 <span v-show="this.searchResults.length >= this.MAX_SEARCH_RESULT_COUNT">Showing only the first {{MAX_SEARCH_RESULT_COUNT}} results.<br></span>
                 <b-btn size="sm" variant="link" @click="searchOnAdd"><i class="fa fa-plus"></i> Add to map</b-btn>
                 <b-btn size="sm" variant="link" @click="searchOnExclude"><i class="far fa-eye-slash"></i> Hide</b-btn>
-                <b-checkbox style="display: inline-block; vertical-align: middle; accent-color: #29d1fc; color: #29d1fc;" switch v-model="skipMarked" > Skip marked</b-checkbox>
-
+                <!--<b-checkbox style="display: inline-block; vertical-align: middle; accent-color: #29d1fc; color: #29d1fc;" switch v-model="skipMarked" > Skip marked</b-checkbox>
+                    -->
               </p>
               <div v-for="(result, idx) in searchResults" :key="result.objid">
                 <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false" @click.native="searchJumpToResult(idx)" :is-checked="settings.checklists[result.hash_id]"/>
@@ -161,16 +161,18 @@
           <!-- <b-btn size="sm" variant="link" style="padding-top: 0px" @click="clearChecklists()">Clear</b-btn> -->
           <!-- <b-btn size="sm" variant="link" style="padding-top: 0px" @click="addChecklists()">Add to Map</b-btn>-->
           <b-btn size="sm clButton" variant="link" @click="clCreate()">New List</b-btn>
+          <!--
           <div>
             <input type="checkbox" v-model="skipMarked" id="skippedMarked">
             <label for="skippedMarked" style="color: #29d1fc; margin-bottom: 0px; margin-left: 0.5em;">Show Marked</label>
           </div>
+          -->
           <b-btn size="sm clButton" variant="link" @click="clClearAsk()">Reset</b-btn>
         </div>
 
         <details v-for="(list) in settings.checklists.lists" :key="list.id">
-          <summary>{{list.name}}: {{clMarked(list)}}/{{clLength(list)}}
-            <b-btn class="sm clButton" variant="link" @click="clShow(list)">
+          <summary>{{list.name}}: {{clMarkedLength(list)}}/{{clLength(list)}}
+            <b-btn class="small clButton" variant="link" @click="clShow(list)">
               <i class="fas fa-eye"></i>
             </b-btn>
           </summary>
