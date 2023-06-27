@@ -78,7 +78,6 @@ export class Settings {
   }
 
   private save() {
-    console.log("settings save");
     for (const cb of this.beforeSaveCallbacks)
       cb();
     const data = {
