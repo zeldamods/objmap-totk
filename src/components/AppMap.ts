@@ -1301,17 +1301,6 @@ export default class AppMap extends mixins(MixinUtil) {
     this.staticTooltip = !this.staticTooltip;
     this.updateTooltips();
   }
-  clMarkedLength(list: any) {
-    if (!list) {
-      return 0;
-    }
-    return list.items
-      .map((item: any) => item.hash_id)
-      .filter((hash_id: string) => this.settings!.checklists.values[hash_id]).length;
-  }
-  clLength(list: any) {
-    return Object.keys(list.items).length;
-  }
   clIsMarked(hash_id: string) {
     return (hash_id !== undefined) && this.settings!.checklists.values[hash_id];
   }
@@ -1323,13 +1312,6 @@ export default class AppMap extends mixins(MixinUtil) {
     }
     this.settings!.checklists.values[hash_id] = !settings.checklists.values[hash_id];
     return this.settings!.checklists.values[hash_id];
-  }
-  clItemChange(item: any) {
-    this.updateSearchResultMarkers({ hash_id: item.hash_id, label: "" }, false);
-  }
-  clRenderItem(item: any) {
-    console.log("Render item: ", item);
-    return item.name;
   }
   clExport() {
     const data = {
@@ -1475,7 +1457,6 @@ export default class AppMap extends mixins(MixinUtil) {
       }
       let list = this.settings!.checklists.lists[id]
       list.query = value.query;
-      console.log(list);
       await this.clChangeQuery(list);
       this.settings!.checklists.lists[id] = list;
       this.settings!.checklists.lists = [... this.settings!.checklists.lists];
