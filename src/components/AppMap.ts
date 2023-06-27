@@ -19,6 +19,7 @@ import AppMapDetailsPlace from '@/components/AppMapDetailsPlace';
 import AppMapFilterMainButton from '@/components/AppMapFilterMainButton';
 import AppMapPopup from '@/components/AppMapPopup';
 import AppMapSettings from '@/components/AppMapSettings';
+import AppMapChecklists from '@/components/AppMapChecklists';
 import MixinUtil from '@/components/MixinUtil';
 import ModalGotoCoords from '@/components/ModalGotoCoords';
 import ObjectInfo from '@/components/ObjectInfo';
@@ -244,6 +245,7 @@ function addPopupAndTooltip(layer: L.Marker | L.Polyline, root: any) {
     AppMapDetailsPlace,
     AppMapFilterMainButton,
     AppMapSettings,
+    AppMapChecklists,
     ModalGotoCoords,
     ObjectInfo,
     draggable,
@@ -962,6 +964,7 @@ export default class AppMap extends mixins(MixinUtil) {
   clClear() {
     this.settings!.checklists = Object.assign({}, {
       lists: [],
+      values: {},
     });
   }
   clShow(list: any) {
@@ -973,22 +976,13 @@ export default class AppMap extends mixins(MixinUtil) {
     if (ids.length)
       id = Math.max(...ids) + 1;
 
-    this.settings!.checklists.lists.push({ name: 'New List', query: '', id, items: [] });
+    this.settings!.checklists.lists.push({ name: 'New List', query: '', id, items: {} });
     this.settings!.checklists.lists = [... this.settings!.checklists.lists];
   }
   clRemove(remove: any) {
     if (confirm(`Delete checklist ${remove.name}?`)) {
       this.settings!.checklists.lists = this.settings!.checklists.lists.filter((list: any) => list.id != remove.id);
     }
-  }
-  getName(name: string) {
-    return ui.getName(name);
-  }
-  checklistItemUpdated(item: any) {
-    if (!(item.hash_id in this.settings!.checklists)) {
-      this.settings!.checklists[item.hash_id] = false;
-    }
-    this.settings!.checklists[item.hash_id] = item.marked;
   }
   minObjToCL(obj: ObjectMinData) {
     let ui_name = obj.name;
@@ -1002,7 +996,10 @@ export default class AppMap extends mixins(MixinUtil) {
     } else if (obj.korok_id) {
       ui_name = obj.korok_id;
     } else {
-      ui_name = this.getName(obj.name);
+      ui_name = ui.getName(obj.name);
+    }
+    if (ui_name === undefined) {
+      ui_name = obj.name;
     }
     return {
       hash_id: obj.hash_id,
@@ -1010,19 +1007,24 @@ export default class AppMap extends mixins(MixinUtil) {
       map_name: obj.map_name,
       ui_name: ui_name,
       pos: obj.pos,
+      marked: this.clIsMarked(obj.hash_id),
     };
   }
-  async checklistChangeQuery(list: any) {
+  async clChangeQuery(list: any) {
     const query = list.query;
     let results = [];
     try {
       results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false);
     } catch (e) {
-      list.items = [];
+      list.items = {};
       return;
     }
-    list.items = results.map((item) => this.minObjToCL(item));
-    list.items.sort((a: any, b: any) => a.ui_name.localeCompare(b.ui_name));
+    const items = results.map((item) => this.minObjToCL(item));
+    items.sort((a: any, b: any) => a.ui_name.localeCompare(b.ui_name));
+    for (const item of items) {
+      list.items[item.hash_id] = item;
+    }
+    console.log(list.items);
   }
   async addChecklists() {
     const group = new SearchResultGroup('', 'Marked Objs');
@@ -1182,25 +1184,29 @@ export default class AppMap extends mixins(MixinUtil) {
     }
     return list.items
       .map((item: any) => item.hash_id)
-      .filter((hash_id: string) => this.settings!.checklists[hash_id]).length;
+      .filter((hash_id: string) => this.settings!.checklists.values[hash_id]).length;
   }
   clLength(list: any) {
     return Object.keys(list.items).length;
   }
   clIsMarked(hash_id: string) {
-    return (hash_id !== undefined) && this.settings!.checklists[hash_id];
+    return (hash_id !== undefined) && this.settings!.checklists.values[hash_id];
   }
   clToggle(hash_id: string) {
     const settings = this.settings!;
 
-    if (!(hash_id in settings.checklists)) {
-      this.$set(this.settings!.checklists, hash_id, false)
+    if (!(hash_id in settings.checklists.values)) {
+      this.$set(this.settings!.checklists.values, hash_id, false)
     }
-    this.settings!.checklists[hash_id] = !settings.checklists[hash_id];
-    return this.settings!.checklists[hash_id];
+    this.settings!.checklists.values[hash_id] = !settings.checklists.values[hash_id];
+    return this.settings!.checklists.values[hash_id];
   }
   clItemChange(item: any) {
     this.updateSearchResultMarkers({ hash_id: item.hash_id, label: "" }, false);
+  }
+  clRenderItem(item: any) {
+    console.log("Render item: ", item);
+    return item.name;
   }
   clExport() {
     const data = {
@@ -1242,7 +1248,7 @@ export default class AppMap extends mixins(MixinUtil) {
         .filter(key => key != "lists")
         .filter(hash_id => cl[hash_id]);
       this.settings!.checklists.lists = [... this.settings!.checklists.lists];
-      this.settings!.checklists.lists.forEach(async (list: any) => await this.checklistChangeQuery(list));
+      this.settings!.checklists.lists.forEach(async (list: any) => await this.clChangeQuery(list));
       hash_ids.forEach(hash_id => this.clToggle(hash_id));
     } catch (e) {
       alert(e);
@@ -1279,6 +1285,13 @@ export default class AppMap extends mixins(MixinUtil) {
         if (marker) {
           // @ts-ignore
           marker.setMarked(value);
+        }
+      }
+      for (let i = 0; i < this.settings!.checklists.lists.length; i++) {
+        const list = this.settings!.checklists.lists[i];
+        if (item.hash_id in list.items) {
+          this.$set(this.settings!.checklists.lists[i].items[item.hash_id], 'marked', value);
+          this.settings!.checklists.lists = [...this.settings!.checklists.lists];
         }
       }
     })
@@ -1319,6 +1332,30 @@ export default class AppMap extends mixins(MixinUtil) {
     });
     this.map.m.on('AppMap:update-search-markers', (args) => {
       this.updateSearchResultMarkers(args);
+    });
+    this.$on('AppMap:search-on-value', (value: string) => {
+      this.searchOnValue(value);
+    });
+    this.$on('AppMap:search-on-hash', (value: string) => {
+      this.searchOnHash(value);
+    });
+    this.$on('AppMap:search-add-group', (value: any) => {
+      this.searchAddGroup(value.query, value.name);
+    });
+    this.$on('AppMap:checklist-remove', (list: any) => {
+      this.clRemove(list);
+    });
+    this.$on('AppMap:update-checklist-query', async (value: any) => {
+      let id = this.settings!.checklists.lists.findIndex((list: any) => list.id == value.list_id);
+      if (id < 0) {
+        return;
+      }
+      let list = this.settings!.checklists.lists[id]
+      list.query = value.query;
+      console.log(list);
+      await this.clChangeQuery(list);
+      this.settings!.checklists.lists[id] = list;
+      this.settings!.checklists.lists = [... this.settings!.checklists.lists];
     });
     this.$on('AppMap:open-obj', async (obj: ObjectData) => {
       if (this.tempObjMarker)

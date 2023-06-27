@@ -73,7 +73,7 @@ export class Settings {
     this.drawControlsShown = parse(data.drawControlsShown, Id, false);
     this.decompBannerHidden = parse(data.decompBannerHidden, Id, false);
     this.noTouchScreen = parse(data.noTouchScreen, Id, false);
-    this.checklists = parse(data.checklists, Id, {});
+    this.checklists = parse(data.checklists, Id, { lists: [], values: {} });
     this.invokeCallbacks();
   }
 
