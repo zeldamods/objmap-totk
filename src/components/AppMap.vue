@@ -17,8 +17,9 @@
         <li class="d-none"><a href="#spane-search-help" role="tab"></a></li>
         <li><a href="#spane-search" role="tab"><i class="fa fa-search"></i></a></li>
         <li><a href="#spane-filter" role="tab"><i class="fa fa-filter"></i></a></li>
-        <li><a href="#spane-dummy" role="tab"><i class="fa fa-tasks"></i></a></li>
+        <li class="disabled"><a href="#spane-dummy" role="tab"><i class="fa fa-tasks"></i></a></li>
         <li><a href="#spane-draw" role="tab"><i class="fa fa-draw-polygon"></i></a></li>
+        <li><a href="#spane-checklist" role="tab"><i class="far fa-check-circle"></i></a></li>
         <li><a href="#spane-tools" role="tab"><i class="fa fa-tools"></i></a></li>
         <li><a href="#spane-settings" role="tab"><i class="fa fa-cog"></i></a></li>
       </ul>
@@ -119,7 +120,9 @@
                     -->
               </p>
               <div v-for="(result, idx) in searchResults" :key="result.objid">
-                <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false" @click.native="searchJumpToResult(idx)" :is-checked="settings.checklists[result.hash_id]"/>
+                <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false"
+                            @click.native="searchJumpToResult(idx)"
+                            :isChecked="settings.checklists.values[result.hash_id]"/>
               </div>
             </div>
           </section>
@@ -156,6 +159,8 @@
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-dummy">
+      </div>
+      <div class="leaflet-sidebar-pane" id="spane-checklist">
         <h1 class="leaflet-sidebar-header">Checklists</h1>
         <div class="clButtonRow">
           <!-- <b-btn size="sm" variant="link" style="padding-top: 0px" @click="clearChecklists()">Clear</b-btn> -->
@@ -169,48 +174,7 @@
           -->
           <b-btn size="sm clButton" variant="link" @click="clClearAsk()">Reset</b-btn>
         </div>
-
-        <details v-for="(list) in settings.checklists.lists" :key="list.id">
-          <summary>{{list.name}}: {{clMarkedLength(list)}}/{{clLength(list)}}
-            <b-btn class="small clButton" variant="link" @click="clShow(list)">
-              <i class="fas fa-eye"></i>
-            </b-btn>
-          </summary>
-          <details class="small" style="margin-left: 2em">
-            <summary style="margin-left: -1em">Details</summary>
-            <div class="clMeta">
-              <div class="clMetaTable">
-                <div class="clMetaRow">
-                  <div>Name</div>
-                  <input type="text" v-model="list.name"  class="clForm">
-                </div>
-                <div class="clMetaRow">
-                  <div>Query</div>
-                  <input type="search" v-model="list.query" class="clForm" >
-                </div>
-              </div>
-              <div class="clButtonRow">
-                <b-btn size="sm" variant="link" @click="checklistChangeQuery(list)">Update</b-btn>
-                <b-btn size="sm" variant="link" @click="clRemove(list)">Remove</b-btn>
-              </div>
-            </div>
-          </details>
-          <ul class="clList">
-            <li class="small" v-for="(item) in list.items" :key="item.hash_id">
-              <input type="checkbox" v-model="settings.checklists[item.hash_id]" @change="clItemChange(item)">
-              <b-btn class="small" size="sm"
-                     style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
-                     variant="link" @click='searchOnValue(`"${item.name}"`)'>{{item.ui_name}}</b-btn>
-              <b-btn class="small" size="sm"
-                     style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
-                     variant="link" @click='searchOnValue(`map:"${item.map_name}"`)'>{{item.map_name}}</b-btn>
-              <b-btn class="small" size="sm"
-                     style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
-                     variant="link"
-                     @click="searchOnHash(item.hash_id)">view</b-btn>
-            </li>
-          </ul>
-        </details>
+        <AppMapChecklists :lists="settings.checklists.lists"/>
         <hr>
         <div class="row no-gutters">
           <div class="col mr-3">
@@ -300,7 +264,7 @@
         <h1 v-if="detailsMarker" class="location-title leaflet-sidebar-header" :title="detailsMarker.data.title"><span>{{detailsMarker.data.title}}</span></h1>
         <component v-if="detailsComponent" :is="detailsComponent"
                    v-bind:marker="detailsMarker"
-                   v-bind:is-checked="(detailsMarker.data && detailsMarker.data.obj) ? settings.checklists[detailsMarker.data.obj.hash_id] : false"
+                   v-bind:is-checked="(detailsMarker.data && detailsMarker.data.obj) ? settings.checklists.values[detailsMarker.data.obj.hash_id] : false"
                    ></component>
       </div>
 
@@ -493,45 +457,6 @@
 }
 .map-filter-icon-Dispensers {
     padding: 4px;
-}
-.clForm {
-    background-color: rgba(255, 255,255,0.3);
-    border: 1px solid rgba(255,255,255,0.2);
-    line-height: 2;
-    color: white;
-    border-radius: 0.25rem;
-    width: 100%;
-    display: table-cell;
-}
-.clMetaTable {
-    width: 100%;
-    display: table;
-}
-.clMetaRow {
-    display: table-row
-}
-.clMetaRow div {
-    display: table-cell;
-}
-.clButtonRow {
-    width: 100%;
-    display: flex;
-    flex: row nowrap;
-    align-items: top;
-    justify-content: center;
-    gap: 0.5em;
-}
-.clMeta {
-    padding: 0.2em;
-}
-.clList {
-    padding-left: 1.5em;
-    list-style: none;
-}
-.clButton {
-    padding-top: 0px;
-    padding-bottom: 0px;
-    vertical-align: baseline;
 }
 
 </style>
