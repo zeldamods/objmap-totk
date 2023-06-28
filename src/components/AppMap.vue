@@ -116,8 +116,6 @@
                 <span v-show="this.searchResults.length >= this.MAX_SEARCH_RESULT_COUNT">Showing only the first {{MAX_SEARCH_RESULT_COUNT}} results.<br></span>
                 <b-btn size="sm" variant="link" @click="searchOnAdd"><i class="fa fa-plus"></i> Add to map</b-btn>
                 <b-btn size="sm" variant="link" @click="searchOnExclude"><i class="far fa-eye-slash"></i> Hide</b-btn>
-                <!--<b-checkbox style="display: inline-block; vertical-align: middle; accent-color: #29d1fc; color: #29d1fc;" switch v-model="skipMarked" > Skip marked</b-checkbox>
-                    -->
               </p>
               <div v-for="(result, idx) in searchResults" :key="result.objid">
                 <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false"
@@ -163,15 +161,7 @@
       <div class="leaflet-sidebar-pane" id="spane-checklist">
         <h1 class="leaflet-sidebar-header">Checklists</h1>
         <div class="clButtonRow">
-          <!-- <b-btn size="sm" variant="link" style="padding-top: 0px" @click="clearChecklists()">Clear</b-btn> -->
-          <!-- <b-btn size="sm" variant="link" style="padding-top: 0px" @click="addChecklists()">Add to Map</b-btn>-->
           <b-btn size="sm clButton" variant="link" @click="clCreate()">New List</b-btn>
-          <!--
-          <div>
-            <input type="checkbox" v-model="skipMarked" id="skippedMarked">
-            <label for="skippedMarked" style="color: #29d1fc; margin-bottom: 0px; margin-left: 0.5em;">Show Marked</label>
-          </div>
-          -->
           <b-btn size="sm clButton" variant="link" @click="clClearAsk()">Reset</b-btn>
         </div>
         <AppMapChecklists :lists="settings.checklists.lists"/>

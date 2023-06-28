@@ -66,11 +66,15 @@ class MapMarkerImpl extends MapMarker {
     }));
     super.commonInit();
   }
+
   getLabel() { return ""; }
+
   getMarker() { return this.marker; }
+
   setIcons(icons: L.Icon[]) {
     this.icons = icons;
   }
+
   setMarked(marked: boolean) {
     const k = (marked) ? 1 : 0;
     if (k < this.icons.length) {
@@ -162,12 +166,15 @@ export class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     this.lm = lm;
     this.setIcons([icon, iconAddBadge(icon)])
   }
+
   getMessageId() {
     return this.lm.getMessageId();
   }
+
   getHashID() {
     return this.lm.getHashID();
   }
+
   getLabel() {
     return this.lm.getIcon();
   }
@@ -287,6 +294,7 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     this.marker.bindTooltip(`${this.title}<br>${sub}${cave}`, { pane: 'front2' });
     this.setIcons([icon, iconAddBadge(icon, shift)])
   }
+
   shouldBeShown() {
     let layer = this.mb.activeLayer;
     const inSky = [
@@ -420,6 +428,7 @@ export class MapMarkerTower extends MapMarkerGenericLocationMarker {
     return this.mb.activeLayer == "Surface";
   }
 }
+
 export class MapMarkerCave extends MapMarkerGenericLocationMarker {
   private info: any;
   constructor(mb: MapBase, l: any) {
@@ -428,6 +437,7 @@ export class MapMarkerCave extends MapMarkerGenericLocationMarker {
     this.marker.bindTooltip(this.title, { pane: 'front2' });
     this.info = l;
   }
+
   getLabel() {
     if (this.info.Icon == "Chasm") {
       return "Chasm";
@@ -468,10 +478,11 @@ export class MapMarkerShop extends MapMarkerGenericLocationMarker {
     this.marker.bindTooltip(this.title, { pane: 'front2' });
     this.info = l;
   }
+
   getLabel() {
     return "Shop";
   }
-  // This needs attention **FIX**
+
   shouldBeShown() {
     const layer = this.mb.activeLayer;
     const y = this.info.Translate.Y;
@@ -525,9 +536,11 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
     this.info = info;
     this.obj = info;
   }
+
   shouldBeShown() {
     return this.info.map_name == this.mb.activeLayer;
   }
+
   getHashID() {
     return this.info.hash_id;
   }
