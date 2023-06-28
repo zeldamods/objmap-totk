@@ -7,7 +7,7 @@
         </b-btn>
       </summary>
       <details class="small" style="margin-left: 2em">
-        <summary style="margin-left: -1em">Details</summary>
+        <summary style="margin-left: -1em; font-size: 1.2em">Details</summary>
         <div class="clMeta">
           <div class="clMetaTable">
             <div class="clMetaRow">

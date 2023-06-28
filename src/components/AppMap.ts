@@ -161,6 +161,12 @@ function getMarkerDetailsComponent(marker: MapMarker): string {
   return '';
 }
 
+function hasSetMarked(marker: any) {
+  return marker instanceof MapMarkers.MapMarkerGenericLocationMarker ||
+    marker instanceof MapMarkers.MapMarkerKorok ||
+    marker instanceof MapMarkers.MapMarkerLocation;
+}
+
 class LayerProps {
   title: string;
   text: string;
@@ -428,13 +434,7 @@ export default class AppMap extends mixins(MixinUtil) {
       const group = new MapMarkerGroup(
         markers.map((m: any) => new (component.cl)(this.map, m, { showLabel: this.showKorokIDs }))
           .map((marker: any) => {
-            if (marker instanceof MapMarkers.MapMarkerGenericLocationMarker) {
-              const msg = marker.getHashID();
-              if (this.clIsMarked(msg)) {
-                marker.setMarked(true);
-              }
-            }
-            if (marker instanceof MapMarkers.MapMarkerKorok || marker instanceof MapMarkers.MapMarkerLocation) {
+            if (hasSetMarked(marker)) {
               const msg = marker.getHashID();
               if (this.clIsMarked(msg)) {
                 marker.setMarked(true);
@@ -956,83 +956,7 @@ export default class AppMap extends mixins(MixinUtil) {
     //  query = BigInt(query).toString(10);
     return query;
   }
-  clClearAsk() {
-    if (confirm('Remove all checklists and reset marked data?')) {
-      this.clClear();
-    }
-  }
-  clClear() {
-    this.settings!.checklists = Object.assign({}, {
-      lists: [],
-      values: {},
-    });
-  }
-  clShow(list: any) {
-    this.searchAddGroup(list.query, list.name);
-  }
-  clCreate() {
-    let id = 0;
-    const ids = this.settings!.checklists.lists.map((list: any) => list.id);
-    if (ids.length)
-      id = Math.max(...ids) + 1;
 
-    this.settings!.checklists.lists.push({ name: 'New List', query: '', id, items: {} });
-    this.settings!.checklists.lists = [... this.settings!.checklists.lists];
-  }
-  clRemove(remove: any) {
-    if (confirm(`Delete checklist ${remove.name}?`)) {
-      this.settings!.checklists.lists = this.settings!.checklists.lists.filter((list: any) => list.id != remove.id);
-    }
-  }
-  minObjToCL(obj: ObjectMinData) {
-    let ui_name = obj.name;
-    const location = obj.Location;
-    if (location && (obj.name == 'LocationMarker' || obj.name == 'LocationArea')) {
-      if (location.includes('Dungeon')) {
-        ui_name = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', location);
-      } else {
-        ui_name = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', location);
-      }
-    } else if (obj.korok_id) {
-      ui_name = obj.korok_id;
-    } else {
-      ui_name = ui.getName(obj.name);
-    }
-    if (ui_name === undefined) {
-      ui_name = obj.name;
-    }
-    return {
-      hash_id: obj.hash_id,
-      name: obj.name,
-      map_name: obj.map_name,
-      ui_name: ui_name,
-      pos: obj.pos,
-      marked: this.clIsMarked(obj.hash_id),
-    };
-  }
-  async clChangeQuery(list: any) {
-    const query = list.query;
-    let results = [];
-    try {
-      results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false);
-    } catch (e) {
-      list.items = {};
-      return;
-    }
-    const items = results.map((item) => this.minObjToCL(item));
-    items.sort((a: any, b: any) => a.ui_name.localeCompare(b.ui_name));
-    for (const item of items) {
-      list.items[item.hash_id] = item;
-    }
-    console.log(list.items);
-  }
-  async addChecklists() {
-    const group = new SearchResultGroup('', 'Marked Objs');
-    await group.init(this.map);
-    group.setObjects(this.map, Object.values(this.settings!.checklists));
-    group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
-    this.searchGroups.push(group);
-  }
 
   searchJumpToResult(idx: number) {
     const marker = this.searchResultMarkers[idx];
@@ -1178,9 +1102,81 @@ export default class AppMap extends mixins(MixinUtil) {
     this.staticTooltip = !this.staticTooltip;
     this.updateTooltips();
   }
+
+  clClearAsk() {
+    if (confirm('Remove all checklists and reset marked data?')) {
+      this.clClear();
+    }
+  }
+
+  clClear() {
+    this.settings!.checklists = Object.assign({}, { lists: [], values: {} });
+  }
+
+  clCreate() {
+    let id = 0;
+    const ids = this.settings!.checklists.lists.map((list: any) => list.id);
+    if (ids.length)
+      id = Math.max(...ids) + 1;
+
+    this.settings!.checklists.lists.push({ name: 'New List', query: '', id, items: {} });
+    this.settings!.checklists.lists = [... this.settings!.checklists.lists];
+  }
+
+  clRemove(remove: any) {
+    if (confirm(`Delete checklist ${remove.name}?`)) {
+      this.settings!.checklists.lists = this.settings!.checklists.lists.filter((list: any) => list.id != remove.id);
+    }
+  }
+
+  minObjToCL(obj: ObjectMinData) {
+    let ui_name = obj.name;
+    const location = obj.Location;
+    if (location && (obj.name == 'LocationMarker' || obj.name == 'LocationArea')) {
+      if (location.includes('Dungeon')) {
+        ui_name = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', location);
+      } else {
+        ui_name = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', location);
+      }
+    } else if (obj.korok_id) {
+      ui_name = obj.korok_id;
+    } else {
+      ui_name = ui.getName(obj.name);
+    }
+    if (ui_name === undefined) {
+      ui_name = obj.name;
+    }
+    return {
+      hash_id: obj.hash_id,
+      name: obj.name,
+      map_name: obj.map_name,
+      ui_name: ui_name,
+      pos: obj.pos,
+      marked: this.clIsMarked(obj.hash_id),
+    };
+  }
+
+  async clChangeQuery(list: any) {
+    const query = list.query;
+    let results = [];
+    try {
+      results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false);
+    } catch (e) {
+      list.items = {};
+      return;
+    }
+    list.items = {}
+    const items = results.map((item) => this.minObjToCL(item));
+    items.sort((a: any, b: any) => a.ui_name.localeCompare(b.ui_name));
+    for (const item of items) {
+      list.items[item.hash_id] = item;
+    }
+  }
+
   clIsMarked(hash_id: string) {
     return (hash_id !== undefined) && this.settings!.checklists.values[hash_id];
   }
+
   clToggle(hash_id: string) {
     const settings = this.settings!;
 
@@ -1190,6 +1186,7 @@ export default class AppMap extends mixins(MixinUtil) {
     this.settings!.checklists.values[hash_id] = !settings.checklists.values[hash_id];
     return this.settings!.checklists.values[hash_id];
   }
+
   clExport() {
     const data = {
       OBJMAP_CL_VERSION: save.CURRENT_OBJMAP_SV_VERSION,
@@ -1209,7 +1206,6 @@ export default class AppMap extends mixins(MixinUtil) {
 
   private async clImportCb() {
     const input = <HTMLInputElement>(document.getElementById('clFileinput'));
-    let hash_ids: string[] = [];
     if (!input.files!.length) {
       return;
     }
@@ -1226,12 +1222,14 @@ export default class AppMap extends mixins(MixinUtil) {
         xlist.query = list.query;
         xlist.name = list.name;
       }
-      hash_ids = Object.keys(cl)
-        .filter(key => key != "lists")
-        .filter(hash_id => cl[hash_id]);
       this.settings!.checklists.lists = [... this.settings!.checklists.lists];
       this.settings!.checklists.lists.forEach(async (list: any) => await this.clChangeQuery(list));
-      hash_ids.forEach(hash_id => this.clToggle(hash_id));
+
+      for (const [hash_id, marked] of Object.entries(cl.values)) {
+        if (marked) {
+          this.clToggle(hash_id)
+        }
+      }
     } catch (e) {
       alert(e);
     } finally {
@@ -1335,7 +1333,6 @@ export default class AppMap extends mixins(MixinUtil) {
       let list = this.settings!.checklists.lists[id]
       list.query = value.query;
       await this.clChangeQuery(list);
-      this.settings!.checklists.lists[id] = list;
       this.settings!.checklists.lists = [... this.settings!.checklists.lists];
     });
     this.$on('AppMap:open-obj', async (obj: ObjectData) => {

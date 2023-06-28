@@ -38,6 +38,9 @@ export default class AppMapChecklists extends Vue {
 
   meta(list: any) {
     const total = this.length(list);
+    if (total == 0) {
+      return `0 / 0`;
+    }
     const marked = this.markedLength(list);
     const percent = (100 * marked / total).toFixed(2);
     return `${marked} / ${total} (${percent}%)`
