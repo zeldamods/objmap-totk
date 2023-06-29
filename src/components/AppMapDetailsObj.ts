@@ -20,6 +20,7 @@ import {
 import { MsgMgr } from '@/services/MsgMgr';
 import { ColorScale } from '@/util/colorscale';
 import * as curves from '@/util/curves';
+import { vecAdd } from '@/util/math';
 import * as svg from '@/util/svg';
 
 require('leaflet-hotline')
@@ -42,7 +43,7 @@ function numOrArrayToArray(x: number | [number, number, number] | undefined): [n
 }
 
 function isAreaObject(obj: ObjectMinData) {
-  const areaObjectNames = ["Area", "BoxWater", "SpotBgmTag", "PointWindSetTag", "AreaCulling_InnerHide",
+  const areaObjectNames = ["Area", "BoxWater", "SpotBgmTag", "PointWindSetTag", "AreaCulling", "AreaCulling_InnerHide",
     "AreaCulling_InnerOn", "AreaCulling_OuterNPCMementary", "FarModelCullingArea", 'LocationArea'];
   return areaObjectNames.includes(obj.name) || obj.name.startsWith('AirWall');
 }
@@ -299,6 +300,11 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     if (!this.obj)
       return;
 
+    if (this.obj.name === "AreaCulling") {
+      this.addAreaCullingMarker(this.obj);
+      return;
+    }
+
     if (isAreaObject(this.obj))
       this.addAreaMarker(this.obj);
 
@@ -337,20 +343,8 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
         areaMarker = L.circle(mb.fromXYZ([x, 0, z]), { radius: scale[0] }).addTo(mb.m);
       }
     } else if (shape == 'Box') {
-      const southWest = L.latLng(z + scale[2], x - scale[0]);
-      const northEast = L.latLng(z - scale[2], x + scale[0]);
-      areaMarker = L.rectangle(L.latLngBounds(southWest, northEast), {
-        // @ts-ignore
-        transform: true,
-      }).addTo(mb.m);
-      if (rotate) {
-        // XXX: horrible hack to rotate a rectangle.
-        // @ts-ignore
-        areaMarker.transform._map = areaMarker._map;
-        const center = (<L.Rectangle>(areaMarker)).getCenter();
-        // @ts-ignore
-        areaMarker.transform._transformPoints(areaMarker, -rotate[1], null, center, center);
-      }
+      this.addBoxAreaMarker(obj, scale);
+      return;
     } else if (shape == 'Hull') {
       // Deliberately unhandled.
       return;
@@ -360,6 +354,62 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
     areaMarker.bringToBack();
     this.areaMarkers.push(areaMarker);
+  }
+
+  private addAreaCullingMarker(obj: ObjectData) {
+    const scale = numOrArrayToArray(obj.data.Scale);
+    if (!scale)
+      return;
+
+    const dyn = obj.data.Dynamic;
+    if (!dyn)
+      return;
+
+    const MarginNegative = dyn.MarginNegative;
+    if (!MarginNegative)
+      return;
+
+    const MarginPositive = dyn.MarginPositive;
+    if (!MarginPositive)
+      return;
+
+      this.addBoxAreaMarker(obj, scale, "AreaCulling", { fillColor: "blue" });
+      this.addBoxAreaMarker(obj, vecAdd(scale, MarginPositive), "AreaCulling + MarginPositive", { fillColor: "green", color: "green" });
+      this.addBoxAreaMarker(obj, vecAdd(scale, MarginNegative), "AreaCulling + MarginNegative", { fillColor: "red", color: "red" });
+  }
+
+  private addBoxAreaMarker(obj: ObjectData, scale: [number, number, number], tooltip?: string, options: L.PolylineOptions = {}): L.Path {
+    const mb = this.marker.data.mb;
+    const [x, _, z] = obj.data.Translate;
+    const rotate = numOrArrayToArray(obj.data.Rotate);
+
+    // Super rough approximation. This could be improved by actually projecting the 3D shape...
+    // A lot of shapes do not use any rotate feature though,
+    // and for those this naïve approach should suffice.
+    const southWest = L.latLng(z + scale[2], x - scale[0]);
+    const northEast = L.latLng(z - scale[2], x + scale[0]);
+    const marker = L.rectangle(L.latLngBounds(southWest, northEast), {
+      ...options,
+      // @ts-ignore
+      transform: true,
+    }).addTo(mb.m);
+
+    if (tooltip) {
+      marker.bindTooltip(tooltip);
+    }
+
+    if (rotate) {
+      // XXX: horrible hack to rotate a rectangle.
+      // @ts-ignore
+      marker.transform._map = marker._map;
+      const center = (<L.Rectangle>(marker)).getCenter();
+      // @ts-ignore
+      marker.transform._transformPoints(marker, -rotate[1], null, center, center);
+    }
+
+    marker.bringToBack();
+    this.areaMarkers.push(marker);
+    return marker;
   }
 
   isAreaReprPossiblyWrong(): boolean {
