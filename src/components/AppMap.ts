@@ -165,11 +165,13 @@ class LayerProps {
   text: string;
   pathLength: number;
   order: number;
+  map_layer: string;
   constructor() {
     this.title = "";
     this.text = "";
     this.pathLength = 0;
     this.order = -1;
+    this.map_layer = "";
   }
   lengthAsString(): string {
     if (this.pathLength <= 0.0) {
@@ -185,6 +187,7 @@ class LayerProps {
     this.text = feat.properties.text || '';
     this.pathLength = feat.properties.pathLength || 0;
     this.order = (feat.properties.order !== undefined) ? feat.properties.order : -1;
+    this.map_layer = feat.properties.map_layer || 'Surface';
   }
 }
 function addGeoJSONFeatureToLayer(layer: any) {
@@ -230,6 +233,13 @@ function addPopupAndTooltip(layer: L.Marker | L.Polyline, root: any) {
         root.updateDrawLayerOpts({ txt: txt, layer });
       }
     });
+    popup.$on('map_layer', (txt: string) => {
+      if (layer && layer.feature) {
+        layer.feature.properties.map_layer = txt;
+        root.updateDrawLayerOpts({ map_layer: txt, layer });
+        root.updateDrawLayers();
+      }
+    });
     // Create Popup and Tooltip
     layerSetPopup(layer, popup);
     layer.bindTooltip(layer.feature.properties.tooltip());
@@ -265,6 +275,7 @@ export default class AppMap extends mixins(MixinUtil) {
   private drawLayerOpts: any[] = [];
   private drawLineColor = '#3388ff';
   private setLineColorThrottler!: () => void;
+  private markerVisibility: string = "opacity";
 
   private previousGotoMarker: L.Marker | null = null;
   private greatPlateauBarrierShown = false;
@@ -321,6 +332,9 @@ export default class AppMap extends mixins(MixinUtil) {
   // Replace current markers
   private importReplace: boolean = true;
 
+  // internal State for drawing markers
+  private drawVertexLayers: string[] = [];
+
   setViewFromRoute(route: any) {
     const x = parseFloat(route.params.x);
     const z = parseFloat(route.params.z);
@@ -362,7 +376,10 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.registerMoveEndCb(() => this.updateRoute());
     this.map.registerZoomEndCb(() => this.updateRoute());
     this.updateRoute();
-    this.map.registerBaseLayerChangeCb(() => this.updateMarkers());
+    this.map.registerBaseLayerChangeCb(() => {
+      this.updateMarkers();
+      this.updateDrawLayers();
+    });
   }
 
   initMarkers() {
@@ -529,6 +546,19 @@ export default class AppMap extends mixins(MixinUtil) {
     }
   }
 
+  updateDrawLayers() {
+    const activeLayer = this.map.activeLayer;
+    this.drawLayer.eachLayer((layer: any) => {
+      const alphas: { [key: string]: number } = { 'never': 0.0, always: 1.0, opacity: 0.3 }
+      const opacity = (layer.feature.properties.map_layer == activeLayer) ? 1.0 : alphas[this.markerVisibility];
+      if (ui.leafletType(layer) == ui.LeafletType.Marker) {
+        layer.setOpacity(opacity)
+      } else {
+        layer.setStyle({ opacity });
+      }
+    })
+  }
+
   changeLayerColor(event: any) {
     const id = Number(event.target.attributes.layer_id.value);
     const color = event.target.value;
@@ -561,6 +591,7 @@ export default class AppMap extends mixins(MixinUtil) {
         text: props.text,
         length: (ui.leafletType(layer) == ui.LeafletType.Marker) ? "" : props.pathLength.toFixed(2),
         visible: true,
+        map_layer: props.map_layer,
       };
     })
     // order values < 0 are appended at the end and given a value
@@ -589,6 +620,7 @@ export default class AppMap extends mixins(MixinUtil) {
         if (opt) {
           opt.title = updates.title || opt.title;
           opt.text = updates.text || opt.text;
+          opt.map_layer = updates.map_layer || opt.map_layer;
         }
       } else {
         this.drawLayerOpts = this.createDrawLayerOpts();
@@ -646,15 +678,65 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.m.on({
       // @ts-ignore
       'draw:created': (e: any) => {
-        addGeoJSONFeatureToLayer(e.layer);
-        calcLayerLength(e.layer);
-        addPopupAndTooltip(e.layer, this);
-        this.drawLayer.addLayer(e.layer);
-        this.initGeojsonFeature(e.layer);
-        if (!e.layer.options.color) {
-          e.layer.options.color = this.drawLineColor;
+        let group = [];
+        if (ui.leafletType(e.layer) == ui.LeafletType.Polyline) {
+          const map_layers = this.drawVertexLayers.filter((value, index, self) => { return self.indexOf(value) == index; });
+          if (map_layers.length != 1) {
+            const color = e.layer.options.color || this.drawLineColor;
+            const latlngs = e.layer.getLatLngs();
+            if (latlngs.length != this.drawVertexLayers.length) {
+              console.error("Mismatch between polyline vertex and drawVertexLayer lengths");
+              return;
+            }
+            let k = 0; // Last index in latlngs and drawVertexLayers
+            let p0 = undefined; // Last interpolation point
+            for (let i = 1; i < latlngs.length; i++) {
+              if (this.drawVertexLayers[i - 1] != this.drawVertexLayers[i]) {
+                // Points on different maps get split either in half or in thirds
+                if (this.drawVertexLayers[i - 1] != "Surface" && this.drawVertexLayers[i] != "Surface") {
+                  // Go from Sky <-> Depths, skipping the surface, divide into 3 parts
+                  const p1 = interp(latlngs[i - 1], latlngs[i], 1. / 3.);
+                  const p2 = interp(latlngs[i - 1], latlngs[i], 2. / 3.);
+                  const pts = (p0) ? [p0, ...latlngs.slice(k, i), p1] : [...latlngs.slice(k, i), p1];
+                  group.push({ layer: L.polyline(pts, { color }), map_layer: this.drawVertexLayers[k] });
+                  group.push({ layer: L.polyline([p1, p2], { color }), map_layer: 'Surface' });
+                  p0 = p2;
+                } else {
+                  const pts = (p0) ? [p0, ...latlngs.slice(k, i)] : [...latlngs.slice(k, i)];
+                  p0 = interp(latlngs[i - 1], latlngs[i], 0.5);
+                  pts.push(p0);
+                  group.push({ layer: L.polyline(pts, { color }), map_layer: this.drawVertexLayers[k] });
+                }
+                k = i;
+              }
+            }
+            const pts = [p0, ...latlngs.slice(k)];
+            group.push({ layer: L.polyline(pts, { color }), map_layer: this.drawVertexLayers[k] });
+          } else {
+            group.push({ layer: e.layer, map_layer: this.drawVertexLayers[0] });
+          }
+        } else {
+          group.push({ layer: e.layer, map_layer: this.map.activeLayer });
         }
+        group.forEach((e: any) => {
+          addGeoJSONFeatureToLayer(e.layer);
+          calcLayerLength(e.layer);
+          e.layer.feature.properties.map_layer = e.map_layer;
+          addPopupAndTooltip(e.layer, this);
+          this.drawLayer.addLayer(e.layer);
+          this.initGeojsonFeature(e.layer);
+          if (!e.layer.options.color) {
+            e.layer.options.color = this.drawLineColor;
+          }
+        })
+        this.updateDrawLayers();
         this.updateDrawLayerOpts();
+      },
+      'draw:drawstart': () => {
+        this.drawVertexLayers = [];
+      },
+      'draw:drawvertex': () => {
+        this.drawVertexLayers.push(this.map.activeLayer);
       },
       'draw:edited': (e: any) => {
         e.layers.eachLayer((layer: L.Marker | L.Polyline) => {
@@ -682,6 +764,7 @@ export default class AppMap extends mixins(MixinUtil) {
     });
     this.updateDrawControlsVisibility();
     this.updateDrawLayerOpts();
+    this.updateDrawLayers();
   }
 
   private layerFromGeoJSON(feat: any): L.Layer {
@@ -776,6 +859,8 @@ export default class AppMap extends mixins(MixinUtil) {
             this.searchAddExcludedSet(g.query, g.label);
           });
         }
+        // Version 4 Add .map_layer = [Surface, Sky, Depths]
+        //   Handled by fromGeoJSON()
       }
     } catch (e) {
       alert(e);
@@ -1464,5 +1549,12 @@ export default class AppMap extends mixins(MixinUtil) {
     if (!this.updatingRoute)
       this.setViewFromRoute(to);
     next();
+  }
+}
+
+function interp(a: any, b: any, f: number) {
+  return {
+    lat: a.lat + f * (b.lat - a.lat),
+    lng: a.lng + f * (b.lng - a.lng),
   }
 }

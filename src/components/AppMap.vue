@@ -179,10 +179,20 @@
         <hr/>
         <div v-if="drawLayerOpts.length">
           <h4 class="subsection-heading">Polyline/Markers</h4>
+          <div class="marker-row">Items on another map:
+          <select v-model="markerVisibility" @change="updateDrawLayers" style="flex-grow: 2; margin-left: 1em">
+              <option value="never">Never show</option>
+              <option value="opacity">Less visible</option>
+              <option value="always">Always show</option>
+          </select>
+          </div>
           <draggable v-model="drawLayerOpts" @update="updateDrawLayerOptsIndex">
             <div v-for="layer in drawLayerOpts" :key="layer.id" @model="drawLayerOpts" class="marker-row" draggable="true">
               <div>
                 <input type="checkbox" @input="toggleLayerVisibility" :id="layer.id" :checked="layer.visible" >
+                <div v-if="layer.map_layer == 'Surface'" style="display: inline; padding-left: 0.3em;"> <i class="fa fa-tree fa-fw" style="color: lightgreen"></i></div>
+                <div v-else-if="layer.map_layer == 'Sky'"  style="display: inline; padding-left: 0.3em;"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></div>
+                <div v-else-if="layer.map_layer == 'Depths'"  style="display: inline; padding-left: 0.3em;"><i class="fa fa-circle fa-fw" style="color: #D771DB;"></i></div>
                 <input type="color" :value="layer.color" @input="changeLayerColor" :layer_id="layer.id" class="marker-color">
                 <div class="inline-block">{{layer.title}}</div>
               </div>
