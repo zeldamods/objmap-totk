@@ -18,14 +18,16 @@ export default class AppMapSettings extends Vue {
   s: Settings | null = null;
 
   optionsMapType = Object.freeze([
-    { value: 'Totk', text: 'Sky, Surface and Depths' },
+    { value: 'Any', text: 'Sky, Surface and Depths' },
     { value: 'SmallDungeon', text: 'Shrines (SmallDungeon)' },
     { value: 'LargeDungeon', text: 'Temples (LargeDungeon)' },
     { value: 'NormalStage', text: 'Special Maps (NormalStage)' },
+    { value: 'MainField', text: 'Surface, Sky, Caves and Chasms' },
+    { value: 'MinusField', text: 'Depths' },
   ]);
 
   optionsMapNameForMapType: { [type: string]: any } = Object.freeze({
-    'Totk': [
+    'Any': [
       { value: '', text: 'All' },
     ],
     'SmallDungeon': [{ value: '', text: 'All' }].concat([...Array(152).keys()].map(makeCDungeonEntry)),
@@ -41,6 +43,16 @@ export default class AppMapSettings extends Vue {
       { value: 'OpeningField', text: 'Prologue (OpeningField)' },
       { value: 'TitleScene', text: 'TitleScene' },
     ],
+    'MainField': [
+      { value: '', text: 'All' },
+      { value: 'Surface', text: 'Surface' },
+      { value: 'Sky', text: 'Sky' },
+      { value: 'Cave', text: 'Cave' },
+      { value: 'DeepHole', text: 'Chasms' },
+    ],
+    'MinusField': [
+      { value: '', text: 'All' },
+    ]
   });
 
   created() {
