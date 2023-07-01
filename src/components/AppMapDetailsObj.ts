@@ -571,11 +571,38 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       let markers = objs.map((obj: any) => this.getKorokMarkerWithIcon(obj).addTo(map.m));
       this.korokMarkers.push(...markers);
     } else if (this.obj.korok_type == "Flower Trail") {
-      let group = this.genGroup;
-      let start = group.find((g: any) => this.getName(g.name) == "Obj_Plant_Korok_A_01" &&
-        g.data['!Parameters'].IsNoAppearEffect);
+      const is5 = this.aiGroups[0].data.Logic.includes('TrackingFlower_05');
+      const is10 = this.aiGroups[0].data.Logic.includes('TrackingFlower_10');
+      if (!is5 && !is10) {
+        return;
+      }
+      // Flowers order suffixes for 5 and 10 flowers are below
+      // AiGroup Instance name suffixes determine order
+      //   Path of AiGroup is shared with Obj_Plant_Korok
+      //   Obj_Plant_Korok hash_id points to an object within the genGroup
+      const keys = (is5) ? ['29a0_37f6', '196a_cb2f', '196a_c822', '196a_9cde', '53b7_0732'] :
+        ['29a0_d827', '196a_3435', '196a_994b', '196a_95b8', '196a_7ed8',
+          '196a_5af9', '196a_a1d9', '196a_68c7', '196a_d26c', '53b7_e9c4'];
 
-      let flowers = this.getFlowersInKorokFlowerTrail(group, start);
+      let flowers = [];
+      const Refs = this.aiGroups[0].data.References
+      for (const key of keys) {
+        let ai_flower = Refs.find((ref: any) => ref.Id == 'AiGroup' && ref.InstanceName.endsWith(key));
+        if (!ai_flower)
+          continue;
+        let path = ai_flower.Path.split("/")[0];
+        let flower = Refs.find((ref: any) => ref.Id.startsWith('Obj_Plant_Korok') && ref.Path.startsWith(path));
+        if (!flower)
+          continue;
+        let flower_hash = '0x' + BigInt(flower.Reference).toString(16).padStart(16, '0');
+        flower = this.genGroup.find((item: any) => item.hash_id == flower_hash);
+        if (!flower)
+          continue;
+        flowers.push(flower);
+      }
+      if (flowers.length != keys.length) {
+        return;
+      }
       let style = "color: #E2DF41; font-size: 2em; display: inline;";
       let style_end = "color: #eeeeee; font-size: 2em;  display: inline;";
       flowers.forEach((obj: any, i: number) => {
