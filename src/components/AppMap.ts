@@ -669,8 +669,8 @@ export default class AppMap extends mixins(MixinUtil) {
       },
     };
     if (this.settings!.noTouchScreen) {
-      options.draw.polyline = { icon };
-      options.edit.poly = { icon };
+      options.draw.polyline = { icon, allowIntersection: true };
+      options.edit.poly = { icon, allowIntersection: true };
     }
     // @ts-ignore
     this.drawControl = new L.Control.Draw(options);
