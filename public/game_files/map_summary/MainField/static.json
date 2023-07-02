@@ -15496,6 +15496,256 @@
         "ShowLevel": "Farthest"
       },
       {
+        "MessageID": "BeginningIsland",
+        "Priority": 1,
+        "Translate": {
+          "X": 394.47698974609375,
+          "Y": 1937.4566650390625,
+          "Z": 1259.8544921875
+        },
+        "SaveFlag": "Location_BeginningIsland"
+      },
+      {
+        "MessageID": "Rito_SkyHighIsland",
+        "Priority": 1,
+        "Translate": {
+          "X": -3156.0,
+          "Y": 2000.0,
+          "Z": -3215.0
+        },
+        "SaveFlag": "Location_Rito_SkyHighIsland"
+      },
+      {
+        "MessageID": "SkyIslands_Eldin01",
+        "Priority": 1,
+        "Translate": {
+          "X": 1777.0,
+          "Y": 2000.0,
+          "Z": -2705.5
+        },
+        "SaveFlag": "Location_SkyIslands_Eldin01"
+      },
+      {
+        "MessageID": "SkyIslands_Eldin02",
+        "Priority": 1,
+        "Translate": {
+          "X": 1924.8409423828125,
+          "Y": 2000.0,
+          "Z": -798.7322998046875
+        },
+        "SaveFlag": "Location_SkyIslands_Eldin02"
+      },
+      {
+        "MessageID": "SkyIslands_Firone01",
+        "Priority": 1,
+        "Translate": {
+          "X": -68.03298950195312,
+          "Y": 1000.0,
+          "Z": 2751.132080078125
+        },
+        "SaveFlag": "Location_SkyIslands_Firone01"
+      },
+      {
+        "MessageID": "SkyIslands_Firone02",
+        "Priority": 1,
+        "Translate": {
+          "X": 1295.386962890625,
+          "Y": 2001.628662109375,
+          "Z": 2346.8359375
+        },
+        "SaveFlag": "Location_SkyIslands_Firone02"
+      },
+      {
+        "MessageID": "SkyIslands_Gerudo01",
+        "Priority": 1,
+        "Translate": {
+          "X": -1866.2982177734375,
+          "Y": 2000.0,
+          "Z": 2316.1748046875
+        },
+        "SaveFlag": "Location_SkyIslands_Gerudo01"
+      },
+      {
+        "MessageID": "SkyIslands_Gerudo02",
+        "Priority": 1,
+        "Translate": {
+          "X": -3573.1611328125,
+          "Y": 2000.0,
+          "Z": 607.92919921875
+        },
+        "SaveFlag": "Location_SkyIslands_Gerudo02"
+      },
+      {
+        "MessageID": "SkyIslands_Hateru01",
+        "Priority": 1,
+        "Translate": {
+          "X": 2540.85791015625,
+          "Y": 2000.0,
+          "Z": 2270.68310546875
+        },
+        "SaveFlag": "Location_SkyIslands_Hateru01"
+      },
+      {
+        "MessageID": "SkyIslands_Hateru02",
+        "Priority": 1,
+        "Translate": {
+          "X": 2559.24609375,
+          "Y": 1000.0,
+          "Z": 3751.43798828125
+        },
+        "SaveFlag": "Location_SkyIslands_Hateru02"
+      },
+      {
+        "MessageID": "SkyIslands_Hebra02",
+        "Priority": 1,
+        "Translate": {
+          "X": -1729.4683837890625,
+          "Y": 2000.0,
+          "Z": -3171.4013671875
+        },
+        "SaveFlag": "Location_SkyIslands_Hebra02"
+      },
+      {
+        "MessageID": "SkyIslands_Hebra03",
+        "Priority": 1,
+        "Translate": {
+          "X": -3136.991943359375,
+          "Y": 2000.0,
+          "Z": -2019.0596923828125
+        },
+        "SaveFlag": "Location_SkyIslands_Hebra03"
+      },
+      {
+        "MessageID": "SkyIslands_Hebra04",
+        "Priority": 1,
+        "Translate": {
+          "X": -3845.848388671875,
+          "Y": 2000.0,
+          "Z": -2300.0
+        },
+        "SaveFlag": "Location_SkyIslands_Hebra04"
+      },
+      {
+        "MessageID": "SkyIslands_Hyrule01",
+        "Priority": 1,
+        "Translate": {
+          "X": 131.83099365234375,
+          "Y": 2054.728515625,
+          "Z": 92.04000854492188
+        },
+        "SaveFlag": "Location_SkyIslands_Hyrule01"
+      },
+      {
+        "MessageID": "SkyIslands_Hyrule02",
+        "Priority": 1,
+        "Translate": {
+          "X": 1795.116943359375,
+          "Y": 2000.0,
+          "Z": 864.0540161132812
+        },
+        "SaveFlag": "Location_SkyIslands_Hyrule02"
+      },
+      {
+        "MessageID": "SkyIslands_Hyrule03",
+        "Priority": 1,
+        "Translate": {
+          "X": -901.2310180664062,
+          "Y": 2000.0,
+          "Z": 1380.0
+        },
+        "SaveFlag": "Location_SkyIslands_Hyrule03"
+      },
+      {
+        "MessageID": "SkyIslands_Hyrule04",
+        "Priority": 1,
+        "Translate": {
+          "X": 349.93206787109375,
+          "Y": 2000.0,
+          "Z": -2354.297607421875
+        },
+        "SaveFlag": "Location_SkyIslands_Hyrule04"
+      },
+      {
+        "MessageID": "SkyIslands_Hyrule05",
+        "Priority": 1,
+        "Translate": {
+          "X": -2292.015625,
+          "Y": 1000.0,
+          "Z": 538.689453125
+        },
+        "SaveFlag": "Location_SkyIslands_Hyrule05"
+      },
+      {
+        "MessageID": "SkyIslands_Lanayru02",
+        "Priority": 1,
+        "Translate": {
+          "X": 4368.39599609375,
+          "Y": 2000.0,
+          "Z": 1254.572021484375
+        },
+        "SaveFlag": "Location_SkyIslands_Lanayru02"
+      },
+      {
+        "MessageID": "SkyIslands_Lanayru03",
+        "Priority": 1,
+        "Translate": {
+          "X": 3010.072265625,
+          "Y": 2000.0,
+          "Z": -83.19644165039062
+        },
+        "SaveFlag": "Location_SkyIslands_Lanayru03"
+      },
+      {
+        "MessageID": "SkyIslands_Tabanta01",
+        "Priority": 1,
+        "Translate": {
+          "X": -2942.518798828125,
+          "Y": 2000.0,
+          "Z": -558.3880615234375
+        },
+        "SaveFlag": "Location_SkyIslands_Tabanta01"
+      },
+      {
+        "MessageID": "SkyIslands_Tabanta02",
+        "Priority": 1,
+        "Translate": {
+          "X": -3600.50390625,
+          "Y": 1999.99951171875,
+          "Z": -1333.8599853515625
+        },
+        "SaveFlag": "Location_SkyIslands_Tabanta02"
+      },
+      {
+        "MessageID": "SkyIslands_Tamul01",
+        "Priority": 1,
+        "Translate": {
+          "X": 3738.987060546875,
+          "Y": 2000.0,
+          "Z": -1688.5860595703125
+        },
+        "SaveFlag": "Location_SkyIslands_Tamul01"
+      },
+      {
+        "MessageID": "SkyIslands_Tamul02",
+        "Priority": 1,
+        "Translate": {
+          "X": 3703.7099609375,
+          "Y": 1850.0,
+          "Z": -2998.64697265625
+        },
+        "SaveFlag": "Location_SkyIslands_Tamul02"
+      },
+      {
+        "MessageID": "ZonauThunderSkyIsland",
+        "Priority": 1,
+        "Translate": {
+          "X": 911.68798828125,
+          "Y": 2000.0,
+          "Z": 3064.657958984375
+        },
+        "SaveFlag": "Location_ZonauThunderSkyIsland"
+      },
+      {
         "MessageID": "Assassin",
         "Priority": 1,
         "Translate": {
@@ -27311,258 +27561,6 @@
         "SaveFlag": "Location_Dungeon151",
         "ShrineInCave": false,
         "Icon": "Dungeon"
-      }
-    ],
-    "SkyArchipelago": [
-      {
-        "MessageID": "BeginningIsland",
-        "Priority": 1,
-        "Translate": {
-          "X": 394.47698974609375,
-          "Y": 1937.4566650390625,
-          "Z": 1259.8544921875
-        },
-        "SaveFlag": "Location_BeginningIsland"
-      },
-      {
-        "MessageID": "Rito_SkyHighIsland",
-        "Priority": 1,
-        "Translate": {
-          "X": -3156.0,
-          "Y": 2000.0,
-          "Z": -3215.0
-        },
-        "SaveFlag": "Location_Rito_SkyHighIsland"
-      },
-      {
-        "MessageID": "SkyIslands_Eldin01",
-        "Priority": 1,
-        "Translate": {
-          "X": 1777.0,
-          "Y": 2000.0,
-          "Z": -2705.5
-        },
-        "SaveFlag": "Location_SkyIslands_Eldin01"
-      },
-      {
-        "MessageID": "SkyIslands_Eldin02",
-        "Priority": 1,
-        "Translate": {
-          "X": 1924.8409423828125,
-          "Y": 2000.0,
-          "Z": -798.7322998046875
-        },
-        "SaveFlag": "Location_SkyIslands_Eldin02"
-      },
-      {
-        "MessageID": "SkyIslands_Firone01",
-        "Priority": 1,
-        "Translate": {
-          "X": -68.03298950195312,
-          "Y": 1000.0,
-          "Z": 2751.132080078125
-        },
-        "SaveFlag": "Location_SkyIslands_Firone01"
-      },
-      {
-        "MessageID": "SkyIslands_Firone02",
-        "Priority": 1,
-        "Translate": {
-          "X": 1295.386962890625,
-          "Y": 2001.628662109375,
-          "Z": 2346.8359375
-        },
-        "SaveFlag": "Location_SkyIslands_Firone02"
-      },
-      {
-        "MessageID": "SkyIslands_Gerudo01",
-        "Priority": 1,
-        "Translate": {
-          "X": -1866.2982177734375,
-          "Y": 2000.0,
-          "Z": 2316.1748046875
-        },
-        "SaveFlag": "Location_SkyIslands_Gerudo01"
-      },
-      {
-        "MessageID": "SkyIslands_Gerudo02",
-        "Priority": 1,
-        "Translate": {
-          "X": -3573.1611328125,
-          "Y": 2000.0,
-          "Z": 607.92919921875
-        },
-        "SaveFlag": "Location_SkyIslands_Gerudo02"
-      },
-      {
-        "MessageID": "SkyIslands_Hateru01",
-        "Priority": 1,
-        "Translate": {
-          "X": 2540.85791015625,
-          "Y": 2000.0,
-          "Z": 2270.68310546875
-        },
-        "SaveFlag": "Location_SkyIslands_Hateru01"
-      },
-      {
-        "MessageID": "SkyIslands_Hateru02",
-        "Priority": 1,
-        "Translate": {
-          "X": 2559.24609375,
-          "Y": 1000.0,
-          "Z": 3751.43798828125
-        },
-        "SaveFlag": "Location_SkyIslands_Hateru02"
-      },
-      {
-        "MessageID": "SkyIslands_Hebra02",
-        "Priority": 1,
-        "Translate": {
-          "X": -1729.4683837890625,
-          "Y": 2000.0,
-          "Z": -3171.4013671875
-        },
-        "SaveFlag": "Location_SkyIslands_Hebra02"
-      },
-      {
-        "MessageID": "SkyIslands_Hebra03",
-        "Priority": 1,
-        "Translate": {
-          "X": -3136.991943359375,
-          "Y": 2000.0,
-          "Z": -2019.0596923828125
-        },
-        "SaveFlag": "Location_SkyIslands_Hebra03"
-      },
-      {
-        "MessageID": "SkyIslands_Hebra04",
-        "Priority": 1,
-        "Translate": {
-          "X": -3845.848388671875,
-          "Y": 2000.0,
-          "Z": -2300.0
-        },
-        "SaveFlag": "Location_SkyIslands_Hebra04"
-      },
-      {
-        "MessageID": "SkyIslands_Hyrule01",
-        "Priority": 1,
-        "Translate": {
-          "X": 131.83099365234375,
-          "Y": 2054.728515625,
-          "Z": 92.04000854492188
-        },
-        "SaveFlag": "Location_SkyIslands_Hyrule01"
-      },
-      {
-        "MessageID": "SkyIslands_Hyrule02",
-        "Priority": 1,
-        "Translate": {
-          "X": 1795.116943359375,
-          "Y": 2000.0,
-          "Z": 864.0540161132812
-        },
-        "SaveFlag": "Location_SkyIslands_Hyrule02"
-      },
-      {
-        "MessageID": "SkyIslands_Hyrule03",
-        "Priority": 1,
-        "Translate": {
-          "X": -901.2310180664062,
-          "Y": 2000.0,
-          "Z": 1380.0
-        },
-        "SaveFlag": "Location_SkyIslands_Hyrule03"
-      },
-      {
-        "MessageID": "SkyIslands_Hyrule04",
-        "Priority": 1,
-        "Translate": {
-          "X": 349.93206787109375,
-          "Y": 2000.0,
-          "Z": -2354.297607421875
-        },
-        "SaveFlag": "Location_SkyIslands_Hyrule04"
-      },
-      {
-        "MessageID": "SkyIslands_Hyrule05",
-        "Priority": 1,
-        "Translate": {
-          "X": -2292.015625,
-          "Y": 1000.0,
-          "Z": 538.689453125
-        },
-        "SaveFlag": "Location_SkyIslands_Hyrule05"
-      },
-      {
-        "MessageID": "SkyIslands_Lanayru02",
-        "Priority": 1,
-        "Translate": {
-          "X": 4368.39599609375,
-          "Y": 2000.0,
-          "Z": 1254.572021484375
-        },
-        "SaveFlag": "Location_SkyIslands_Lanayru02"
-      },
-      {
-        "MessageID": "SkyIslands_Lanayru03",
-        "Priority": 1,
-        "Translate": {
-          "X": 3010.072265625,
-          "Y": 2000.0,
-          "Z": -83.19644165039062
-        },
-        "SaveFlag": "Location_SkyIslands_Lanayru03"
-      },
-      {
-        "MessageID": "SkyIslands_Tabanta01",
-        "Priority": 1,
-        "Translate": {
-          "X": -2942.518798828125,
-          "Y": 2000.0,
-          "Z": -558.3880615234375
-        },
-        "SaveFlag": "Location_SkyIslands_Tabanta01"
-      },
-      {
-        "MessageID": "SkyIslands_Tabanta02",
-        "Priority": 1,
-        "Translate": {
-          "X": -3600.50390625,
-          "Y": 1999.99951171875,
-          "Z": -1333.8599853515625
-        },
-        "SaveFlag": "Location_SkyIslands_Tabanta02"
-      },
-      {
-        "MessageID": "SkyIslands_Tamul01",
-        "Priority": 1,
-        "Translate": {
-          "X": 3738.987060546875,
-          "Y": 2000.0,
-          "Z": -1688.5860595703125
-        },
-        "SaveFlag": "Location_SkyIslands_Tamul01"
-      },
-      {
-        "MessageID": "SkyIslands_Tamul02",
-        "Priority": 1,
-        "Translate": {
-          "X": 3703.7099609375,
-          "Y": 1850.0,
-          "Z": -2998.64697265625
-        },
-        "SaveFlag": "Location_SkyIslands_Tamul02"
-      },
-      {
-        "MessageID": "ZonauThunderSkyIsland",
-        "Priority": 1,
-        "Translate": {
-          "X": 911.68798828125,
-          "Y": 2000.0,
-          "Z": 3064.657958984375
-        },
-        "SaveFlag": "Location_ZonauThunderSkyIsland"
       }
     ],
     "Tower": [

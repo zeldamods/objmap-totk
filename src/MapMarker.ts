@@ -171,15 +171,14 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
   //     text is shown at
   shouldBeShown() {
     // @ts-ignore
-    if (this.lp.l && this.lp.l.ShowLevel !== undefined) {
+    if (this.lp.l) {
       // @ts-ignore
       let label = this.lp.l;
       const pt = label.Translate;
-      let level = [label.ShowLevel];
-      if (label.ShowLevel.includes(",")) {
+      let level = (label.ShowLevel !== undefined) ? [label.ShowLevel] : [""];
+      if (label.ShowLevel && label.ShowLevel.includes(",")) {
         level = label.ShowLevel.split(",");
       }
-
       if (label.MessageID == "Oasis") // No Kara Kara Bazaar
         return false;
       if (this.mb.activeLayer == "Sky" && pt.Y < 950)

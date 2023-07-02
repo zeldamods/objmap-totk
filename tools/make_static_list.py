@@ -60,6 +60,7 @@ types = {
     "Shrine": "Dungeon",
     "District": "Location",
     "Stable": "Place",
+    "SkyArchipelago": "Location",
 }
 out = {}
 markers = {}
