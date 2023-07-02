@@ -745,87 +745,49 @@ export default class AppMap extends mixins(MixinUtil) {
             group.push({ layer: L.polyline(pts, { color }), map_layer: this.drawVertexLayers[k] });
           } else {
             group.push({ layer: e.layer, map_layer: this.drawVertexLayers[0] });
-
-            addGeoJSONFeatureToLayer(e.layer);
-            calcLayerLength(e.layer);
-            addPopupAndTooltip(e.layer, this);
-            this.drawLayer.addLayer(e.layer);
-            this.initGeojsonFeature(e.layer);
-            if (!e.layer.options.color) {
-              e.layer.options.color = this.drawLineColor;
-            }
-            this.updateDrawLayerOpts();
-          },
-          'draw:edited': (e: any) => {
-            e.layers.eachLayer((layer: L.Marker | L.Polyline) => {
-              calcLayerLength(layer);
-              layerSetTooltip(layer);
-            });
-            this.updateDrawLayerOpts();
-          },
-            'draw:deleted': (e: any) => {
-              // Only use confirm dialog if editable layer is empty and
-              //   the layers passed are not empty
-              // A 'Save' action should have a possibly non-empty editable layer
-              if (this.drawLayer.getLayers().length == 0 && e.layers.getLayers().length != 0) {
-                let ans = confirm("Clear all map items?");
-                if (!ans) {
-                  e.layers.eachLayer((layer: L.Marker | L.Polyline) => this.drawLayer.addLayer(layer));
-
-                }
-              } else {
-                group.push({ layer: e.layer, map_layer: this.map.activeLayer });
-
-                console.log('draw:created', e.layer);
-                console.log('draw:created', e.layer.feature);
-                addGeoJSONFeatureToLayer(e.layer);
-                console.log('draw:created', e.layer.feature);
-                calcLayerLength(e.layer);
-                addPopupAndTooltip(e.layer, this);
-                this.drawLayer.addLayer(e.layer);
-                this.initGeojsonFeature(e.layer);
-                if (!e.layer.options.color) {
-                  e.layer.options.color = this.drawLineColor;
-                }
-                group.forEach((e: any) => {
-                  addGeoJSONFeatureToLayer(e.layer);
-                  calcLayerLength(e.layer);
-                  e.layer.feature.properties.map_layer = e.map_layer;
-                  addPopupAndTooltip(e.layer, this);
-                  this.drawLayer.addLayer(e.layer);
-                  this.initGeojsonFeature(e.layer);
-                  if (!e.layer.options.color) {
-                    e.layer.options.color = this.drawLineColor;
-                  }
-                })
-                this.updateDrawLayers();
-                this.updateDrawLayerOpts();
-              },
-              'draw:drawstart': () => {
-                this.drawVertexLayers = [];
-              },
-                'draw:drawvertex': () => {
-                  this.drawVertexLayers.push(this.map.activeLayer);
-                },
-                  'draw:edited': (e: any) => {
-                    e.layers.eachLayer((layer: L.Marker | L.Polyline) => {
-                      calcLayerLength(layer);
-                      layerSetTooltip(layer);
-                    });
-                    this.updateDrawLayerOpts();
-                  },
-                    'draw:deleted': (e: any) => {
-                      // Only use confirm dialog if editable layer is empty and
-                      //   the layers passed are not empty
-                      // A 'Save' action should have a possibly non-empty editable layer
-                      if (this.drawLayer.getLayers().length == 0 && e.layers.getLayers().length != 0) {
-                        let ans = confirm("Clear all map items?");
-                        if (!ans) {
-                          e.layers.eachLayer((layer: L.Marker | L.Polyline) => this.drawLayer.addLayer(layer));
-                        }
-                      }
-                      this.updateDrawLayerOpts();
-                    },
+          }
+        } else {
+          group.push({ layer: e.layer, map_layer: this.map.activeLayer });
+        }
+        group.forEach((e: any) => {
+          addGeoJSONFeatureToLayer(e.layer);
+          calcLayerLength(e.layer);
+          e.layer.feature.properties.map_layer = e.map_layer;
+          addPopupAndTooltip(e.layer, this);
+          this.drawLayer.addLayer(e.layer);
+          this.initGeojsonFeature(e.layer);
+          if (!e.layer.options.color) {
+            e.layer.options.color = this.drawLineColor;
+          }
+        })
+        this.updateDrawLayers();
+        this.updateDrawLayerOpts();
+      },
+      'draw:drawstart': () => {
+        this.drawVertexLayers = [];
+      },
+      'draw:drawvertex': () => {
+        this.drawVertexLayers.push(this.map.activeLayer);
+      },
+      'draw:edited': (e: any) => {
+        e.layers.eachLayer((layer: L.Marker | L.Polyline) => {
+          calcLayerLength(layer);
+          layerSetTooltip(layer);
+        });
+        this.updateDrawLayerOpts();
+      },
+      'draw:deleted': (e: any) => {
+        // Only use confirm dialog if editable layer is empty and
+        //   the layers passed are not empty
+        // A 'Save' action should have a possibly non-empty editable layer
+        if (this.drawLayer.getLayers().length == 0 && e.layers.getLayers().length != 0) {
+          let ans = confirm("Clear all map items?");
+          if (!ans) {
+            e.layers.eachLayer((layer: L.Marker | L.Polyline) => this.drawLayer.addLayer(layer));
+          }
+        }
+        this.updateDrawLayerOpts();
+      },
     });
     this.drawOnColorChange({});
     Settings.getInstance().registerBeforeSaveCallback(() => {
@@ -1079,7 +1041,6 @@ export default class AppMap extends mixins(MixinUtil) {
     //  query = BigInt(query).toString(10);
     return query;
   }
-
 
   searchJumpToResult(idx: number) {
     const marker = this.searchResultMarkers[idx];
