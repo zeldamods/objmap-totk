@@ -19,6 +19,7 @@
         <li><a href="#spane-filter" role="tab"><i class="fa fa-filter"></i></a></li>
         <li class="disabled"><a href="#spane-dummy" role="tab"><i class="fa fa-tasks"></i></a></li>
         <li><a href="#spane-draw" role="tab"><i class="fa fa-draw-polygon"></i></a></li>
+        <li><a href="#spane-checklist" role="tab"><i class="far fa-check-circle"></i></a></li>
         <li><a href="#spane-tools" role="tab"><i class="fa fa-tools"></i></a></li>
         <li><a href="#spane-settings" role="tab"><i class="fa fa-cog"></i></a></li>
       </ul>
@@ -116,7 +117,11 @@
                 <b-btn size="sm" variant="link" @click="searchOnAdd"><i class="fa fa-plus"></i> Add to map</b-btn>
                 <b-btn size="sm" variant="link" @click="searchOnExclude"><i class="far fa-eye-slash"></i> Hide</b-btn>
               </p>
-              <ObjectInfo v-for="(result, idx) in searchResults" :obj="result" :is-static="false" :key="result.objid" @click.native="searchJumpToResult(idx)" />
+              <div v-for="(result, idx) in searchResults" :key="result.objid">
+                <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false"
+                            @click.native="searchJumpToResult(idx)"
+                            :isChecked="settings.checklists.values[result.hash_id]"/>
+              </div>
             </div>
           </section>
       </div>
@@ -149,6 +154,34 @@
           </div>
         </b-form-group>
         -->
+      </div>
+
+      <div class="leaflet-sidebar-pane" id="spane-dummy">
+      </div>
+      <div class="leaflet-sidebar-pane" id="spane-checklist">
+        <h1 class="leaflet-sidebar-header">Checklists</h1>
+        <div class="clButtonRow">
+          <b-btn size="sm clButton" variant="link" @click="clCreate()">New List</b-btn>
+          <b-btn size="sm clButton" variant="link" @click="clClearAsk()">Reset</b-btn>
+        </div>
+        <AppMapChecklists :lists="settings.checklists.lists"/>
+        <hr>
+        <div class="row no-gutters">
+          <div class="col mr-3">
+            <b-btn size="sm" variant="secondary" block @click="clExport()">
+              <i class="fas fa-file-export"></i>
+              Export
+            </b-btn>
+          </div>
+          <div class="col">
+            <b-btn size="sm" variant="danger" block @click="clImport()">
+              <i class="fas fa-file-import"></i>
+              Import
+            </b-btn>
+            <b-form-checkbox v-model="clImportReplace">Replace existing checklists</b-form-checkbox>
+          </div>
+          <input type="file" id="clFileinput" accept=".json" hidden @change="clImportCb">
+        </div>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-draw">
@@ -219,10 +252,10 @@
       <div class="leaflet-sidebar-pane" id="spane-details">
         <div class="leaflet-sidebar-close" @click="closeSidebar()"><i class="fa fa-times"></i></div>
         <h1 v-if="detailsMarker" class="location-title leaflet-sidebar-header" :title="detailsMarker.data.title"><span>{{detailsMarker.data.title}}</span></h1>
-        <component v-if="detailsComponent" :is="detailsComponent" v-bind:marker="detailsMarker"></component>
-      </div>
-
-      <div class="leaflet-sidebar-pane" id="spane-dummy">
+        <component v-if="detailsComponent" :is="detailsComponent"
+                   v-bind:marker="detailsMarker"
+                   v-bind:is-checked="(detailsMarker.data && detailsMarker.data.obj) ? settings.checklists.values[detailsMarker.data.obj.hash_id] : false"
+                   ></component>
       </div>
 
     </div>
@@ -415,4 +448,5 @@
 .map-filter-icon-Dispensers {
     padding: 4px;
 }
+
 </style>

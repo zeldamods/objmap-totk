@@ -71,6 +71,7 @@ export class LocationMarkerBase {
 
   getMessageId(): string { return this.l.MessageID; }
   getXYZ(): Point { return [this.l.Translate.X, this.l.Translate.Y, this.l.Translate.Z]; }
+  getHashID(): string { return this.l.hash_id; }
 }
 
 export class LocationMarker extends LocationMarkerBase {

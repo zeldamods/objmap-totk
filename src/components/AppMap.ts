@@ -19,6 +19,7 @@ import AppMapDetailsPlace from '@/components/AppMapDetailsPlace';
 import AppMapFilterMainButton from '@/components/AppMapFilterMainButton';
 import AppMapPopup from '@/components/AppMapPopup';
 import AppMapSettings from '@/components/AppMapSettings';
+import AppMapChecklists from '@/components/AppMapChecklists';
 import MixinUtil from '@/components/MixinUtil';
 import ModalGotoCoords from '@/components/ModalGotoCoords';
 import ObjectInfo from '@/components/ObjectInfo';
@@ -160,6 +161,12 @@ function getMarkerDetailsComponent(marker: MapMarker): string {
   return '';
 }
 
+function hasSetMarked(marker: any) {
+  return marker instanceof MapMarkers.MapMarkerGenericLocationMarker ||
+    marker instanceof MapMarkers.MapMarkerKorok ||
+    marker instanceof MapMarkers.MapMarkerLocation;
+}
+
 class LayerProps {
   title: string;
   text: string;
@@ -254,6 +261,7 @@ function addPopupAndTooltip(layer: L.Marker | L.Polyline, root: any) {
     AppMapDetailsPlace,
     AppMapFilterMainButton,
     AppMapSettings,
+    AppMapChecklists,
     ModalGotoCoords,
     ObjectInfo,
     draggable,
@@ -307,6 +315,8 @@ export default class AppMap extends mixins(MixinUtil) {
   private areaMapLayersByData: ui.Unobservable<Map<any, L.Layer[]>> = new ui.Unobservable(new Map());
   private areaAutoItem = new ui.Unobservable(L.layerGroup());
 
+  private skipMarked: boolean = false;
+
   shownAreaMap = '';
   areaWhitelist = '';
   showKorokIDs = false;
@@ -331,9 +341,20 @@ export default class AppMap extends mixins(MixinUtil) {
 
   // Replace current markers
   private importReplace: boolean = true;
+  private clImportReplace: boolean = true;
 
   // internal State for drawing markers
   private drawVertexLayers: string[] = [];
+
+  filterResults(result: any) {
+    if (!this.skipMarked) {
+      return true;
+    }
+    if (this.clIsMarked(result.hash_id)) { // If found, skip
+      return false;
+    }
+    return true;
+  }
 
   setViewFromRoute(route: any) {
     const x = parseFloat(route.params.x);
@@ -427,7 +448,16 @@ export default class AppMap extends mixins(MixinUtil) {
       const markers: any[] = info.markers[type];
       const component = MARKER_COMPONENTS[type];
       const group = new MapMarkerGroup(
-        markers.map((m: any) => new (component.cl)(this.map, m, { showLabel: this.showKorokIDs })),
+        markers.map((m: any) => new (component.cl)(this.map, m, { showLabel: this.showKorokIDs }))
+          .map((marker: any) => {
+            if (hasSetMarked(marker)) {
+              const msg = marker.getHashID();
+              if (this.clIsMarked(msg)) {
+                marker.setMarked(true);
+              }
+            }
+            return marker;
+          }),
         valueOrDefault(component.preloadPad, 1.0),
         valueOrDefault(component.enableUpdates, true));
       this.markerGroups.set(type, group);
@@ -1011,6 +1041,7 @@ export default class AppMap extends mixins(MixinUtil) {
     return query;
   }
 
+
   searchJumpToResult(idx: number) {
     const marker = this.searchResultMarkers[idx];
     this.openMarkerDetails(getMarkerDetailsComponent(marker.data), marker.data, 6);
@@ -1051,6 +1082,12 @@ export default class AppMap extends mixins(MixinUtil) {
     const group = new SearchResultGroup(query, label || query, enabled);
     await group.init(this.map);
     group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
+    group.getMarkers().forEach((marker: any) => {
+      const hash_id = marker.obj.hash_id;
+      if (this.clIsMarked(hash_id)) {
+        marker.setMarked(true);
+      }
+    });
     this.searchGroups.push(group);
     this.updateTooltips();
   }
@@ -1094,6 +1131,9 @@ export default class AppMap extends mixins(MixinUtil) {
 
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
+      if (this.clIsMarked(result.hash_id)) {
+        marker.data.setMarked(true);
+      }
       this.searchResultMarkers.push(marker);
       marker.data.getMarker().addTo(this.map.m);
     }
@@ -1147,6 +1187,180 @@ export default class AppMap extends mixins(MixinUtil) {
     this.updateTooltips();
   }
 
+  clClearAsk() {
+    if (confirm('Remove all checklists and reset marked data?')) {
+      this.clClear();
+    }
+  }
+
+  clClear() {
+    this.settings!.checklists = Object.assign({}, { lists: [], values: {} });
+  }
+
+  clCreate() {
+    let id = 0;
+    const ids = this.settings!.checklists.lists.map((list: any) => list.id);
+    if (ids.length)
+      id = Math.max(...ids) + 1;
+
+    this.settings!.checklists.lists.push({ name: 'New List', query: '', id, items: {} });
+    this.settings!.checklists.lists = [... this.settings!.checklists.lists];
+  }
+
+  clRemove(remove: any) {
+    if (confirm(`Delete checklist ${remove.name}?`)) {
+      this.settings!.checklists.lists = this.settings!.checklists.lists.filter((list: any) => list.id != remove.id);
+    }
+  }
+
+  minObjToCL(obj: ObjectMinData) {
+    let ui_name = obj.name;
+    const location = obj.Location;
+    if (location && (obj.name == 'LocationMarker' || obj.name == 'LocationArea')) {
+      if (location.includes('Dungeon')) {
+        ui_name = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', location);
+      } else {
+        ui_name = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', location);
+      }
+    } else if (obj.korok_id) {
+      ui_name = obj.korok_id;
+    } else {
+      ui_name = ui.getName(obj.name);
+    }
+    if (ui_name === undefined) {
+      ui_name = obj.name;
+    }
+    return {
+      hash_id: obj.hash_id,
+      name: obj.name,
+      map_name: obj.map_name,
+      ui_name: ui_name,
+      pos: obj.pos,
+      marked: this.clIsMarked(obj.hash_id),
+    };
+  }
+
+  async clChangeQuery(list: any) {
+    const query = list.query;
+    let results = [];
+    try {
+      results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false);
+    } catch (e) {
+      list.items = {};
+      return;
+    }
+    list.items = {}
+    const items = results.map((item) => this.minObjToCL(item));
+    items.sort((a: any, b: any) => a.ui_name.localeCompare(b.ui_name));
+    for (const item of items) {
+      list.items[item.hash_id] = item;
+    }
+  }
+
+  clIsMarked(hash_id: string) {
+    return (hash_id !== undefined) && this.settings!.checklists.values[hash_id];
+  }
+
+  clToggle(hash_id: string) {
+    const settings = this.settings!;
+
+    if (!(hash_id in settings.checklists.values)) {
+      this.$set(this.settings!.checklists.values, hash_id, false)
+    }
+    this.settings!.checklists.values[hash_id] = !settings.checklists.values[hash_id];
+    return this.settings!.checklists.values[hash_id];
+  }
+
+  clExport() {
+    const data = {
+      OBJMAP_CL_VERSION: save.CURRENT_OBJMAP_SV_VERSION,
+      checklists: this.settings!.checklists,
+    };
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'objmap_checklists.json';
+    a.click();
+  }
+
+  clImport() {
+    const input = <HTMLInputElement>(document.getElementById('clFileinput'));
+    input.click();
+  }
+
+  private async clImportCb() {
+    const input = <HTMLInputElement>(document.getElementById('clFileinput'));
+    if (!input.files!.length) {
+      return;
+    }
+    try {
+      const rawData = await (new Response(input.files![0])).json();
+      const version: number | undefined = rawData.OBJMAP_CL_VERSION; // 3 or 4
+      if (this.clImportReplace) {
+        this.clClear();
+      }
+      const cl = rawData.checklists;
+      for (const list of cl.lists) {
+        this.clCreate();
+        const xlist = this.settings!.checklists.lists[this.settings!.checklists.lists.length - 1];
+        xlist.query = list.query;
+        xlist.name = list.name;
+      }
+      this.settings!.checklists.lists = [... this.settings!.checklists.lists];
+      this.settings!.checklists.lists.forEach(async (list: any) => await this.clChangeQuery(list));
+
+      for (const [hash_id, marked] of Object.entries(cl.values)) {
+        if (marked) {
+          this.clToggle(hash_id)
+        }
+      }
+    } catch (e) {
+      alert(e);
+    } finally {
+      input.value = '';
+    }
+  }
+
+  updateSearchResultMarkers(item: any, toggle: boolean = true) {
+    this.$nextTick(() => {
+      let value = this.clIsMarked(item.hash_id);
+      if (toggle) {
+        value = this.clToggle(item.hash_id);
+      }
+      // Search Result Markers
+      const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
+      if (marker) {
+        marker.data.setMarked(value);
+      }
+
+      // Group Marker (from Add to Map and Preset Searches)
+      for (const group of this.searchGroups) { // Has a label and query
+        const marker = group.getMarkers().find(marker => marker.obj.hash_id == item.hash_id);
+        if (marker) {
+          marker.setMarked(value);
+        }
+      }
+      for (const [key, group] of this.markerGroups) {
+        if (item.label.length && item.label != key) {
+          continue
+        }
+        // @ts-ignore
+        const marker = group.find((marker) => { return marker.getHashID() == item.hash_id });
+        if (marker) {
+          // @ts-ignore
+          marker.setMarked(value);
+        }
+      }
+      for (let i = 0; i < this.settings!.checklists.lists.length; i++) {
+        const list = this.settings!.checklists.lists[i];
+        if (item.hash_id in list.items) {
+          this.$set(this.settings!.checklists.lists[i].items[item.hash_id], 'marked', value);
+          this.settings!.checklists.lists = [...this.settings!.checklists.lists];
+        }
+      }
+    })
+  }
+
   initContextMenu() {
     this.map.m.on(SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT, (e) => {
       const mapType = Settings.getInstance().mapType;
@@ -1177,7 +1391,34 @@ export default class AppMap extends mixins(MixinUtil) {
     this.$on('AppMap:toggle-y-values', () => {
       this.toggleY();
     });
-
+    this.$on('AppMap:update-search-markers', (value: any) => {
+      this.updateSearchResultMarkers(value);
+    });
+    this.map.m.on('AppMap:update-search-markers', (args) => {
+      this.updateSearchResultMarkers(args);
+    });
+    this.$on('AppMap:search-on-value', (value: string) => {
+      this.searchOnValue(value);
+    });
+    this.$on('AppMap:search-on-hash', (value: string) => {
+      this.searchOnHash(value);
+    });
+    this.$on('AppMap:search-add-group', (value: any) => {
+      this.searchAddGroup(value.query, value.name);
+    });
+    this.$on('AppMap:checklist-remove', (list: any) => {
+      this.clRemove(list);
+    });
+    this.$on('AppMap:update-checklist-query', async (value: any) => {
+      let id = this.settings!.checklists.lists.findIndex((list: any) => list.id == value.list_id);
+      if (id < 0) {
+        return;
+      }
+      let list = this.settings!.checklists.lists[id]
+      list.query = value.query;
+      await this.clChangeQuery(list);
+      this.settings!.checklists.lists = [... this.settings!.checklists.lists];
+    });
     this.$on('AppMap:open-obj', async (obj: ObjectData) => {
       if (this.tempObjMarker)
         this.tempObjMarker.data.getMarker().remove();
@@ -1539,6 +1780,17 @@ export default class AppMap extends mixins(MixinUtil) {
           }
         });
     }
+  }
+
+  searchOnHash(hash: string) {
+    this.searchQuery = `hash_id: ${hash}`;
+    this.search();
+    this.switchPane('spane-search');
+  }
+  searchOnValue(value: string) {
+    this.searchQuery = value;
+    this.search();
+    this.switchPane('spane-search');
   }
 
   beforeDestroy() {
