@@ -343,7 +343,6 @@ export default class AppMap extends mixins(MixinUtil) {
   private importReplace: boolean = true;
   private clImportReplace: boolean = true;
 
-
   // internal State for drawing markers
   private drawVertexLayers: string[] = [];
 
@@ -1041,6 +1040,7 @@ export default class AppMap extends mixins(MixinUtil) {
     //  query = BigInt(query).toString(10);
     return query;
   }
+
 
   searchJumpToResult(idx: number) {
     const marker = this.searchResultMarkers[idx];
