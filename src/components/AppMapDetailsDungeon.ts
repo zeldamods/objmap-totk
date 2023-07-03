@@ -19,6 +19,7 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
   private sub = '';
   private tboxObjs: ObjectMinData[] = [];
   private enemies: ObjectMinData[] = [];
+  private pos: number[] = [];
 
   protected init() {
     this.id = this.marker.data.lm.getMessageId();
@@ -26,5 +27,6 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
 
     MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"TBox_"').then(d => this.tboxObjs = d);
     MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"Enemy_"').then(d => this.enemies = d);
+    this.pos = this.marker.data.lm.getXYZ();
   }
 }
