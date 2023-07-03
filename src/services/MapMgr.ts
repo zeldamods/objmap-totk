@@ -115,9 +115,11 @@ export class MapMgr {
     const res = await fetch(`${RADAR_URL}/obj/${mapType}/${mapName}/${hashId}/ai_groups`);
     return parse(res);
   }
+
   getRegionFromPoint(layer: string, point: Point): Promise<string[]> {
     return fetch(`${RADAR_URL}/region/${layer}/${point[0]}/${point[2]}`).then(parse);
   }
+
   getObjShopData() {
     return fetch(`${GAME_FILES}/ecosystem/beedle_shop_data.json`).then(parse);
   }

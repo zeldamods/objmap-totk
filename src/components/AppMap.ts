@@ -1162,8 +1162,8 @@ export default class AppMap extends mixins(MixinUtil) {
       } else if (layer == 'Sky') {
         const regions = await MapMgr.getInstance().getRegionFromPoint(layer, xyz);
         const query = regions.map(region => `map: "MainField/Sky__${region}"`).join(" OR ");
-        const region = regions.join(" or ");
-        this.searchAddGroup(query, `Map: ${region}`);
+        const regionsStr = regions.join(" or ");
+        this.searchAddGroup(query, `Map: ${regionsStr}`);
       }
     });
   }
