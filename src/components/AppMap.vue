@@ -120,7 +120,7 @@
               <div v-for="(result, idx) in searchResults" :key="result.objid">
                 <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false"
                             @click.native="searchJumpToResult(idx)"
-                            :isChecked="settings.checklists.values[result.hash_id]"/>
+                            :isChecked="checklists.marked[result.hash_id]"/>
               </div>
             </div>
           </section>
@@ -161,10 +161,10 @@
       <div class="leaflet-sidebar-pane" id="spane-checklist">
         <h1 class="leaflet-sidebar-header">Checklists</h1>
         <div class="clButtonRow">
-          <b-btn size="sm clButton" variant="link" @click="clCreate()">New List</b-btn>
-          <b-btn size="sm clButton" variant="link" @click="clClearAsk()">Reset</b-btn>
+          <b-btn size="clButton" variant="link" @click="clCreate()">New List</b-btn>
+          <b-btn size="clButton" variant="link" @click="clClearAsk()">Reset</b-btn>
         </div>
-        <AppMapChecklists :lists="settings.checklists.lists"/>
+        <AppMapChecklists :lists="checklists.lists"/>
         <hr>
         <div class="row no-gutters">
           <div class="col mr-3">
@@ -254,7 +254,7 @@
         <h1 v-if="detailsMarker" class="location-title leaflet-sidebar-header" :title="detailsMarker.data.title"><span>{{detailsMarker.data.title}}</span></h1>
         <component v-if="detailsComponent" :is="detailsComponent"
                    v-bind:marker="detailsMarker"
-                   v-bind:is-checked="(detailsMarker.data && detailsMarker.data.obj) ? settings.checklists.values[detailsMarker.data.obj.hash_id] : false"
+                   v-bind:is-checked="(detailsMarker.data && detailsMarker.data.obj) ? checklists.marked[detailsMarker.data.obj.hash_id] : false"
                    ></component>
       </div>
 

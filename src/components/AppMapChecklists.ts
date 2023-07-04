@@ -16,6 +16,8 @@ export default class AppMapChecklists extends Vue {
   @Prop()
   private lists!: any[];
 
+  private showItems: boolean = false;
+
   created() {
     this.$on('AppMap:search-on-hash', (value: string) => {
       this.$parent.$emit('AppMap:search-on-hash', value);
@@ -28,6 +30,11 @@ export default class AppMapChecklists extends Vue {
     });
   }
 
+  checkopen() {
+    if (!this.showItems) {
+      this.showItems = true;
+    }
+  }
   markedLength(list: any) {
     return Object.values(list.items).filter((item: any) => item.marked).length
   }
@@ -59,8 +66,12 @@ export default class AppMapChecklists extends Vue {
     this.$parent.$emit('AppMap:checklist-remove', list)
   }
 
+  changeName(list: any) {
+    this.$parent.$emit('AppMap:update-checklist-name', { id: list.id, name: list.name, });
+  }
+
   changeQuery(list: any) {
-    this.$parent.$emit('AppMap:update-checklist-query', { list_id: list.id, query: list.query });
+    this.$parent.$emit('AppMap:update-checklist-query', { id: list.id, query: list.query });
   }
 
 }

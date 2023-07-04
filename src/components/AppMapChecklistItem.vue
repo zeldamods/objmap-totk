@@ -7,10 +7,6 @@
     <b-btn class="small" size="sm"
            style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
            variant="link" @click='searchOnValue(`map:"${item.map_name}"`)'>{{item.map_name}}</b-btn>
-    <b-btn class="small" size="sm"
-           style="padding-top:0; padding-bottom: 0; font-size: inherit; padding-left: 2px;"
-           variant="link"
-           @click="searchOnHash(item.hash_id)">view</b-btn>
   </li>
 </template>
 <style lang="less">

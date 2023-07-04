@@ -1,9 +1,9 @@
 <template>
   <section>
-    <details v-for="(list) in lists" :key="list.id">
+    <details v-for="(list) in lists" :key="list.id" class="clDetails" @click="checkopen()">
       <summary>{{list.name}}: {{meta(list)}}
-        <b-btn class="small clButton" variant="link" @click="show(list)">
-          <i class="fas fa-eye"></i>
+        <b-btn size="sm clButton" variant="link" @click="show(list)" title="Add to map">
+          Add to map
         </b-btn>
       </summary>
       <details class="small" style="margin-left: 2em">
@@ -12,7 +12,7 @@
           <div class="clMetaTable">
             <div class="clMetaRow">
               <div>Name</div>
-              <input type="text" v-model="list.name"  class="clForm">
+              <input type="text" v-model="list.name"  class="clForm" @input="changeName(list)">
             </div>
             <div class="clMetaRow">
               <div>Query</div>
@@ -25,7 +25,7 @@
           </div>
         </div>
       </details>
-      <ul class="clList">
+      <ul class="clList" v-if="showItems">
         <AppMapChecklistItem class="small" v-for="(item, hash_id) in list.items" :key="hash_id" :item="item" />
       </ul>
     </details>

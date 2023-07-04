@@ -51,6 +51,7 @@ import { Point } from '@/util/map';
 import { calcLayerLength } from '@/util/polyline';
 import { Settings } from '@/util/settings';
 import * as ui from '@/util/ui';
+import { Checklist } from '@/util/Checklist';
 
 const { isNavigationFailure, NavigationFailureType } = VueRouter;
 
@@ -316,6 +317,7 @@ export default class AppMap extends mixins(MixinUtil) {
   private areaAutoItem = new ui.Unobservable(L.layerGroup());
 
   private skipMarked: boolean = false;
+  private checklists: Checklist = new Checklist();
 
   shownAreaMap = '';
   areaWhitelist = '';
@@ -350,7 +352,7 @@ export default class AppMap extends mixins(MixinUtil) {
     if (!this.skipMarked) {
       return true;
     }
-    if (this.clIsMarked(result.hash_id)) { // If found, skip
+    if (this.checklists.isMarked(result.hash_id)) { // If found, skip
       return false;
     }
     return true;
@@ -452,7 +454,7 @@ export default class AppMap extends mixins(MixinUtil) {
           .map((marker: any) => {
             if (hasSetMarked(marker)) {
               const msg = marker.getHashID();
-              if (this.clIsMarked(msg)) {
+              if (this.checklists.isMarked(msg)) {
                 marker.setMarked(true);
               }
             }
@@ -1084,7 +1086,7 @@ export default class AppMap extends mixins(MixinUtil) {
     group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
     group.getMarkers().forEach((marker: any) => {
       const hash_id = marker.obj.hash_id;
-      if (this.clIsMarked(hash_id)) {
+      if (this.checklists.isMarked(hash_id)) {
         marker.setMarked(true);
       }
     });
@@ -1131,7 +1133,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
-      if (this.clIsMarked(result.hash_id)) {
+      if (this.checklists.isMarked(result.hash_id)) {
         marker.data.setMarked(true);
       }
       this.searchResultMarkers.push(marker);
@@ -1194,22 +1196,16 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   clClear() {
-    this.settings!.checklists = Object.assign({}, { lists: [], values: {} });
+    this.checklists.clear();
   }
 
   clCreate() {
-    let id = 0;
-    const ids = this.settings!.checklists.lists.map((list: any) => list.id);
-    if (ids.length)
-      id = Math.max(...ids) + 1;
-
-    this.settings!.checklists.lists.push({ name: 'New List', query: '', id, items: {} });
-    this.settings!.checklists.lists = [... this.settings!.checklists.lists];
+    this.checklists.create();
   }
 
-  clRemove(remove: any) {
+  clDelete(remove: any) {
     if (confirm(`Delete checklist ${remove.name}?`)) {
-      this.settings!.checklists.lists = this.settings!.checklists.lists.filter((list: any) => list.id != remove.id);
+      this.checklists.delete(remove.id);
     }
   }
 
@@ -1233,10 +1229,11 @@ export default class AppMap extends mixins(MixinUtil) {
     return {
       hash_id: obj.hash_id,
       name: obj.name,
+      map_type: obj.map_type,
       map_name: obj.map_name,
       ui_name: ui_name,
       pos: obj.pos,
-      marked: this.clIsMarked(obj.hash_id),
+      marked: this.checklists.isMarked(obj.hash_id),
     };
   }
 
@@ -1244,38 +1241,24 @@ export default class AppMap extends mixins(MixinUtil) {
     const query = list.query;
     let results = [];
     try {
-      results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false);
+      results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false, 5000);
     } catch (e) {
       list.items = {};
       return;
     }
     list.items = {}
-    const items = results.map((item) => this.minObjToCL(item));
+    let items = [];
+    for (const item of results) {
+      items.push(this.minObjToCL(item));
+    }
     items.sort((a: any, b: any) => a.ui_name.localeCompare(b.ui_name));
     for (const item of items) {
       list.items[item.hash_id] = item;
     }
   }
 
-  clIsMarked(hash_id: string) {
-    return (hash_id !== undefined) && this.settings!.checklists.values[hash_id];
-  }
-
-  clToggle(hash_id: string) {
-    const settings = this.settings!;
-
-    if (!(hash_id in settings.checklists.values)) {
-      this.$set(this.settings!.checklists.values, hash_id, false)
-    }
-    this.settings!.checklists.values[hash_id] = !settings.checklists.values[hash_id];
-    return this.settings!.checklists.values[hash_id];
-  }
-
-  clExport() {
-    const data = {
-      OBJMAP_CL_VERSION: save.CURRENT_OBJMAP_SV_VERSION,
-      checklists: this.settings!.checklists,
-    };
+  async clExport() {
+    const data = await this.checklists.db.export();
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -1295,38 +1278,21 @@ export default class AppMap extends mixins(MixinUtil) {
     }
     try {
       const rawData = await (new Response(input.files![0])).json();
-      const version: number | undefined = rawData.OBJMAP_CL_VERSION; // 3 or 4
-      if (this.clImportReplace) {
-        this.clClear();
-      }
-      const cl = rawData.checklists;
-      for (const list of cl.lists) {
-        this.clCreate();
-        const xlist = this.settings!.checklists.lists[this.settings!.checklists.lists.length - 1];
-        xlist.query = list.query;
-        xlist.name = list.name;
-      }
-      this.settings!.checklists.lists = [... this.settings!.checklists.lists];
-      this.settings!.checklists.lists.forEach(async (list: any) => await this.clChangeQuery(list));
-
-      for (const [hash_id, marked] of Object.entries(cl.values)) {
-        if (marked) {
-          this.clToggle(hash_id)
-        }
-      }
+      this.checklists.db.import(rawData, this.clImportReplace);
+      await this.initChecklist();
     } catch (e) {
       alert(e);
     } finally {
       input.value = '';
     }
   }
-
-  updateSearchResultMarkers(item: any, toggle: boolean = true) {
+  async updateSearchResultMarkers(item: any, toggle: boolean = true) {
+    let value = this.checklists.isMarked(item.hash_id);
+    if (toggle) {
+      value = !value;
+      value = await this.checklists.setMarked(item.hash_id, value);
+    }
     this.$nextTick(() => {
-      let value = this.clIsMarked(item.hash_id);
-      if (toggle) {
-        value = this.clToggle(item.hash_id);
-      }
       // Search Result Markers
       const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
       if (marker) {
@@ -1407,17 +1373,24 @@ export default class AppMap extends mixins(MixinUtil) {
       this.searchAddGroup(value.query, value.name);
     });
     this.$on('AppMap:checklist-remove', (list: any) => {
-      this.clRemove(list);
+      this.clDelete(list);
+    });
+    this.$on('AppMap:update-checklist-name', async (value: any) => {
+      let list = this.checklists.read(value.id);
+      if (!list)
+        return;
+      list.name = value.name;
+      this.checklists.lists = [... this.checklists.lists];
+      await this.checklists.update(list);
     });
     this.$on('AppMap:update-checklist-query', async (value: any) => {
-      let id = this.settings!.checklists.lists.findIndex((list: any) => list.id == value.list_id);
-      if (id < 0) {
+      let list = this.checklists.read(value.id);
+      if (!list)
         return;
-      }
-      let list = this.settings!.checklists.lists[id]
       list.query = value.query;
       await this.clChangeQuery(list);
-      this.settings!.checklists.lists = [... this.settings!.checklists.lists];
+      this.checklists.lists = [... this.checklists.lists];
+      await this.checklists.update(list);
     });
     this.$on('AppMap:open-obj', async (obj: ObjectData) => {
       if (this.tempObjMarker)
@@ -1732,7 +1705,7 @@ export default class AppMap extends mixins(MixinUtil) {
     this.settings = Settings.getInstance();
   }
 
-  mounted() {
+  async mounted() {
     this.map = new MapBase('lmap');
     this.map.registerZoomChangeCb((zoom) => this.zoom = zoom);
     this.initMapRouteIntegration();
@@ -1747,6 +1720,7 @@ export default class AppMap extends mixins(MixinUtil) {
     this.initContextMenu();
     this.initEvents();
     this.initSettings();
+    this.initChecklist();
 
     if (this.$route.query.q) {
       this.searchQuery = this.$route.query.q.toString();
@@ -1780,6 +1754,10 @@ export default class AppMap extends mixins(MixinUtil) {
           }
         });
     }
+  }
+
+  async initChecklist() {
+    this.checklists.init();
   }
 
   searchOnHash(hash: string) {

@@ -14,6 +14,7 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
     "git-describe": "^4.1.1",
+    "idb": "^7.1.1",
     "leaflet": "~1.6.0",
     "leaflet-contextmenu": "^1.4.0",
     "leaflet-defaulticon-compatibility": "^0.1.1",
