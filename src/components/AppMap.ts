@@ -1375,6 +1375,12 @@ export default class AppMap extends mixins(MixinUtil) {
     this.$on('AppMap:checklist-remove', (list: any) => {
       this.clDelete(list);
     });
+    this.$on('AppMap:checklist-reset', () => {
+      this.clClearAsk();
+    });
+    this.$on('AppMap:checklist-create', () => {
+      this.clCreate();
+    });
     this.$on('AppMap:update-checklist-name', async (value: any) => {
       let list = this.checklists.read(value.id);
       if (!list)

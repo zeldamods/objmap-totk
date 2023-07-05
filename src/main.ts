@@ -4,6 +4,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css';
 import '@fortawesome/fontawesome-free/css/regular.css';
 import '@fortawesome/fontawesome-free/css/solid.css';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 
 import Vue from 'vue';
 import Component from 'vue-class-component'

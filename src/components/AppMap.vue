@@ -158,32 +158,28 @@
 
       <div class="leaflet-sidebar-pane" id="spane-dummy">
       </div>
-      <div class="leaflet-sidebar-pane" id="spane-checklist">
-        <h1 class="leaflet-sidebar-header">Checklists</h1>
-        <div class="clButtonRow">
-          <b-btn size="clButton" variant="link" @click="clCreate()">New List</b-btn>
-          <b-btn size="clButton" variant="link" @click="clClearAsk()">Reset</b-btn>
-        </div>
-        <AppMapChecklists :lists="checklists.lists"/>
-        <hr>
-        <div class="row no-gutters">
-          <div class="col mr-3">
-            <b-btn size="sm" variant="secondary" block @click="clExport()">
-              <i class="fas fa-file-export"></i>
-              Export
-            </b-btn>
+      <div class="leaflet-sidebar-pane" id="spane-checklist" >
+        <div class="app-checklist">
+          <AppMapChecklists :lists="checklists.lists"/>
+          <hr>
+          <div class="row no-gutters">
+            <div class="col mr-3">
+              <b-btn size="sm" variant="secondary" block @click="clExport()">
+                <i class="fas fa-file-export"></i>
+                Export
+              </b-btn>
+            </div>
+            <div class="col">
+              <b-btn size="sm" variant="danger" block @click="clImport()">
+                <i class="fas fa-file-import"></i>
+                Import
+              </b-btn>
+              <b-form-checkbox v-model="clImportReplace">Replace existing checklists</b-form-checkbox>
+            </div>
+            <input type="file" id="clFileinput" accept=".json" hidden @change="clImportCb">
           </div>
-          <div class="col">
-            <b-btn size="sm" variant="danger" block @click="clImport()">
-              <i class="fas fa-file-import"></i>
-              Import
-            </b-btn>
-            <b-form-checkbox v-model="clImportReplace">Replace existing checklists</b-form-checkbox>
-          </div>
-          <input type="file" id="clFileinput" accept=".json" hidden @change="clImportCb">
         </div>
       </div>
-
       <div class="leaflet-sidebar-pane" id="spane-draw">
         <h1 class="leaflet-sidebar-header">Draw</h1>
         <b-btn size="sm" block variant="primary" @click="toggleDraw()"><i class="fa fa-draw-polygon"></i> Toggle draw controls</b-btn>
@@ -447,6 +443,12 @@
 }
 .map-filter-icon-Dispensers {
     padding: 4px;
+}
+.app-checklist {
+    height: calc(100vh - 28px);
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
 }
 
 </style>

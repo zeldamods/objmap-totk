@@ -7,33 +7,50 @@ import { MsgMgr } from '@/services/MsgMgr';
 import * as ui from '@/util/ui';
 import AppMapChecklistItem from '@/components/AppMapChecklistItem';
 
+// @ts-ignore
+import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller';
+
+
 @Component({
   components: {
-    AppMapChecklistItem
+    AppMapChecklistItem,
+    DynamicScroller,
+    DynamicScrollerItem
   },
 })
 export default class AppMapChecklists extends Vue {
   @Prop()
   private lists!: any[];
 
-  private showItems: boolean = false;
+  private activeList: number = -1;
+  private xlist: any = {};
+  private bus!: any;
 
   created() {
-    this.$on('AppMap:search-on-hash', (value: string) => {
+    // EventBus used here as there is an intermediate component
+    //   that does not forward events from the child to the parent
+    this.bus = new Vue();
+    this.bus.$on('AppMap:search-on-hash', (value: string) => {
       this.$parent.$emit('AppMap:search-on-hash', value);
     });
-    this.$on('AppMap:search-on-value', (value: string) => {
+    this.bus.$on('AppMap:search-on-value', (value: string) => {
       this.$parent.$emit('AppMap:search-on-value', value);
     });
-    this.$on('AppMap:update-search-markers', (value: any) => {
+    this.bus.$on('AppMap:update-search-markers', (value: any) => {
       this.$parent.$emit('AppMap:update-search-markers', value);
     });
+    this.activeList = -1;
+    this.xlist = {};
   }
 
-  checkopen() {
-    if (!this.showItems) {
-      this.showItems = true;
-    }
+  back() {
+    this.activeList = -1;
+    this.xlist = {};
+  }
+  checkopen(list: any) {
+    this.activeList = list.id;
+    this.xlist = list;
+    this.$nextTick();
   }
   markedLength(list: any) {
     return Object.values(list.items).filter((item: any) => item.marked).length
@@ -64,6 +81,13 @@ export default class AppMapChecklists extends Vue {
 
   remove(list: any) {
     this.$parent.$emit('AppMap:checklist-remove', list)
+    this.back();
+  }
+  reset() {
+    this.$parent.$emit('AppMap:checklist-reset')
+  }
+  create() {
+    this.$parent.$emit('AppMap:checklist-create')
   }
 
   changeName(list: any) {

@@ -15,15 +15,18 @@ export default class AppMapChecklistItem extends Vue {
   @Prop()
   private item!: any;
 
+  @Prop()
+  private bus!: any;
+
   searchOnHash() {
-    this.$parent.$emit('AppMap:search-on-hash', this.item.hash_id);
+    this.bus.$emit('AppMap:search-on-hash', this.item.hash_id);
   }
   searchOnValue() {
-    this.$parent.$emit('AppMap:search-on-value', this.item.hash_id);
+    this.bus.$emit('AppMap:search-on-value', this.item.hash_id);
   }
 
   itemChange() {
-    this.$parent.$emit('AppMap:update-search-markers', {
+    this.bus.$emit('AppMap:update-search-markers', {
       hash_id: this.item.hash_id,
       label: "",
     });
