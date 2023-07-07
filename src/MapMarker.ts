@@ -32,6 +32,19 @@ export abstract class MapMarker {
   protected commonInit(): void {
     this.getMarker().on({ 'click': () => this.mb.emitMarkerSelectedEvent(this) });
   }
+  setOpacity(opacity: number) {
+    const marker = this.getMarker();
+    if (marker instanceof L.CircleMarker) {
+      marker.setStyle({ opacity: opacity, fillOpacity: opacity });
+    } else {
+      marker.setOpacity(opacity);
+    }
+  }
+
+  setMarked(_value: boolean, _opacity: number) { }
+
+  getHashID() { return ""; }
+
 }
 
 function iconAddBadge(icon: L.Icon, anchor: [number, number] | undefined = undefined) {
@@ -69,18 +82,21 @@ class MapMarkerImpl extends MapMarker {
 
   getLabel() { return ""; }
 
+  getHashID() { return ""; }
+
   getMarker() { return this.marker; }
 
   setIcons(icons: L.Icon[]) {
     this.icons = icons;
   }
-
-  setMarked(marked: boolean) {
+  setMarked(marked: boolean, opacity: number) {
     const k = (marked) ? 1 : 0;
     if (k < this.icons.length) {
       this.marker.setIcon(this.icons[k]);
     }
+    this.setOpacity(opacity);
   }
+
   protected setTitle(title: string) {
     this.title = title;
     this.marker.options.title = title;
@@ -110,10 +126,11 @@ class MapMarkerCanvasImpl extends MapMarker {
 
   getMarker() { return this.marker; }
 
-  setMarked(marked: boolean) {
+  setMarked(marked: boolean, opacity: number) {
     // @ts-ignore
     this.marker.setBadge(marked);
     this.marker.setStyle({});
+    this.setOpacity(opacity);
   }
 
   protected marker: L.CircleMarker;
@@ -723,6 +740,10 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
     this.marker.setStyle({
       weight: radius >= 5 ? 2 : 0,
     });
+  }
+
+  getHashID() {
+    return this.obj.hash_id;
   }
 }
 

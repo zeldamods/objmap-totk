@@ -43,15 +43,20 @@ export class CanvasMarker extends L.CircleMarker {
     if (!this.options.badge) {
       return;
     }
+    let opacity = this.options.opacity;
+    if (opacity === undefined) {
+      opacity = 1.0
+    }
     const badge = {
       offset: 10,
       radius: 5,
       stroke: true,
+      opacity: opacity,
       color: "goldenrod",
       weight: 0.8,
       fill: true,
       fillColor: '#645838',
-      fillOpacity: 1,
+      fillOpacity: opacity,
       checkmark: {
         weight: 1.8,
         color: "goldenrod",
@@ -59,6 +64,7 @@ export class CanvasMarker extends L.CircleMarker {
         lineJoin: 'round',
         fill: false,
         stroke: true,
+        opacity: opacity,
       },
     };
     // @ts-ignore

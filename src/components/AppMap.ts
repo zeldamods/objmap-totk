@@ -75,6 +75,13 @@ interface MarkerComponent {
   filterLabel: string,
 }
 
+const ALPHAS: { [key: string]: number } = {
+  'never': 0.0,
+  always: 1.0,
+  opacity: 0.3
+};
+
+
 const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   'Location': {
     cl: MapMarkers.MapMarkerLocation,
@@ -160,12 +167,6 @@ function getMarkerDetailsComponent(marker: MapMarker): string {
       return valueOrDefault(component.detailsComponent, '');
   }
   return '';
-}
-
-function hasSetMarked(marker: any) {
-  return marker instanceof MapMarkers.MapMarkerGenericLocationMarker ||
-    marker instanceof MapMarkers.MapMarkerKorok ||
-    marker instanceof MapMarkers.MapMarkerLocation;
 }
 
 class LayerProps {
@@ -285,6 +286,7 @@ export default class AppMap extends mixins(MixinUtil) {
   private drawLineColor = '#3388ff';
   private setLineColorThrottler!: () => void;
   private markerVisibility: string = "opacity";
+  private clMarkerVisibility: string = "opacity";
 
   private previousGotoMarker: L.Marker | null = null;
   private greatPlateauBarrierShown = false;
@@ -431,6 +433,14 @@ export default class AppMap extends mixins(MixinUtil) {
     }
   }
 
+  updateMarkerCheckmark(marker: MapMarker) {
+    const opacity = ALPHAS[this.clMarkerVisibility];
+    const msg = marker.getHashID();
+    if (this.checklists.isMarked(msg)) {
+      marker.setMarked(true, opacity);
+    }
+  }
+
   updateMarkers() {
     const info = MapMgr.getInstance().getInfoMainField();
     for (const type of Object.keys(info.markers)) {
@@ -452,12 +462,7 @@ export default class AppMap extends mixins(MixinUtil) {
       const group = new MapMarkerGroup(
         markers.map((m: any) => new (component.cl)(this.map, m, { showLabel: this.showKorokIDs }))
           .map((marker: any) => {
-            if (hasSetMarked(marker)) {
-              const msg = marker.getHashID();
-              if (this.checklists.isMarked(msg)) {
-                marker.setMarked(true);
-              }
-            }
+            this.updateMarkerCheckmark(marker);
             return marker;
           }),
         valueOrDefault(component.preloadPad, 1.0),
@@ -465,9 +470,13 @@ export default class AppMap extends mixins(MixinUtil) {
       this.markerGroups.set(type, group);
       group.addToMap(this.map.m);
     }
-
-    for (const group of this.markerGroups.values())
+    for (const group of this.markerGroups.values()) {
       group.update();
+      // @ts-ignore
+      for (const marker of group.markers.values()) {
+        this.updateMarkerCheckmark(marker);
+      }
+    }
   }
 
   initSidebar() {
@@ -581,8 +590,7 @@ export default class AppMap extends mixins(MixinUtil) {
   updateDrawLayers() {
     const activeLayer = this.map.activeLayer;
     this.drawLayer.eachLayer((layer: any) => {
-      const alphas: { [key: string]: number } = { 'never': 0.0, always: 1.0, opacity: 0.3 }
-      const opacity = (layer.feature.properties.map_layer == activeLayer) ? 1.0 : alphas[this.markerVisibility];
+      const opacity = (layer.feature.properties.map_layer == activeLayer) ? 1.0 : ALPHAS[this.markerVisibility];
       if (ui.leafletType(layer) == ui.LeafletType.Marker) {
         layer.setOpacity(opacity)
       } else {
@@ -1081,13 +1089,14 @@ export default class AppMap extends mixins(MixinUtil) {
     if (this.searchGroups.some(g => !!g.query && g.query == query))
       return;
 
+    const opacity = ALPHAS[this.clMarkerVisibility];
     const group = new SearchResultGroup(query, label || query, enabled);
     await group.init(this.map);
     group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
     group.getMarkers().forEach((marker: any) => {
       const hash_id = marker.obj.hash_id;
       if (this.checklists.isMarked(hash_id)) {
-        marker.setMarked(true);
+        marker.setMarked(true, opacity);
       }
     });
     this.searchGroups.push(group);
@@ -1130,11 +1139,11 @@ export default class AppMap extends mixins(MixinUtil) {
       this.searchResults = [];
       this.searchLastSearchFailed = true;
     }
-
+    const opacity = ALPHAS[this.clMarkerVisibility];
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
       if (this.checklists.isMarked(result.hash_id)) {
-        marker.data.setMarked(true);
+        marker.data.setMarked(true, opacity);
       }
       this.searchResultMarkers.push(marker);
       marker.data.getMarker().addTo(this.map.m);
@@ -1237,6 +1246,14 @@ export default class AppMap extends mixins(MixinUtil) {
     };
   }
 
+  clUpdateMarkers() {
+    this.updateMarkers();
+    this.searchResultMarkers.forEach(m => this.updateMarkerCheckmark(m.data));
+    this.searchGroups.forEach(group => {
+      group.getMarkers().forEach(m => this.updateMarkerCheckmark(m));
+    })
+  }
+
   async clChangeQuery(list: any) {
     const query = list.query;
     let results = [];
@@ -1292,18 +1309,19 @@ export default class AppMap extends mixins(MixinUtil) {
       value = !value;
       value = await this.checklists.setMarked(item.hash_id, value);
     }
+    const opacity = (value) ? ALPHAS[this.clMarkerVisibility] : 1.0;
     this.$nextTick(() => {
       // Search Result Markers
       const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
       if (marker) {
-        marker.data.setMarked(value);
+        marker.data.setMarked(value, opacity);
       }
 
       // Group Marker (from Add to Map and Preset Searches)
       for (const group of this.searchGroups) { // Has a label and query
         const marker = group.getMarkers().find(marker => marker.obj.hash_id == item.hash_id);
         if (marker) {
-          marker.setMarked(value);
+          marker.setMarked(value, opacity);
         }
       }
       for (const [key, group] of this.markerGroups) {
@@ -1314,7 +1332,7 @@ export default class AppMap extends mixins(MixinUtil) {
         const marker = group.find((marker) => { return marker.getHashID() == item.hash_id });
         if (marker) {
           // @ts-ignore
-          marker.setMarked(value);
+          marker.setMarked(value, opacity);
         }
       }
       for (let i = 0; i < this.settings!.checklists.lists.length; i++) {
@@ -1763,7 +1781,8 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   async initChecklist() {
-    this.checklists.init();
+    await this.checklists.init();
+    this.updateMarkers();
   }
 
   searchOnHash(hash: string) {

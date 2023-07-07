@@ -161,7 +161,15 @@
       <div class="leaflet-sidebar-pane" id="spane-checklist" >
         <div class="app-checklist">
           <AppMapChecklists :lists="checklists.lists"/>
-          <hr>
+          <div class="row" style="margin-left:0.2em;margin-top:1.2em;margin-bottom:1.2em;">
+            Completed Markers:
+            <select v-model="clMarkerVisibility" @change="clUpdateMarkers"
+                    style="flex-grow: 2; margin-left: 1em">
+              <option value="never">Never show</option>
+              <option value="opacity">Less visible</option>
+              <option value="always">Always show</option>
+            </select>
+          </div>
           <div class="row no-gutters">
             <div class="col mr-3">
               <b-btn size="sm" variant="secondary" block @click="clExport()">
