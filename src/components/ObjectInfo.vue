@@ -26,9 +26,12 @@
     <section class="search-result-equip" v-if="data.equip">
       <div v-if="obj.name == 'Npc_MinusFieldGhost_000'" style="display: inline">
         <div class="swords fa-fw fa" style="color: white">&#9876;</div> Possible:
+        {{data.equip.map((x) => getName(x) + "✨").join(', ')}}
       </div>
-      <i v-else class="fa fa-shield-alt fa-fw"></i>
-      {{data.equip.map((x) => getName(x)).join(', ')}}
+      <div v-else>
+        <i class="fa fa-shield-alt fa-fw"></i>
+        {{data.equip.map((x) => getName(x)).join(', ')}}
+      </div>
     </section>
     <section class="search-result-location" v-if="data.location">
       <i class="fas fa-fw fa-location-arrow" aria-hidden="true" style="color: honeydew"></i>
