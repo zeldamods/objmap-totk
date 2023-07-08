@@ -65,7 +65,9 @@ export class Settings {
     this.lastBossMode = parse(data.lastBossMode, Id, false);
     this.customSearchPresets = parse(data.customSearchPresets, Id, []);
     this.left = parse(data.left, Id, true);
-    this.mapType = parse(data.mapType, Id, 'Totk');
+    this.mapType = parse(data.mapType, (d) => {
+      return (d == 'Totk') ? 'MainAndMinusField' : d;
+    }, 'MainAndMinusField');
     this.mapName = parse(data.mapName, Id, '');
     this.hylianMode = false;
     this.drawControlsShown = parse(data.drawControlsShown, Id, false);

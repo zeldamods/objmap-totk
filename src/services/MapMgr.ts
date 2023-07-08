@@ -1,4 +1,4 @@
-import { GAME_FILES } from '@/util/map';
+import { GAME_FILES, Point } from '@/util/map';
 
 const RADAR_URL = process.env.VUE_APP_RADAR_URL;
 
@@ -114,6 +114,10 @@ export class MapMgr {
   async getObjAiGroups(mapType: string, mapName: string, hashId: string): Promise<AiGroup[]> {
     const res = await fetch(`${RADAR_URL}/obj/${mapType}/${mapName}/${hashId}/ai_groups`);
     return parse(res);
+  }
+
+  getRegionFromPoint(layer: string, point: Point): Promise<string[]> {
+    return fetch(`${RADAR_URL}/region/${layer}/${point[0]}/${point[2]}`).then(parse);
   }
 
   getObjShopData() {

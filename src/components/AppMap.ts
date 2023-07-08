@@ -1148,25 +1148,23 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   initContextMenu() {
-    this.map.m.on(SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT, (e) => {
-      const mapType = Settings.getInstance().mapType;
-      const mapName = Settings.getInstance().mapName;
-
-      if (mapType != "Totk") {
-        if (mapName.length !== 0)
-          this.searchAddGroup("*", `Map: ${mapType}/${mapName}`);
-        else
-          this.searchAddGroup("*", `Maps: ${mapType}`);
-        return;
-      }
-
+    this.map.m.on(SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT, async (e) => {
       // @ts-ignore
       const latlng: L.LatLng = e.latlng;
       const xyz = this.map.toXYZ(latlng);
       if (!map.isValidPoint(xyz))
         return;
-      const quad = map.pointToMapUnit(xyz);
-      this.searchAddGroup(`map:"${quad}"`, `Map: Sky/Surface/Depths ${quad}`);
+      const layer = this.map.activeLayer;
+      if (layer == 'Surface' || layer == 'Depths') {
+        let mapType = (layer == "Surface") ? 'MainField' : 'MinusField';
+        const quad = map.pointToMapUnit(xyz);
+        this.searchAddGroup(`map:"${mapType}/${quad}"`, `Map: ${layer} ${quad}`);
+      } else if (layer == 'Sky') {
+        const regions = await MapMgr.getInstance().getRegionFromPoint(layer, xyz);
+        const query = regions.map(region => `map: "MainField/Sky__${region}"`).join(" OR ");
+        const regionsStr = regions.join(" or ");
+        this.searchAddGroup(query, `Map: ${regionsStr}`);
+      }
     });
   }
 
@@ -1470,15 +1468,11 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   private switchToObjectLayer(obj: ObjectMinData) {
-    if (obj.map_type != "Totk") {
-      return;
-    }
-
     if (!obj.map_name) {
       return;
     }
 
-    if (obj.map_name.startsWith("Depths")) {
+    if (obj.map_type.startsWith("MinusField")) {
       this.map.switchBaseTileLayer("Depths");
     } else if (obj.map_name.startsWith("Sky")) {
       this.map.switchBaseTileLayer("Sky");
