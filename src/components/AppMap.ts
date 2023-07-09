@@ -1155,7 +1155,15 @@ export default class AppMap extends mixins(MixinUtil) {
       if (!map.isValidPoint(xyz))
         return;
       const layer = this.map.activeLayer;
-      if (layer == 'Surface' || layer == 'Depths') {
+      const mapType = this.settings!.mapType;
+      const mapName = this.settings!.mapName;
+      if (mapType == 'SmallDungeon') {
+        this.searchAddGroup(`map:"${mapType}/${mapName}"`, `Map: Shrine ${mapName}`);
+      } else if (mapType == 'LargeDungeon') {
+        this.searchAddGroup(`map:"${mapType}/${mapName}"`, `Map: Temples ${mapName}`);
+      } else if (mapType == 'NormalStage') {
+        this.searchAddGroup(`map:"${mapType}/${mapName}"`, `Map: Special Maps ${mapName}`);
+      } else if (layer == 'Surface' || layer == 'Depths') {
         let mapType = (layer == "Surface") ? 'MainField' : 'MinusField';
         const quad = map.pointToMapUnit(xyz);
         this.searchAddGroup(`map:"${mapType}/${quad}"`, `Map: ${layer} ${quad}`);
