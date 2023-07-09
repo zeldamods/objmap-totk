@@ -40,8 +40,7 @@ export default class ObjectInfo extends mixins(MixinUtil) {
   }
   toggleCheck() {
     this.$parent.$emit('AppMap:update-search-markers', {
-      hash_id: this.data.hash_id,
-      label: "",
+      hash_id: this.data.hash_id
     });
   }
   async loadMetaIfNeeded() {

@@ -155,6 +155,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.initKorokMarkers();
     this.initRails();
   }
+
   mounted() {
     this.$on('AppMap:update-search-markers', (value: any) => {
       this.$parent.$emit('AppMap:update-search-markers', value);
@@ -382,9 +383,9 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     if (!MarginPositive)
       return;
 
-      this.addBoxAreaMarker(obj, scale, "AreaCulling", { fillColor: "blue" });
-      this.addBoxAreaMarker(obj, vecAdd(scale, MarginPositive), "AreaCulling + MarginPositive", { fillColor: "green", color: "green" });
-      this.addBoxAreaMarker(obj, vecAdd(scale, MarginNegative), "AreaCulling + MarginNegative", { fillColor: "red", color: "red" });
+    this.addBoxAreaMarker(obj, scale, "AreaCulling", { fillColor: "blue" });
+    this.addBoxAreaMarker(obj, vecAdd(scale, MarginPositive), "AreaCulling + MarginPositive", { fillColor: "green", color: "green" });
+    this.addBoxAreaMarker(obj, vecAdd(scale, MarginNegative), "AreaCulling + MarginNegative", { fillColor: "red", color: "red" });
   }
 
   private addBoxAreaMarker(obj: ObjectData, scale: [number, number, number], tooltip?: string, options: L.PolylineOptions = {}): L.Path {

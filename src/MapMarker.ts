@@ -32,10 +32,11 @@ export abstract class MapMarker {
   protected commonInit(): void {
     this.getMarker().on({ 'click': () => this.mb.emitMarkerSelectedEvent(this) });
   }
+
   setOpacity(opacity: number) {
     const marker = this.getMarker();
     if (marker instanceof L.CircleMarker) {
-      marker.setStyle({ opacity: opacity, fillOpacity: opacity });
+      marker.setStyle({ opacity: fillOpacity: opacity });
     } else {
       marker.setOpacity(opacity);
     }
@@ -47,16 +48,21 @@ export abstract class MapMarker {
 
 }
 
-function iconAddBadge(icon: L.Icon, anchor: [number, number] | undefined = undefined) {
+function iconAddCheckmark(icon: L.Icon, anchor: [number, number] | undefined = undefined) {
   const options = Object.assign({}, icon.options);
-  options.shadowUrl = '/icons/badge.svg';
+  options.shadowUrl = '/icons/checkmark.svg';
   options.shadowSize = [12, 12];
   options.shadowAnchor = (anchor) ? anchor : [-4, 18];
   return L.icon(options);
 }
 
 class MapMarkerImpl extends MapMarker {
+  // Icons for marker
+  //  - icons[0] is a normal icon
+  //  - icons[1] is the same icon with a checkmark in the upper-right
+  //    Uses the shadow to add the checkmark
   private icons: L.Icon[] = [];
+
   constructor(mb: MapBase, title: string, xyz: Point, options: L.MarkerOptions = {},
     hash_id: string | undefined = undefined) {
     super(mb);
@@ -66,11 +72,11 @@ class MapMarkerImpl extends MapMarker {
       contextmenu: true,
       contextmenuItems: [
         {
-          text: 'Toggle Completed',
+          text: 'Toggle completed',
           callback: () => {
             mb.m.fire('AppMap:update-search-markers', {
               hash_id: hash_id,
-              label: this.getLabel(),
+              label: this.getMarkerCategory(),
             });
           },
           index: 0,
@@ -80,7 +86,7 @@ class MapMarkerImpl extends MapMarker {
     super.commonInit();
   }
 
-  getLabel() { return ""; }
+  getMarkerCategory() { return ""; }
 
   getHashID() { return ""; }
 
@@ -89,6 +95,7 @@ class MapMarkerImpl extends MapMarker {
   setIcons(icons: L.Icon[]) {
     this.icons = icons;
   }
+
   setMarked(marked: boolean, opacity: number) {
     const k = (marked) ? 1 : 0;
     if (k < this.icons.length) {
@@ -181,7 +188,7 @@ export class MapMarkerGenericLocationMarker extends MapMarkerImpl {
       });
     }
     this.lm = lm;
-    this.setIcons([icon, iconAddBadge(icon)])
+    this.setIcons([icon, iconAddCheckmark(icon)])
   }
 
   getMessageId() {
@@ -192,7 +199,7 @@ export class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     return this.lm.getHashID();
   }
 
-  getLabel() {
+  getMarkerCategory() {
     return this.lm.getIcon();
   }
 }
@@ -226,7 +233,7 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
       // @ts-ignore
       contextmenuItems: [
         {
-          text: 'Toggle Completed',
+          text: 'Toggle completed',
           callback: () => {
             mb.m.fire('AppMap:update-search-markers', {
               hash_id: this.lp.getHashID(),
@@ -292,6 +299,7 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
     return false;
   }
 }
+
 export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
   public readonly dungeonNum: number;
 
@@ -309,7 +317,7 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     const sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId() + '_sub');
     const cave = (l.ShrineInCave) ? "<br>Cave" : "";
     this.marker.bindTooltip(`${this.title}<br>${sub}${cave}`, { pane: 'front2' });
-    this.setIcons([icon, iconAddBadge(icon, shift)])
+    this.setIcons([icon, iconAddCheckmark(icon, shift)])
   }
 
   shouldBeShown() {
@@ -339,7 +347,7 @@ export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
     this.marker.bindTooltip(msg, { pane: 'front2' });
   }
 
-  getLabel() {
+  getMarkerCategory() {
     return "CheckPoint";
   }
 
@@ -347,6 +355,7 @@ export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
     return this.mb.activeLayer == "Depths";
   }
 }
+
 export class MapMarkerDispenser extends MapMarkerGenericLocationMarker {
   public readonly info: any;
   constructor(mb: MapBase, info: any) {
@@ -361,7 +370,7 @@ export class MapMarkerDispenser extends MapMarkerGenericLocationMarker {
     this.obj = info;
   }
 
-  getLabel() {
+  getMarkerCategory() {
     return "Dispensers";
   }
 
@@ -394,7 +403,7 @@ export class MapMarkerTear extends MapMarkerGenericLocationMarker {
     this.marker.bindTooltip(`${titles[this.tearNum]}<br>Tear of the Dragon #${this.tearNum}`, { pane: 'front2' });
   }
 
-  getLabel() {
+  getMarkerCategory() {
     return "DragonTears";
   }
 
@@ -418,7 +427,7 @@ export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
     this.isVillage = isVillage;
     this.info = l;
   }
-  getLabel() {
+  getMarkerCategory() {
     return "Place";
   }
 
@@ -455,7 +464,7 @@ export class MapMarkerCave extends MapMarkerGenericLocationMarker {
     this.info = l;
   }
 
-  getLabel() {
+  getMarkerCategory() {
     if (this.info.Icon == "Chasm") {
       return "Chasm";
     }
@@ -496,7 +505,7 @@ export class MapMarkerShop extends MapMarkerGenericLocationMarker {
     this.info = l;
   }
 
-  getLabel() {
+  getMarkerCategory() {
     return "Shop";
   }
 
@@ -539,7 +548,7 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
       // @ts-ignore
       contextmenuItems: [
         {
-          text: 'Toggle Completed',
+          text: 'Toggle completed',
           callback: () => {
             mb.m.fire('AppMap:update-search-markers', {
               hash_id: this.info.hash_id,
@@ -694,11 +703,10 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
           index: 0,
         },
         {
-          text: 'Toggle Completed',
+          text: 'Toggle completed',
           callback: () => {
             mb.m.fire('AppMap:update-search-markers', {
-              hash_id: this.obj.hash_id,
-              label: "",
+              hash_id: this.obj.hash_id
             });
           },
           index: 0,

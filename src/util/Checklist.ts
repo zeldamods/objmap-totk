@@ -1,6 +1,6 @@
 import { openDB } from 'idb';
 
-interface ListItem {
+export interface ListItem {
   hash_id: string;
   name: string;
   map_name: string;
@@ -23,41 +23,49 @@ interface ChecklistStore {
   name: string;
 }
 
-export class Checklist {
+export class Checklists {
   db: ChecklistDB;
   marked: { [key: string]: boolean };
   lists: List[];
+
   constructor() {
     this.db = new ChecklistDB();
     this.marked = {};
     this.lists = [];
   }
+
   async init() {
     await this.db.init();
     this.marked = await this.db.all();
     this.lists = await this.db.listGetAll();
   }
+
   async clear() {
     this.marked = {};
     this.lists = [];
     this.db.clear();
   }
+
   async create() {
     const newList = { name: 'New List', query: '', items: {} } as List;
     const id = await this.db.listAdd(newList);
     const list = await this.db.listGet(id);
     this.lists.push(list);
   }
+
   async delete(id: number) {
     this.lists = this.lists.filter((list: any) => list.id != id);
     await this.db.listRemove(id);
   }
+
   read(id: number) {
     return this.lists.find((list: any) => list.id == id);
   }
+
   async update(list: List) {
     await this.db.listUpdate(list);
   }
+
   isMarked(hash_id: string) {
     let value = this.marked[hash_id];
     if (value === undefined) {
@@ -65,6 +73,7 @@ export class Checklist {
     }
     return value;
   }
+
   async setMarked(hash_id: string, value: boolean) {
     this.marked[hash_id] = value;
     this.db.setMarked(hash_id, value);
@@ -94,6 +103,7 @@ export class ChecklistDB {
     this.listsIndex = "listName";
     this.db = undefined;
   }
+
   async init() {
     const self = this;
     this.db = await openDB(this.name, this.version, {
@@ -110,8 +120,8 @@ export class ChecklistDB {
         console.log("terminated");
       },
     });
-
   }
+
   async import(data: ChecklistStore, replace: boolean = false) {
     if (replace) {
       await this.listRemoveAll();
@@ -124,6 +134,7 @@ export class ChecklistDB {
       this.listAdd(list);
     }
   }
+
   async export(): Promise<ChecklistStore> {
     return {
       values: await this.all(),
@@ -132,18 +143,23 @@ export class ChecklistDB {
       name: this.name,
     }
   }
+
   async listAdd(list: any) {
     return this.db.put(this.lists, list);
   }
+
   async listGet(id: number) {
     return this.db.get(this.lists, id);
   }
+
   async listGetByName(name: string) {
     return this.db.getFromIndex(this.lists, this.listsIndex, name);
   }
+
   async listRemove(id: number) {
     return this.db.delete(this.lists, id);
   }
+
   async listUpdate(list: List) {
     return this.db.put(this.lists, list)
   }
@@ -151,6 +167,7 @@ export class ChecklistDB {
   async listGetAll() {
     return this.db.getAll(this.lists);
   }
+
   async listRemoveAll() {
     this.db.clear(this.lists);
     return true;
@@ -160,12 +177,15 @@ export class ChecklistDB {
   async setMarked(hash_id: string, value: boolean) {
     return this.db.put(this.hash, value, hash_id);
   }
+
   async marked(hash_id: string) {
     return this.db.get(this.hash, hash_id);
   }
+
   async all() {
     return this.all_internal(this.hash);
   }
+
   async all_internal(storeName: string) {
     let cursor = await this.db.transaction(storeName).store.openCursor()
     let data: any = {};
@@ -175,6 +195,7 @@ export class ChecklistDB {
     }
     return data;
   }
+
   async hashClear() {
     this.db.clear(this.hash)
     return true;
@@ -184,5 +205,4 @@ export class ChecklistDB {
     await this.hashClear();
     await this.listRemoveAll();
   }
-
 }

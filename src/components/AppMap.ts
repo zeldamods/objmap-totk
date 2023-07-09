@@ -51,7 +51,7 @@ import { Point } from '@/util/map';
 import { calcLayerLength } from '@/util/polyline';
 import { Settings } from '@/util/settings';
 import * as ui from '@/util/ui';
-import { Checklist } from '@/util/Checklist';
+import { Checklists } from '@/util/Checklist';
 
 const { isNavigationFailure, NavigationFailureType } = VueRouter;
 
@@ -75,7 +75,7 @@ interface MarkerComponent {
   filterLabel: string,
 }
 
-const ALPHAS: { [key: string]: number } = {
+const MARKER_OPACITIES: { [key: string]: number } = {
   'never': 0.0,
   always: 1.0,
   opacity: 0.3
@@ -318,8 +318,8 @@ export default class AppMap extends mixins(MixinUtil) {
   private areaMapLayersByData: ui.Unobservable<Map<any, L.Layer[]>> = new ui.Unobservable(new Map());
   private areaAutoItem = new ui.Unobservable(L.layerGroup());
 
-  private skipMarked: boolean = false;
-  private checklists: Checklist = new Checklist();
+  private skipCompletedObjects: boolean = false;
+  private checklists: Checklists = new Checklists();
 
   shownAreaMap = '';
   areaWhitelist = '';
@@ -351,10 +351,10 @@ export default class AppMap extends mixins(MixinUtil) {
   private drawVertexLayers: string[] = [];
 
   filterResults(result: any) {
-    if (!this.skipMarked) {
+    if (!this.skipCompletedObjects) {
       return true;
     }
-    if (this.checklists.isMarked(result.hash_id)) { // If found, skip
+    if (this.checklists.isMarked(result.hash_id)) {
       return false;
     }
     return true;
@@ -434,7 +434,7 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   updateMarkerCheckmark(marker: MapMarker) {
-    const opacity = ALPHAS[this.clMarkerVisibility];
+    const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
     const msg = marker.getHashID();
     if (this.checklists.isMarked(msg)) {
       marker.setMarked(true, opacity);
@@ -590,7 +590,7 @@ export default class AppMap extends mixins(MixinUtil) {
   updateDrawLayers() {
     const activeLayer = this.map.activeLayer;
     this.drawLayer.eachLayer((layer: any) => {
-      const opacity = (layer.feature.properties.map_layer == activeLayer) ? 1.0 : ALPHAS[this.markerVisibility];
+      const opacity = (layer.feature.properties.map_layer == activeLayer) ? 1.0 : MARKER_OPACITIES[this.markerVisibility];
       if (ui.leafletType(layer) == ui.LeafletType.Marker) {
         layer.setOpacity(opacity)
       } else {
@@ -1089,7 +1089,7 @@ export default class AppMap extends mixins(MixinUtil) {
     if (this.searchGroups.some(g => !!g.query && g.query == query))
       return;
 
-    const opacity = ALPHAS[this.clMarkerVisibility];
+    const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
     const group = new SearchResultGroup(query, label || query, enabled);
     await group.init(this.map);
     group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
@@ -1139,7 +1139,7 @@ export default class AppMap extends mixins(MixinUtil) {
       this.searchResults = [];
       this.searchLastSearchFailed = true;
     }
-    const opacity = ALPHAS[this.clMarkerVisibility];
+    const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
       if (this.checklists.isMarked(result.hash_id)) {
@@ -1303,13 +1303,18 @@ export default class AppMap extends mixins(MixinUtil) {
       input.value = '';
     }
   }
+
+  // Item: {
+  //      hash_id: string,
+  //      label: undefined | string // defined which marker group it belongs to
+  // }
   async updateSearchResultMarkers(item: any, toggle: boolean = true) {
     let value = this.checklists.isMarked(item.hash_id);
     if (toggle) {
       value = !value;
       value = await this.checklists.setMarked(item.hash_id, value);
     }
-    const opacity = (value) ? ALPHAS[this.clMarkerVisibility] : 1.0;
+    const opacity = (value) ? MARKER_OPACITIES[this.clMarkerVisibility] : 1.0;
     this.$nextTick(() => {
       // Search Result Markers
       const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
@@ -1325,7 +1330,7 @@ export default class AppMap extends mixins(MixinUtil) {
         }
       }
       for (const [key, group] of this.markerGroups) {
-        if (item.label.length && item.label != key) {
+        if (item.label && item.label != key) {
           continue
         }
         // @ts-ignore
@@ -1333,13 +1338,6 @@ export default class AppMap extends mixins(MixinUtil) {
         if (marker) {
           // @ts-ignore
           marker.setMarked(value, opacity);
-        }
-      }
-      for (let i = 0; i < this.settings!.checklists.lists.length; i++) {
-        const list = this.settings!.checklists.lists[i];
-        if (item.hash_id in list.items) {
-          this.$set(this.settings!.checklists.lists[i].items[item.hash_id], 'marked', value);
-          this.settings!.checklists.lists = [...this.settings!.checklists.lists];
         }
       }
     })

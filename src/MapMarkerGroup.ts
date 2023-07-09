@@ -54,7 +54,7 @@ export class MapMarkerGroup {
     this.isInitialUpdate = false;
   }
 
-  find(func: (marker: MapMarker) => boolean) {
-    return this.markers.find(func)
+  find(predicate: (marker: MapMarker) => boolean) {
+    return this.markers.find(predicate)
   }
 }

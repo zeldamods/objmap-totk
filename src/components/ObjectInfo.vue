@@ -14,10 +14,15 @@
                                               :key="`${data.map_type},${data.map_name},${data.hash_id}`"
                                               append>{{formatObjId(data.hash_id)}}</router-link></span>
       <span v-if="!withPermalink">{{formatObjId(data.hash_id)}}</span>
-      <div style="display: inline; text-shadow: none;" @click.stop.prevent="toggleCheck()" title="Mark as found or not">
-        <span v-if="isChecked"><i class="fa fa-check-circle fa-fw" style="color: white; padding-left: 1em;"></i></span>
-        <span v-else><i class="fa fa-check-circle " style="color: #ffffff10; padding-left: 1em;"></i></span>
-      </div>
+      <b-btn style="display: inline; text-shadow: none;"
+             @click.stop.prevent="toggleCheck()" title="Mark as found or not">
+        <span v-if="isChecked">
+          <i class="fa fa-check-circle fa-fw" style="color: white; padding-left: 1em;"></i>
+        </span>
+        <span v-else>
+          <i class="fa fa-check-circle" style="color: #ffffff10; padding-left: 1em;"></i>
+        </span>
+      </b-btn>
     </section>
     <section class="search-result-hard-mode">
       <span style="color: #ff3915" v-if="data.hard_mode"><i class="fa fa-dungeon fa-fw"></i> Master Mode</span>

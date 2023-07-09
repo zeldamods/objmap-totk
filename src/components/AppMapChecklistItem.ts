@@ -5,18 +5,18 @@ import { Settings } from '@/util/settings';
 import { MapMgr, ObjectMinData } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 import * as ui from '@/util/ui';
+import { ListItem } from '@/util/Checklist';
 
 @Component({
   components: {
-    //ObjectInfo,
   },
 })
 export default class AppMapChecklistItem extends Vue {
   @Prop()
-  private item!: any;
+  private item!: ListItem;
 
   @Prop()
-  private bus!: any;
+  private bus!: Vue;
 
   searchOnHash() {
     this.bus.$emit('AppMap:search-on-hash', this.item.hash_id);
@@ -27,10 +27,8 @@ export default class AppMapChecklistItem extends Vue {
 
   itemChange() {
     this.bus.$emit('AppMap:update-search-markers', {
-      hash_id: this.item.hash_id,
-      label: "",
+      hash_id: this.item.hash_id
     });
-
   }
 }
 
