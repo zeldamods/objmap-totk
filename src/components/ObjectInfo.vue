@@ -14,13 +14,12 @@
                                               :key="`${data.map_type},${data.map_name},${data.hash_id}`"
                                               append>{{formatObjId(data.hash_id)}}</router-link></span>
       <span v-if="!withPermalink">{{formatObjId(data.hash_id)}}</span>
-      <b-btn style="display: inline; text-shadow: none;"
-             @click.stop.prevent="toggleCheck()" title="Mark as found or not">
+      <b-btn class="checkmark-btn" @click.stop.prevent="toggleCheck()" title="Mark as found or not">
         <span v-if="isChecked">
           <i class="fa fa-check-circle fa-fw" style="color: white; padding-left: 1em;"></i>
         </span>
         <span v-else>
-          <i class="fa fa-check-circle" style="color: #ffffff10; padding-left: 1em;"></i>
+          <i class="fa fa-check-circle" style="color: rgba(255,255,255,0.25); padding-left: 1em;"></i>
         </span>
       </b-btn>
     </section>
@@ -122,6 +121,23 @@
 .search-result-life {
     display: inline-block;
     padding-right: 0.3em;
+}
+
+.checkmark-btn {
+    display: inline;
+    text-shadow: none;
+    background: none;
+    border: 0px solid white;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    vertical-align: inherit;
+}
+
+.checkmark-btn:focus, .checkmark-btn:active, .checkmark-btn:hover, .checkmark-btn:focus-visible {
+    background: none !important;
+    border: 0px solid white;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
 }
 </style>
 <script src="./ObjectInfo.ts"></script>

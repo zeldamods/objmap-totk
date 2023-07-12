@@ -460,11 +460,7 @@ export default class AppMap extends mixins(MixinUtil) {
       const markers: any[] = info.markers[type];
       const component = MARKER_COMPONENTS[type];
       const group = new MapMarkerGroup(
-        markers.map((m: any) => new (component.cl)(this.map, m, { showLabel: this.showKorokIDs }))
-          .map((marker: any) => {
-            this.updateMarkerCheckmark(marker);
-            return marker;
-          }),
+        markers.map((m: any) => new (component.cl)(this.map, m, { showLabel: this.showKorokIDs })),
         valueOrDefault(component.preloadPad, 1.0),
         valueOrDefault(component.enableUpdates, true));
       this.markerGroups.set(type, group);

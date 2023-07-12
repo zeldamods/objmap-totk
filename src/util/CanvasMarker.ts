@@ -75,10 +75,12 @@ export class CanvasMarker extends L.CircleMarker {
     const p = { x: pt.x, y: pt.y };
     p.x += badge.offset;
     p.y -= badge.offset;
+    ctx.save();
     // Circle
     ctx.beginPath();
     ctx.arc(p.x, p.y, badge.radius, 0, Math.PI * 2, true);
     renderer._fillStroke(ctx, { options: badge });
+
     // Checkmark
     const s = badge.radius / 3;
     p.x += 1;
@@ -87,5 +89,6 @@ export class CanvasMarker extends L.CircleMarker {
     ctx.lineTo(p.x - s, p.y + s);
     ctx.lineTo(p.x - s - s, p.y);
     renderer._fillStroke(ctx, { options: badge.checkmark });
+    ctx.restore();
   }
 }

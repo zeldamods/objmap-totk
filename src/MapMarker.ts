@@ -36,7 +36,7 @@ export abstract class MapMarker {
   setOpacity(opacity: number) {
     const marker = this.getMarker();
     if (marker instanceof L.CircleMarker) {
-      marker.setStyle({ opacity: fillOpacity: opacity });
+      marker.setStyle({ opacity, fillOpacity: opacity });
     } else {
       marker.setOpacity(opacity);
     }
@@ -56,6 +56,19 @@ function iconAddCheckmark(icon: L.Icon, anchor: [number, number] | undefined = u
   return L.icon(options);
 }
 
+function toggleMenuItem(mb: MapBase, hash_id: string, label: string = "") {
+  return {
+    text: 'Toggle completed',
+    index: 0,
+    callback: () => {
+      mb.m.fire('AppMap:update-search-markers', {
+        hash_id: hash_id,
+        label: label,
+      })
+    },
+  }
+}
+
 class MapMarkerImpl extends MapMarker {
   // Icons for marker
   //  - icons[0] is a normal icon
@@ -64,29 +77,17 @@ class MapMarkerImpl extends MapMarker {
   private icons: L.Icon[] = [];
 
   constructor(mb: MapBase, title: string, xyz: Point, options: L.MarkerOptions = {},
+    category: string,
     hash_id: string | undefined = undefined) {
     super(mb);
     this.title = title;
     this.marker = L.marker(this.mb.fromXYZ(xyz), Object.assign(options, {
       title,
       contextmenu: true,
-      contextmenuItems: [
-        {
-          text: 'Toggle completed',
-          callback: () => {
-            mb.m.fire('AppMap:update-search-markers', {
-              hash_id: hash_id,
-              label: this.getMarkerCategory(),
-            });
-          },
-          index: 0,
-        }
-      ]
+      contextmenuItems: [toggleMenuItem(mb, hash_id || "", category)]
     }));
     super.commonInit();
   }
-
-  getMarkerCategory() { return ""; }
 
   getHashID() { return ""; }
 
@@ -136,8 +137,8 @@ class MapMarkerCanvasImpl extends MapMarker {
   setMarked(marked: boolean, opacity: number) {
     // @ts-ignore
     this.marker.setBadge(marked);
-    this.marker.setStyle({});
     this.setOpacity(opacity);
+    this.marker.setStyle({});
   }
 
   protected marker: L.CircleMarker;
@@ -171,7 +172,7 @@ export class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     'Lightroot': [MapIcons.TOTK_LIGHTROOT, ''],
   };
 
-  constructor(mb: MapBase, l: any, showLabel: boolean, zIndexOffset?: number) {
+  constructor(mb: MapBase, l: any, showLabel: boolean, category: string, zIndexOffset?: number) {
     const lm = new map.LocationMarker(l);
     const [icon, label] = MapMarkerGenericLocationMarker.ICONS_AND_LABELS[lm.getIcon()];
     const msgId = lm.getMessageId();
@@ -179,7 +180,7 @@ export class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     super(mb, msg, lm.getXYZ(), {
       icon,
       zIndexOffset,
-    }, lm.getHashID());
+    }, category, lm.getHashID());
     if (showLabel) {
       this.marker.bindTooltip(msg, {
         permanent: true,
@@ -197,10 +198,6 @@ export class MapMarkerGenericLocationMarker extends MapMarkerImpl {
 
   getHashID() {
     return this.lm.getHashID();
-  }
-
-  getMarkerCategory() {
-    return this.lm.getIcon();
   }
 }
 
@@ -231,18 +228,7 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
       stroke: false,
       fill: false,
       // @ts-ignore
-      contextmenuItems: [
-        {
-          text: 'Toggle completed',
-          callback: () => {
-            mb.m.fire('AppMap:update-search-markers', {
-              hash_id: this.lp.getHashID(),
-              label: "Location",
-            });
-          },
-          index: 0,
-        }
-      ]
+      contextmenuItems: [toggleMenuItem(mb, lp.getHashID(), "Location")]
     });
     this.marker.unbindTooltip();
     this.marker.bindTooltip(msg + `<span class="location-marker-type">${visibleMarkerTypeStr}</span>`, {
@@ -255,6 +241,17 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
 
   getHashID() {
     return this.lp.getHashID();
+  }
+
+  setOpacity(opacity: number) {
+    const marker = this.getMarker();
+    if (!marker)
+      return
+    const tooltip = marker.getTooltip();
+    if (!tooltip)
+      return
+    tooltip.setOpacity(opacity);
+    marker.setStyle({ opacity, fillOpacity: opacity });
   }
 
   // Zoom level 2 -
@@ -304,7 +301,7 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
   public readonly dungeonNum: number;
 
   constructor(mb: MapBase, l: any) {
-    super(mb, l, false, 1000);
+    super(mb, l, false, l.Icon, 1000);
     // Yes, extracting the dungeon number from the save flag is what Nintendo does.
     const dungeonNum = parseInt(this.lm.getSaveFlag().replace('Location_Dungeon', ''), 10);
     // Different marker for Shrine in Cave
@@ -338,17 +335,13 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
 export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
   public readonly checkpointNum: number;
   constructor(mb: MapBase, l: any) {
-    super(mb, l, false, 1000)
+    super(mb, l, false, "CheckPoint", 1000)
     this.checkpointNum = parseInt(this.lm.getSaveFlag().replace('Location_CheckPoint', ''), 10);
     this.marker.setIcon(MapIcons.TOTK_LIGHTROOT);
     const msg = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', l.MessageID);
     this.setTitle(msg);
     this.marker.options.title = '';
     this.marker.bindTooltip(msg, { pane: 'front2' });
-  }
-
-  getMarkerCategory() {
-    return "CheckPoint";
   }
 
   shouldBeShown() {
@@ -359,7 +352,7 @@ export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
 export class MapMarkerDispenser extends MapMarkerGenericLocationMarker {
   public readonly info: any;
   constructor(mb: MapBase, info: any) {
-    super(mb, info, false, 1000)
+    super(mb, info, false, "Dispensers", 1000)
     this.marker.setIcon(MapIcons.DISPENSER);
     this.setTitle('Device Dispenser');
     this.marker.options.title = '';
@@ -370,10 +363,6 @@ export class MapMarkerDispenser extends MapMarkerGenericLocationMarker {
     this.obj = info;
   }
 
-  getMarkerCategory() {
-    return "Dispensers";
-  }
-
   shouldBeShown() {
     return this.info.map_name.includes(this.mb.activeLayer)
   }
@@ -382,7 +371,7 @@ export class MapMarkerDispenser extends MapMarkerGenericLocationMarker {
 export class MapMarkerTear extends MapMarkerGenericLocationMarker {
   public readonly tearNum: number;
   constructor(mb: MapBase, l: any) {
-    super(mb, l, false, 1001);
+    super(mb, l, false, "DragonTears", 1001);
     this.tearNum = parseInt(this.lm.getSaveFlag().replace('Location_DragonTears', ''), 10);
     const titles = ["empty",  // 0
       "Where Am I?",         // 1
@@ -403,10 +392,6 @@ export class MapMarkerTear extends MapMarkerGenericLocationMarker {
     this.marker.bindTooltip(`${titles[this.tearNum]}<br>Tear of the Dragon #${this.tearNum}`, { pane: 'front2' });
   }
 
-  getMarkerCategory() {
-    return "DragonTears";
-  }
-
   shouldBeShown() {
     return this.mb.activeLayer == "Surface";
   }
@@ -423,12 +408,9 @@ export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
   private info: any;
   constructor(mb: MapBase, l: any) {
     const isVillage = l['Icon'] == 'Village';
-    super(mb, l, isVillage);
+    super(mb, l, isVillage, "Place");
     this.isVillage = isVillage;
     this.info = l;
-  }
-  getMarkerCategory() {
-    return "Place";
   }
 
   shouldBeShown() {
@@ -446,7 +428,7 @@ export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
 
 export class MapMarkerTower extends MapMarkerGenericLocationMarker {
   constructor(mb: MapBase, l: any) {
-    super(mb, l, false, 1001);
+    super(mb, l, false, l.Icon, 1001);
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
   }
@@ -458,17 +440,11 @@ export class MapMarkerTower extends MapMarkerGenericLocationMarker {
 export class MapMarkerCave extends MapMarkerGenericLocationMarker {
   private info: any;
   constructor(mb: MapBase, l: any) {
-    super(mb, l, false, 1001);
+    const category = (l.Icon == "Chasm") ? "Chasm" : "Cave";
+    super(mb, l, false, category, 1001);
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
     this.info = l;
-  }
-
-  getMarkerCategory() {
-    if (this.info.Icon == "Chasm") {
-      return "Chasm";
-    }
-    return "Cave";
   }
 
   shouldBeShown() {
@@ -488,7 +464,7 @@ export class MapMarkerCave extends MapMarkerGenericLocationMarker {
 
 export class MapMarkerLabo extends MapMarkerGenericLocationMarker {
   constructor(mb: MapBase, l: any) {
-    super(mb, l, false);
+    super(mb, l, false, l.Icon);
   }
 
   shouldBeShown() {
@@ -499,14 +475,10 @@ export class MapMarkerLabo extends MapMarkerGenericLocationMarker {
 export class MapMarkerShop extends MapMarkerGenericLocationMarker {
   private info: any;
   constructor(mb: MapBase, l: any) {
-    super(mb, l, false);
+    super(mb, l, false, "Shop");
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
     this.info = l;
-  }
-
-  getMarkerCategory() {
-    return "Shop";
   }
 
   shouldBeShown() {
@@ -546,18 +518,7 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
       showLabel: extra.showLabel,
       className: classToColor(id),
       // @ts-ignore
-      contextmenuItems: [
-        {
-          text: 'Toggle completed',
-          callback: () => {
-            mb.m.fire('AppMap:update-search-markers', {
-              hash_id: this.info.hash_id,
-              label: "Korok",
-            });
-          },
-          index: 0,
-        }
-      ],
+      contextmenuItems: [toggleMenuItem(mb, info.hash_id, "Korok")],
     });
     this.info = info;
     this.obj = info;
@@ -702,15 +663,7 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
           },
           index: 0,
         },
-        {
-          text: 'Toggle completed',
-          callback: () => {
-            mb.m.fire('AppMap:update-search-markers', {
-              hash_id: this.obj.hash_id
-            });
-          },
-          index: 0,
-        },
+        toggleMenuItem(mb, obj.hash_id),
       ],
     });
     this.marker.bringToFront();
