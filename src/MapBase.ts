@@ -131,6 +131,8 @@ export class MapBase {
         // @ts-ignore
         const p: L.Point = layer._point;
         const ctx: CanvasRenderingContext2D = this._ctx;
+        ctx.save();
+        ctx.globalAlpha = (layer.options.opacity !== undefined) ? layer.options.opacity : 1.0;
         const img: HTMLImageElement = (layer.options.icon)!;
         if (layer.options.iconWidth && layer.options.iconHeight) {
           ctx.drawImage(img, p.x - layer.options.iconWidth / 2, p.y - layer.options.iconHeight / 2,
@@ -138,6 +140,7 @@ export class MapBase {
         } else {
           ctx.drawImage(img, p.x - img.width / 2, p.y - img.height / 2);
         }
+        ctx.restore();
       },
     });
 

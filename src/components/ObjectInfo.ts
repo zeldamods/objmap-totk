@@ -31,11 +31,18 @@ export default class ObjectInfo extends mixins(MixinUtil) {
 
   private metadata: any | null = null;
 
+  @Prop({ type: Boolean, default: false })
+  private isChecked!: boolean;
+
   private created() {
     if (this.obj)
       this.data = this.obj;
   }
-
+  toggleCheck() {
+    this.$parent.$emit('AppMap:update-search-markers', {
+      hash_id: this.data.hash_id
+    });
+  }
   async loadMetaIfNeeded() {
     if (!this.metadata) {
       const rname = this.getRankedUpActorNameForObj(this.data);
