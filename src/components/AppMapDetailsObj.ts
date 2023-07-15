@@ -640,6 +640,16 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       const m = objs.filter(obj => obj.name.includes("Destination"))
         .map(obj => this.getKorokMarkerWithIcon(obj, "smoke").addTo(map.m));
       this.korokMarkers.push(...m);
+    } else if (this.obj.korok_type == "Land on Target") {
+      let names = ["FldObj_KorokStartingBlock_A_01", "FldObj_KorokGoalBlock_A_02"];
+      let objs = this.genGroup.filter((obj: any) => names.includes(this.getName(obj.name)));
+      // Start and End Markers
+      let markers = objs.map((obj: any) => this.getKorokMarkerWithIcon(obj).addTo(map.m));
+      this.korokMarkers.push(...markers);
+      // Connecting Line
+      let ll = objs.map((obj: any) => [obj.data.Translate[2], obj.data.Translate[0]]);
+      let line = L.polyline(ll, { color: '#cccccc', weight: 1.5 }).addTo(map.m);
+      this.korokMarkers.push(line);
     }
   }
 
