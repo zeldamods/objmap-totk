@@ -246,6 +246,88 @@ function addPopupAndTooltip(layer: L.Marker | L.Polyline, root: any) {
   }
 }
 
+class SingleEdit {
+  tooltip: L.Draw.Tooltip | undefined;//= undefined;
+  layer: L.Polyline | L.Marker | undefined;// = undefined;
+  map: L.Map | undefined;// = undefined;
+
+  constructor() {
+    this.tooltip = undefined;
+    this.layer = undefined;
+    this.map = undefined;
+  }
+
+  tooltipDisable() {
+    if (this.tooltip) {
+      this.tooltip.dispose()
+      this.tooltip = undefined;
+    }
+  }
+
+  tooltipEnable() {
+    if (!this.map)
+      return
+    this.tooltip = new L.Draw.Tooltip(this.map)
+    this.tooltip.updateContent({
+      subtext: "Use context menu to toggle editing or Return to save",
+      text: "Drag handles or markers to edit features."
+    });
+    //drawTooltip.updatePosition(
+    this.map.on('mousemove', (ev) => {
+      if (this.tooltip) {
+        // @ts-ignore
+        this.tooltip.updatePosition(ev.latlng);
+      }
+    });
+  }
+
+  disable() {
+    if (this.map && this.layer) {
+      // @ts-ignore
+      this.layer.editing.disable();
+      this.tooltipDisable();
+      L.DomEvent.off(this.map.getContainer(), 'keyup',
+        this.onKey, this);
+      this.map = undefined;
+      this.layer = undefined;
+    }
+  }
+
+  enable(map: L.Map, layer: L.Polyline | L.Marker) {
+    this.map = map;
+    this.layer = layer;
+    // @ts-ignore
+    layer.editing.enable()
+    this.tooltipEnable();
+    L.DomEvent.on(this.map.getContainer(), 'keyup',
+      this.onKey, this);
+    this.map.getContainer().focus();
+  }
+
+  edit(map: L.Map, layer: L.Polyline | L.Marker) {
+    // @ts-ignore
+    if (!layer.editing.enabled()) {
+      // Turn off editing for current layer
+      //  unless it is the requested layer to edit
+      if (this.layer && this.map) {
+        if (this.layer == layer)
+          return
+        this.disable();
+      }
+      this.enable(map, layer);
+    } else {
+      this.disable();
+    }
+  }
+  onKey(e: Event) {
+    const ev = e as KeyboardEvent;
+    if (ev.code == "Enter") {
+      this.disable();
+      // A revert could be added using backupLayer and revertLayer
+      //   from Leaflet.Draw
+    }
+  }
+}
 
 @Component({
   components: {
@@ -334,6 +416,8 @@ export default class AppMap extends mixins(MixinUtil) {
 
   // internal State for drawing markers
   private drawVertexLayers: string[] = [];
+
+  private singleEdit: SingleEdit = new SingleEdit();
 
   setViewFromRoute(route: any) {
     const x = parseFloat(route.params.x);
@@ -529,8 +613,14 @@ export default class AppMap extends mixins(MixinUtil) {
           }
         },
       }, {
-        separator: true,
+        text: 'Toggle editing this marker or line',
         index: 1,
+        callback: () => {
+          this.singleEdit.edit(this.map.m, layer)
+        },
+      }, {
+        separator: true,
+        index: 2,
       }],
     });
   }
