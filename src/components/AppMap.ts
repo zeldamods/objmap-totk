@@ -348,6 +348,9 @@ export default class AppMap extends mixins(MixinUtil) {
       zoom = 3;
 
     this.map.setView([x, 0, z], zoom);
+    const layer = route.params.layer;
+    if (layer && ["Surface", "Depths", "Sky"].includes(layer))
+      this.map.switchBaseTileLayer(layer);
   }
   updateRoute() {
     this.updatingRoute = true;
@@ -358,6 +361,7 @@ export default class AppMap extends mixins(MixinUtil) {
         x: this.map.center[0],
         z: this.map.center[2],
         zoom: this.map.m.getZoom(),
+        layer: this.map.activeLayer,
       },
       query: this.$route.query,
     }).catch(err => {

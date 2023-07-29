@@ -10,6 +10,11 @@ export default new Router({
   routes: [
     { path: '/map', redirect: '/map/zx,0,0' },
     {
+      path: '/map/z:zoom,:x,:z,:layer',
+      name: 'map',
+      component: AppMap,
+    },
+    {
       path: '/map/z:zoom,:x,:z',
       name: 'map',
       component: AppMap,
