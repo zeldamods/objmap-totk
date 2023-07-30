@@ -62,7 +62,10 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
       { label: 'Hasty Ingredients', query: makeNameQuery(['Hightail Lizard', 'Hot-Footed Frog', 'Fleet-Lotus Seeds', 'Rushroom', 'Swift Carrot', 'Swift Violet']) },
       //{label: 'Hasty Ingredients (Lvl2 only)', query: makeNameQuery(['Hot-Footed Frog', 'Fleet-Lotus Seeds', 'Swift Violet'])},
       { label: 'Hearty Ingredients', query: 'name:Hearty' },
-      { label: 'Mighty Ingredients', query: makeNameQuery(['Mighty Item', 'Razorshroom', 'Razorclaw Crab', 'Bladed Rhino Beetle']), },
+      {
+        label: 'Mighty Ingredients', query: makeNameQuery(['Mighty']) + ' NOT Weapon OR ' +
+          makeNameQuery(['Razorshroom', 'Razorclaw Crab', 'Bladed Rhino Beetle']),
+      },
       { label: 'Tough Ingredients', query: makeNameQuery(['Ironshroom', 'Fortified Pumpkin', 'Rugged Rhino Beetle', 'Ironshell Crab', 'Armored', 'Armoranth']) },
     ],
   },
@@ -115,7 +118,7 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
       { label: "Sage's Will", query: `"Sage's Will"` },
       { label: 'Old Maps', query: 'Old Map' },
       { label: 'Statues Paths', query: 'WisemanStatue' },
-      { label: 'Messages from an Ancient Era Stone Tablets', query: "Ancient Stone Tablet map: Sky" },
+      { label: 'Messages from an Ancient Era Stone Tablets', query: "Tablet map: Sky" },
 
     ],
   }

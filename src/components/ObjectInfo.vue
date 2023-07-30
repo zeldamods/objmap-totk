@@ -2,9 +2,10 @@
   <div :class="className + (isStatic ? ' static' : '')">
     <section class="search-result-name">{{name(true)}}</section>
     <section class="search-result-location">
-      <span v-if="obj.map_name.includes('Surface')"> <i class="fa fa-tree fa-fw" style="color: lightgreen"></i></span>
-      <span v-else-if="obj.map_name.includes('Sky')"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></span>
-      <span v-else-if="obj.map_name.includes('Depths')"> <i class="fa fa-circle fa-fw" style="color: #F3B4F6;"></i></span>
+      <span v-if="obj.map_name.startsWith('Sky')"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></span>
+      <span v-else-if="obj.map_name.startsWith('Cave')"> <i class="fas fa-archway fa-fw" style="color: rosybrown"></i></span>
+      <span v-else-if="obj.map_type === 'MainField'"> <i class="fa fa-tree fa-fw" style="color: lightgreen"></i></span>
+      <span v-else-if="obj.map_type === 'MinusField'"> <i class="fa fa-circle fa-fw" style="color: #F3B4F6;"></i></span>
       <i v-else class="fa fa-map-marker-alt fa-fw"></i>
       {{getMapNameForObj(data)}}
     </section>
@@ -33,9 +34,12 @@
     <section class="search-result-equip" v-if="data.equip">
       <div v-if="obj.name == 'Npc_MinusFieldGhost_000'" style="display: inline">
         <div class="swords fa-fw fa" style="color: white">&#9876;</div> Possible:
+        {{data.equip.map((x) => getName(x) + "✨").join(', ')}}
       </div>
-      <i v-else class="fa fa-shield-alt fa-fw"></i>
-      {{data.equip.map((x) => getName(x)).join(', ')}}
+      <div v-else>
+        <i class="fa fa-shield-alt fa-fw"></i>
+        {{data.equip.map((x) => getName(x)).join(', ')}}
+      </div>
     </section>
     <section class="search-result-location" v-if="data.location">
       <i class="fas fa-fw fa-location-arrow" aria-hidden="true" style="color: honeydew"></i>

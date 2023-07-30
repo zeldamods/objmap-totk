@@ -255,6 +255,88 @@ function addPopupAndTooltip(layer: L.Marker | L.Polyline, root: any) {
   }
 }
 
+class SingleEdit {
+  tooltip: L.Draw.Tooltip | undefined;//= undefined;
+  layer: L.Polyline | L.Marker | undefined;// = undefined;
+  map: L.Map | undefined;// = undefined;
+
+  constructor() {
+    this.tooltip = undefined;
+    this.layer = undefined;
+    this.map = undefined;
+  }
+
+  tooltipDisable() {
+    if (this.tooltip) {
+      this.tooltip.dispose()
+      this.tooltip = undefined;
+    }
+  }
+
+  tooltipEnable() {
+    if (!this.map)
+      return
+    this.tooltip = new L.Draw.Tooltip(this.map)
+    this.tooltip.updateContent({
+      subtext: "Use context menu to toggle editing or Return to save",
+      text: "Drag handles or markers to edit features."
+    });
+    //drawTooltip.updatePosition(
+    this.map.on('mousemove', (ev) => {
+      if (this.tooltip) {
+        // @ts-ignore
+        this.tooltip.updatePosition(ev.latlng);
+      }
+    });
+  }
+
+  disable() {
+    if (this.map && this.layer) {
+      // @ts-ignore
+      this.layer.editing.disable();
+      this.tooltipDisable();
+      L.DomEvent.off(this.map.getContainer(), 'keyup',
+        this.onKey, this);
+      this.map = undefined;
+      this.layer = undefined;
+    }
+  }
+
+  enable(map: L.Map, layer: L.Polyline | L.Marker) {
+    this.map = map;
+    this.layer = layer;
+    // @ts-ignore
+    layer.editing.enable()
+    this.tooltipEnable();
+    L.DomEvent.on(this.map.getContainer(), 'keyup',
+      this.onKey, this);
+    this.map.getContainer().focus();
+  }
+
+  edit(map: L.Map, layer: L.Polyline | L.Marker) {
+    // @ts-ignore
+    if (!layer.editing.enabled()) {
+      // Turn off editing for current layer
+      //  unless it is the requested layer to edit
+      if (this.layer && this.map) {
+        if (this.layer == layer)
+          return
+        this.disable();
+      }
+      this.enable(map, layer);
+    } else {
+      this.disable();
+    }
+  }
+  onKey(e: Event) {
+    const ev = e as KeyboardEvent;
+    if (ev.code == "Enter") {
+      this.disable();
+      // A revert could be added using backupLayer and revertLayer
+      //   from Leaflet.Draw
+    }
+  }
+}
 
 @Component({
   components: {
@@ -350,6 +432,8 @@ export default class AppMap extends mixins(MixinUtil) {
   // internal State for drawing markers
   private drawVertexLayers: string[] = [];
 
+  private singleEdit: SingleEdit = new SingleEdit();
+
   filterResults(result: any) {
     if (!this.skipCompletedObjects) {
       return true;
@@ -373,6 +457,9 @@ export default class AppMap extends mixins(MixinUtil) {
       zoom = 3;
 
     this.map.setView([x, 0, z], zoom);
+    const layer = route.params.layer;
+    if (layer && ["Surface", "Depths", "Sky"].includes(layer))
+      this.map.switchBaseTileLayer(layer);
   }
   updateRoute() {
     this.updatingRoute = true;
@@ -383,6 +470,7 @@ export default class AppMap extends mixins(MixinUtil) {
         x: this.map.center[0],
         z: this.map.center[2],
         zoom: this.map.m.getZoom(),
+        layer: this.map.activeLayer,
       },
       query: this.$route.query,
     }).catch(err => {
@@ -404,6 +492,7 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.registerBaseLayerChangeCb(() => {
       this.updateMarkers();
       this.updateDrawLayers();
+      this.updateRoute();
     });
   }
 
@@ -566,8 +655,14 @@ export default class AppMap extends mixins(MixinUtil) {
           }
         },
       }, {
-        separator: true,
+        text: 'Toggle editing this marker or line',
         index: 1,
+        callback: () => {
+          this.singleEdit.edit(this.map.m, layer)
+        },
+      }, {
+        separator: true,
+        index: 2,
       }],
     });
   }
@@ -1340,25 +1435,31 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   initContextMenu() {
-    this.map.m.on(SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT, (e) => {
-      const mapType = Settings.getInstance().mapType;
-      const mapName = Settings.getInstance().mapName;
-
-      if (mapType != "Totk") {
-        if (mapName.length !== 0)
-          this.searchAddGroup("*", `Map: ${mapType}/${mapName}`);
-        else
-          this.searchAddGroup("*", `Maps: ${mapType}`);
-        return;
-      }
-
+    this.map.m.on(SHOW_ALL_OBJS_FOR_MAP_UNIT_EVENT, async (e) => {
       // @ts-ignore
       const latlng: L.LatLng = e.latlng;
       const xyz = this.map.toXYZ(latlng);
       if (!map.isValidPoint(xyz))
         return;
-      const quad = map.pointToMapUnit(xyz);
-      this.searchAddGroup(`map:"${quad}"`, `Map: Sky/Surface/Depths ${quad}`);
+      const layer = this.map.activeLayer;
+      const mapType = this.settings!.mapType;
+      const mapName = this.settings!.mapName;
+      if (mapType == 'SmallDungeon') {
+        this.searchAddGroup(`map:"${mapType}/${mapName}"`, `Map: Shrine ${mapName}`);
+      } else if (mapType == 'LargeDungeon') {
+        this.searchAddGroup(`map:"${mapType}/${mapName}"`, `Map: Temples ${mapName}`);
+      } else if (mapType == 'NormalStage') {
+        this.searchAddGroup(`map:"${mapType}/${mapName}"`, `Map: Special Maps ${mapName}`);
+      } else if (layer == 'Surface' || layer == 'Depths') {
+        let mapType = (layer == "Surface") ? 'MainField' : 'MinusField';
+        const quad = map.pointToMapUnit(xyz);
+        this.searchAddGroup(`map:"${mapType}/${quad}"`, `Map: ${layer} ${quad}`);
+      } else if (layer == 'Sky') {
+        const regions = await MapMgr.getInstance().getRegionFromPoint(layer, xyz);
+        const query = regions.map(region => `map: "MainField/Sky__${region}"`).join(" OR ");
+        const regionsStr = regions.join(" or ");
+        this.searchAddGroup(query, `Map: ${regionsStr}`);
+      }
     });
   }
 
@@ -1702,18 +1803,24 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   private switchToObjectLayer(obj: ObjectMinData) {
-    if (obj.map_type != "Totk") {
-      return;
-    }
-
     if (!obj.map_name) {
       return;
     }
 
-    if (obj.map_name.startsWith("Depths")) {
+    if (obj.map_type.startsWith("MinusField")) {
       this.map.switchBaseTileLayer("Depths");
     } else if (obj.map_name.startsWith("Sky")) {
       this.map.switchBaseTileLayer("Sky");
+    } else if (obj.map_type == "LargeDungeon") {
+      if (obj.map_name == "LargeDungeonWater") {
+        this.map.switchBaseTileLayer("Sky");
+      } else if (obj.map_name == "LargeDungeonFire") {
+        this.map.switchBaseTileLayer("Depths");
+      } else if (obj.map_name == "LargeDungeonSpirit") {
+        this.map.switchBaseTileLayer("Depths");
+      } else {// Wind and Thunder
+        this.map.switchBaseTileLayer("Surface");
+      }
     } else {
       this.map.switchBaseTileLayer("Surface");
     }

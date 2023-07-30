@@ -488,7 +488,7 @@ export class MapMarkerShop extends MapMarkerGenericLocationMarker {
       return true;
     if (layer == 'Depths' && y < 0)
       return true;
-    if (layer == 'Surface' && y >= 0) {
+    if (layer == 'Surface' && y >= 0 && y <= 1000) {
       if (this.info.MessageID == 'BatteryExchangeShop_01') {
         return true;
       }
