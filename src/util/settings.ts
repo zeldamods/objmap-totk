@@ -73,7 +73,6 @@ export class Settings {
     this.drawControlsShown = parse(data.drawControlsShown, Id, false);
     this.decompBannerHidden = parse(data.decompBannerHidden, Id, false);
     this.noTouchScreen = parse(data.noTouchScreen, Id, false);
-
     this.invokeCallbacks();
   }
 

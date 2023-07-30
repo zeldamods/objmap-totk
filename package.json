@@ -14,6 +14,7 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
     "git-describe": "^4.1.1",
+    "idb": "^7.1.1",
     "leaflet": "~1.6.0",
     "leaflet-contextmenu": "^1.4.0",
     "leaflet-defaulticon-compatibility": "^0.1.1",
@@ -31,6 +32,7 @@
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.2.0",
+    "vue-virtual-scroller": "^1.1.2",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
