@@ -383,6 +383,7 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.registerBaseLayerChangeCb(() => {
       this.updateMarkers();
       this.updateDrawLayers();
+      this.updateRoute();
     });
   }
 
