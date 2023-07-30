@@ -14,7 +14,7 @@
           <div>{{meta(list)}}</div>
           <div>
             <b-btn size="sm clButton" variant="link" style="padding: 0"
-                   @click="show(list)" title="Add items to map">
+                   @click.stop.prevent="show(list)" title="Add items to map">
               Add items to map
             </b-btn>
           </div>

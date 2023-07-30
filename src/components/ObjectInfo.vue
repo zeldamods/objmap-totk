@@ -17,10 +17,10 @@
       <span v-if="!withPermalink">{{formatObjId(data.hash_id)}}</span>
       <b-btn class="checkmark-btn" @click.stop.prevent="toggleCheck()" title="Mark as found or not">
         <span v-if="isChecked">
-          <i class="fa fa-check-circle fa-fw" style="color: white; padding-left: 1em;"></i>
+          <i class="fa fa-check-circle fa-fw" style="color: white; padding-left: 1em; padding-right:0.5em"></i>
         </span>
         <span v-else>
-          <i class="fa fa-check-circle" style="color: rgba(255,255,255,0.25); padding-left: 1em;"></i>
+          <i class="fa fa-check-circle fa-fw" style="color: rgba(255,255,255,0.25); padding-left: 1em; padding-right: 0.5em"></i>
         </span>
       </b-btn>
     </section>
@@ -128,6 +128,7 @@
 }
 
 .checkmark-btn {
+    position: relative;
     display: inline;
     text-shadow: none;
     background: none;
@@ -135,6 +136,8 @@
     padding-top: 0px;
     padding-bottom: 0px;
     vertical-align: inherit;
+    margin-top: -1em;
+    float: right;
 }
 
 .checkmark-btn:focus, .checkmark-btn:active, .checkmark-btn:hover, .checkmark-btn:focus-visible {
