@@ -45,7 +45,9 @@ function numOrArrayToArray(x: number | [number, number, number] | undefined): [n
 
 function isAreaObject(obj: ObjectMinData) {
   const areaObjectNames = ["Area", "BoxWater", "SpotBgmTag", "PointWindSetTag", "AreaCulling", "AreaCulling_InnerHide",
-    "AreaCulling_InnerOn", "AreaCulling_OuterNPCMementary", "FarModelCullingArea", 'LocationArea'];
+    "AreaCulling_InnerOn", "AreaCulling_OuterNPCMementary", "FarModelCullingArea", 'LocationArea',
+    'LowGravityAreaBox', 'LowGravityAreaCylinder'
+  ];
   return areaObjectNames.includes(obj.name) || obj.name.startsWith('AirWall');
 }
 
@@ -331,6 +333,10 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     const [x, y, z] = obj.data.Translate;
     const dyn = obj.data.Dynamic;
     let shapeNum = (dyn && dyn.RigidBodyShapeType !== undefined) ? dyn.RigidBodyShapeType : 2;
+    if (obj.name == 'LowGravityAreaCylinder')
+      shapeNum = 3;
+    if (obj.name == 'LowGravityAreaBox')
+      shapeNum = 2;
     const shape = (shapeNum <= 3) ? shapes[shapeNum] : shapes[2];
     const scale = numOrArrayToArray(obj.data.Scale);
     const rotate = numOrArrayToArray(obj.data.Rotate);
