@@ -143,6 +143,8 @@
           <b-radio value="MinusField">Depths Field Map Areas</b-radio>
           <b-radio value="Cave">Cave Field Map Areas</b-radio>
           <b-radio value="Sky">Sky Field Map Areas</b-radio>
+          <b-radio value="sky_polys">Sky Regions <div style="display: inline; font-size:0.8em">(approximate)</div></b-radio>
+          <b-radio value="cave_polys">Cave Regions <div style="display: inline; font-size:0.8em">(approximate)</div></b-radio>
 
           <!-- <b-radio value="LoadBalancer">Load balancer areas</b-radio> -->
         </b-radio-group>

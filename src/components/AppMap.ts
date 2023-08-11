@@ -1568,7 +1568,12 @@ export default class AppMap extends mixins(MixinUtil) {
 
   featureCollectionToPolygons(areas: any) {
     return Object.fromEntries(areas.features.map((feat: any) => {
-      feat.geometry.properties = { title: feat.properties.Area.toString() }
+      if (feat.properties.Area !== undefined) {
+        feat.geometry.properties = { title: feat.properties.Area.toString() }
+      } else if (feat.properties.group != undefined) {
+        feat.geometry.properties = { title: feat.properties.group }
+        return [feat.properties.group, [feat.geometry]];
+      }
       return [feat.properties.Area, [feat.geometry]]
     }))
   }
@@ -1638,7 +1643,7 @@ export default class AppMap extends mixins(MixinUtil) {
         layer.on('mouseout', () => {
           layers.forEach(l => l.setStyle({ weight: 2, fillOpacity: 0.2 }));
         });
-        if (name == "MapTower") {
+        if (name == "MapTower" || name == "sky_polys" || name == "cave_polys") {
           layer.bindTooltip(features[0].properties.title);
           continue;
         }
