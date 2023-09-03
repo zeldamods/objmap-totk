@@ -434,6 +434,9 @@ export default class AppMap extends mixins(MixinUtil) {
 
   private singleEdit: SingleEdit = new SingleEdit();
 
+  private localDetails: { [key: string]: boolean } = {};
+  private localSearch: { [key: string]: boolean } = {};
+
   filterResults(result: any) {
     if (!this.skipCompletedObjects) {
       return true;
@@ -1091,7 +1094,19 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.m.on({ 'click': () => this.closeMarkerDetails() });
   }
 
+  setLocalDetails(marker: MapMarker) {
+    //@ts-ignore
+    if (marker.obj && marker.obj['hash_id']) {
+      const marks: { [key: string]: boolean } = {};
+      //@ts-ignore
+      const hash = marker.obj.hash_id;
+      marks[hash] = this.checklists.isMarked(hash) || false;
+      this.localDetails = Object.assign({}, marks);
+    }
+  }
+
   openMarkerDetails(component: string, marker: MapMarker, zoom = -1) {
+    this.setLocalDetails(marker);
     this.closeMarkerDetails(true);
     this.detailsMarker = new ui.Unobservable(marker);
     this.detailsComponent = component;
@@ -1231,15 +1246,19 @@ export default class AppMap extends mixins(MixinUtil) {
       this.searchLastSearchFailed = true;
     }
     const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
+    let marks: { [key: string]: boolean } = {};
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
+      marks[result.hash_id] = false;
       if (this.checklists.isMarked(result.hash_id)) {
         marker.data.setMarked(true, opacity);
+        marks[result.hash_id] = true;
       }
       this.searchResultMarkers.push(marker);
       marker.data.getMarker().addTo(this.map.m);
     }
 
+    this.localSearch = Object.assign({}, marks);
     this.updateTooltips();
     this.searching = false;
   }
@@ -1407,6 +1426,10 @@ export default class AppMap extends mixins(MixinUtil) {
     }
     const opacity = (value) ? MARKER_OPACITIES[this.clMarkerVisibility] : 1.0;
     this.$nextTick(() => {
+      if (item.hash_id in this.localDetails)
+        this.localDetails[item.hash_id] = value;
+      if (item.hash_id in this.localSearch)
+        this.localSearch[item.hash_id] = value;
       // Search Result Markers
       const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
       if (marker) {
@@ -1851,6 +1874,9 @@ export default class AppMap extends mixins(MixinUtil) {
     this.initEvents();
     this.initSettings();
     this.initChecklist();
+
+    this.localDetails = {};
+    this.localSearch = {};
 
     if (this.$route.query.q) {
       this.searchQuery = this.$route.query.q.toString();

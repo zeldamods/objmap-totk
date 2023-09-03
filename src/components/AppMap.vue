@@ -120,7 +120,7 @@
               <div v-for="(result, idx) in searchResults" :key="result.objid">
                 <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false"
                             @click.native="searchJumpToResult(idx)"
-                            :isChecked="checklists.marked[result.hash_id]"/>
+                            :isChecked="localSearch[result.hash_id]"/>
               </div>
             </div>
           </section>
@@ -260,7 +260,7 @@
         <h1 v-if="detailsMarker" class="location-title leaflet-sidebar-header" :title="detailsMarker.data.title"><span>{{detailsMarker.data.title}}</span></h1>
         <component v-if="detailsComponent" :is="detailsComponent"
                    v-bind:marker="detailsMarker"
-                   v-bind:is-checked="(detailsMarker.data && detailsMarker.data.obj) ? checklists.marked[detailsMarker.data.obj.hash_id] : false"
+                   v-bind:is-checked="localDetails[detailsMarker.data.obj.hash_id]"
                    ></component>
       </div>
 
