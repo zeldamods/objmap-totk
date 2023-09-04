@@ -260,7 +260,7 @@
         <h1 v-if="detailsMarker" class="location-title leaflet-sidebar-header" :title="detailsMarker.data.title"><span>{{detailsMarker.data.title}}</span></h1>
         <component v-if="detailsComponent" :is="detailsComponent"
                    v-bind:marker="detailsMarker"
-                   v-bind:is-checked="localDetails[detailsMarker.data.obj.hash_id]"
+                   v-bind:is-checked="(detailsMarker.data && detailsMarker.data.obj) ? localDetails[detailsMarker.data.obj.hash_id] : false"
                    ></component>
       </div>
 
