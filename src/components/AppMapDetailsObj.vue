@@ -43,7 +43,7 @@
       </section>
 
       <section v-if="shopDataExists()">
-        <ShopData :data="shopData[this.getLocationSub()]" />
+        <ShopData :data="obj.data.ShopData" />
       </section>
 
       <section v-if="obj.data.Presence">

@@ -136,11 +136,6 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     }
 
     const location = this.getLocationSub();
-    if (location != '') {
-      if (location.includes('Stable') || location == "Oasis") {
-        this.shopData = await MapMgr.getInstance().getObjShopData();
-      }
-    }
 
     if (this.obj.data.Rails) {
       this.rails = await MapMgr.getInstance().getObjRails(this.obj.hash_id) || [];
@@ -470,7 +465,9 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   }
 
   shopDataExists() {
-    return Object.keys(this.shopData).length > 0;
+    if (!this.obj || !this.obj.data || !this.obj.data['ShopData'])
+      return false;
+    return true;
   }
 
   getDropTableGroupCount(group: any) {

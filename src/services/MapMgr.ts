@@ -20,6 +20,7 @@ export interface ResPlacementObj {
   readonly Scale?: Vec3 | number;
   readonly Rotate?: Vec3 | number;
   readonly Rails?: any;
+  readonly ShopData?: any;
 }
 
 export interface ObjectDropInfo {
