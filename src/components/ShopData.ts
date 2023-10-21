@@ -18,18 +18,12 @@ export default class ShopData extends mixins(MixinUtil) {
   }
   name(i: number) {
     return ui.getName(this.item(i).Name)
-    //const n = i.toString().padStart(3, '0')
-    //return ui.getName(this.data.Normal[`ItemName${n}`]);
   }
   num(i: number) {
     return this.item(i).StockNum;
-    //const n = i.toString().padStart(3, '0')
-    //return this.data.Normal[`ItemNum${n}`];
   }
   price(i: number) {
     return this.item(i).Price;
-    //const n = i.toString().padStart(3, '0')
-    //return this.data.Normal[`ItemPrice${n}`];
   }
   currency(i: number) {
     return this.item(i).Currency;
