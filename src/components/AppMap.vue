@@ -225,10 +225,14 @@
               <option value="always">Always show</option>
           </select>
           </div>
+          <div style="display: flex; flex-flow: row nowrap;">
+            <b-btn size="sm" variant="link" @click="toggleAllLayers(true)">All On</b-btn>
+            <b-btn size="sm" variant="link" @click="toggleAllLayers(false)">All Off</b-btn>
+          </div>
           <draggable v-model="drawLayerOpts" @update="updateDrawLayerOptsIndex">
             <div v-for="layer in drawLayerOpts" :key="layer.id" @model="drawLayerOpts" class="marker-row" draggable="true">
               <div>
-                <input type="checkbox" @input="toggleLayerVisibility" :id="layer.id" :checked="layer.visible" >
+                <input type="checkbox" @input="toggleLayerVisibility" :id="layer.id" v-model="layer.visible" >
                 <div v-if="layer.map_layer == 'Surface'" style="display: inline; padding-left: 0.3em;"> <i class="fa fa-tree fa-fw" style="color: lightgreen"></i></div>
                 <div v-else-if="layer.map_layer == 'Sky'"  style="display: inline; padding-left: 0.3em;"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></div>
                 <div v-else-if="layer.map_layer == 'Depths'"  style="display: inline; padding-left: 0.3em;"><i class="fa fa-circle fa-fw" style="color: #D771DB;"></i></div>

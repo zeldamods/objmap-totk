@@ -680,6 +680,18 @@ export default class AppMap extends mixins(MixinUtil) {
       layer.addTo(this.map.m);
     }
   }
+  toggleAllLayers(on: boolean) {
+    this.drawLayerOpts.forEach((opt: any) => {
+      opt.visible = on
+      let layer = this.drawLayer.getLayer(opt.id);
+      if (!layer)
+        return;
+      if (on)
+        layer.addTo(this.map.m)
+      else
+        layer.remove()
+    })
+  }
 
   updateDrawLayers() {
     const activeLayer = this.map.activeLayer;
@@ -717,6 +729,8 @@ export default class AppMap extends mixins(MixinUtil) {
     const layerIDs = this.drawLayer.getLayers().map((layer: any) => {
       let props = layer.feature.properties;
       const id = this.drawLayer.getLayerId(layer);
+      const opt = this.drawLayerOpts.find(opt => opt.id == id);
+      const visible = (opt && opt.visible !== undefined) ? opt.visible : true;
       return {
         id,
         color: layer.options.color,
@@ -724,7 +738,7 @@ export default class AppMap extends mixins(MixinUtil) {
         title: props.title,
         text: props.text,
         length: (ui.leafletType(layer) == ui.LeafletType.Marker) ? "" : props.pathLength.toFixed(2),
-        visible: true,
+        visible,
         map_layer: props.map_layer,
       };
     })
