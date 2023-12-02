@@ -164,6 +164,7 @@ export class MapMarkerGenericLocationMarker extends MapMarkerImpl {
     'Star': [MapIcons.STAR, ''],
     'Drink': [MapIcons.DRINK, ''],
     'Battery': [MapIcons.BATTERY, ''],
+    'Sword': [MapIcons.SWORD, ''],
     'Dispenser': [MapIcons.DISPENSER, ''],
     'Cave': [MapIcons.CAVE, 'Cave Entrance'],
     'Well': [MapIcons.WELL, 'Well'],

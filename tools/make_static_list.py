@@ -144,6 +144,8 @@ for field in ['MainField', 'MinusField']:
                             item['Icon'] = 'Star'
                         elif 'BatteryExchangeShop_' in msg:
                             item['Icon'] = 'Battery'
+                        elif 'ForgeShopGolem' in msg:
+                            item['Icon'] = 'Sword'
                         else:
                             item['Icon'] = 'ShopBougu'
                         markers['Shop'].append(item)

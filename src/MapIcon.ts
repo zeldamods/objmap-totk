@@ -55,6 +55,10 @@ export const DRINK = L.icon({
   iconUrl: '/icons/drink.svg',
   iconSize: L.point(20, 20),
 });
+export const SWORD = L.icon({
+  iconUrl: '/icons/sword.svg',
+  iconSize: L.point(20, 20),
+});
 
 export const VILLAGE = L.icon({
   iconUrl: '/icons/mapicon_village.svg',
