@@ -11,7 +11,7 @@
       <section>Position: {{obj.data.Translate[0].toFixed(2)}}, {{obj.data.Translate[1].toFixed(2)}}, {{(-obj.data.Translate[2]).toFixed(2)}}</section>
       <section v-if="obj.data.Scale != null">Scale: {{arrayOrNumToStr(obj.data.Scale, 2)}}</section>
       <section v-if="obj.data.Rotate != null">Rotate: {{arrayOrNumToStr(obj.data.Rotate, 5)}}</section>
-      <section v-if="obj.data.UniqueName">Unique name: {{obj.data.UniqueName}}</section>
+      <section v-if="obj.data.Name">Unique name: {{obj.data.Name}}</section>
 
       <p class="my-1" v-if="isPossibleConditionalSpawn()" style="color: orange"><i class="fa fa-exclamation-circle"></i> This object might be a conditional spawn, or it might have custom logic.</p>
 
@@ -145,6 +145,14 @@
         <div class="search-results">
           <ObjectInfo v-for="otherObj in genGroup" :key="otherObj.objid" :obj="otherObj" :isStatic="false" @click.native="jumpToObj(otherObj)" />
         </div>
+      </details>
+    </section>
+    <section>
+      <details>
+        <summary>
+          <h4 class="subsection-heading">Object data</h4>
+        </summary>
+        <pre class="obj-params">{{JSON.stringify(obj, undefined, 2)}}</pre>
       </details>
     </section>
   </div>
