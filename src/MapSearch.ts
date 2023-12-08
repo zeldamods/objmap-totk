@@ -106,7 +106,7 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
   {
     label: '<i class="fa fa-ellipsis-h"></i>',
     presets: [
-      { label: "Dog Treasures", query: "0xae32e479e861a6d2 OR 0x7331e404656cde51 OR 0xe9c6573d304bf15c OR 0xaf37e21735729d39 OR 0x602d68ed04bf7c6c OR 0x8142c74cd1db001f OR 0x9f093b26fb3b54f8 OR 0x85a81139b65afc67 OR 0xce94c29fa40b8618 OR 0xd0769f8b4a13a936 OR 0xe4da53903f94b653 OR 0xe1aca0a6ad0d5c42 OR 0xe7faace66c19fc6d OR 0x09752412d1411bc4 OR 0xb0061d25bbf7cb45 OR 0x10d45b2a2d9dab92 OR 0x56db2b6c5607f336 OR 0x30cad9a5867f0a2c OR 0xc53ae280cbd9b3b3 OR 0x718cd3145cc0f831" },
+      { label: "Dog Treasures", query: "0xae32e479e861a6d2 OR 0x7331e404656cde51 OR 0xe9c6573d304bf15c OR 0xaf37e21735729d39 OR 0x602d68ed04bf7c6c OR 0x8142c74cd1db001f OR 0x9f093b26fb3b54f8 OR 0x85a81139b65afc67 OR 0xce94c29fa40b8618 OR 0xd0769f8b4a13a936 OR 0xe4da53903f94b653 OR 0xe1aca0a6ad0d5c42 OR 0xe7faace66c19fc6d OR 0x09752412d1411bc4 OR 0xb0061d25bbf7cb45 OR 0x10d45b2a2d9dab92 OR 0x56db2b6c5607f336 OR 0x30cad9a5867f0a2c OR 0xc53ae280cbd9b3b3 OR 0x718cd3145cc0f831 OR 0xb35e4d017b8a90e4" },
       { label: 'Wild Horses', query: "WildHorse*" },
       { label: 'Special Horses', query: "GameRomHorseZelda OR GameRomHorseGold OR GameRomHorse00L OR GameRomHorse01L" },
       { label: 'Shadowy Figures with Weapons', query: 'Npc_MinusFieldGhost_000' },
