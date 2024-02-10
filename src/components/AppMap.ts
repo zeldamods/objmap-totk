@@ -1616,9 +1616,15 @@ export default class AppMap extends mixins(MixinUtil) {
   featureCollectionToPolygons(areas: any) {
     return Object.fromEntries(areas.features.map((feat: any) => {
       if (feat.properties.Area !== undefined) {
-        feat.geometry.properties = { title: feat.properties.Area.toString() }
+        feat.geometry.properties = {
+          title: feat.properties.Area.toString(),
+          color: feat.properties.color || undefined
+        }
       } else if (feat.properties.group != undefined) {
-        feat.geometry.properties = { title: feat.properties.group }
+        feat.geometry.properties = {
+          title: feat.properties.group,
+          color: feat.properties.color || undefined
+        }
         return [feat.properties.group, [feat.geometry]];
       }
       return [feat.properties.Area, [feat.geometry]]
@@ -1672,7 +1678,8 @@ export default class AppMap extends mixins(MixinUtil) {
       const layers: L.GeoJSON[] = features.map((feature: any) => {
         return L.geoJSON(feature, {
           style: function(_) {
-            return { weight: 2, fillOpacity: 0.2, color: ui.genColor(entries.length, i) };
+            let color = feature.properties.color || ui.genColor(entries.length, i);
+            return { weight: 2, fillOpacity: 0.2, color }
           },
           // @ts-ignore
           contextmenu: true,
@@ -1692,6 +1699,11 @@ export default class AppMap extends mixins(MixinUtil) {
         });
         if (name == "MapTower" || name == "sky_polys" || name == "cave_polys") {
           layer.bindTooltip(features[0].properties.title);
+          continue;
+        }
+        if (name == "cave_polys_detail") {
+          let title = features[0].properties.title.split("::").at(0)
+          layer.bindTooltip(title);
           continue;
         }
         const area = await MsgMgr.getInstance().getAreaData(name, parseInt(data));
