@@ -1677,6 +1677,10 @@ export default class AppMap extends mixins(MixinUtil) {
     for (const [data, features] of entries) {
       const layers: L.GeoJSON[] = features.map((feature: any) => {
         return L.geoJSON(feature, {
+          pointToLayer: function(_geoJsonPoint, latlng) {
+            let color = feature.properties.color || '#3388ff'
+            return L.marker(latlng, { icon: ui.svgIcon(color) });
+          },
           style: function(_) {
             let color = feature.properties.color || ui.genColor(entries.length, i);
             return { weight: 2, fillOpacity: 0.2, color }
@@ -1700,6 +1704,10 @@ export default class AppMap extends mixins(MixinUtil) {
         if (name == "MapTower" || name == "sky_polys" || name == "cave_polys") {
           layer.bindTooltip(features[0].properties.title);
           continue;
+        }
+        if (name == "cherry_blossom_trees") {
+          layer.bindTooltip(features[0].properties.title);
+          continue
         }
         if (name == "cave_polys_detail") {
           let title = features[0].properties.title.split("::").at(0)

@@ -1,0 +1,618 @@
+{
+   "features" : [
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     -1124,
+                     -1000
+                  ],
+                  [
+                     -1124,
+                     -4000
+                  ],
+                  [
+                     -5000,
+                     -4000
+                  ],
+                  [
+                     -5000,
+                     -1000
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 0",
+            "title" : "0",
+            "Area" : "Area 0a",
+            "color" : "#3388ff"
+         },
+         "style" : {
+            "color" : "#3388ff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     -3013,
+                     -175
+                  ],
+                  [
+                     -3013,
+                     -975
+                  ],
+                  [
+                     -3859,
+                     -975
+                  ],
+                  [
+                     -3859,
+                     -175
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 0",
+            "title" : "0",
+            "Area" : "Area 0b",
+            "color" : "#3388ff"
+         },
+         "style" : {
+            "color" : "#3388ff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               -4049.53,
+               -1689.97
+            ],
+            "type" : "Point"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 11,
+            "pathLength" : 0,
+            "text" : "Hebra",
+            "Area" : "Hebra",
+            "title" : "CaveMasterShintoShrine_Activate",
+            "color" : "#3388ff"
+         },
+         "style" : {
+            "color" : "#3388ff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     5000,
+                     -1014
+                  ],
+                  [
+                     5000,
+                     -4000
+                  ],
+                  [
+                     1338,
+                     -4000
+                  ],
+                  [
+                     1338,
+                     -1014
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 2",
+            "Area" : "Area 2a",
+            "title" : "2",
+            "color" : "#88ffff"
+         },
+         "style" : {
+            "color" : "#88ffff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     1338,
+                     -1757
+                  ],
+                  [
+                     1338,
+                     -4000
+                  ],
+                  [
+                     -332,
+                     -4000
+                  ],
+                  [
+                     -332,
+                     -1757
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 2",
+            "Area" : "Area 2b",
+            "title" : "2",
+            "color" : "#88ffff"
+         },
+         "style" : {
+            "color" : "#88ffff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               1239.42,
+               -2957.39
+            ],
+            "type" : "Point"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 11,
+            "pathLength" : 0,
+            "text" : "Eldin",
+            "Area" : "Eldin",
+            "title" : "CaveMasterShintoShrine_Activate04",
+            "color" : "#88ffff"
+         },
+         "style" : {
+            "color" : "#88ffff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     -1005,
+                     1600
+                  ],
+                  [
+                     -1005,
+                     -1000
+                  ],
+                  [
+                     -5000,
+                     -1000
+                  ],
+                  [
+                     -5000,
+                     1600
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 3",
+            "Area" : "Area 3",
+            "title" : "3",
+            "color" : "#ff8888"
+         },
+         "style" : {
+            "color" : "#ff8888"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               -2299.47,
+               341.21
+            ],
+            "type" : "Point"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 11,
+            "pathLength" : 0,
+            "text" : "Satori Mountain",
+            "Area" : "Satori Mountain",
+            "title" : "CaveMasterShintoShrine_Activate08",
+            "color" : "#ff8888"
+         },
+         "style" : {
+            "color" : "#ff8888"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     1782,
+                     1585
+                  ],
+                  [
+                     1782,
+                     -1621
+                  ],
+                  [
+                     -1567,
+                     -1621
+                  ],
+                  [
+                     -1567,
+                     1585
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 4",
+            "Area" : "Area 4a",
+            "title" : "4",
+            "color" : "#ff33ff"
+         },
+         "style" : {
+            "color" : "#ff33ff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               317.36,
+               -541.93
+            ],
+            "type" : "Point"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 11,
+            "pathLength" : 0,
+            "text" : "Hyrule Plains",
+            "Area" : "Hyrule Plains",
+            "title" : "CaveMasterShintoShrine_Activate03",
+            "color" : "#ff33ff"
+         },
+         "style" : {
+            "color" : "#ff33ff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     -56,
+                     -1366
+                  ],
+                  [
+                     -56,
+                     -2315
+                  ],
+                  [
+                     -922,
+                     -2315
+                  ],
+                  [
+                     -922,
+                     -1366
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 4",
+            "Area" : "Area 4b",
+            "title" : "4",
+            "color" : "#ff33ff"
+         },
+         "style" : {
+            "color" : "#ff33ff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               2530.88,
+               5.44
+            ],
+            "type" : "Point"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 11,
+            "pathLength" : 0,
+            "text" : "Lanayru",
+            "Area" : "Lanayru",
+            "title" : "CaveMasterShintoShrine_Activate06",
+            "color" : "#ffffff"
+         },
+         "style" : {
+            "color" : "#ffffff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     5000,
+                     915
+                  ],
+                  [
+                     5000,
+                     -1678
+                  ],
+                  [
+                     1784,
+                     -1678
+                  ],
+                  [
+                     1784,
+                     915
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 5",
+            "Area" : "Area 5",
+            "title" : "5",
+            "color" : "#ffffff"
+         },
+         "style" : {
+            "color" : "#ffffff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     -1355,
+                     4000
+                  ],
+                  [
+                     -1355,
+                     1536
+                  ],
+                  [
+                     -5000,
+                     1536
+                  ],
+                  [
+                     -5000,
+                     4000
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 6",
+            "Area" : "Area 6",
+            "title" : "6",
+            "color" : "#00ff00"
+         },
+         "style" : {
+            "color" : "#00ff00"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               -2314.76,
+               2157.58
+            ],
+            "type" : "Point"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 11,
+            "pathLength" : 0,
+            "text" : "Gerudo Canyon",
+            "Area" : "Gerudo Canyon",
+            "title" : "CaveMasterShintoShrine_Activate02",
+            "color" : "#00ff00"
+         },
+         "style" : {
+            "color" : "#00ff00"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     2183,
+                     4000
+                  ],
+                  [
+                     2183,
+                     1595
+                  ],
+                  [
+                     -1342,
+                     1595
+                  ],
+                  [
+                     -1342,
+                     4000
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 7",
+            "Area" : "Area 7",
+            "title" : "7",
+            "color" : "#00ffff"
+         },
+         "style" : {
+            "color" : "#00ffff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               798.82,
+               3502.3
+            ],
+            "type" : "Point"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 11,
+            "pathLength" : 0,
+            "text" : "Faron",
+            "Area" : "Faron",
+            "title" : "CaveMasterShintoShrine_Activate05",
+            "color" : "#00ffff"
+         },
+         "style" : {
+            "color" : "#00ffff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               [
+                  [
+                     5000,
+                     4000
+                  ],
+                  [
+                     5000,
+                     911
+                  ],
+                  [
+                     1739,
+                     911
+                  ],
+                  [
+                     1739,
+                     4000
+                  ]
+               ]
+            ],
+            "type" : "Polygon"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 1,
+            "pathLength" : 0,
+            "text" : "Area 8",
+            "Area" : "Area 8",
+            "title" : "8",
+            "color" : "#3300ff"
+         },
+         "style" : {
+            "color" : "#3300ff"
+         },
+         "type" : "Feature"
+      },
+      {
+         "geometry" : {
+            "coordinates" : [
+               3357.82,
+               2479.17
+            ],
+            "type" : "Point"
+         },
+         "properties" : {
+            "length" : 0,
+            "map_layer" : "Surface",
+            "order" : 11,
+            "pathLength" : 0,
+            "text" : "East Necluda",
+            "Area" : "East Necluda",
+            "title" : "CaveMasterShintoShrine_Activate07",
+            "color" : "#3300ff"
+         },
+         "style" : {
+            "color" : "#3300ff"
+         },
+         "type" : "Feature"
+      }
+   ],
+   "type" : "FeatureCollection"
+}
