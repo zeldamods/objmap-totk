@@ -19,6 +19,14 @@
     <b-checkbox switch  @change="toggleY">Show object heights in tooltips</b-checkbox>
     <hr>
     <section>
+      <h4 class="subsection-heading">Use In-Game Coordinates</h4>
+      <b-checkbox switch v-model="s.inGameCoordinates">Display Coordinates as those In-Game</b-checkbox>
+      <p class="small">
+        Coordinates here are displayed as East-West, Vertical, North-South (x,z,y). This option converts the coordinates to match those In-Game as East-West, North-South, Vertical - 106 meters (x,y,z).
+      </p>
+    </section>
+    <hr>
+    <section>
       <h4 class="subsection-heading">Custom Search Presets</h4>
       <div class="d-flex mb-1" v-for="(preset, idx) in s.customSearchPresets" :key="idx">
         <input placeholder="Label" style="flex: 4" class="form-control form-control-sm mr-2" v-model="s.customSearchPresets[idx][0]">

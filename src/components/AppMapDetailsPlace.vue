@@ -5,7 +5,7 @@
       <ObjectInfo :obj="minobj" :key="minobj.objid" className="obj-main-info" />
     </section>
     <section v-if="minobj" class="mt-2">
-      Position: {{minobj.pos[0].toFixed(2)}} {{minobj.pos[1].toFixed(2)}} {{(-minobj.pos[2]).toFixed(2)}}
+      Position: {{formatPosition(minobj.pos)}}
     </section>
     <section v-if="shopDataExists()">
       <ShopData :data="shopData[this.sub]" />
