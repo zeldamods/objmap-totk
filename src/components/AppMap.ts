@@ -51,6 +51,7 @@ import { Point } from '@/util/map';
 import { calcLayerLength } from '@/util/polyline';
 import { Settings } from '@/util/settings';
 import * as ui from '@/util/ui';
+import * as math from '@/util/math';
 import { Checklists } from '@/util/Checklist';
 
 const { isNavigationFailure, NavigationFailureType } = VueRouter;
@@ -411,6 +412,8 @@ export default class AppMap extends mixins(MixinUtil) {
 
   private mapUnitGrid = new ui.Unobservable(L.layerGroup());
   showMapUnitGrid = false;
+  private revivalMapUnitGrid = new ui.Unobservable(L.layerGroup());
+  showRevivalMapUnitGrid = false;
 
   private mapSafeAreas = new ui.Unobservable(L.layerGroup());
   showSafeAreas = false;
@@ -1834,13 +1837,49 @@ export default class AppMap extends mixins(MixinUtil) {
         this.mapUnitGrid.data.addLayer(rect);
       }
     }
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 8; j++) {
+        let x = math.clamp((i - 1) * 1000 - 4500, -5000, 5000)
+        let y = math.clamp((j - 1) * 1000 - 3500, -4000, 4000)
+        const topLeft: Point = [x, 0, y];
+        x = math.clamp((i + 1) * 1000 - 4500, -5000, 5000)
+        y = math.clamp((j + 1) * 1000 - 3500, -4000, 4000)
+        const bottomRight: Point = [x, 0.0, y]
+        const rect = L.rectangle(L.latLngBounds(this.map.fromXYZ(topLeft), this.map.fromXYZ(bottomRight)), {
+          fill: true,
+          stroke: true,
+          color: '#fcc867',
+          fillOpacity: 0.02,
+          weight: 2,
+          // @ts-ignore
+          contextmenu: true,
+        });
+        rect.bringToBack();
+
+        const name = String.fromCharCode('A'.charCodeAt(0) + i) + `-${j + 1}`;
+        rect.bindTooltip(name, {
+          permanent: true,
+          direction: 'center',
+        });
+        rect.on('mouseover', function(_ev: any) {
+          rect.setStyle({ weight: 5, fillOpacity: 0.13 });
+        });
+        rect.on('mouseout', function(_ev: any) {
+          rect.setStyle({ weight: 2, fillOpacity: 0.02 });
+        });
+        this.revivalMapUnitGrid.data.addLayer(rect);
+      }
+    }
   }
 
   onShowMapUnitGridChanged() {
     this.$nextTick(() => {
       this.mapUnitGrid.data.remove();
+      this.revivalMapUnitGrid.data.remove();
       if (this.showMapUnitGrid)
         this.mapUnitGrid.data.addTo(this.map.m);
+      if (this.showRevivalMapUnitGrid)
+        this.revivalMapUnitGrid.data.addTo(this.map.m);
     });
   }
 
