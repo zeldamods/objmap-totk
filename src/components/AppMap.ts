@@ -1503,10 +1503,22 @@ export default class AppMap extends mixins(MixinUtil) {
       } else if (layer == 'Surface' || layer == 'Depths') {
         let mapType = (layer == "Surface") ? 'MainField' : 'MinusField';
         const quad = map.pointToMapUnit(xyz);
-        this.searchAddGroup(`map:"${mapType}/${quad}"`, `Map: ${layer} ${quad}`);
+        let query = `map:"${mapType}/${quad}"`
+        if (layer == 'Surface' && quad == 'A-8') { // Thunder Temple
+          query += " OR LargeDungeonThunder"
+        } else if (layer == 'Depths' && Math.abs(latlng.lat - -2800) < 350 && Math.abs(latlng.lng - 1325) < 250) {
+          // Box around Fire Temple as it spans two Quads
+          query += " OR LargeDungeonFire"
+        }
+        this.searchAddGroup(query, `Map: ${layer} ${quad}`);
       } else if (layer == 'Sky') {
         const regions = await MapMgr.getInstance().getRegionFromPoint(layer, xyz);
-        const query = regions.map(region => `map: "MainField/Sky__${region}"`).join(" OR ");
+        let query = regions.map(region => `map: "MainField/Sky__${region}"`).join(" OR ");
+        if (regions.includes("Pln_Fld_Rito_SkyField_Start_01")) { // Wind Temple
+          query += " OR LargeDungeonWind"
+        } else if (regions.includes("Pln_Fld_Zora_SkyField_Before_DungeonWay")) { // Water Temple
+          query += " OR LargeDungeonWater"
+        }
         const regionsStr = regions.join(" or ");
         this.searchAddGroup(query, `Map: ${regionsStr}`);
       }
