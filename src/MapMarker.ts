@@ -220,7 +220,7 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
   constructor(mb: MapBase, l: any) {
     const lp = new map.LocationPointer(l);
     const markerTypeStr = map.markerTypetoStr(lp.getType());
-    const visibleMarkerTypeStr = l.PointerType ? 'Place' : markerTypeStr;
+    const visibleMarkerTypeStr = "Location"
     let msg = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', lp.getMessageId());
     if (msg === undefined) {
       msg = lp.getMessageId();
