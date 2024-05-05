@@ -1922,14 +1922,12 @@ export default class AppMap extends mixins(MixinUtil) {
       this.map.switchBaseTileLayer("Depths");
     } else if (obj.map_name.startsWith("Sky")) {
       this.map.switchBaseTileLayer("Sky");
-    } else if (obj.map_type == "LargeDungeon") {
-      if (obj.map_name == "LargeDungeonWater") {
+    } else if (obj.map_name.startsWith("LargeDungeon")) {
+      if (obj.map_name.startsWith("LargeDungeon__LargeDungeonWater")) {
         this.map.switchBaseTileLayer("Sky");
-      } else if (obj.map_name == "LargeDungeonFire") {
-        this.map.switchBaseTileLayer("Depths");
-      } else if (obj.map_name == "LargeDungeonSpirit") {
-        this.map.switchBaseTileLayer("Depths");
-      } else {// Wind and Thunder
+      } else if (obj.map_name.startsWith("LargeDungeon__LargeDungeonWind")) {
+        this.map.switchBaseTileLayer("Sky");
+      } else {
         this.map.switchBaseTileLayer("Surface");
       }
     } else {
