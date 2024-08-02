@@ -414,6 +414,7 @@ export default class AppMap extends mixins(MixinUtil) {
   showMapUnitGrid = false;
   private revivalMapUnitGrid = new ui.Unobservable(L.layerGroup());
   showRevivalMapUnitGrid = false;
+  showAreaColor = true;
 
   private mapSafeAreas = new ui.Unobservable(L.layerGroup());
   showSafeAreas = false;
@@ -1688,6 +1689,10 @@ export default class AppMap extends mixins(MixinUtil) {
       areas = this.featureCollectionToPolygons(areas as any)
     }
     const entries = Object.entries(areas);
+
+    let fillOpacity = (this.showAreaColor) ? 0.2 : 0.0
+    let fillOpacityOver = (this.showAreaColor) ? 0.3 : 0.0
+
     let i = 0;
     for (const [data, features] of entries) {
       const layers: L.GeoJSON[] = features.map((feature: any) => {
@@ -1698,7 +1703,7 @@ export default class AppMap extends mixins(MixinUtil) {
           },
           style: function(_) {
             let color = feature.properties.color || ui.genColor(entries.length, i);
-            return { weight: 2, fillOpacity: 0.2, color }
+            return { weight: 2, fillOpacity, color }
           },
           // @ts-ignore
           contextmenu: true,
@@ -1710,11 +1715,11 @@ export default class AppMap extends mixins(MixinUtil) {
       for (const layer of layers) {
         layer.on('mouseover', () => {
           layers.forEach(l => {
-            l.setStyle({ weight: 4, fillOpacity: 0.3 });
+            l.setStyle({ weight: 4, fillOpacity: fillOpacityOver });
           });
         });
         layer.on('mouseout', () => {
-          layers.forEach(l => l.setStyle({ weight: 2, fillOpacity: 0.2 }));
+          layers.forEach(l => l.setStyle({ weight: 2, fillOpacity }));
         });
         if (name == "MapTower" || name == "sky_polys" || name == "cave_polys") {
           layer.bindTooltip(features[0].properties.title);

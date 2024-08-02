@@ -151,6 +151,9 @@
 
           <!-- <b-radio value="LoadBalancer">Load balancer areas</b-radio> -->
         </b-radio-group>
+        <h4 class="subsection-heading">Visible map area fill</h4>
+        <b-checkbox switch v-model="showAreaColor" @change="onShownAreaMapChanged">Fill map areas with color</b-checkbox>
+        <br/>
         <h4 class="subsection-heading">Map grids</h4>
         <b-checkbox switch v-model="showMapUnitGrid" @change="onShowMapUnitGridChanged">Show map unit grid</b-checkbox>
         <b-checkbox switch v-model="showRevivalMapUnitGrid" @change="onShowMapUnitGridChanged">Show revival map grid</b-checkbox>
