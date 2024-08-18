@@ -74,7 +74,7 @@
         <hr>
         <h4 class="subsection-heading">Drop table: {{this.dropTables.DropTableName || 'Default'}}</h4>
         <div v-for="(group, igroup) in this.dropTables.items" :key="igroup">
-          <div v-if="group.DropTableElement.length" class="droptable_content">
+          <div v-if="group.DropTableElement && group.DropTableElement.length" class="droptable_content">
             <div class="droptable_group">{{getDropTableGroupCount(group)}}</div>
             <table>
               <tr v-for="(item, kitem) in [...group.DropTableElement].sort((a,b) => b.DropProbability - a.DropProbability)" :key="kitem" class="droptable_item">
