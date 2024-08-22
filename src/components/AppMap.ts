@@ -887,8 +887,17 @@ export default class AppMap extends mixins(MixinUtil) {
       'draw:drawstart': () => {
         this.drawVertexLayers = [];
       },
-      'draw:drawvertex': () => {
-        this.drawVertexLayers.push(this.map.activeLayer);
+      'draw:drawvertex': (item: any) => {
+        // Determine if points have been added or removed
+        const n0 = this.drawVertexLayers.length
+        const n1 = item.layers.getLayers().length;
+        if (n0 + 1 == n1) // Point Added
+          this.drawVertexLayers.push(this.map.activeLayer);
+        else if (n0 - 1 == n1) // Point Removed (Assume 'delete last point' clicked)
+          this.drawVertexLayers.pop()
+        else {
+          console.log(`Unknown state encountered currentPoints(edit) ${n1} layers ${n0}`)
+        }
       },
       'draw:edited': (e: any) => {
         e.layers.eachLayer((layer: L.Marker | L.Polyline) => {
