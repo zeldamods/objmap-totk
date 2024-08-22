@@ -15,6 +15,7 @@ export class MsgMgr {
   private climate: any | null = null;
   private area: any | null = null;
   private metadata: any | null = null;
+  private hornMaterial: any | null = null;
 
   async init() {
     const PREFIX = `${GAME_FILES}/text/`;
@@ -69,6 +70,14 @@ export class MsgMgr {
       this.metadata = await res.json();
     }
     return this.metadata[item];
+  }
+
+  async getHornMaterialData() {
+    if (!this.hornMaterial) {
+      const res = await fetch(`${GAME_FILES}/horn_material.json`);
+      this.hornMaterial = await res.json();
+    }
+    return this.hornMaterial
   }
 
   /// Get a message by its message ID (e.g. EventFlowMsg/AncientBall_Kakariko:Label).

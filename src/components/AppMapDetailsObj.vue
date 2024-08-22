@@ -79,10 +79,27 @@
             <table>
               <tr v-for="(item, kitem) in [...group.DropTableElement].sort((a,b) => b.DropProbability - a.DropProbability)" :key="kitem" class="droptable_item">
                 <td class="drop-probability">{{item.DropProbability}}%</td>
-                <td>
-                  <span v-if="item.IsProxySetting">{{item.ProxyType}} - {{item.WeaponType}}</span>
-                  <span v-else>{{getName(item.DropActorName.split("/").pop().split(".")[0])}}</span>
-                </td>
+                <template v-if="item.IsProxySetting">
+                  <td v-if="getDropTableProxyLength(item) == 1">
+                    <span>{{getDropTableProxy(item)}}</span>
+                  </td>
+                  <td v-else-if="getDropTableProxyLength(item) == 0">
+                  </td>
+                  <td v-else>
+                    <div>{{getDropTableProxyName(item)}}</div>
+                    <table>
+                      <tr v-for="(pitem, ipitem) in getDropTableProxy(item)" :key="ipitem">
+                        <td class="drop-probability-sub">{{pitem.num}}%</td>
+                        <td><span>{{pitem.name}}</span></td>
+                      </tr>
+                    </table>
+                  </td>
+                </template>
+                <template v-else>
+                  <td>
+                    <span>{{getDropItemName(item)}}</span>
+                  </td>
+                </template>
               </tr>
             </table>
           </div>
@@ -199,6 +216,13 @@
 .drop-probability {
   display: inline-block;
   width: 5em;
+  text-align: right;
+  margin-right: 1em;
+}
+
+.drop-probability-sub {
+  display: inline-block;
+  width: 2.5em;
   text-align: right;
   margin-right: 1em;
 }

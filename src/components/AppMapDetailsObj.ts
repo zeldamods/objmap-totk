@@ -79,6 +79,9 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
   private dropTables: { [key: string]: any } = {};
   private shopData: { [key: string]: any } = {};
+  private areaData: { [key: string]: any } = {};
+  private hornMaterial: { [key: string]: string } = {};
+  private dropTableChest: { [key: string]: any } = {};
 
   private areaMarkers: L.Path[] = [];
   private staticData = staticData;
@@ -109,6 +112,9 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.railsWithMarkers = [];
     this.selectedRailIdx = -1;
     this.shopData = {};
+    this.areaData = {};
+    this.hornMaterial = {};
+    this.dropTableChest = {};
     if (this.minObj.objid) {
       this.obj = (await MapMgr.getInstance().getObjByObjId(this.minObj.objid))!;
     } else {
@@ -126,7 +132,30 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     const dropTableName = this.getDropTableName();
     if (dropTableName) {
       this.dropTables = await MapMgr.getInstance().getObjDropTables(this.getRankedUpActorNameForObj(this.minObj), dropTableName);
+      if (this.minObj.name.startsWith("Enemy_LikeLike_")) {
+        // Enemy_LikeLike_ are the only actors with ProxyType: TBox
+        // Get the DropActorDropTable from the DropTableElement where
+        //   ProxyType is TBox and ProxySetting is on
+        const table_name = this.dropTables.items
+          .filter((elements: any) =>
+            elements.DropTableElement.some((el: any) => el.IsProxySetting && el.ProxyType == 'TBox')
+          )
+          .map((elements: any) => elements.DropActorDropTable).pop()
+        if (table_name)
+          this.dropTableChest = await MapMgr.getInstance().getObjDropTables("TBox_Field_Enemy", table_name)
+      }
+      if (this.minObj.name.startsWith("Enemy_Sandworm")) {
+        // Fake a ProxyType: TBox to get the contents of the Molduga Chest
+        this.dropTableChest = await MapMgr.getInstance().getObjDropTables("TBox_Field_Iron_Sandworm", "Sandworm")
+        let el = this.dropTables.items.find((el: any) => el.DropActorDropTable == "Sandworm")
+        if (el) {
+          el.DropTableElement[0].IsProxySetting = true
+          el.DropTableElement[0].ProxyType = "TBox"
+        }
+      }
     }
+    this.areaData = await this.getAreaData();
+    this.hornMaterial = await MsgMgr.getInstance().getHornMaterialData();
 
     this.aiGroups = await MapMgr.getInstance().getObjAiGroups(this.obj.map_type, this.obj.map_name, this.obj.hash_id);
 
@@ -486,6 +515,123 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       num = `${min_drop}`;
     }
     return `Items: ${num}`;
+  }
+
+  async getAreaData() {
+    // @ts-ignore
+    const fieldarea = this.obj.fieldarea
+    if (!fieldarea)
+      return {}
+    let name = undefined
+    let num = undefined
+    for (const key of ["Surface", "Sky", "Cave", "Depths"]) {
+      if (fieldarea.startsWith(key)) {
+        num = parseInt(fieldarea.replace(key, ""))
+        name = key
+        break
+      }
+    }
+    if (!name || num === undefined) {
+      return "Proxy Lookup Failed"
+    }
+    if (name == "Surface")
+      name = "Ground"
+    if (name == "Depths")
+      name = "MinusField"
+
+    const area_data = await MsgMgr.getInstance().getAreaData(name, num);
+    return area_data
+  }
+
+  getDropTableProxyLength(item: any): number {
+    // Only need to know if the values is 0, 1, or something larger
+    if (!Object.keys(this.areaData).length)
+      return 0
+    if (item.ProxyType == "WeaponDefault") {
+      return 1
+    }
+    if (item.ProxyType == "LocalSeaFood") {
+      return 2;
+    }
+    if (item.ProxyType == "ZonauBlockMaster") {
+      return 2;
+    }
+    if (item.ProxyType == "EcoSystemRain") {
+      return 2;
+    }
+    if (item.ProxyType == "HornMaterial") {
+      return 1
+    }
+    if (item.ProxyType == "TBox") {
+      return 2;
+    }
+
+    return 0
+  }
+
+  getDropTableProxyName(item: any) {
+    if (item.ProxyType == "WeaponDefault") {
+      return "Weapon"
+    }
+    if (item.ProxyType == "LocalSeaFood") {
+      return "Local Seafood"
+    }
+    if (item.ProxyType == "ZonauBlockMaster") {
+      return "Zonai Capsules"
+    }
+    if (item.ProxyType == "EcoSystemRain") {
+      return "Special Rain Items"
+    }
+    if (item.ProxyType == "HornMaterial") {
+      return "Horn"
+    }
+    if (item.ProxyType == "TBox") {
+      return "Treasure Chest"
+    }
+    return ""
+  }
+
+  getDropTableProxy(item: any) {
+    if (!Object.keys(this.areaData).length)
+      return ""
+    if (item.ProxyType == "WeaponDefault" && this.areaData.Weapon) {
+      let WeaponOrder = ["SmallSword", "LargeSword", "Spear", "Bow"] // Bow never appears
+      let index = WeaponOrder.indexOf(item.WeaponType)
+      return this.getName(this.areaData.Weapon[index].name)
+    }
+    if (item.ProxyType == "LocalSeaFood" && this.areaData.Seafood && this.areaData.Seafood != "") {
+      return this.areaData.Seafood.map((fish: any) => {
+        return { num: fish.num, name: this.getName(fish.name) }
+      })
+    }
+    if (item.ProxyType == "ZonauBlockMaster" && this.areaData.SpObjCapsuleBlockMaster) {
+      let len = this.areaData.SpObjCapsuleBlockMaster.length
+      let num = 100.0 / len;
+      return this.areaData.SpObjCapsuleBlockMaster.map((fish: any) => {
+        return { num, name: this.getName(fish.name) }
+      })
+    }
+    if (item.ProxyType == "EcoSystemRain" && this.areaData.RainBonusMaterial) {
+      return this.areaData.RainBonusMaterial.map((wet: any) => {
+        return { num: wet.num, name: this.getName(wet.name) }
+      })
+    }
+    if (item.ProxyType == "HornMaterial" && this.minObj) {
+      return this.getName(this.hornMaterial[this.minObj.name] || "Unknown Horn Material")
+    }
+    if (item.ProxyType == "TBox" && this.dropTableChest) {
+      return this.dropTableChest.items[0].DropTableElement.map((v: any) => {
+        let name = this.getDropItemName(v)
+        return { num: v.DropProbability, name }
+      })
+    }
+    return "Unknown Proxy Type"
+  }
+
+  getDropItemName(item: any) {
+    if (item.isProxySetting)
+      return this.getDropTableProxy(item)
+    return this.getName(item.DropActorName.split("/").pop().split(".")[0])
   }
 
   findItemByHash(group: any[], links: any[], name: string): any {
