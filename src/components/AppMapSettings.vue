@@ -36,6 +36,11 @@
       <b-btn class="mt-2" size="sm" @click="s.customSearchPresets.push(['', ''])"><i class="fa fa-plus"></i> Add</b-btn>
     </section>
     <hr>
+    <h4 class="subsection-heading">Copy Coordinates</h4>
+    <b-checkbox switch v-model="s.copyCoordinatesXYZ">Copy (x,y,z) instead of (x,z).</b-checkbox>
+      <p class="small">
+        Result of 'Copy coordinates' in the map's context menu, right click, returns (x,y,z) instead of (x,z). Value of y (height) is defined by the active layer.
+      </p>
     <h4 class="subsection-heading">Map Drawing</h4>
     <b-checkbox switch v-model="s.noTouchScreen">Not using a touch screen</b-checkbox>
     <p class="small">

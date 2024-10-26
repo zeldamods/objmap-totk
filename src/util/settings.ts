@@ -43,6 +43,7 @@ export class Settings {
   decompBannerHidden!: boolean;
   noTouchScreen!: boolean;
   inGameCoordinates!: boolean;
+  copyCoordinatesXYZ!: boolean;
 
   private constructor() {
     this.load();
@@ -75,6 +76,7 @@ export class Settings {
     this.decompBannerHidden = parse(data.decompBannerHidden, Id, false);
     this.noTouchScreen = parse(data.noTouchScreen, Id, false);
     this.inGameCoordinates = parse(data.inGameCoordinates, Id, false);
+    this.copyCoordinatesXYZ = parse(data.copyCoordinatesXYZ, Id, false);
     this.invokeCallbacks();
   }
 
@@ -99,6 +101,7 @@ export class Settings {
       decompBannerHidden: this.decompBannerHidden,
       noTouchScreen: this.noTouchScreen,
       inGameCoordinates: this.inGameCoordinates,
+      copyCoordinatesXYZ: this.copyCoordinatesXYZ,
     };
     // Merge with existing data to avoid data loss.
     const existingDataStr = localStorage.getItem(Settings.KEY);

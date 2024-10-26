@@ -13,6 +13,7 @@ import { CanvasMarker } from '@/util/CanvasMarker';
 import * as map from '@/util/map';
 import { Point } from '@/util/map';
 import * as ui from '@/util/ui';
+import { Settings } from '@/util/settings';
 
 declare module 'leaflet' {
   export type RasterCoords = any;
@@ -172,7 +173,14 @@ export class MapBase {
           text: 'Copy coordinates',
           callback: ({ latlng }: ui.LeafletContextMenuCbArg) => {
             const [x, y, z] = this.toXYZ(latlng);
-            ui.copyToClipboard(`${x},${-z}`);
+            let s = Settings.getInstance();
+            if (s.copyCoordinatesXYZ) {
+              // @ts-ignore
+              const yv = { Surface: 150, Sky: 1500, Depths: -500 }[this.activeLayer]
+              ui.copyToClipboard(`${x},${yv},${-z}`)
+              return
+            }
+            ui.copyToClipboard(`${x},${-z}`)
           },
         },
         {
