@@ -1257,6 +1257,14 @@ export default class AppMap extends mixins(MixinUtil) {
     this.search();
   }
 
+  searchColorGroup(ev: any) {
+    const idx = parseInt(ev.target.dataset.id)
+    const group = this.searchGroups[idx];
+    group.setFillColor(ev.target.value)
+    group.update(SearchResultUpdateMode.UpdateVisibility | SearchResultUpdateMode.UpdateStyle,
+      this.searchExcludedSets);
+  }
+
   searchRemoveGroup(idx: number) {
     const group = this.searchGroups[idx];
     group.remove();

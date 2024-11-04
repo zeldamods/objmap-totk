@@ -194,6 +194,15 @@ export class SearchResultGroup {
     this.setObjects(map, results);
   }
 
+  getFillColor(): string {
+    return this.fillColor
+  }
+
+  setFillColor(color: string) {
+    this.fillColor = color;
+    this.strokeColor = ui.shadeColor(this.fillColor, -20)
+  }
+
   private static COLOR_COUNTER = 0;
   private markerGroup = new ui.Unobservable<L.LayerGroup>(L.layerGroup());
   private markers = new ui.Unobservable<MapMarkers.MapMarkerObj[]>([]);

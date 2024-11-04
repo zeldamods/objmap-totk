@@ -98,6 +98,7 @@
                 <span>{{group.label}}</span>
                 <a class="ml-2" @click="searchRemoveGroup(idx)"><i class="text-danger fa fa-times"></i></a>
                 <a class="ml-2" style="font-size: 90%" v-if="group.query" @click="searchViewGroup(idx)"><i class="fa fa-edit"></i></a>
+                <span class="ml-2" v-if="settings && !settings.colorPerActor"><input class="marker-color2" type="color" :data-id="`${idx}`" @input="searchColorGroup" :value="group.getFillColor()"></span>
                 <span class="ml-2">({{group.size()}})</span>
               </span>
             </div>
@@ -434,6 +435,16 @@
     border-radius: 0.2em;
     margin-left: 0.5em;
     margin-right: 0.3em;
+}
+.marker-color2 {
+    width: 1em;
+    height: 1em;
+    min-height: 0.5em;
+    padding: 0;
+    border: 1px solid #bbb;
+    border-radius: 0.2em;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .marker-row {
