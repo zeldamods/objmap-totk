@@ -46,6 +46,10 @@
         <ShopData :data="obj.data.ShopData" />
       </section>
 
+      <section v-if="obj.name == 'Npc_CraftSignboard001'">
+        <RewardData :data="obj.data.Dynamic" />
+      </section>
+
       <section v-if="obj.data.Presence">
         <hr>
         <h4 class="subsection-heading">Presence params</h4>

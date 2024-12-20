@@ -7,6 +7,8 @@ import { Prop } from 'vue-property-decorator';
 import AppMapDetailsBase from '@/components/AppMapDetailsBase';
 import ObjectInfo from '@/components/ObjectInfo';
 import ShopData from '@/components/ShopData';
+import RewardData from '@/components/RewardData';
+
 import {
   MapMarkerObj,
   MapMarkerSearchResult,
@@ -66,6 +68,7 @@ const staticData = new StaticData();
   components: {
     ObjectInfo,
     ShopData,
+    RewardData,
   },
 })
 export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | MapMarkerSearchResult> {
