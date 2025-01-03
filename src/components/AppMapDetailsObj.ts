@@ -50,7 +50,7 @@ function isAreaObject(obj: ObjectMinData) {
     "AreaCulling_InnerOn", "AreaCulling_OuterNPCMementary", "FarModelCullingArea", 'LocationArea',
     'LowGravityAreaBox', 'LowGravityAreaCylinder', "NoEscapeRangeAreaBox"
   ];
-  return areaObjectNames.includes(obj.name) || obj.name.startsWith('AirWall');
+  return areaObjectNames.includes(obj.name) || obj.name.startsWith('AirWall') || obj.name.startsWith("AreaInvalidateRestartPos");
 }
 
 class StaticData {
