@@ -50,7 +50,7 @@ function isAreaObject(obj: ObjectMinData) {
     "AreaCulling_InnerOn", "AreaCulling_OuterNPCMementary", "FarModelCullingArea", 'LocationArea',
     'LowGravityAreaBox', 'LowGravityAreaCylinder', "NoEscapeRangeAreaBox"
   ];
-  return areaObjectNames.includes(obj.name) || obj.name.startsWith('AirWall') || obj.name.startsWith("AreaInvalidateRestartPos");
+  return areaObjectNames.includes(obj.name) || obj.name.startsWith('AirWall') || obj.name.startsWith("AreaInvalidateRestartPos") || obj.name.startsWith("ForbidAutoPlacementArea");
 }
 
 class StaticData {
@@ -360,6 +360,10 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     const [x, y, z] = obj.data.Translate;
     const dyn = obj.data.Dynamic;
     let shapeNum = (dyn && dyn.RigidBodyShapeType !== undefined) ? dyn.RigidBodyShapeType : 2;
+    if (obj.name.endsWith("Sphere"))
+      shapeNum = 0;
+    if (obj.name.endsWith("Cylinder"))
+      shapeNum = 3;
     if (obj.name == 'LowGravityAreaCylinder')
       shapeNum = 3;
     if (obj.name == 'LowGravityAreaBox')
