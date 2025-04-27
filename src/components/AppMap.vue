@@ -152,20 +152,21 @@
 
           <!-- <b-radio value="LoadBalancer">Load balancer areas</b-radio> -->
         </b-radio-group>
-        <h4 class="subsection-heading">Visible map area fill</h4>
-        <b-checkbox switch v-model="showAreaColor" @change="onShownAreaMapChanged">Fill map areas with color</b-checkbox>
-        <br/>
-        <h4 class="subsection-heading">Map grids</h4>
-        <b-checkbox switch v-model="showMapUnitGrid" @change="onShowMapUnitGridChanged">Show map unit grid</b-checkbox>
-        <b-checkbox switch v-model="showRevivalMapUnitGrid" @change="onShowMapUnitGridChanged">Show revival map grid</b-checkbox>
-        <!--
+
         <b-form-group label="Filter map areas" label-for="mapareafilter">
           <div class="d-flex mb-1">
             <input type="search" style="flex: 1" class="form-control form-control-sm mr-2" id="mapareafilter" placeholder="Example: 1,2,3,64" v-model="areaWhitelist">
             <b-btn size="sm" variant="primary" @click="updateAreaMapVisibility()"><i class="fa fa-filter"></i></b-btn>
           </div>
         </b-form-group>
-        -->
+
+        <h4 class="subsection-heading">Visible map area fill</h4>
+        <b-checkbox switch v-model="showAreaColor" @change="onShownAreaMapChanged">Fill map areas with color</b-checkbox>
+        <br/>
+        <h4 class="subsection-heading">Map grids</h4>
+        <b-checkbox switch v-model="showMapUnitGrid" @change="onShowMapUnitGridChanged">Show map unit grid</b-checkbox>
+        <b-checkbox switch v-model="showRevivalMapUnitGrid" @change="onShowMapUnitGridChanged">Show revival map grid</b-checkbox>
+
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-dummy">
