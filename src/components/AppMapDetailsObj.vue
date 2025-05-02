@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="staticData.history.length" style="right: 40px" class="leaflet-sidebar-close" @click="goBack()" v-b-tooltip.hover title="Go back to previous object"><i class="fa fa-arrow-left"></i></div>
+    <div v-if="staticData.history.length" style="right: 40px" class="leaflet-sidebar-close" @click.stop.prevent="goBack()" v-b-tooltip.hover title="Go back to previous object"><i class="fa fa-arrow-left"></i></div>
 
     <h2 class="location-sub" v-if="getLocationSub()">{{getLocationSub()}}</h2>
     <ObjectInfo :obj="minObj" :key="minObj.objid" className="obj-main-info" withPermalink :is-checked="isChecked"/>
@@ -20,16 +20,16 @@
       <p class="my-1" v-if="isAreaReprPossiblyWrong()"><i class="fa fa-exclamation-circle"></i> Area representation may be inaccurate.</p>
 
       <section class="mt-2" v-show="areaMarkers.length || staticData.persistentAreaMarkers.length">
-        <b-btn v-show="areaMarkers.length" size="sm" block variant="dark" @click="keepAreaMarkersAlive()">Keep area representation loaded</b-btn>
-        <b-btn v-show="staticData.persistentAreaMarkers.length" size="sm" block variant="dark" @click="forgetPersistentAreaMarkers()">Hide area representation</b-btn>
+        <b-btn v-show="areaMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepAreaMarkersAlive()">Keep area representation loaded</b-btn>
+        <b-btn v-show="staticData.persistentAreaMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentAreaMarkers()">Hide area representation</b-btn>
       </section>
       <section class="mt-2" v-show="minObj.korok_type && (this.korokMarkers.length || staticData.persistentKorokMarkers.length)">
-        <b-btn v-show="this.korokMarkers.length" size="sm" block variant="dark" @click="keepKorokMarkersAlive()">Keep Korok markers loaded</b-btn>
-        <b-btn v-show="staticData.persistentKorokMarkers.length" size="sm" block variant="dark" @click="forgetPersistentKorokMarkers()">Hide Korok markers</b-btn>
+        <b-btn v-show="this.korokMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepKorokMarkersAlive()">Keep Korok markers loaded</b-btn>
+        <b-btn v-show="staticData.persistentKorokMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentKorokMarkers()">Hide Korok markers</b-btn>
       </section>
       <section class="mt-2" v-show="this.railMarkers.length || staticData.persistentRailMarkers.length">
-        <b-btn v-show="this.railMarkers.length" size="sm" block variant="dark" @click="keepRailMarkersAlive()">Keep Rails loaded</b-btn>
-        <b-btn v-show="staticData.persistentRailMarkers.length" size="sm" block variant="dark" @click="forgetPersistentRailMarkers()">Hide Rails</b-btn>
+        <b-btn v-show="this.railMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepRailMarkersAlive()">Keep Rails loaded</b-btn>
+        <b-btn v-show="staticData.persistentRailMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentRailMarkers()">Hide Rails</b-btn>
       </section>
 
       <section class="obj-actor-specific-info">
@@ -114,7 +114,7 @@
 
     <section v-if="isSearchResult()">
       <br>
-      <b-btn size="sm" block @click="emitBackToSearch()"><i class="fa fa-chevron-circle-left"></i> Back to search</b-btn>
+      <b-btn size="sm" block @click.stop.prevent="emitBackToSearch()"><i class="fa fa-chevron-circle-left"></i> Back to search</b-btn>
     </section>
 
     <section v-if="railsWithMarkers.length">
@@ -124,7 +124,7 @@
         <div class="search-result"
           v-for="(rail, idx) in rails"
           :key="rail.Hash"
-          @click="onRailClicked(idx)"
+          @click.stop.prevent="onRailClicked(idx)"
           :class="{'active': idx === selectedRailIdx}"
         >
           <section class="search-result-name">{{getRailUiName(rail)}}</section>
@@ -146,7 +146,7 @@
         <div class="search-result"
           v-for="ref in group.data.References"
           :key="ref.Path + ref.Reference"
-          @click="onAiGroupReferenceClicked(group, ref)"
+          @click.stop.prevent="onAiGroupReferenceClicked(group, ref)"
         >
           <section class="search-result-name">{{getAiGroupReferenceName(group, ref)}}</section>
           <section v-if="ref.Id"><i class="fas fa-hashtag fa-fw"></i> ID: {{ref.Id}}</section>
@@ -164,7 +164,7 @@
           <h4 class="subsection-heading">Generation group</h4>
         </summary>
         <div class="search-results">
-          <ObjectInfo v-for="otherObj in genGroup" :key="otherObj.objid" :obj="otherObj" :isStatic="false" @click.native="jumpToObj(otherObj)" />
+          <ObjectInfo v-for="otherObj in genGroup" :key="otherObj.objid" :obj="otherObj" :isStatic="false" @click.native.stop.prevent="jumpToObj(otherObj)" />
         </div>
       </details>
     </section>
