@@ -114,7 +114,7 @@ export const SEARCH_PRESETS: ReadonlyArray<SearchPresetGroup> = Object.freeze([
       { label: 'Koltin', query: 'Koltin' },
       { label: 'Bargainer Statue', query: 'Bargainer Statue' },
       { label: 'Addison', query: 'Addison NOT Complete' },
-      { label: 'Schema Stones', query: 'Josha OR (Servant_Minus00* NOT Forge NOT Minus0005 NOT Minus0004 NOT Minus0001)' },
+      { label: 'Schema Stones', query: 'Josha OR (Servant_Minus00* NOT Forge NOT Minus0005 NOT Minus0004 NOT Minus0001) OR Golem_Servant_MainField0001' },
       { label: 'Yiga Schematics', query: 'Obj_AutoBuilderDraftAssassin' },
       { label: "Sage's Will", query: `"Sage's Will"` },
       { label: 'Old Maps', query: 'Old Map' },
