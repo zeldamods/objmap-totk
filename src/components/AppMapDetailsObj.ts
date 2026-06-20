@@ -48,7 +48,8 @@ function numOrArrayToArray(x: number | [number, number, number] | undefined): [n
 function isAreaObject(obj: ObjectMinData) {
   const areaObjectNames = ["Area", "BoxWater", "SpotBgmTag", "PointWindSetTag", "AreaCulling", "AreaCulling_InnerHide",
     "AreaCulling_InnerOn", "AreaCulling_OuterNPCMementary", "FarModelCullingArea", 'LocationArea',
-    'LowGravityAreaBox', 'LowGravityAreaCylinder', "NoEscapeRangeAreaBox"
+    'LowGravityAreaBox', 'LowGravityAreaCylinder', "NoEscapeRangeAreaBox",
+    'Area_WorldLimitAbyss', 'DungeonPit',
   ];
   return areaObjectNames.includes(obj.name) || obj.name.startsWith('AirWall') || obj.name.startsWith("AreaInvalidateRestartPos") || obj.name.startsWith("ForbidAutoPlacementArea");
 }
