@@ -1,5 +1,5 @@
 <template>
-  <div :class="className + (isStatic ? ' static' : '')">
+  <div :class="className + (isStatic ? ' static' : '')" @click="$emit('click', $event)">
     <section class="search-result-name">{{name(true)}}</section>
     <section class="search-result-location">
       <span v-if="obj.map_name.startsWith('Sky')"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></span>

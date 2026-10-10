@@ -164,7 +164,7 @@
           <h4 class="subsection-heading">Generation group</h4>
         </summary>
         <div class="search-results">
-          <ObjectInfo v-for="otherObj in genGroup" :key="otherObj.objid" :obj="otherObj" :isStatic="false" @click.native.stop.prevent="jumpToObj(otherObj)" />
+          <ObjectInfo v-for="otherObj in genGroup" :key="otherObj.objid" :obj="otherObj" :isStatic="false" @click.stop.prevent="jumpToObj(otherObj)" />
         </div>
       </details>
     </section>

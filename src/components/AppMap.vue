@@ -121,7 +121,7 @@
               </p>
               <div v-for="(result, idx) in searchResults" :key="result.objid">
                 <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false"
-                            @click.native="searchJumpToResult(idx)"
+                            @click="searchJumpToResult(idx)"
                             :isChecked="localSearch[result.hash_id]"/>
               </div>
             </div>

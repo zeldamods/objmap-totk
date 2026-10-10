@@ -3,6 +3,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 
 import { MsgMgr } from '@/services/MsgMgr';
+import { appMapBus } from '@/util/bus';
 import { Settings } from '@/util/settings';
 
 function makeCDungeonEntry(n: number) {
@@ -62,7 +63,7 @@ export default class AppMapSettings extends Vue {
   }
 
   toggleY() {
-    this.$parent.$emit('AppMap:toggle-y-values');
+    appMapBus.emit('AppMap:toggle-y-values');
   }
 
   private loadSettings() {

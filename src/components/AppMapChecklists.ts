@@ -6,6 +6,7 @@ import { MapMgr, ObjectMinData } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 import * as ui from '@/util/ui';
 import AppMapChecklistItem from '@/components/AppMapChecklistItem';
+import { appMapBus } from '@/util/bus';
 
 // @ts-ignore
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller';
@@ -31,13 +32,13 @@ export default class AppMapChecklists extends Vue {
     //   that does not forward events from the child to the parent
     this.bus = new Vue();
     this.bus.$on('AppMap:search-on-hash', (value: string) => {
-      this.$parent.$emit('AppMap:search-on-hash', value);
+      appMapBus.emit('AppMap:search-on-hash', value);
     });
     this.bus.$on('AppMap:search-on-value', (value: string) => {
-      this.$parent.$emit('AppMap:search-on-value', value);
+      appMapBus.emit('AppMap:search-on-value', value);
     });
     this.bus.$on('AppMap:update-search-markers', (value: any) => {
-      this.$parent.$emit('AppMap:update-search-markers', value);
+      appMapBus.emit('AppMap:update-search-markers', value);
     });
     this.activeList = -1;
     this.xlist = {};
@@ -76,26 +77,26 @@ export default class AppMapChecklists extends Vue {
   }
 
   show(list: any) {
-    this.$parent.$emit('AppMap:search-add-group', { name: list.name, query: list.query });
+    appMapBus.emit('AppMap:search-add-group', { name: list.name, query: list.query });
   }
 
   remove(list: any) {
-    this.$parent.$emit('AppMap:checklist-remove', list)
+    appMapBus.emit('AppMap:checklist-remove', list)
     this.back();
   }
   reset() {
-    this.$parent.$emit('AppMap:checklist-reset')
+    appMapBus.emit('AppMap:checklist-reset')
   }
   create() {
-    this.$parent.$emit('AppMap:checklist-create')
+    appMapBus.emit('AppMap:checklist-create')
   }
 
   changeName(list: any) {
-    this.$parent.$emit('AppMap:update-checklist-name', { id: list.id, name: list.name, });
+    appMapBus.emit('AppMap:update-checklist-name', { id: list.id, name: list.name, });
   }
 
   changeQuery(list: any) {
-    this.$parent.$emit('AppMap:update-checklist-query', { id: list.id, query: list.query });
+    appMapBus.emit('AppMap:update-checklist-query', { id: list.id, query: list.query });
   }
 
 }

@@ -8,7 +8,7 @@ import AppMapDetailsBase from '@/components/AppMapDetailsBase';
 import ObjectInfo from '@/components/ObjectInfo';
 import ShopData from '@/components/ShopData';
 import RewardData from '@/components/RewardData';
-
+import { appMapBus } from '@/util/bus';
 import {
   MapMarkerObj,
   MapMarkerSearchResult,
@@ -188,7 +188,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
   mounted() {
     this.$on('AppMap:update-search-markers', (value: any) => {
-      this.$parent.$emit('AppMap:update-search-markers', value);
+      appMapBus.emit('AppMap:update-search-markers', value);
     });
   }
 
@@ -316,13 +316,13 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   }
 
   emitBackToSearch() {
-    this.$parent.$emit('AppMap:switch-pane', 'spane-search');
+    appMapBus.emit('AppMap:switch-pane', 'spane-search');
   }
 
   jumpToObj(obj: ObjectData, updateHistory = true) {
     if (updateHistory && this.obj)
       this.staticData.history.push(this.obj);
-    this.$parent.$emit('AppMap:open-obj', obj);
+    appMapBus.emit('AppMap:open-obj', obj);
   }
 
   goBack() {
