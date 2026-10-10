@@ -1,8 +1,8 @@
 <template>
   <section>
     <h2 class="location-sub">{{sub}}</h2>
-    <div>Dungeon number: {{marker.data.dungeonNum}}</div>
-    <div v-if="marker.data.lm.l.ShrineInCave" style="color: orange"><i class="fa fa-exclamation-circle"></i> Inside Cave</div>
+    <div>Dungeon number: {{marker.dungeonNum}}</div>
+    <div v-if="marker.lm.l.ShrineInCave" style="color: orange"><i class="fa fa-exclamation-circle"></i> Inside Cave</div>
     <section title="Warning: This is the marker position; actual Dungeon Position may be different ">Position: {{formatPosition(pos)}}</section>
     <hr>
     <section v-if="tboxObjs.length">
