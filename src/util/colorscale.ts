@@ -35,20 +35,65 @@ export type ColorScaleOptions = {
   name?: string;
 };
 
-export class ColorScale extends L.Control {
-  min: number
-  max: number
-  max_ticks: number;
-  nice_min: number;
-  nice_max: number;
-  tick_spacing: number;
-  palettes: any;
-  name: string;
+const BasePalettes: any = {
+  gist_rainbow: {
+    0.0: '#ff0028',
+    0.06666666666666667: '#ff3200',
+    0.13333333333333333: '#ff8e00',
+    0.2: '#ffea00',
+    0.26666666666666666: '#b7ff00',
+    0.3333333333333333: '#5bff00',
+    0.4: '#00ff00',
+    0.4666666666666667: '#00ff5b',
+    0.5333333333333333: '#00ffb6',
+    0.6: '#00ebff',
+    0.6666666666666666: '#008fff',
+    0.7333333333333333: '#0032ff',
+    0.8: '#2900ff',
+    0.8666666666666667: '#8500ff',
+    0.9333333333333333: '#e200ff',
+    1.0: '#ff00bf',
+  },
+  viridis: {
+    0.0: '#440154',
+    0.14285714285714285: '#46317e',
+    0.2857142857142857: '#365b8c',
+    0.42857142857142855: '#277e8e',
+    0.5714285714285714: '#1fa187',
+    0.7142857142857143: '#49c16d',
+    0.8571428571428571: '#9fd938',
+    1.0: '#fde724',
+  },
+  terrain: {
+    0.000: '#ddf892',
+    0.125: '#eee98f',
+    0.250: '#ccbd7d',
+    0.375: '#aa926b',
+    0.500: '#886658',
+    0.625: '#997c76',
+    0.750: '#bba7a3',
+    0.875: '#ddd3d1',
+    1.000: '#ffffff',
+  },
+  grays: { 0.0: 'black', 1.0: 'white' },
+};
 
-  constructor(opt: ColorScaleOptions, options?: L.ControlOptions) {
-    super(options)
+
+export class ColorScale extends L.Control {
+  min!: number;
+  max!: number;
+  max_ticks!: number;
+  nice_min!: number;
+  nice_max!: number;
+  tick_spacing!: number;
+  palettes!: any;
+  name!: string;
+
+  initialize(opt: ColorScaleOptions, options?: L.ControlOptions) {
+    if(opt === undefined) { opt = {min: 0, max: 0} }
+    L.Util.setOptions(this, options)
     this.name = opt.name || "viridis";
-    this.palettes = Object.assign({}, this.base_palettes, opt.palettes);
+    this.palettes = Object.assign({}, BasePalettes, opt.palettes);
     this.min = opt.min;
     this.max = opt.max;
     this.max_ticks = 5;
@@ -61,48 +106,6 @@ export class ColorScale extends L.Control {
     this._calculate();
   }
 
-  base_palettes: any = {
-    gist_rainbow: {
-      0.0: '#ff0028',
-      0.06666666666666667: '#ff3200',
-      0.13333333333333333: '#ff8e00',
-      0.2: '#ffea00',
-      0.26666666666666666: '#b7ff00',
-      0.3333333333333333: '#5bff00',
-      0.4: '#00ff00',
-      0.4666666666666667: '#00ff5b',
-      0.5333333333333333: '#00ffb6',
-      0.6: '#00ebff',
-      0.6666666666666666: '#008fff',
-      0.7333333333333333: '#0032ff',
-      0.8: '#2900ff',
-      0.8666666666666667: '#8500ff',
-      0.9333333333333333: '#e200ff',
-      1.0: '#ff00bf',
-    },
-    viridis: {
-      0.0: '#440154',
-      0.14285714285714285: '#46317e',
-      0.2857142857142857: '#365b8c',
-      0.42857142857142855: '#277e8e',
-      0.5714285714285714: '#1fa187',
-      0.7142857142857143: '#49c16d',
-      0.8571428571428571: '#9fd938',
-      1.0: '#fde724',
-    },
-    terrain: {
-      0.000: '#ddf892',
-      0.125: '#eee98f',
-      0.250: '#ccbd7d',
-      0.375: '#aa926b',
-      0.500: '#886658',
-      0.625: '#997c76',
-      0.750: '#bba7a3',
-      0.875: '#ddd3d1',
-      1.000: '#ffffff',
-    },
-    grays: { 0.0: 'black', 1.0: 'white' },
-  };
 
   createPicker() {
     let div = L.DomUtil.create('div', 'colorscale-picker');

@@ -11,7 +11,7 @@ import * as L from 'leaflet';
 import debounce from 'lodash/debounce';
 import Component, { mixins } from 'vue-class-component';
 import VueRouter from 'vue-router';
-import draggable from 'vuedraggable';
+import { VueDraggable } from 'vue-draggable-plus';
 
 import AppMapDetailsDungeon from '@/components/AppMapDetailsDungeon';
 import AppMapDetailsObj from '@/components/AppMapDetailsObj';
@@ -272,7 +272,7 @@ class SingleEdit {
   tooltipEnable() {
     if (!this.map)
       return
-    this.tooltip = new L.Draw.Tooltip(this.map)
+    this.tooltip = new L.Draw.Tooltip(this.map as L.DrawMap)
     this.tooltip.updateContent({
       subtext: "Use context menu to toggle editing or Return to save",
       text: "Drag handles or markers to edit features."
@@ -344,7 +344,7 @@ class SingleEdit {
     AppMapChecklists,
     ModalGotoCoords,
     ObjectInfo,
-    draggable,
+    VueDraggable,
   },
 })
 export default class AppMap extends mixins(MixinUtil) {
@@ -825,8 +825,8 @@ export default class AppMap extends mixins(MixinUtil) {
     // @ts-ignore
     this.drawControl = new L.Control.Draw(options);
     this.setLineColorThrottler = debounce(() => this.setLineColor(), 100);
+    // @ts-ignore
     this.map.m.on({
-      // @ts-ignore
       'draw:created': (e: any) => {
         let group = [];
         if (ui.leafletType(e.layer) == ui.LeafletType.Polyline) {

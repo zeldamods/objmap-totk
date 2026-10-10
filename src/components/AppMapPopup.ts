@@ -7,6 +7,7 @@ export interface AppMapPopupProps {
   title?: string;
   text?: string;
   pathLength?: number;
+  mapLayer?: string;
 }
 
 @Component
@@ -20,8 +21,12 @@ export default class AppMapPopup extends Vue {
   @Prop(Number)
   private pathLength!: number;
 
+  @Prop(String)
+  private mapLayer!: string;
+
   private currentTitle = this.title;
   private currentText = this.text;
+  private currentMapLayer = this.mapLayer || "Surface";
 
   @Watch('currentTitle')
   onTitleChanged(val: string) {
@@ -31,5 +36,10 @@ export default class AppMapPopup extends Vue {
   @Watch('currentText')
   onTextChanged(val: string) {
     this.$emit('text', val);
+  }
+
+  @Watch('currentMapLayer')
+  onLayerChanged(val: string) {
+    this.$emit('mapLayer', val);
   }
 }

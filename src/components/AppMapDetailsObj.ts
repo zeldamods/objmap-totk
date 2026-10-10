@@ -247,8 +247,11 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
     if (this.railMarkers.length) {
       if (!this.staticData.colorScale) {
+        // @ts-ignore
         this.staticData.colorScale = new ColorScale(opts, { position: 'bottomleft' }).addTo(map.m);
-        this.updateColorlineStyle({ palette: this.staticData.colorScale.palette() });
+        if(this.staticData.colorScale) {
+          this.updateColorlineStyle({ palette: this.staticData.colorScale.palette() });
+        }
       }
       this.updateColorScale();
     }
@@ -482,6 +485,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
   forgetColorScale() {
     if (this.staticData.colorScale) {
+      // @ts-ignore
       this.staticData.colorScale.remove();
       this.staticData.colorScale = null;
     }

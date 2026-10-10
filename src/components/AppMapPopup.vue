@@ -2,7 +2,7 @@
   <div>
     <input class="w-100" placeholder="Title ..." v-model="currentTitle">
     <textarea class="w-100" placeholder="Description ..." v-model="currentText"></textarea>
-    <select v-model="map_layer">
+    <select v-model="currentMapLayer">
       <option>Sky</option>
       <option>Surface</option>
       <option>Depths</option>
