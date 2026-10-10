@@ -10,6 +10,7 @@ import '@/util/leaflet_tile_workaround.js';
 import * as L from 'leaflet';
 import debounce from 'lodash/debounce';
 import Component, { mixins } from 'vue-class-component';
+import { markRaw } from 'vue';
 import VueRouter from 'vue-router';
 import { VueDraggable } from 'vue-draggable-plus';
 
@@ -356,7 +357,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   private sidebar!: L.Control.Sidebar;
   private sidebarActivePane = '';
-  private sidebarPaneScrollPos: Map<string, number> = new Map();
+  private sidebarPaneScrollPos: Map<string, number> = markRaw( new Map() );
   private drawControlEnabled = false;
   private drawControl: any;
   private drawLayer!: L.GeoJSON;
@@ -373,19 +374,19 @@ export default class AppMap extends mixins(MixinUtil) {
   private greatPlateauBarrierShown = false;
 
   private detailsComponent = '';
-  private detailsMarker: ui.Unobservable<MapMarker> | null = null;
+  private detailsMarker: MapMarker | null = null;
   private detailsPaneOpened = false;
-  private detailsPinMarker: ui.Unobservable<L.Marker> | null = null;
+  private detailsPinMarker: L.Marker | null = null;
 
   private markerComponents = MARKER_COMPONENTS;
-  private markerGroups: Map<string, MapMarkerGroup> = new Map();
+  private markerGroups: Map<string, MapMarkerGroup> = markRaw( new Map() );
 
   private searching = false;
   private searchQuery = '';
   private searchThrottler!: () => void;
   private searchLastSearchFailed = false;
   private searchResults: ObjectMinData[] = [];
-  private searchResultMarkers: ui.Unobservable<MapMarkers.MapMarkerSearchResult>[] = [];
+  private searchResultMarkers: MapMarkers.MapMarkerSearchResult[] = [];
   private searchGroups: SearchResultGroup[] = [];
   private searchPresets = SEARCH_PRESETS;
   private searchExcludedSets: SearchExcludeSet[] = [];
@@ -395,9 +396,9 @@ export default class AppMap extends mixins(MixinUtil) {
   private lastBossExcludeSet!: SearchExcludeSet;
   private ohoExcludeSet!: SearchExcludeSet;
 
-  private areaMapLayer = new ui.Unobservable(L.layerGroup());
-  private areaMapLayersByData: ui.Unobservable<Map<any, L.Layer[]>> = new ui.Unobservable(new Map());
-  private areaAutoItem = new ui.Unobservable(L.layerGroup());
+  private areaMapLayer = markRaw( L.layerGroup() );
+  private areaMapLayersByData = markRaw(new Map<any, L.Layer[]>());
+  private areaAutoItem = markRaw( L.layerGroup() );
 
   private skipCompletedObjects: boolean = false;
   private checklists: Checklists = new Checklists();
@@ -408,22 +409,22 @@ export default class AppMap extends mixins(MixinUtil) {
   shownAutoItem = '';
   staticTooltip = false;
 
-  private mapUnitGrid = new ui.Unobservable(L.layerGroup());
+  private mapUnitGrid = markRaw( L.layerGroup() );
   showMapUnitGrid = false;
-  private revivalMapUnitGrid = new ui.Unobservable(L.layerGroup());
+  private revivalMapUnitGrid = markRaw( L.layerGroup() );
   showRevivalMapUnitGrid = false;
   showAreaColor = true;
 
-  private mapSafeAreas = new ui.Unobservable(L.layerGroup());
+  private mapSafeAreas = markRaw( L.layerGroup() );
   showSafeAreas = false;
 
-  private mapCastleAreas = new ui.Unobservable(L.layerGroup());
+  private mapCastleAreas = markRaw( L.layerGroup() );
   showCastleAreas = false;
 
   showBaseMap = true;
   showReferenceGrid = false;
 
-  private tempObjMarker: ui.Unobservable<MapMarker> | null = null;
+  private tempObjMarker: MapMarker | null = null;
 
   private settings: Settings | null = null;
 
@@ -1102,14 +1103,14 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.setView(xyz);
     if (this.previousGotoMarker)
       this.previousGotoMarker.remove();
-    this.previousGotoMarker = L.marker(this.map.fromXYZ(xyz), {
+    this.previousGotoMarker = markRaw( L.marker(this.map.fromXYZ(xyz), {
       // @ts-ignore
       contextmenu: true,
       contextmenuItems: [{
         text: 'Hide',
         callback: () => { this.previousGotoMarker!.remove(); this.previousGotoMarker = null; },
       }],
-    }).addTo(this.map.m);
+    }).addTo(this.map.m) );
   }
 
   initMarkerDetails() {
@@ -1133,11 +1134,11 @@ export default class AppMap extends mixins(MixinUtil) {
   openMarkerDetails(component: string, marker: MapMarker, zoom = -1) {
     this.setLocalDetails(marker);
     this.closeMarkerDetails(true);
-    this.detailsMarker = new ui.Unobservable(marker);
+    this.detailsMarker = markRaw(marker);
     this.detailsComponent = component;
     this.switchPane('spane-details');
     this.detailsPaneOpened = true;
-    this.detailsPinMarker = new ui.Unobservable(L.marker(marker.getMarker().getLatLng(), {
+    this.detailsPinMarker = markRaw(L.marker(marker.getMarker().getLatLng(), {
       pane: 'front',
     }).addTo(this.map.m));
 
@@ -1160,7 +1161,7 @@ export default class AppMap extends mixins(MixinUtil) {
       this.sidebar.close();
     }
     if (this.detailsPinMarker) {
-      this.detailsPinMarker.data.remove();
+      this.detailsPinMarker.remove();
       this.detailsPinMarker = null;
     }
     this.detailsPaneOpened = false;
@@ -1185,7 +1186,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   searchJumpToResult(idx: number) {
     const marker = this.searchResultMarkers[idx];
-    this.openMarkerDetails(getMarkerDetailsComponent(marker.data), marker.data, 6);
+    this.openMarkerDetails(getMarkerDetailsComponent(marker), marker, 6);
   }
 
   searchOnInput() {
@@ -1277,7 +1278,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   async search() {
     this.searching = true;
-    this.searchResultMarkers.forEach(m => m.data.getMarker().remove());
+    this.searchResultMarkers.forEach(m => m.getMarker().remove());
     this.searchResultMarkers = [];
 
     const query = this.searchGetQuery();
@@ -1291,14 +1292,14 @@ export default class AppMap extends mixins(MixinUtil) {
     const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
     let marks: { [key: string]: boolean } = {};
     for (const result of this.searchResults) {
-      const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
+      const marker = markRaw(new MapMarkers.MapMarkerSearchResult(this.map, result));
       marks[result.hash_id] = false;
       if (this.checklists.isMarked(result.hash_id)) {
-        marker.data.setMarked(true, opacity);
+        marker.setMarked(true, opacity);
         marks[result.hash_id] = true;
       }
       this.searchResultMarkers.push(marker);
-      marker.data.getMarker().addTo(this.map.m);
+      marker.getMarker().addTo(this.map.m);
     }
 
     this.localSearch = Object.assign({}, marks);
@@ -1336,7 +1337,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   toggleYTooltipOnAllMarkers(on: boolean) {
     let func = on ? this.enableYTooltip : this.disableYTooltip;
-    this.searchResultMarkers.map(m => m.data).forEach(func);
+    this.searchResultMarkers.forEach(func);
     this.searchGroups.forEach(group => {
       group.getMarkers().forEach(func);
     });
@@ -1401,7 +1402,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   clUpdateMarkers() {
     this.updateMarkers();
-    this.searchResultMarkers.forEach(m => this.updateMarkerCheckmark(m.data));
+    this.searchResultMarkers.forEach(m => this.updateMarkerCheckmark(m));
     this.searchGroups.forEach(group => {
       group.getMarkers().forEach(m => this.updateMarkerCheckmark(m));
     })
@@ -1474,9 +1475,9 @@ export default class AppMap extends mixins(MixinUtil) {
       if (item.hash_id in this.localSearch)
         this.localSearch[item.hash_id] = value;
       // Search Result Markers
-      const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
+      const marker = this.searchResultMarkers.find(m => m.obj.hash_id == item.hash_id);
       if (marker) {
-        marker.data.setMarked(value, opacity);
+        marker.setMarked(value, opacity);
       }
 
       // Group Marker (from Add to Map and Preset Searches)
@@ -1589,10 +1590,10 @@ export default class AppMap extends mixins(MixinUtil) {
       },
       'AppMap:open-obj': async (obj: ObjectData) => {
         if (this.tempObjMarker)
-          this.tempObjMarker.data.getMarker().remove();
-        this.tempObjMarker = new ui.Unobservable(new MapMarkers.MapMarkerObj(this.map, obj, '#e02500', '#ff2a00'));
-        this.tempObjMarker.data.getMarker().addTo(this.map.m);
-        this.openMarkerDetails(getMarkerDetailsComponent(this.tempObjMarker.data), this.tempObjMarker.data);
+          this.tempObjMarker.getMarker().remove();
+        this.tempObjMarker = markRaw(new MapMarkers.MapMarkerObj(this.map, obj, '#e02500', '#ff2a00'));
+        this.tempObjMarker.getMarker().addTo(this.map.m);
+        this.openMarkerDetails(getMarkerDetailsComponent(this.tempObjMarker), this.tempObjMarker);
       },
       'AppMap:show-gen-group': async (id) => {
         const group = new SearchResultGroup('', `Generation group for ${id.mapType}/${id.mapName}:${id.hashId}`);
@@ -1609,7 +1610,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
     this.map.m.on('click', () => {
       if (this.tempObjMarker)
-        this.tempObjMarker.data.getMarker().remove();
+        this.tempObjMarker.getMarker().remove();
     });
 
     this.map.m.on('AppMap:show-gen-group', (args) => {
@@ -1627,24 +1628,24 @@ export default class AppMap extends mixins(MixinUtil) {
     for (const group of this.searchGroups)
       group.update(SearchResultUpdateMode.UpdateVisibility | SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateTitle, this.searchExcludedSets);
 
-    this.searchResultMarkers.forEach(m => m.data.updateTitle());
+    this.searchResultMarkers.forEach(m => m.updateTitle());
   }
 
   initAreaMap() {
-    this.areaMapLayer.data.addTo(this.map.m);
+    this.areaMapLayer.addTo(this.map.m);
   }
   initAutoItem() {
-    this.areaAutoItem.data.addTo(this.map.m);
+    this.areaAutoItem.addTo(this.map.m);
   }
 
   async loadAutoItem(name: string) {
-    this.areaAutoItem.data.clearLayers();
+    this.areaAutoItem.clearLayers();
     if (!name)
       return;
     const areas = await MapMgr.getInstance().fetchAreaMap(name);
     let layers: L.Path[] = ui.areaMapToLayers(areas);
-    layers.forEach(l => this.areaAutoItem.data.addLayer(l));
-    this.areaAutoItem.data.setZIndex(1000);
+    layers.forEach(l => this.areaAutoItem.addLayer(l));
+    this.areaAutoItem.setZIndex(1000);
   }
 
   featureCollectionToPolygons(areas: any) {
@@ -1669,8 +1670,8 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   async loadAreaMap(name: string) {
-    this.areaMapLayer.data.clearLayers();
-    this.areaMapLayersByData.data.clear();
+    this.areaMapLayer.clearLayers();
+    this.areaMapLayersByData.clear();
     if (!name)
       return;
     // Order matches that in MapTower.json
@@ -1728,7 +1729,7 @@ export default class AppMap extends mixins(MixinUtil) {
           // @ts-ignore
         });
       });
-      this.areaMapLayersByData.data.set(data, layers);
+      this.areaMapLayersByData.set(data, layers);
 
       for (const layer of layers) {
         layer.on('mouseover', () => {
@@ -1806,10 +1807,10 @@ export default class AppMap extends mixins(MixinUtil) {
   updateAreaMapVisibility() {
     const hasWhitelist = !!this.areaWhitelist;
     const shown = this.areaWhitelist.trim().split(',').map(s => s.trim());
-    this.areaMapLayer.data.clearLayers();
-    for (const [data, layers] of this.areaMapLayersByData.data.entries()) {
+    this.areaMapLayer.clearLayers();
+    for (const [data, layers] of this.areaMapLayersByData.entries()) {
       if (!hasWhitelist || shown.includes(data))
-        layers.forEach(l => this.areaMapLayer.data.addLayer(l));
+        layers.forEach(l => this.areaMapLayer.addLayer(l));
     }
   }
 
@@ -1823,7 +1824,7 @@ export default class AppMap extends mixins(MixinUtil) {
   async initMapSafeAreas() {
     const areas = await MapMgr.getInstance().fetchAreaMap("AutoSafe");
     let layers: L.Path[] = ui.areaMapToLayers(areas);
-    layers.forEach(l => this.mapSafeAreas.data.addLayer(l));
+    layers.forEach(l => this.mapSafeAreas.addLayer(l));
   }
 
   async initMapCastleAreas() {
@@ -1844,9 +1845,9 @@ export default class AppMap extends mixins(MixinUtil) {
       layer.on('mouseout', () => { layer.setStyle({ weight: 2, fillOpacity: 0.2 }); });
       return layer;
     });
-    layers.forEach(l => this.mapCastleAreas.data.addLayer(l));
+    layers.forEach(l => this.mapCastleAreas.addLayer(l));
 
-    this.mapCastleAreas.data.setZIndex(1000);
+    this.mapCastleAreas.setZIndex(1000);
   }
 
 
@@ -1869,7 +1870,7 @@ export default class AppMap extends mixins(MixinUtil) {
           permanent: true,
           direction: 'center',
         });
-        this.mapUnitGrid.data.addLayer(rect);
+        this.mapUnitGrid.addLayer(rect);
       }
     }
     for (let i = 0; i < 10; i++) {
@@ -1902,42 +1903,42 @@ export default class AppMap extends mixins(MixinUtil) {
         rect.on('mouseout', function(_ev: any) {
           rect.setStyle({ weight: 2, fillOpacity: 0.02 });
         });
-        this.revivalMapUnitGrid.data.addLayer(rect);
+        this.revivalMapUnitGrid.addLayer(rect);
       }
     }
   }
 
   onShowMapUnitGridChanged() {
     this.$nextTick(() => {
-      this.mapUnitGrid.data.remove();
-      this.revivalMapUnitGrid.data.remove();
+      this.mapUnitGrid.remove();
+      this.revivalMapUnitGrid.remove();
       if (this.showMapUnitGrid)
-        this.mapUnitGrid.data.addTo(this.map.m);
+        this.mapUnitGrid.addTo(this.map.m);
       if (this.showRevivalMapUnitGrid)
-        this.revivalMapUnitGrid.data.addTo(this.map.m);
+        this.revivalMapUnitGrid.addTo(this.map.m);
     });
   }
 
   onShowCastleAreas() {
     this.$nextTick(() => {
-      this.mapCastleAreas.data.remove();
+      this.mapCastleAreas.remove();
       if (this.showCastleAreas) {
-        if (this.mapCastleAreas.data.getLayers().length <= 0) {
+        if (this.mapCastleAreas.getLayers().length <= 0) {
           this.initMapCastleAreas();
         }
-        this.mapCastleAreas.data.addTo(this.map.m);
+        this.mapCastleAreas.addTo(this.map.m);
       }
     });
   }
 
   onShowSafeAreas() {
     this.$nextTick(() => {
-      this.mapSafeAreas.data.remove();
+      this.mapSafeAreas.remove();
       if (this.showSafeAreas) {
-        if (this.mapSafeAreas.data.getLayers().length <= 0) {
+        if (this.mapSafeAreas.getLayers().length <= 0) {
           this.initMapSafeAreas();
         }
-        this.mapSafeAreas.data.addTo(this.map.m);
+        this.mapSafeAreas.addTo(this.map.m);
       }
     });
   }

@@ -22,11 +22,11 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
   private pos: number[] = [];
 
   protected init() {
-    this.id = this.marker.data.lm.getMessageId();
+    this.id = this.marker.lm.getMessageId();
     this.sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.id + '_sub');
 
     MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"TBox_"').then(d => this.tboxObjs = d);
     MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"Enemy_"').then(d => this.enemies = d);
-    this.pos = this.marker.data.lm.getXYZ();
+    this.pos = this.marker.lm.getXYZ();
   }
 }
