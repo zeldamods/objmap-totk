@@ -9,6 +9,7 @@ import {
 } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 import { Settings } from '@/util/settings';
+import { appMapBus } from '@/util/bus';
 
 @Component
 export default class ObjectInfo extends mixins(MixinUtil) {
@@ -39,7 +40,7 @@ export default class ObjectInfo extends mixins(MixinUtil) {
       this.data = this.obj;
   }
   toggleCheck() {
-    this.$parent.$emit('AppMap:update-search-markers', {
+    appMapBus.emit('AppMap:update-search-markers', {
       hash_id: this.data.hash_id
     });
   }

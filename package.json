@@ -27,6 +27,7 @@
     "leaflet.control.opacity": "^1.6.0",
     "leaflet.markercluster": "^1.4.1",
     "lodash": "^4.17.21",
+    "mitt": "^3.0.1",
     "terser": "^4.8.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
