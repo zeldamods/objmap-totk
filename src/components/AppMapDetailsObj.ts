@@ -26,7 +26,7 @@ import * as curves from '@/util/curves';
 import { vecAdd } from '@/util/math';
 import * as svg from '@/util/svg';
 
-require('leaflet-hotline')
+import 'leaflet-hotline'
 
 const KUH_TAKKAR_ELEVATOR_HASH_ID = 0x96d181a0;
 const DRAGON_HASH_IDS = [
@@ -241,7 +241,8 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
       this.railsWithMarkers.push(rail);
       // @ts-ignore
-      this.railMarkers.push(L.hotline(pts, opts).addTo(map.m));
+      let rail_line = L.hotline(pts, {...opts, renderer: L.Hotline.renderer({pan: opts.pane })}).addTo(map.m)
+      this.railMarkers.push(rail_line)
     }
 
     if (this.railMarkers.length) {
