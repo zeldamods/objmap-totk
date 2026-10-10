@@ -240,6 +240,7 @@ export class MapBase {
     this.m.createPane('front2').style.zIndex = '1002';
 
     // Basic Switching
+    // @ts-ignore
     L.control.layers(this.baseMapLayers).addTo(this.m);
 
     // Opacity Switching
@@ -254,6 +255,7 @@ export class MapBase {
       position: 'bottomright',
       latFormatter: (x) => (-x).toFixed(0),
       lngFormatter: (x) => x.toFixed(0),
+    // @ts-ignore
     }).addTo(this.m);
     this.m.on('baselayerchange', (ev: any) => {
       const url = ev.layer._url;
