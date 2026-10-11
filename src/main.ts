@@ -1,6 +1,4 @@
-import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css';
 import '@fortawesome/fontawesome-free/css/regular.css';
 import '@fortawesome/fontawesome-free/css/solid.css';
@@ -28,8 +26,6 @@ async function initServices() {
 }
 
 function initUi() {
-  Vue.use(BootstrapVue);
-
   Vue.config.productionTip = false;
 
   Component.registerHooks([
