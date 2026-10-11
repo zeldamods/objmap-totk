@@ -21,6 +21,7 @@ import AppMapFilterMainButton from '@/components/AppMapFilterMainButton';
 import AppMapSettings from '@/components/AppMapSettings';
 import AppMapChecklists from '@/components/AppMapChecklists';
 import MixinUtil from '@/components/MixinUtil';
+import AppDropdown from '@/components/AppDropdown';
 import ModalGotoCoords from '@/components/ModalGotoCoords';
 import ObjectInfo from '@/components/ObjectInfo';
 import { MsgMgr } from '@/services/MsgMgr';
@@ -337,6 +338,7 @@ class SingleEdit {
 
 @Component({
   components: {
+    AppDropdown,
     AppMapDetailsDungeon,
     AppMapDetailsObj,
     AppMapDetailsPlace,
