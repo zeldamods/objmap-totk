@@ -1,7 +1,5 @@
 
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { Prop, Watch } from 'vue-property-decorator';
+import { defineComponent } from 'vue';
 
 export interface AppMapPopupProps {
   title?: string;
@@ -10,36 +8,33 @@ export interface AppMapPopupProps {
   mapLayer?: string;
 }
 
-@Component
-export default class AppMapPopup extends Vue {
-  @Prop(String)
-  private title!: string;
+export default defineComponent({
+  name: 'AppMapPopup',
+  props: {
+    title: String,
+    text: String,
+    pathLength: Number,
+    mapLayer: String,
+  },
+  emits: ['title', 'text', 'mapLayer'],
 
-  @Prop(String)
-  private text!: string;
+  data() {
+    return {
+      currentTitle: this.title,
+      currentText: this.text,
+      currentMapLayer: this.mapLayer || "Surface",
+    }
+  },
 
-  @Prop(Number)
-  private pathLength!: number;
-
-  @Prop(String)
-  private mapLayer!: string;
-
-  private currentTitle = this.title;
-  private currentText = this.text;
-  private currentMapLayer = this.mapLayer || "Surface";
-
-  @Watch('currentTitle')
-  onTitleChanged(val: string) {
-    this.$emit('title', val);
-  }
-
-  @Watch('currentText')
-  onTextChanged(val: string) {
-    this.$emit('text', val);
-  }
-
-  @Watch('currentMapLayer')
-  onLayerChanged(val: string) {
-    this.$emit('mapLayer', val);
-  }
-}
+  watch: {
+    currentTitle(val: string) {
+      this.$emit('title', val);
+    },
+    currentText(val: string) {
+      this.$emit('text', val);
+    },
+    currentMapLayer(val: string) {
+      this.$emit('mapLayer', val);
+    }
+  },
+})
