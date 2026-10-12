@@ -1,8 +1,10 @@
 import 'leaflet/dist/leaflet.css';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
 import 'leaflet-sidebar-v2';
 import 'leaflet-sidebar-v2/css/leaflet-sidebar.css';
+
+import '@/util/leaflet_draw_globals';
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import '@/util/leaflet_tile_workaround.js';
@@ -13,16 +15,16 @@ import { Component, defineComponent, markRaw, reactive } from 'vue';
 import VueRouter from 'vue-router';
 import { VueDraggable } from 'vue-draggable-plus';
 
-import AppMapDetailsDungeon from '@/components/AppMapDetailsDungeon';
-import AppMapDetailsObj from '@/components/AppMapDetailsObj';
-import AppMapDetailsPlace from '@/components/AppMapDetailsPlace';
-import AppMapFilterMainButton from '@/components/AppMapFilterMainButton';
-import AppMapSettings from '@/components/AppMapSettings';
-import AppMapChecklists from '@/components/AppMapChecklists';
+import AppMapDetailsDungeon from '@/components/AppMapDetailsDungeon.vue';
+import AppMapDetailsObj from '@/components/AppMapDetailsObj.vue';
+import AppMapDetailsPlace from '@/components/AppMapDetailsPlace.vue';
+import AppMapFilterMainButton from '@/components/AppMapFilterMainButton.vue';
+import AppMapSettings from '@/components/AppMapSettings.vue';
+import AppMapChecklists from '@/components/AppMapChecklists.vue';
 import MixinUtil from '@/components/MixinUtil';
-import AppDropdown from '@/components/AppDropdown';
-import ModalGotoCoords from '@/components/ModalGotoCoords';
-import ObjectInfo from '@/components/ObjectInfo';
+import AppDropdown from '@/components/AppDropdown.vue';
+import ModalGotoCoords from '@/components/ModalGotoCoords.vue';
+import ObjectInfo from '@/components/ObjectInfo.vue';
 import { MsgMgr } from '@/services/MsgMgr';
 import {
   MapBase,
@@ -51,7 +53,8 @@ import { Point } from '@/util/map';
 import { calcLayerLength } from '@/util/polyline';
 import { mountComponent, MountedComponent } from '@/util/mount';
 import { appMapBus, ObjectIdentifier, onAppMapEvents } from '@/util/bus';
-import AppMapPopup, { AppMapPopupProps } from '@/components/AppMapPopup';
+import AppMapPopup from '@/components/AppMapPopup.vue';
+import type { AppMapPopupProps } from '@/components/AppMapPopup';
 import { Settings } from '@/util/settings';
 import * as ui from '@/util/ui';
 import * as math from '@/util/math';
@@ -376,7 +379,7 @@ export default defineComponent({
       mapSafeAreas: L.layerGroup(),
       mapCastleAreas: L.layerGroup(),
       revivalMapUnitGrid: L.layerGroup(),
-      OBJMAP_VERSION: process.env.VUE_APP_GIT_HASH,
+      OBJMAP_VERSION: import.meta.env.VUE_APP_GIT_HASH,
     };
   },
 

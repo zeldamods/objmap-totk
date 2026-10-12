@@ -1,10 +1,10 @@
 import 'leaflet-path-transform';
 
-import * as L from 'leaflet';
+import L from 'leaflet';
 import { defineComponent, markRaw } from 'vue';
 import { defineDetailsBase } from '@/components/AppMapDetailsBase';
-import ObjectInfo from '@/components/ObjectInfo';
-import ShopData from '@/components/ShopData';
+import ObjectInfo from '@/components/ObjectInfo.vue';
+import ShopData from '@/components/ShopData.vue';
 import RewardData from '@/components/RewardData';
 import { appMapBus } from '@/util/bus';
 import {
@@ -24,7 +24,11 @@ import * as curves from '@/util/curves';
 import { vecAdd } from '@/util/math';
 import * as svg from '@/util/svg';
 
-import 'leaflet-hotline'
+import leafletHotline from 'leaflet-hotline';
+
+// Needs the default import: hotline adds L.Hotline, and
+//     a namespace import is frozen in production builds.
+leafletHotline(L);
 
 const KUH_TAKKAR_ELEVATOR_HASH_ID = 0x96d181a0;
 const DRAGON_HASH_IDS = [
