@@ -71,7 +71,7 @@
                 class="small"
                 :key="item.hash_id"
                 :item="item"
-                :bus="bus"/>
+                />
             </DynamicScrollerItem>
           </template>
         </DynamicScroller>

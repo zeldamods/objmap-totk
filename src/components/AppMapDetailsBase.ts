@@ -1,30 +1,32 @@
-import Vue from 'vue';
-import { Prop } from 'vue-property-decorator';
-import Component, { mixins } from 'vue-class-component';
+import { defineComponent, PropType } from 'vue';
 
 import MixinUtil from '@/components/MixinUtil';
-import { ObjectMinData } from '@/services/MapMgr';
 import { Settings } from '@/util/settings';
 
-@Component({
-  watch: {
-    // @ts-ignore
-    marker: function() { this.init(); },
-  }
-})
-export default class AppMapDetailsBase<MarkerClass> extends mixins(MixinUtil) {
-  @Prop()
-  protected marker!: MarkerClass;
-  protected init() { }
+export function defineDetailsBase<MarkerClass>() {
+  return defineComponent({
+    name: 'AppMapDetailsBase',
+    mixins: [MixinUtil],
+    props: {
+      marker: { type: Object as PropType<MarkerClass>, required: true },
+    },
+    watch: {
+      marker() { this.init(); },
+    },
+    created() {
+      this.init();
+    },
+    methods: {
+      init(): void | Promise<void> {
 
-  private created() {
-    this.init();
-  }
-  formatPosition(pos: number[]): string {
-    const inGame = Settings.getInstance().inGameCoordinates
-    let xyz = [pos[0], pos[1], -pos[2]] // E-W, U-D, N-S
-    if (inGame)
-      xyz = [pos[0], -pos[2], pos[1] - 106] // E-W, N-S, U-D -160
-    return xyz.map(v => v.toFixed(2)).join(", ")
-  }
+      },
+      formatPosition(pos: number[]): string {
+        const inGame = Settings.getInstance().inGameCoordinates
+        let xyz = [pos[0], pos[1], -pos[2]] // E-W, U-D, N-S
+        if (inGame)
+          xyz = [pos[0], -pos[2], pos[1] - 106] // E-W, N-S, U-D -160
+        return xyz.map(v => v.toFixed(2)).join(", ")
+      }
+    },
+  });
 }
