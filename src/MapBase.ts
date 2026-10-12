@@ -2,10 +2,8 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-rastercoords';
 import 'leaflet-contextmenu';
 import 'leaflet-contextmenu/dist/leaflet.contextmenu.css';
-import 'leaflet.control.opacity/dist/L.Control.Opacity.css';
 import 'leaflet-mouse-position';
 import '@/util/leaflet_tile_workaround.js';
-import 'leaflet.control.opacity';
 
 import * as L from 'leaflet';
 
@@ -242,11 +240,6 @@ export class MapBase {
     // Basic Switching
     // @ts-ignore
     L.control.layers(this.baseMapLayers).addTo(this.m);
-
-    // Opacity Switching
-    //   Having control over the tile layer opacity is fun, but is it useful
-    //   Left here as an appendage; if requested and there is demand
-    // L.control.opacity(baseMaps, { label: '', collapsed: true }).addTo(this.m);
 
     // Mouse Position (bottom right corner)
     L.control.mousePosition({

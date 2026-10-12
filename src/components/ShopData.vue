@@ -8,10 +8,10 @@
           <div class="cell">{{name(idx)}}</div>
           <div class="cell">{{num(idx)}}</div>
           <div class="cell">
-            <img v-if="currency(idx) == 'Rupee'" width="15" src="rupee.svg" title="Rupee">
-            <img v-else-if="currency(idx) == 'MinusRupee'" width="15" src="poe.png" title="Poe">
-            <img v-else-if="currency(idx) == 'Zonanium'" width="28" src="Zonaite.png" title="Zonaite">
-            <img v-else-if="currency(idx) == 'BigZonanium'" width="28" src="LargeZonaite.png" title="Large Zonaite">
+            <img v-if="currency(idx) == 'Rupee'" width="15" src="/rupee.svg" title="Rupee">
+            <img v-else-if="currency(idx) == 'MinusRupee'" width="15" src="/poe.png" title="Poe">
+            <img v-else-if="currency(idx) == 'Zonanium'" width="28" src="/Zonaite.png" title="Zonaite">
+            <img v-else-if="currency(idx) == 'BigZonanium'" width="28" src="/LargeZonaite.png" title="Large Zonaite">
           </div>
           <div class="cell">{{price(idx)}}</div>
           <div class="cell">

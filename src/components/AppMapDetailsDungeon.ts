@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
 
 import { defineDetailsBase } from '@/components/AppMapDetailsBase';
-import ObjectInfo from '@/components/ObjectInfo';
+import ObjectInfo from '@/components/ObjectInfo.vue';
 import { MapMarkerDungeon } from '@/MapMarker';
 import {
   MapMgr,
