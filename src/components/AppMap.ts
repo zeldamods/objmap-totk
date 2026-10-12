@@ -9,7 +9,7 @@ import '@/util/leaflet_tile_workaround.js';
 
 import * as L from 'leaflet';
 import debounce from 'lodash/debounce';
-import { Component, defineComponent, markRaw } from 'vue';
+import { Component, defineComponent, markRaw, reactive } from 'vue';
 import VueRouter from 'vue-router';
 import { VueDraggable } from 'vue-draggable-plus';
 
@@ -501,7 +501,7 @@ export default defineComponent({
       const x = parseFloat(route.params.x);
       const z = parseFloat(route.params.z);
       if (isNaN(x) || isNaN(z)) {
-        this.$router.replace({ name: 'map' });
+        this.map.setView([0, 0, 0], 3);
         return;
       }
 
@@ -1243,8 +1243,8 @@ export default defineComponent({
     searchSetLink() {
       const query = this.searchGetQuery();
       this.$router.replace({
-        path: this.$route.fullPath,
         query: {
+          ...this.$route.query,
           q: query,
         }
       })
@@ -1266,7 +1266,7 @@ export default defineComponent({
       if (this.searchExcludedSets.some(g => !!g.query && g.query == query))
         return;
 
-      const set = new SearchExcludeSet(query, query);
+      const set = reactive( new SearchExcludeSet(query, query) );
       this.searchExcludedSets.push(set);
       await set.init();
       for (const group of this.searchGroups)
