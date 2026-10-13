@@ -193,7 +193,7 @@ export class ChecklistDB {
 
   async all_internal(storeName: string) {
     let cursor = await this.db.transaction(storeName).store.openCursor()
-    let data: any = {};
+    const data: any = {};
     while (cursor) {
       data[cursor.key] = cursor.value;
       cursor = await cursor.continue();

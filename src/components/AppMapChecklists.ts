@@ -19,7 +19,7 @@ export default defineComponent({
   },
 
   props: {
-    lists: { type: Array<List>, default: [] },
+    lists: { type: Array<List>, default() { return [] } },
   },
 
   data() {
@@ -42,7 +42,6 @@ export default defineComponent({
     checkopen(list: any) {
       this.activeList = list.id;
       this.xlist = list;
-      this.$nextTick();
     },
 
     markedLength(list: any) {

@@ -5,7 +5,7 @@ import * as ui from '@/util/ui';
 export default defineComponent({
   name: 'RewardData',
   props: {
-    data: { type: Object, default: {} },
+    data: { type: Object, default() { return {} }, },
   },
   methods: {
     length() {
