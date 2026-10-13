@@ -549,7 +549,7 @@ export default defineComponent({
     // Similar to updateMarkers() but only called
     //   on toggle of KorokIDs
     updateKorokIDs() {
-      let type = "Korok";
+      const type = "Korok";
       const info = MapMgr.getInstance().getInfoMainField();
       if (Settings.getInstance().shownGroups.has(type)) {
         this.markerGroups.get(type)!.destroy();
@@ -726,7 +726,7 @@ export default defineComponent({
     toggleAllLayers(on: boolean) {
       this.drawLayerOpts.forEach((opt: any) => {
         opt.visible = on
-        let layer = this.drawLayer.getLayer(opt.id);
+        const layer = this.drawLayer.getLayer(opt.id);
         if (!layer)
           return;
         if (on)
@@ -770,7 +770,7 @@ export default defineComponent({
       if (!this.drawLayer)
         return [];
       const layerIDs = this.drawLayer.getLayers().map((layer: any) => {
-        let props = layer.feature.properties;
+        const props = layer.feature.properties;
         const id = this.drawLayer.getLayerId(layer);
         const opt = this.drawLayerOpts.find(opt => opt.id == id);
         const visible = (opt && opt.visible !== undefined) ? opt.visible : true;
@@ -806,8 +806,8 @@ export default defineComponent({
     updateDrawLayerOpts(updates: any = {}) {
       this.$nextTick(() => {
         if (updates.layer) {
-          let id = this.drawLayer.getLayerId(updates.layer);
-          let opt = this.drawLayerOpts.find((layer: any) => layer.id == id)
+          const id = this.drawLayer.getLayerId(updates.layer);
+          const opt = this.drawLayerOpts.find((layer: any) => layer.id == id)
           if (opt) {
             opt.title = updates.title || opt.title;
             opt.text = updates.text || opt.text;
@@ -845,7 +845,7 @@ export default defineComponent({
       if (savedData)
         this.drawFromGeojson(JSON.parse(savedData));
       this.drawLayer.addTo(this.map.m);
-      let options: any = {
+      const options: any = {
         position: 'topleft',
         draw: {
           circlemarker: false,
@@ -869,7 +869,7 @@ export default defineComponent({
       // @ts-ignore
       this.map.m.on({
         'draw:created': (e: any) => {
-          let group = [];
+          const group = [];
           if (ui.leafletType(e.layer) == ui.LeafletType.Polyline) {
             const map_layers = this.drawVertexLayers.filter((value, index, self) => { return self.indexOf(value) == index; });
             if (map_layers.length != 1) {
@@ -950,7 +950,7 @@ export default defineComponent({
           //   the layers passed are not empty
           // A 'Save' action should have a possibly non-empty editable layer
           if (this.drawLayer.getLayers().length == 0 && e.layers.getLayers().length != 0) {
-            let ans = confirm("Clear all map items?");
+            const ans = confirm("Clear all map items?");
             if (!ans) {
               e.layers.eachLayer((layer: L.Marker | L.Polyline) => this.drawLayer.addLayer(layer));
             }
@@ -968,9 +968,9 @@ export default defineComponent({
     },
 
     layerFromGeoJSON(feat: any): L.Layer {
-      let isCircle = feat.geometry.type == "Point" && feat.properties.radius;
+      const isCircle = feat.geometry.type == "Point" && feat.properties.radius;
       if (isCircle) {
-        let latlon = L.latLng(feat.geometry.coordinates[1], feat.geometry.coordinates[0]);
+        const latlon = L.latLng(feat.geometry.coordinates[1], feat.geometry.coordinates[0]);
         return new L.Circle(latlon, { radius: feat.properties.radius });
       }
       return L.GeoJSON.geometryToLayer(feat);
@@ -981,9 +981,9 @@ export default defineComponent({
         this.drawLayer.clearLayers();
       }
       data.features.forEach((feat: any) => {
-        let layer: any = this.layerFromGeoJSON(feat);
+        const layer: any = this.layerFromGeoJSON(feat);
         // Only set style for Polylines not Markers
-        let color = feat.style.color || this.drawLineColor;
+        const color = feat.style.color || this.drawLineColor;
         if (ui.leafletType(layer) == ui.LeafletType.Marker) {
           layer.options.color = color;
           layer.setIcon(ui.svgIcon(color));
@@ -1217,7 +1217,7 @@ export default defineComponent({
     },
 
     searchGetQuery() {
-      let query = this.searchQuery.trim();
+      const query = this.searchQuery.trim();
       //if (/^0x[0-9A-Fa-f]{6}/g.test(query))
       //  query = BigInt(query).toString(10);
       return query;
@@ -1329,7 +1329,7 @@ export default defineComponent({
         this.searchLastSearchFailed = true;
       }
       const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
-      let marks: { [key: string]: boolean } = {};
+      const marks: { [key: string]: boolean } = {};
       for (const result of this.searchResults) {
         const marker = markRaw(new MapMarkers.MapMarkerSearchResult(this.map, result));
         marks[result.hash_id] = false;
@@ -1347,10 +1347,10 @@ export default defineComponent({
     },
 
     enableYTooltip(marker: any) {
-      let m: any = marker.getMarker();
+      const m: any = marker.getMarker();
       if (!('_tooltip' in marker.obj)) {
         // @ts-ignore
-        let tt = m.getTooltip();
+        const tt = m.getTooltip();
         marker.obj._tooltip = tt.getContent();
         marker.obj._tooltip_options = tt.options;
       }
@@ -1365,7 +1365,7 @@ export default defineComponent({
     },
 
     disableYTooltip(marker: any) {
-      let m: any = marker.getMarker();
+      const m: any = marker.getMarker();
       if (m.getTooltip().options.permanent) {
         m.getTooltip().options.permanent = false;
         m.unbindTooltip();
@@ -1375,7 +1375,7 @@ export default defineComponent({
     },
 
     toggleYTooltipOnAllMarkers(on: boolean) {
-      let func = on ? this.enableYTooltip : this.disableYTooltip;
+      const func = on ? this.enableYTooltip : this.disableYTooltip;
       this.searchResultMarkers.forEach(func);
       this.searchGroups.forEach(group => {
         group.getMarkers().forEach(func);
@@ -1412,7 +1412,7 @@ export default defineComponent({
     },
 
     minObjToCL(obj: ObjectMinData) {
-      let ui_name = obj.name;
+      let ui_name;
       const location = obj.Location;
       if (location && (obj.name == 'LocationMarker' || obj.name == 'LocationArea')) {
         if (location.includes('Dungeon')) {
@@ -1449,7 +1449,7 @@ export default defineComponent({
 
     async clChangeQuery(list: any) {
       const query = list.query;
-      let results = [];
+      let results;
       try {
         results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false, 5000);
       } catch (e) {
@@ -1457,7 +1457,7 @@ export default defineComponent({
         return;
       }
       list.items = {}
-      let items = [];
+      const items = [];
       for (const item of results) {
         items.push(this.minObjToCL(item));
       }
@@ -1557,7 +1557,7 @@ export default defineComponent({
         } else if (mapType == 'NormalStage') {
           this.searchAddGroup(`map:"${mapType}/${mapName}"`, `Map: Special Maps ${mapName}`);
         } else if (layer == 'Surface' || layer == 'Depths') {
-          let mapType = (layer == "Surface") ? 'MainField' : 'MinusField';
+          const mapType = (layer == "Surface") ? 'MainField' : 'MinusField';
           const quad = map.pointToMapUnit(xyz);
           let query = `map:"${mapType}/${quad}"`
           if (layer == 'Surface' && quad == 'A-8') { // Thunder Temple
@@ -1611,14 +1611,14 @@ export default defineComponent({
           this.clCreate();
         },
         'AppMap:update-checklist-name': async (value: any) => {
-          let list = this.checklists.read(value.id);
+          const list = this.checklists.read(value.id);
           if (!list)
             return;
           list.name = value.name;
           await this.checklists.update(list);
         },
         'AppMap:update-checklist-query': async (value: any) => {
-          let list = this.checklists.read(value.id);
+          const list = this.checklists.read(value.id);
           if (!list)
             return;
           list.query = value.query;
@@ -1681,7 +1681,7 @@ export default defineComponent({
       if (!name)
         return;
       const areas = await MapMgr.getInstance().fetchAreaMap(name);
-      let layers: L.Path[] = ui.areaMapToLayers(areas);
+      const layers: L.Path[] = ui.areaMapToLayers(areas);
       layers.forEach(l => this.areaAutoItem.addLayer(l));
       this.areaAutoItem.setZIndex(1000);
     },
@@ -1748,19 +1748,19 @@ export default defineComponent({
       }
       const entries = Object.entries(areas);
 
-      let fillOpacity = (this.showAreaColor) ? 0.2 : 0.0
-      let fillOpacityOver = (this.showAreaColor) ? 0.3 : 0.0
+      const fillOpacity = (this.showAreaColor) ? 0.2 : 0.0
+      const fillOpacityOver = (this.showAreaColor) ? 0.3 : 0.0
 
       let i = 0;
       for (const [data, features] of entries) {
         const layers: L.GeoJSON[] = features.map((feature: any) => {
           return L.geoJSON(feature, {
             pointToLayer: function(_geoJsonPoint, latlng) {
-              let color = feature.properties.color || '#3388ff'
+              const color = feature.properties.color || '#3388ff'
               return L.marker(latlng, { icon: ui.svgIcon(color) });
             },
             style: function(_) {
-              let color = feature.properties.color || ui.genColor(entries.length, i);
+              const color = feature.properties.color || ui.genColor(entries.length, i);
               return { weight: 2, fillOpacity, color }
             },
             // @ts-ignore
@@ -1788,7 +1788,7 @@ export default defineComponent({
             continue
           }
           if (name == "cave_polys_detail") {
-            let title = features[0].properties.title.split("::").at(0)
+            const title = features[0].properties.title.split("::").at(0)
             layer.bindTooltip(title);
             continue;
           }
@@ -1809,11 +1809,11 @@ export default defineComponent({
             label += ` Fire Level ${climate.EnvFireLevel}`
           }
           if (name == "Sky" || name == "MinusField") {
-            let cname = (name == "Sky") ? "Sky" : "UnderGround";
-            let day = climate.DayTemperature[cname];
-            let night = climate.NightTemperature[cname]
-            let night_emoji = this.temperatureEmoji(night);
-            let day_emoji = this.temperatureEmoji(day);
+            const cname = (name == "Sky") ? "Sky" : "UnderGround";
+            const day = climate.DayTemperature[cname];
+            const night = climate.NightTemperature[cname]
+            const night_emoji = this.temperatureEmoji(night);
+            const day_emoji = this.temperatureEmoji(day);
 
             if (day != night) {
               label += `<br/>${day} ${day_emoji}/ ${night}&deg;C ${night_emoji}`;
@@ -1863,7 +1863,7 @@ export default defineComponent({
 
     async initMapSafeAreas() {
       const areas = await MapMgr.getInstance().fetchAreaMap("AutoSafe");
-      let layers: L.Path[] = ui.areaMapToLayers(areas);
+      const layers: L.Path[] = ui.areaMapToLayers(areas);
       layers.forEach(l => this.mapSafeAreas.addLayer(l));
     },
 
@@ -1872,8 +1872,8 @@ export default defineComponent({
       const features = areas.features;
 
       const layers: L.GeoJSON[] = features.map((feature: any, i: number) => {
-        let color = ui.genColor(300, feature.properties.y);
-        let layer = L.geoJSON(feature, {
+        const color = ui.genColor(300, feature.properties.y);
+        const layer = L.geoJSON(feature, {
           style: function(_) {
             return { weight: 2, fillOpacity: 0.2, color: color };
           },

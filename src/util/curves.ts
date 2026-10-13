@@ -5,7 +5,7 @@ function range(n: number): number[] {
 
 // Calculate Bezier coefficients: A row of Pascal's Triangle
 function bezierCoeff(n: number): number[] {
-  let row = Array(n + 1).fill(0);
+  const row = Array(n + 1).fill(0);
   row[0] = 1;
   for (let i = 0; i <= n; i++) {
     for (let j = i; j > 0; j--) {
@@ -38,24 +38,24 @@ function ptAdd(a: number[], b: number[]): number[] {
 // Curve construction is performed on all components [x,y,z]
 //
 function bezier(pts: any) {
-  let steps = 36;
-  let out = [];
-  let n = pts.length;
+  const steps = 36;
+  const out = [];
+  const n = pts.length;
   if (n == 2) {
     return pts;
   }
   const coeff = bezierCoeff(n - 1);
 
-  let t0 = 0;
-  let dt = 1.0 / (steps - 1);
-  let xi = pts.map((p: any) => p[0]);
-  let yi = pts.map((p: any) => p[1]);
-  let zi = pts.map((p: any) => p[2]);
+  const t0 = 0;
+  const dt = 1.0 / (steps - 1);
+  const xi = pts.map((p: any) => p[0]);
+  const yi = pts.map((p: any) => p[1]);
+  const zi = pts.map((p: any) => p[2]);
   for (let k = 0; k < steps; k++) {
     const t = t0 + k * dt;
     const ti = range(n).map((i: number) => coeff[i] * Math.pow(1.0 - t, n - 1 - i) * Math.pow(t, i));
     for (let i = 0; i < n; i++) {
-      let pt = [dot(ti, xi), dot(ti, yi), dot(ti, zi)];
+      const pt = [dot(ti, xi), dot(ti, yi), dot(ti, zi)];
       out.push(pt);
     }
   }
@@ -64,7 +64,7 @@ function bezier(pts: any) {
 
 // Linear Rail path without any Control Points
 function railPathLinear(rail: any): any {
-  let pts = rail.RailPoints.map((pt: any) => pt.Translate);
+  const pts = rail.RailPoints.map((pt: any) => pt.Translate);
   if (rail['IsClosed']) {
     pts.push(pts[0])
   }
@@ -92,7 +92,7 @@ function railPathLinear(rail: any): any {
 //  If the curve is open, do not use the last point as a curve starting point
 //
 function railPathBezier(rail: any): any {
-  let out = [];
+  const out = [];
   let n = rail.Points.length;
   if (!rail['IsClosed']) {
     n -= 1;
@@ -103,9 +103,9 @@ function railPathBezier(rail: any): any {
     if (rail['IsClosed']) {
       j = j % n;
     }
-    let p0 = rail.Points[i].Translate;
-    let p1 = rail.Points[j].Translate;
-    let bez = [p0];
+    const p0 = rail.Points[i].Translate;
+    const p1 = rail.Points[j].Translate;
+    const bez = [p0];
     if (rail.Points[i].Control1) {
       bez.push(rail.Points[i].Control1);
     }

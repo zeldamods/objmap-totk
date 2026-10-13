@@ -57,11 +57,11 @@ export class MapBase {
       this.refGrid = this.createMarkers();
     }
     const zoomLevel = this.m.getZoom();
-    let minZoom = [1, 4, 5, 1];
+    const minZoom = [1, 4, 5, 1];
     if (this.refGridOn) {
       this.refGrid.forEach((layer, i) => {
         //for (let i = 0; i < 4; i++) {
-        let visible = this.m.hasLayer(layer);
+        const visible = this.m.hasLayer(layer);
         if (zoomLevel >= minZoom[i]) {
           if (!visible) {
             this.m.addLayer(layer);
@@ -171,7 +171,7 @@ export class MapBase {
           text: 'Copy coordinates',
           callback: ({ latlng }: ui.LeafletContextMenuCbArg) => {
             const [x, y, z] = this.toXYZ(latlng);
-            let s = Settings.getInstance();
+            const s = Settings.getInstance();
             if (s.copyCoordinatesXYZ) {
               // @ts-ignore
               const yv = { Surface: 150, Sky: 1500, Depths: -500 }[this.activeLayer]
@@ -265,7 +265,7 @@ export class MapBase {
         'F2': 'Surface',
         'F3': 'Depths',
       }
-      var charCode = ev.originalEvent.code;
+      const charCode = ev.originalEvent.code;
       if (charCode in move) {
         this.switchBaseTileLayer(move[charCode]);
       } else if (moveUp.includes(charCode)) {
@@ -290,12 +290,12 @@ preserveAspectRatio="none"  xmlns="http://www.w3.org/2000/svg" >
     const svgIcon = this.svgIconBase(3);
     const svgIcon2 = this.svgIconBase(6);
     const svgIcon3 = this.svgIconBase(12);
-    let size = 125;
-    let markers = [L.layerGroup(), L.layerGroup(), L.layerGroup(), L.layerGroup()];
+    const size = 125;
+    const markers = [L.layerGroup(), L.layerGroup(), L.layerGroup(), L.layerGroup()];
     for (let i = 0; i < 20 * 4; i++) {
       for (let j = 0; j < 16 * 4; j++) {
-        let z = -4000 + j * size + 125 / 2;
-        let x = -5000 + i * size + 125 / 2;
+        const z = -4000 + j * size + 125 / 2;
+        const x = -5000 + i * size + 125 / 2;
         let k = 2;
         let icon = svgIcon;
         if (i % 4 == 0 && j % 4 == 0) {
