@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue2';
+import vue from '@vitejs/plugin-vue';
 
 function git_hash() {
   let gitHash = '???'
@@ -17,8 +17,7 @@ process.env.VUE_APP_GIT_HASH = git_hash()
 
 export default defineConfig({
   plugins: [
-    // Match Vue CLI's whitespace handling: the templates rely on spaces between elements being dropped.
-    vue({ template: { compilerOptions: { whitespace: undefined, preserveWhitespace: false } } }),
+    vue(),
   ],
   envPrefix: 'VUE_APP_',
   resolve: {

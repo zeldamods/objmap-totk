@@ -25,7 +25,7 @@ export default defineComponent({
     };
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     document.removeEventListener('click', this.onDocumentClick);
   },
 

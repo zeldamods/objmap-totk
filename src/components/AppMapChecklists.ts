@@ -3,8 +3,9 @@ import { Settings } from '@/util/settings';
 import { MapMgr, ObjectMinData } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 import * as ui from '@/util/ui';
-import AppMapChecklistItem from '@/components/AppMapChecklistItem';
+import AppMapChecklistItem from '@/components/AppMapChecklistItem.vue';
 import { appMapBus } from '@/util/bus';
+import { List } from '@/util/Checklist';
 
 // @ts-ignore
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller';
@@ -18,9 +19,9 @@ export default defineComponent({
   },
 
   props: {
-    lists: { default: [] },
+    lists: { type: Array<List>, default: [] },
   },
-  
+
   data() {
     return {
       activeList: -1,
@@ -29,17 +30,6 @@ export default defineComponent({
   },
 
   created() {
-    // EventBus used here as there is an intermediate component
-    //   that does not forward events from the child to the parent
-    this.$on('AppMap:search-on-hash', (value: string) => {
-      appMapBus.emit('AppMap:search-on-hash', value);
-    });
-    this.$on('AppMap:search-on-value', (value: string) => {
-      appMapBus.emit('AppMap:search-on-value', value);
-    });
-    this.$on('AppMap:update-search-markers', (value: any) => {
-      appMapBus.emit('AppMap:update-search-markers', value);
-    });
     this.activeList = -1;
     this.xlist = {};
   },
@@ -48,6 +38,7 @@ export default defineComponent({
       this.activeList = -1;
       this.xlist = {};
     },
+
     checkopen(list: any) {
       this.activeList = list.id;
       this.xlist = list;
@@ -57,7 +48,7 @@ export default defineComponent({
     markedLength(list: any) {
       return Object.values(list.items).filter((item: any) => item.marked).length
     },
-    
+
     length(list: any) {
       return Object.keys(list.items).length;
     },

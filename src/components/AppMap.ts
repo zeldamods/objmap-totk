@@ -1,6 +1,6 @@
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
-import 'leaflet-defaulticon-compatibility';
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.js';
 import 'leaflet-sidebar-v2';
 import 'leaflet-sidebar-v2/css/leaflet-sidebar.css';
 
@@ -11,8 +11,7 @@ import '@/util/leaflet_tile_workaround.js';
 
 import * as L from 'leaflet';
 import debounce from 'lodash/debounce';
-import { Component, defineComponent, markRaw, reactive } from 'vue';
-import VueRouter from 'vue-router';
+import { defineComponent, markRaw, reactive } from 'vue';
 import { VueDraggable } from 'vue-draggable-plus';
 
 import AppMapDetailsDungeon from '@/components/AppMapDetailsDungeon.vue';
@@ -59,9 +58,6 @@ import { Settings } from '@/util/settings';
 import * as ui from '@/util/ui';
 import * as math from '@/util/math';
 import { Checklists } from '@/util/Checklist';
-
-const { isNavigationFailure, NavigationFailureType } = VueRouter;
-
 
 function valueOrDefault<T>(value: T | undefined, defaultValue: T) {
   return value === undefined ? defaultValue : value;
@@ -351,7 +347,7 @@ export default defineComponent({
     AppMapChecklists,
     ModalGotoCoords,
     ObjectInfo,
-    VueDraggable: VueDraggable as Component,
+    VueDraggable,
   },
 
   setup() {
@@ -483,7 +479,7 @@ export default defineComponent({
     }
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.offAppMapEvents();
     this.map.m.remove();
   },
@@ -513,15 +509,14 @@ export default defineComponent({
         zoom = 3;
 
       this.map.setView([x, 0, z], zoom);
-      const layer = route.params.layer;
+      const layer = route.params.layer || "Surface";
       if (layer && ["Surface", "Depths", "Sky"].includes(layer))
         this.map.switchBaseTileLayer(layer);
     },
 
     updateRoute() {
-      // @ts-ignore
       this.$router.replace({
-        name: 'map',
+        name: 'map_with_layer',
         params: {
           x: this.map.center[0],
           z: this.map.center[2],
@@ -529,11 +524,6 @@ export default defineComponent({
           layer: this.map.activeLayer,
         },
         query: this.$route.query,
-      }).catch(err => {
-        if (!isNavigationFailure(err, NavigationFailureType.duplicated)) {
-          // eslint-disable-next-line no-console
-          console.error(err);
-        }
       });
     },
 
@@ -1625,7 +1615,6 @@ export default defineComponent({
           if (!list)
             return;
           list.name = value.name;
-          this.checklists.lists = [... this.checklists.lists];
           await this.checklists.update(list);
         },
         'AppMap:update-checklist-query': async (value: any) => {
@@ -1634,7 +1623,6 @@ export default defineComponent({
             return;
           list.query = value.query;
           await this.clChangeQuery(list);
-          this.checklists.lists = [... this.checklists.lists];
           await this.checklists.update(list);
         },
         'AppMap:open-obj': async (obj: ObjectData) => {
