@@ -223,7 +223,7 @@
       <div class="leaflet-sidebar-pane" id="spane-checklist" >
         <div class="app-checklist">
           <AppMapChecklists :lists="checklists.lists"/>
-          <div class="row" style="margin-left:0.2em;margin-top:1.2em;margin-bottom:1.2em;">
+          <div class="row" style="margin-left:0.2em;margin-top:1.2em;margin-bottom:1.2em; width: 100%;">
             Completed Markers:
             <select v-model="clMarkerVisibility" @change="clUpdateMarkers"
                     style="flex-grow: 2; margin-left: 1em">
@@ -232,7 +232,7 @@
               <option value="always">Always show</option>
             </select>
           </div>
-          <div class="row no-gutters">
+          <div class="row no-gutters" style="width: 100%;">
             <div class="col mr-3">
               <button class="btn btn-secondary btn-sm btn-block" @click="clExport()">
                 <i class="fas fa-file-export"></i>
