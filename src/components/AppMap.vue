@@ -121,7 +121,7 @@
 
             <div v-show="searchResults.length">
               <p class="text-center mb-1">
-                <span v-show="this.searchResults.length >= this.MAX_SEARCH_RESULT_COUNT">Showing only the first {{MAX_SEARCH_RESULT_COUNT}} results.<br></span>
+                <span v-show="searchResults.length >= MAX_SEARCH_RESULT_COUNT">Showing only the first {{MAX_SEARCH_RESULT_COUNT}} results.<br></span>
                 <button class="btn btn-link btn-sm" @click="searchOnAdd"><i class="fa fa-plus"></i> Add to map</button>
                 <button class="btn btn-link btn-sm" @click="searchOnExclude"><i class="far fa-eye-slash"></i> Hide</button>
                 <button class="btn btn-link btn-sm" @click="searchSetLink"><i class="fas fa-link"></i> Link</button>
@@ -221,7 +221,7 @@
       <div class="leaflet-sidebar-pane" id="spane-checklist" >
         <div class="app-checklist">
           <AppMapChecklists :lists="checklists.lists"/>
-          <div class="row" style="margin-left:0.2em;margin-top:1.2em;margin-bottom:1.2em;">
+          <div class="row" style="margin-left:0.2em;margin-top:1.2em;margin-bottom:1.2em; width: 100%;">
             Completed Markers:
             <select v-model="clMarkerVisibility" @change="clUpdateMarkers"
                     style="flex-grow: 2; margin-left: 1em">
@@ -230,7 +230,7 @@
               <option value="always">Always show</option>
             </select>
           </div>
-          <div class="row no-gutters">
+          <div class="row no-gutters" style="width: 100%;">
             <div class="col mr-3">
               <button class="btn btn-secondary btn-sm btn-block" @click="clExport()">
                 <i class="fas fa-file-export"></i>
@@ -238,7 +238,7 @@
               </button>
             </div>
             <div class="col">
-              <button class="btn btn-secondary btn-sm btn-block" @click="clImport()">
+              <button class="btn btn-danger btn-sm btn-block" @click="clImport()">
                 <i class="fas fa-file-import"></i>
                 Import
               </button>

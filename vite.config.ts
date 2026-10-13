@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, Plugin } from 'vite';
-import vue from '@vitejs/plugin-vue2';
+import vue from '@vitejs/plugin-vue';
 const execSync = require('child_process').execSync
 
 // Vite cannot exclude part of publicDir, and public/game_files is often a
@@ -39,7 +39,7 @@ process.env.VUE_APP_GIT_HASH = git_hash()
 export default defineConfig({
   plugins: [
     // Match Vue CLI's whitespace handling: the templates rely on spaces between elements being dropped.
-    vue({ template: { compilerOptions: { whitespace: undefined, preserveWhitespace: false } } }),
+    vue(),
     copyPublicDirExceptGameFiles(),
   ],
   envPrefix: 'VUE_APP_',

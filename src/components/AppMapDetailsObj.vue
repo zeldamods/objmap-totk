@@ -23,12 +23,12 @@
         <button type="button" class="btn btn-dark btn-sm btn-block" v-show="areaMarkers.length" @click.stop.prevent="keepAreaMarkersAlive()">Keep area representation loaded</button>
         <button type="button" class="btn btn-dark btn-sm btn-block" v-show="staticData.persistentAreaMarkers.length" @click.stop.prevent="forgetPersistentAreaMarkers()">Hide area representation</button>
       </section>
-      <section class="mt-2" v-show="minObj.korok_type && (this.korokMarkers.length || staticData.persistentKorokMarkers.length)">
-        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="this.korokMarkers.length" @click.stop.prevent="keepKorokMarkersAlive()">Keep Korok markers loaded</button>
+      <section class="mt-2" v-show="minObj.korok_type && (korokMarkers.length || staticData.persistentKorokMarkers.length)">
+        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="korokMarkers.length" @click.stop.prevent="keepKorokMarkersAlive()">Keep Korok markers loaded</button>
         <button type="button" class="btn btn-dark btn-sm btn-block" v-show="staticData.persistentKorokMarkers.length" @click.stop.prevent="forgetPersistentKorokMarkers()">Hide Korok markers</button>
       </section>
-      <section class="mt-2" v-show="this.railMarkers.length || staticData.persistentRailMarkers.length">
-        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="this.railMarkers.length" @click.stop.prevent="keepRailMarkersAlive()">Keep Rails loaded</button>
+      <section class="mt-2" v-show="railMarkers.length || staticData.persistentRailMarkers.length">
+        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="railMarkers.length" @click.stop.prevent="keepRailMarkersAlive()">Keep Rails loaded</button>
         <button type="button" class="btn btn-dark btn-sm btn-block" v-show="staticData.persistentRailMarkers.length"  @click.stop.prevent="forgetPersistentRailMarkers()">Hide Rails</button>
       </section>
 
@@ -76,8 +76,8 @@
 
       <section v-if="dropTableExists()" class="droptable">
         <hr>
-        <h4 class="subsection-heading">Drop table: {{this.dropTables.DropTableName || 'Default'}}</h4>
-        <div v-for="(group, igroup) in this.dropTables.items" :key="igroup">
+        <h4 class="subsection-heading">Drop table: {{dropTables.DropTableName || 'Default'}}</h4>
+        <div v-for="(group, igroup) in dropTables.items" :key="igroup">
           <div v-if="group.DropTableElement && group.DropTableElement.length" class="droptable_content">
             <div class="droptable_group">{{getDropTableGroupCount(group)}}</div>
             <table>

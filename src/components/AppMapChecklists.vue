@@ -61,11 +61,11 @@
           key-field="hash_id"
           >
           <!-- <AppMapChecklistItem class="small" v-for="(item, hash_id) in list.items" :key="hash_id" :item="item" /> -->
-          <template v-slot="{ item, index, active }">
+          <template #default="{ item, index, active }">
             <DynamicScrollerItem
               :item="item"
               :active="active"
-              :data-index="index"
+              :index="index"
               >
               <AppMapChecklistItem
                 class="small"

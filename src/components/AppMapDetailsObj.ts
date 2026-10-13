@@ -136,7 +136,7 @@ export default defineComponent({
     //@Prop({ type: Boolean, default: false })
     //private isChecked!: boolean;
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.areaMarkers.forEach(m => m.remove());
     this.korokMarkers.forEach(m => m.remove());
     this.railMarkers.forEach(m => m.remove());
@@ -149,9 +149,9 @@ export default defineComponent({
   },
 
   mounted() {
-    this.$on('AppMap:update-search-markers', (value: any) => {
-      appMapBus.emit('AppMap:update-search-markers', value);
-    });
+    // this.$on('AppMap:update-search-markers', (value: any) => {
+    //   appMapBus.emit('AppMap:update-search-markers', value);
+    // });
   },
 
   
