@@ -224,6 +224,7 @@ export class MapBase {
       const zarea = (area == "Surface") ? "Ground" : area;
       const baseLayer = L.tileLayer(`${TOTK_MAP}/${zarea}/maptex/{z}/{x}/{y}.webp`, {
         maxNativeZoom: 7,
+        bounds,
       });
       this.baseMapLayers[area] = baseLayer;
     }
