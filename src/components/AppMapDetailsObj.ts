@@ -70,6 +70,17 @@ class StaticData {
 
 const staticData = new StaticData();
 
+function removeRail(line: any) {
+  line.remove();
+  line.options.renderer.remove();
+}
+
+function recolorPersistentRails(args: any) {
+  staticData.persistentRailMarkers.forEach((line: any) => {
+    line.setStyle({ palette: args.palette }).redraw();
+  });
+}
+
 export default defineComponent({
   name: 'AppMapDetailsObj',
   components: {
@@ -139,10 +150,15 @@ export default defineComponent({
     //@Prop({ type: Boolean, default: false })
     //private isChecked!: boolean;
 
+  mounted() {
+    this.marker.mb.m.on('ColorScale:change', this.onColorScaleChange);
+  },
+
   beforeUnmount() {
+    this.marker.mb.m.off('ColorScale:change', this.onColorScaleChange);
     this.areaMarkers.forEach(m => m.remove());
     this.korokMarkers.forEach(m => m.remove());
-    this.railMarkers.forEach(m => m.remove());
+    this.railMarkers.forEach(removeRail);
     // Rails
     this.railLimits = {};
     this.updateColorScale();
@@ -151,13 +167,6 @@ export default defineComponent({
     }
   },
 
-  mounted() {
-    // this.$on('AppMap:update-search-markers', (value: any) => {
-    //   appMapBus.emit('AppMap:update-search-markers', value);
-    // });
-  },
-
-  
   methods: {
     async init() {
       this.minObj = this.marker.obj;
@@ -169,7 +178,7 @@ export default defineComponent({
       this.areaMarkers.forEach(m => m.remove());
       this.areaMarkers = [];
       this.rails = [];
-      this.railMarkers.forEach(m => m.remove());
+      this.railMarkers.forEach(removeRail);
       this.railMarkers = [];
       this.railsWithMarkers = [];
       this.selectedRailIdx = -1;
@@ -234,14 +243,16 @@ export default defineComponent({
 
       this.initAreaMarkers();
 
-      this.marker.mb.m.on('ColorScale:change', async (args: any) => {
-        this.updateColorlineStyle({ palette: args.palette });
-      });
-
       this.korokMarkers.forEach(m => m.remove());
       this.korokMarkers = [];
       this.initKorokMarkers();
       this.initRails();
+    },
+
+    onColorScaleChange(args: any) {
+      this.railMarkers.forEach((line: any) => {
+        line.setStyle({ palette: args.palette }).redraw();
+      });
     },
 
     initRails() {
@@ -300,6 +311,7 @@ export default defineComponent({
       if (this.railMarkers.length) {
         if (!this.staticData.colorScale) {
           this.staticData.colorScale = markRaw( new ColorScale(opts, { position: 'bottomleft' }).addTo(map.m) );
+          map.m.on('ColorScale:change', recolorPersistentRails);
           this.updateColorlineStyle({ palette: this.staticData.colorScale.palette() });
         }
         this.updateColorScale();
@@ -468,6 +480,7 @@ export default defineComponent({
       if (this.staticData.colorScale) {
         this.staticData.colorScale.remove();
         this.staticData.colorScale = null;
+        this.marker.mb.m.off('ColorScale:change', recolorPersistentRails);
       }
     },
 
@@ -820,7 +833,7 @@ export default defineComponent({
     },
 
     forgetPersistentRailMarkers() {
-      this.staticData.persistentRailMarkers.forEach(m => m.remove());
+      this.staticData.persistentRailMarkers.forEach(removeRail);
       this.staticData.persistentRailMarkers = [];
       this.staticData.persistentRailLimits = {};
       this.forgetColorScale();
