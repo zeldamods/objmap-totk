@@ -1,15 +1,23 @@
 import { openDB } from 'idb';
 import { toRaw  } from 'vue';
 
-let db : ChecklistDB | null = null;
+// Singleton db: ChecklistDB at the bottom
 
-export interface ListItem {
+export class ListItem {
   hash_id: string;
   name: string;
   map_name: string;
   map_type: string;
   pos: number[];
   marked: boolean;
+  constructor() {
+    this.hash_id = "";
+    this.name = "";
+    this.map_name = "";
+    this.map_type = "";
+    this.pos = [];
+    this.marked = false;
+  }
 }
 
 export interface List {
@@ -27,7 +35,6 @@ interface ChecklistStore {
 }
 
 export class Checklists {
-  db: ChecklistDB;
   marked: { [key: string]: boolean };
   lists: List[];
 
@@ -37,9 +44,6 @@ export class Checklists {
   }
 
   async init() {
-    if(!db) {
-      db = new ChecklistDB()
-    }
     await db.init();
     this.marked = await db.all();
     this.lists =  await db.listGetAll() ;
@@ -48,7 +52,7 @@ export class Checklists {
   async clear() {
     this.marked = {};
     this.lists = [];
-    db.clear();
+    db.clear()
   }
 
   async create() {
@@ -89,6 +93,12 @@ export class Checklists {
       }
     }
     return value;
+  }
+  import(rawData: ChecklistStore, replace: boolean = false) {
+    db.import(rawData, replace)
+  }
+  async export(): Promise<ChecklistStore> {
+    return db.export()
   }
 }
 
@@ -211,3 +221,6 @@ export class ChecklistDB {
     await this.listRemoveAll();
   }
 }
+
+const db : ChecklistDB = new ChecklistDB()
+

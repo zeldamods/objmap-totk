@@ -873,8 +873,7 @@ export default defineComponent({
       // @ts-ignore
       this.drawControl = new L.Control.Draw(options);
       this.setLineColorThrottler = debounce(() => this.setLineColor(), 100);
-      // @ts-ignore
-      this.map.m.on({
+      const drawHandlers: { [event: string]: (e: any) => void } = {
         'draw:created': (e: any) => {
           const group = [];
           if (ui.leafletType(e.layer) == ui.LeafletType.Polyline) {
@@ -968,7 +967,8 @@ export default defineComponent({
           });
           this.updateDrawLayerOpts();
         },
-      });
+      };
+      this.map.m.on(drawHandlers);
       this.drawOnColorChange({});
       Settings.getInstance().registerBeforeSaveCallback(() => {
         Settings.getInstance().drawLayerGeojson = JSON.stringify(this.drawToGeojson());
@@ -1224,7 +1224,7 @@ export default defineComponent({
 
       this.map.registerZoomCb(() => {
         for (const group of this.searchGroups)
-          group.update(0, this.searchExcludedSets);
+          group.update(SearchResultUpdateMode.None, this.searchExcludedSets);
       });
     },
 
@@ -1480,7 +1480,7 @@ export default defineComponent({
     },
 
     async clExport() {
-      const data = await this.checklists.db.export();
+      const data = await this.checklists.export();
       const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
@@ -1500,7 +1500,7 @@ export default defineComponent({
       }
       try {
         const rawData = await (new Response(input.files![0])).json();
-        this.checklists.db.import(rawData, this.clImportReplace);
+        this.checklists.import(rawData, this.clImportReplace);
         await this.initChecklist();
       } catch (e) {
         alert(e);

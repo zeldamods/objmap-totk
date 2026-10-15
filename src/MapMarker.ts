@@ -114,7 +114,7 @@ class MapMarkerImpl extends MapMarker {
 }
 
 class MapMarkerCanvasImpl extends MapMarker {
-  constructor(mb: MapBase, title: string, pos: Point, options: Partial<CanvasMarkerOptions> = {}) {
+  constructor(mb: MapBase, title: string, pos: Point, options: CanvasMarkerOptions = {}) {
     super(mb);
     this.title = title;
     const extra: any = {};
@@ -127,7 +127,7 @@ class MapMarkerCanvasImpl extends MapMarker {
     this.marker = new CanvasMarker(mb.fromXYZ(pos), Object.assign(options, {
       bubblingMouseEvents: false,
       contextmenu: true,
-    }) as CanvasMarkerOptions);
+    }));
     this.marker.bindTooltip(title, { pane: 'front2', ...extra });
     super.commonInit();
   }
@@ -604,6 +604,7 @@ function hashString(s: string) {
 }
 
 export const enum SearchResultUpdateMode {
+  None = 0,
   UpdateStyle = 1 << 0,
   UpdateVisibility = 1 << 1,
   UpdateTitle = 1 << 2,

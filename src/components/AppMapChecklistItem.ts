@@ -9,7 +9,7 @@ import { ListItem } from '@/util/Checklist';
 export default defineComponent({
   name: 'AppMapChecklistItem',
   props: {
-    item: {type: Object as ListItem, default() { return {} } },
+    item: {type: ListItem, default() { return new ListItem } },
   },
   methods: {
     searchOnHash() {
