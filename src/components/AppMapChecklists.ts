@@ -1,4 +1,4 @@
-import Vue, { defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { Settings } from '@/util/settings';
 import { MapMgr, ObjectMinData } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
