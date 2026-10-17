@@ -11,15 +11,15 @@ jobs:
     - uses: actions/setup-node@v7
       with:
         node-version: 26
-        cache: 'npm'
+        cache: 'pnpm'
     - name: install dependencies
-      run: npm ci
+      run: pnpm ci
     - name: lint
-      run: npm run lint
+      run: pnpm run lint
     - name: type-check
-      run: npm run type-check
+      run: pnpm run type-check
     - name: build
-      run: npm run build
+      run: pnpm run build
     - name: deploy build
       if: github.event_name == "push" && github.ref == "refs/heads/master"
       uses: burnett01/rsync-deployments@155b6d6c1219ab2224c20c58d423a3f1b850395f # 9.0.1
