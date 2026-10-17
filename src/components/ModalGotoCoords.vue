@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div class="modal fade modalpane" :class="{show: isShow}" :style="{display: isBlock ? 'block' : 'none'}" role="dialog" aria-modal="true" aria-labelledby="modal-goto-title" tabindex="1" @keydown.esc="hide" @click.self="hide">
-      <div class="modal-dialog modal-md">
+  <div class="modal fade modalpane" aria-labelledby="modal-goto-title" area-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-md">
+      <div class="model-content">
         <header class="modal-header">
           <h5 class="modal-title" id="modal-goto-title">Enter target coordinates.</h5>
           <button type="button" aria-label="Close" class="btn-close" @click="hide" data-bs-theme="dark"></button>
@@ -19,7 +19,6 @@
         </div>
       </div>
     </div>
-    <div class="modal-backdrop show" v-if="isBlock"></div>
   </div>
 </template>
 <style lang="less" src="./ModalPane.less"></style>

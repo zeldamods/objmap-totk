@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
+    "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.8",
     "git-describe": "^4.1.1",
     "idb": "^7.1.1",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/bootstrap": "^5.2.11",
     "@types/leaflet": "^1.9.22",
     "@types/leaflet-draw": "^1.0.13",
     "@types/leaflet-mouse-position": "^1.2.5",
