@@ -5,7 +5,7 @@ import 'leaflet-contextmenu/dist/leaflet.contextmenu.css';
 import 'leaflet-mouse-position';
 import '@/util/leaflet_tile_workaround.js';
 
-import * as L from 'leaflet';
+import L from 'leaflet';
 
 import { CanvasMarker } from '@/util/CanvasMarker';
 import * as map from '@/util/map';
