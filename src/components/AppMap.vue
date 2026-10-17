@@ -3,7 +3,7 @@
   <div class="banner" v-show="!settings.decompBannerHidden">
     Help us understand the BotW engine! <a href="https://github.com/zeldaret/botw" target="_blank">Contribute to the decompilation project now</a>
 
-    <button type="button" aria-label="Close" class="close" @click="settings.decompBannerHidden = true">×</button>
+    <button type="button" aria-label="Close" class="btn-close" data-bs-theme="dark" @click="settings.decompBannerHidden = true"></button>
   </div>
 
   <div id="lmap" class="h-100"></div>
@@ -71,7 +71,7 @@
           <code>TBox_<b>*</b></code> for TBox_Field_Wood, TBox_Field_Iron, etc.
         </p>
 
-        <button type="button" class="btn btn-primary btn-sm btn-block" @click="switchPane('spane-search')"><i class="fa fa-chevron-left"></i> Back</button>
+        <button type="button" class="btn btn-primary btn-sm d-block w-100" @click="switchPane('spane-search')"><i class="fa fa-chevron-left"></i> Back</button>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-search">
@@ -97,16 +97,16 @@
 
           <section class="search-groups" v-show="searchGroups.length || searchExcludedSets.length">
             <div class="search-group d-flex align-items-center" v-for="(group, idx) in searchGroups" :key="'searchgroup' + idx">
-              <div class="ml-2 d-inline-block search-enable-checkbox custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" :id="'search-group-enabled-' + idx" v-model="group.enabled" @change="searchToggleGroupEnabledStatus(idx)">
-                <label class="custom-control-label" :for="'search-group-enabled-' + idx"></label>
+              <div class="ms-2 d-inline-block search-enable-checkbox form-check">
+                <input type="checkbox" class="form-check-input" :id="'search-group-enabled-' + idx" v-model="group.enabled" @change="searchToggleGroupEnabledStatus(idx)">
+                <label class="form-check-label" :for="'search-group-enabled-' + idx"></label>
               </div>
               <span class="d-inline-block">
                 <span>{{group.label}}</span>
-                <a class="ml-2" @click="searchRemoveGroup(idx)"><i class="text-danger fa fa-times"></i></a>
-                <a class="ml-2" style="font-size: 90%" v-if="group.query" @click="searchViewGroup(idx)"><i class="fa fa-edit"></i></a>
-                <span class="ml-2" v-if="settings && !settings.colorPerActor"><input class="marker-color2" type="color" :data-id="`${idx}`" @input="searchColorGroup" :value="group.getFillColor()"></span>
-                <span class="ml-2">({{group.size()}})</span>
+                <a class="ms-2" @click="searchRemoveGroup(idx)"><i class="text-danger fa fa-times"></i></a>
+                <a class="ms-2" style="font-size: 90%" v-if="group.query" @click="searchViewGroup(idx)"><i class="fa fa-edit"></i></a>
+                <span class="ms-2" v-if="settings && !settings.colorPerActor"><input class="marker-color2" type="color" :data-id="`${idx}`" @input="searchColorGroup" :value="group.getFillColor()"></span>
+                <span class="ms-2">({{group.size()}})</span>
               </span>
             </div>
             <div class="search-group" v-for="(set, idx) in searchExcludedSets" :key="'searchexclude' + idx">
@@ -140,79 +140,79 @@
         <div class="row">
           <AppMapFilterMainButton v-for="(v, type) in markerComponents" :key="type" :type="type" :label="v.filterLabel" :icon="v.filterIcon" @toggle="updateMarkers" />
         </div>
-        <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="filter-korok-ids" v-model="showKorokIDs" @change="updateKorokIDs">
-          <label class="custom-control-label" for="filter-korok-ids">Show Koroks IDs</label>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="filter-korok-ids" v-model="showKorokIDs" @change="updateKorokIDs">
+          <label class="form-check-label" for="filter-korok-ids">Show Koroks IDs</label>
         </div>
         <hr>
 
         <h4 class="subsection-heading">Visible map areas</h4>
         <div role="radiogroup" class="mb-4">
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-none" value="" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-none">None</label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-none" value="" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-none">None</label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-towers" value="MapTower" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-towers">Map Tower Areas</label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-towers" value="MapTower" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-towers">Map Tower Areas</label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-ground" value="Ground" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-ground">Surface Field Map Areas</label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-ground" value="Ground" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-ground">Surface Field Map Areas</label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-minus-field" value="MinusField" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-minus-field">Depths Field Map Areas</label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-minus-field" value="MinusField" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-minus-field">Depths Field Map Areas</label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-cave" value="Cave" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-cave">Cave Field Map Areas</label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-cave" value="Cave" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-cave">Cave Field Map Areas</label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-sky" value="Sky" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-sky">Sky Field Map Areas</label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-sky" value="Sky" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-sky">Sky Field Map Areas</label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-sky-polys" value="sky_polys" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-sky-polys">Sky Regions <div style="display: inline; font-size:0.8em">(approximate)</div></label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-sky-polys" value="sky_polys" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-sky-polys">Sky Regions <div style="display: inline; font-size:0.8em">(approximate)</div></label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-cave-polys" value="cave_polys" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-cave-polys">Cave Regions <div style="display: inline; font-size:0.8em">(approximate)</div></label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-cave-polys" value="cave_polys" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-cave-polys">Cave Regions <div style="display: inline; font-size:0.8em">(approximate)</div></label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-cave-polys-detailed" value="cave_polys_detail" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-cave-polys-detailed">Cave Regions <div style="display: inline; font-size:0.8em">(detailed)</div></label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-cave-polys-detailed" value="cave_polys_detail" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-cave-polys-detailed">Cave Regions <div style="display: inline; font-size:0.8em">(detailed)</div></label>
           </div>
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" name="filter-area-map" id="filter-area-map-cherry-blossom" value="cherry_blossom_trees" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-            <label class="custom-control-label" for="filter-area-map-cherry-blossom">Cherry Blossom Trees</label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-cherry-blossom" value="cherry_blossom_trees" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-cherry-blossom">Cherry Blossom Trees</label>
           </div>
           <!-- <input type="radio" value="LoadBalancer">Load balancer areas</div> -->
         </div>
 
-        <div role="group" class="form-group">
-          <label for="mapareafilter" class="d-block">Filter map areas</label>
+        <div role="group" class="mb-3">
+          <label for="mapareafilter" class="form-label">Filter map areas</label>
           <div class="d-flex mb-1">
-            <input type="search" style="flex: 1" class="form-control form-control-sm mr-2" id="mapareafilter" placeholder="Example: 1,2,3,64" v-model="areaWhitelist">
+            <input type="search" style="flex: 1" class="form-control form-control-sm me-2" id="mapareafilter" placeholder="Example: 1,2,3,64" v-model="areaWhitelist">
             <button class="btn btn-primary btn-sm" @click="updateAreaMapVisibility()"><i class="fa fa-filter"></i></button>
           </div>
         </div>
 
         <h4 class="subsection-heading">Visible map area fill</h4>
-        <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="filter-show-area-color" v-model="showAreaColor" @change="onShownAreaMapChanged">
-          <label class="custom-control-label" for="filter-show-area-color">Full map areas with color</label>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="filter-show-area-color" v-model="showAreaColor" @change="onShownAreaMapChanged">
+          <label class="form-check-label" for="filter-show-area-color">Full map areas with color</label>
         </div>
         <br/>
         <h4 class="subsection-heading">Map grids</h4>
-        <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="filter-show-map-unit-grid" v-model="showMapUnitGrid" @change="onShowMapUnitGridChanged">
-          <label class="custom-control-label" for="filter-show-map-unit-grid">Show map unit grid</label>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="filter-show-map-unit-grid" v-model="showMapUnitGrid" @change="onShowMapUnitGridChanged">
+          <label class="form-check-label" for="filter-show-map-unit-grid">Show map unit grid</label>
         </div>
-        <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="filter-show-revival-map-grid" v-model="showRevivalMapUnitGrid" @change="onShowMapUnitGridChanged">
-          <label class="custom-control-label" for="filter-show-revival-map-grid">Show revival map grid</label>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="filter-show-revival-map-grid" v-model="showRevivalMapUnitGrid" @change="onShowMapUnitGridChanged">
+          <label class="form-check-label" for="filter-show-revival-map-grid">Show revival map grid</label>
         </div>
       </div>
 
@@ -221,30 +221,30 @@
       <div class="leaflet-sidebar-pane" id="spane-checklist" >
         <div class="app-checklist">
           <AppMapChecklists :lists="checklists.lists"/>
-          <div class="row" style="margin-left:0.2em;margin-top:1.2em;margin-bottom:1.2em; width: 100%;">
+          <div class="row w-100" style="margin-left:0.2em;margin-top:1.2em;margin-bottom:1.2em;">
             Completed Markers:
             <select v-model="clMarkerVisibility" @change="clUpdateMarkers"
-                    style="flex-grow: 2; margin-left: 1em">
+                    style="flex-grow: 2; margin-left: 0em">
               <option value="never">Never show</option>
               <option value="opacity">Less visible</option>
               <option value="always">Always show</option>
             </select>
           </div>
           <div class="row no-gutters" style="width: 100%;">
-            <div class="col mr-3">
-              <button class="btn btn-secondary btn-sm btn-block" @click="clExport()">
+            <div class="col me-3">
+              <button class="btn btn-secondary btn-sm d-block w-100" @click="clExport()">
                 <i class="fas fa-file-export"></i>
                 Export
               </button>
             </div>
             <div class="col">
-              <button class="btn btn-danger btn-sm btn-block" @click="clImport()">
+              <button class="btn btn-danger btn-sm d-block w-100" @click="clImport()">
                 <i class="fas fa-file-import"></i>
                 Import
               </button>
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="cl-replace-checklist" v-model="clImportReplace">
-                <label class="custom-control-label" for="cl-replace-checklist">Replace existing checklists</label>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="cl-replace-checklist" v-model="clImportReplace">
+                <label class="form-check-label" for="cl-replace-checklist">Replace existing checklists</label>
               </div>
             </div>
             <input type="file" id="clFileinput" accept=".json" hidden @change="clImportCb">
@@ -253,7 +253,7 @@
       </div>
       <div class="leaflet-sidebar-pane" id="spane-draw">
         <h1 class="leaflet-sidebar-header">Draw</h1>
-        <button class="btn btn-primary btn-block btn-sm" @click="toggleDraw()"><i class="fa fa-draw-polygon"></i> Toggle draw controls</button>
+        <button class="btn btn-primary btn-sm w-100" @click="toggleDraw()"><i class="fa fa-draw-polygon"></i> Toggle draw controls</button>
         <hr>
         <h4 class="subsection-heading">Polyline color</h4>
         <input type="color"  @input="drawOnColorChange" value="#3388ff"> <button class="btn btn-link btn-sm" @click="drawLineColor = '#3388ff'">Reset to default</button>
@@ -261,14 +261,14 @@
         <h4 class="subsection-heading">Data import/export</h4>
         <p>Exported data includes search groups and drawn objects.</p>
         <div class="row no-gutters">
-          <div class="col mr-3">
-            <button class="btn btn-secondary btn-sm btn-block" @click="drawExport()"><i class="fas fa-file-export"></i> Export</button>
+          <div class="col me-3">
+            <button class="btn btn-secondary btn-sm d-block w-100" @click="drawExport()"><i class="fas fa-file-export"></i> Export</button>
           </div>
           <div class="col">
-            <button class="btn btn-danger btn-sm btn-block" @click="drawImport()"><i class="fas fa-file-import"></i> Import</button>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="replace-data" v-model="importReplace">
-              <label class="custom-control-label" for="replace-data">Replace existing data</label>
+            <button class="btn btn-danger btn-sm d-block w-100" @click="drawImport()"><i class="fas fa-file-import"></i> Import</button>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="replace-data" v-model="importReplace">
+              <label class="form-check-label" for="replace-data">Replace existing data</label>
             </div>
           </div>
         </div>
@@ -311,7 +311,7 @@
 
       <div class="leaflet-sidebar-pane" id="spane-tools">
         <h1 class="leaflet-sidebar-header">Tools</h1>
-        <button type="button" class="btn btn-secondary btn-sm btn-block" @click="closeSidebar(); $refs.modalGoto.show()">Go to coordinates...</button>
+        <button type="button" class="btn btn-secondary btn-sm w-100" @click="closeSidebar(); $refs.modalGoto.show()">Go to coordinates...</button>
         <hr>
         <h4 class="subsection-heading">About this map</h4>
         <p>This object map is an <a href="https://github.com/zeldamods/objmap-totk">open source project</a>. Contributions are welcome.</p>
@@ -353,8 +353,8 @@
   text-align: center;
 
   .close {
+    font-size: 0.75rem;
     margin-left: 20px;
-    color: white;
   }
 }
 

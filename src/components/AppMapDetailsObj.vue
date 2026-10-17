@@ -20,16 +20,22 @@
       <p class="my-1" v-if="isAreaReprPossiblyWrong()"><i class="fa fa-exclamation-circle"></i> Area representation may be inaccurate.</p>
 
       <section class="mt-2" v-show="areaMarkers.length || staticData.persistentAreaMarkers.length">
-        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="areaMarkers.length" @click.stop.prevent="keepAreaMarkersAlive()">Keep area representation loaded</button>
-        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="staticData.persistentAreaMarkers.length" @click.stop.prevent="forgetPersistentAreaMarkers()">Hide area representation</button>
+         <div class="d-grid gap-2">
+           <button type="button" class="btn btn-dark btn-sm" v-show="areaMarkers.length" @click.stop.prevent="keepAreaMarkersAlive()">Keep area representation loaded</button>
+           <button type="button" class="btn btn-dark btn-sm" v-show="staticData.persistentAreaMarkers.length" @click.stop.prevent="forgetPersistentAreaMarkers()">Hide area representation</button>
+         </div>
       </section>
       <section class="mt-2" v-show="minObj.korok_type && (korokMarkers.length || staticData.persistentKorokMarkers.length)">
-        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="korokMarkers.length" @click.stop.prevent="keepKorokMarkersAlive()">Keep Korok markers loaded</button>
-        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="staticData.persistentKorokMarkers.length" @click.stop.prevent="forgetPersistentKorokMarkers()">Hide Korok markers</button>
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-dark btn-sm" v-show="korokMarkers.length" @click.stop.prevent="keepKorokMarkersAlive()">Keep Korok markers loaded</button>
+          <button type="button" class="btn btn-dark btn-sm" v-show="staticData.persistentKorokMarkers.length" @click.stop.prevent="forgetPersistentKorokMarkers()">Hide Korok markers</button>
+        </div>
       </section>
       <section class="mt-2" v-show="railMarkers.length || staticData.persistentRailMarkers.length">
-        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="railMarkers.length" @click.stop.prevent="keepRailMarkersAlive()">Keep Rails loaded</button>
-        <button type="button" class="btn btn-dark btn-sm btn-block" v-show="staticData.persistentRailMarkers.length"  @click.stop.prevent="forgetPersistentRailMarkers()">Hide Rails</button>
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-dark btn-sm" v-show="railMarkers.length" @click.stop.prevent="keepRailMarkersAlive()">Keep Rails loaded</button>
+          <button type="button" class="btn btn-dark btn-sm" v-show="staticData.persistentRailMarkers.length"  @click.stop.prevent="forgetPersistentRailMarkers()">Hide Rails</button>
+        </div>
       </section>
 
       <section class="obj-actor-specific-info">
@@ -38,7 +44,7 @@
           <p v-if="obj.name == 'EventTag'">Activates event <code>{{obj.data['!Parameters'].EventFlowName}}&lt;{{obj.data['!Parameters'].EventFlowEntryName}}&gt;</code> when signalled.</p>
           <p v-if="obj.name == 'SignalFlowchart'">Runs <code>{{obj.data['!Parameters'].EventFlowName}}&lt;{{obj.data['!Parameters'].EventFlowEntryName}}&gt;</code> in a loop and emits a basic signal when a signal is sent from the event flow.</p>
 
-          <a target="_blank" :href="`https://eventviewer.zeldamods.org/viewer.html?data=/d/${obj.data['!Parameters'].EventFlowName}.json&params=1&entry=${obj.data['!Parameters'].EventFlowEntryName}`" class="btn btn-block btn-sm btn-info"><i class="fa fa-external-link-alt"></i> View in EventViewer</a>
+          <a target="_blank" :href="`https://eventviewer.zeldamods.org/viewer.html?data=/d/${obj.data['!Parameters'].EventFlowName}.json&params=1&entry=${obj.data['!Parameters'].EventFlowEntryName}`" class="btn btn-sm btn-info d-block w-100"><i class="fa fa-external-link-alt"></i> View in EventViewer</a>
         </div>
       </section>
 
@@ -114,7 +120,7 @@
 
     <section v-if="isSearchResult()">
       <br>
-      <button type="button" class="btn btn-secondary btn-sm btn-block" @click.stop.prevent="emitBackToSearch()"><i class="fa fa-chevron-circle-left"></i> Back to search</button>
+      <button type="button" class="btn btn-secondary btn-sm d-block w-100" @click.stop.prevent="emitBackToSearch()"><i class="fa fa-chevron-circle-left"></i> Back to search</button>
     </section>
 
     <section v-if="railsWithMarkers.length">
