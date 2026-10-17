@@ -17,6 +17,7 @@
     "bootstrap": "^5.3.8",
     "git-describe": "^4.1.1",
     "idb": "^7.1.1",
+    "immer": "^11.1.12",
     "leaflet": "^1.9.4",
     "leaflet-contextmenu": "^1.4.0",
     "leaflet-defaulticon-compatibility": "^0.1.1",
