@@ -10,7 +10,7 @@ export default defineComponent({
 
   setup() {
     return {
-      model: ui.late<Modal>(),
+      modal: ui.late<Modal>(),
       wantShown: false,
       opener: null as HTMLElement | null,
     };

@@ -1,7 +1,8 @@
 {
-  "name": "botw-objmap",
+  "name": "totk-objmap",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "author": "Léo Lam <leo@leolam.fr>",
   "scripts": {
     "serve": "vite",
@@ -52,7 +53,7 @@
     "less": "^4.9.1",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "typescript-eslint": "^8.71.2",
-    "vite": "^7.3.6",
+    "vite": "^8.3.2",
     "vue-eslint-parser": "^10.4.1"
   }
 }
