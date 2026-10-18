@@ -1,6 +1,6 @@
 import { GAME_FILES, Point } from '@/util/map';
 
-const RADAR_URL = process.env.VUE_APP_RADAR_URL;
+const RADAR_URL = import.meta.env.VUE_APP_RADAR_URL;
 
 export type Vec3 = [number, number, number];
 
@@ -134,7 +134,7 @@ export class MapMgr {
   }
 
   getObjs(mapType: string, mapName: string, query: string, withMapNames = false, limit = -1): Promise<ObjectMinData[]> {
-    let url = new URL(`${RADAR_URL}/objs/${mapType}/${mapName}`);
+    const url = new URL(`${RADAR_URL}/objs/${mapType}/${mapName}`);
     url.search = new URLSearchParams({
       q: query,
       withMapNames: withMapNames.toString(),
@@ -144,7 +144,7 @@ export class MapMgr {
   }
 
   getObjids(mapType: string, mapName: string, query: string): Promise<number[]> {
-    let url = new URL(`${RADAR_URL}/objids/${mapType}/${mapName}`);
+    const url = new URL(`${RADAR_URL}/objids/${mapType}/${mapName}`);
     url.search = new URLSearchParams({
       q: query,
     }).toString();

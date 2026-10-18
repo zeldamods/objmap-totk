@@ -1,7 +1,7 @@
-import Component from 'vue-class-component';
+import { defineComponent } from 'vue'
 
-import AppMapDetailsBase from '@/components/AppMapDetailsBase';
-import ObjectInfo from '@/components/ObjectInfo';
+import { defineDetailsBase } from '@/components/AppMapDetailsBase';
+import ObjectInfo from '@/components/ObjectInfo.vue';
 import { MapMarkerDungeon } from '@/MapMarker';
 import {
   MapMgr,
@@ -9,24 +9,30 @@ import {
 } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 
-@Component({
+export default defineComponent({
+  name: 'AppMapDetailsDungeon',
   components: {
     ObjectInfo,
   },
+  extends: defineDetailsBase<MapMarkerDungeon>(),
+  data() {
+    return {
+      id: '',
+      sub: '',
+      tboxObjs: [] as ObjectMinData[],
+      enemies: [] as ObjectMinData[],
+      pos: [] as number[],
+    };
+  },
+
+  methods: {
+    init() {
+      this.id = this.marker.lm.getMessageId();
+      this.sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.id + '_sub');
+
+      MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"TBox_"').then(d => this.tboxObjs = d);
+      MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"Enemy_"').then(d => this.enemies = d);
+      this.pos = this.marker.lm.getXYZ();
+    },
+  },
 })
-export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDungeon> {
-  private id = '';
-  private sub = '';
-  private tboxObjs: ObjectMinData[] = [];
-  private enemies: ObjectMinData[] = [];
-  private pos: number[] = [];
-
-  protected init() {
-    this.id = this.marker.data.lm.getMessageId();
-    this.sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.id + '_sub');
-
-    MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"TBox_"').then(d => this.tboxObjs = d);
-    MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"Enemy_"').then(d => this.enemies = d);
-    this.pos = this.marker.data.lm.getXYZ();
-  }
-}

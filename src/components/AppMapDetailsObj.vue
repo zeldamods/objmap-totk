@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="staticData.history.length" style="right: 40px" class="leaflet-sidebar-close" @click.stop.prevent="goBack()" v-b-tooltip.hover title="Go back to previous object"><i class="fa fa-arrow-left"></i></div>
+    <div v-if="staticData.history.length" style="right: 40px" class="leaflet-sidebar-close" @click.stop.prevent="goBack()" v-tooltip.hover="'Go back to previous object'"><i class="fa fa-arrow-left"></i></div>
 
     <h2 class="location-sub" v-if="getLocationSub()">{{getLocationSub()}}</h2>
     <ObjectInfo :obj="minObj" :key="minObj.objid" className="obj-main-info" withPermalink :is-checked="isChecked"/>
@@ -20,16 +20,22 @@
       <p class="my-1" v-if="isAreaReprPossiblyWrong()"><i class="fa fa-exclamation-circle"></i> Area representation may be inaccurate.</p>
 
       <section class="mt-2" v-show="areaMarkers.length || staticData.persistentAreaMarkers.length">
-        <b-btn v-show="areaMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepAreaMarkersAlive()">Keep area representation loaded</b-btn>
-        <b-btn v-show="staticData.persistentAreaMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentAreaMarkers()">Hide area representation</b-btn>
+         <div class="d-grid gap-2">
+           <button type="button" class="btn btn-dark btn-sm" v-show="areaMarkers.length" @click.stop.prevent="keepAreaMarkersAlive()">Keep area representation loaded</button>
+           <button type="button" class="btn btn-dark btn-sm" v-show="staticData.persistentAreaMarkers.length" @click.stop.prevent="forgetPersistentAreaMarkers()">Hide area representation</button>
+         </div>
       </section>
-      <section class="mt-2" v-show="minObj.korok_type && (this.korokMarkers.length || staticData.persistentKorokMarkers.length)">
-        <b-btn v-show="this.korokMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepKorokMarkersAlive()">Keep Korok markers loaded</b-btn>
-        <b-btn v-show="staticData.persistentKorokMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentKorokMarkers()">Hide Korok markers</b-btn>
+      <section class="mt-2" v-show="minObj.korok_type && (korokMarkers.length || staticData.persistentKorokMarkers.length)">
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-dark btn-sm" v-show="korokMarkers.length" @click.stop.prevent="keepKorokMarkersAlive()">Keep Korok markers loaded</button>
+          <button type="button" class="btn btn-dark btn-sm" v-show="staticData.persistentKorokMarkers.length" @click.stop.prevent="forgetPersistentKorokMarkers()">Hide Korok markers</button>
+        </div>
       </section>
-      <section class="mt-2" v-show="this.railMarkers.length || staticData.persistentRailMarkers.length">
-        <b-btn v-show="this.railMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepRailMarkersAlive()">Keep Rails loaded</b-btn>
-        <b-btn v-show="staticData.persistentRailMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentRailMarkers()">Hide Rails</b-btn>
+      <section class="mt-2" v-show="railMarkers.length || staticData.persistentRailMarkers.length">
+        <div class="d-grid gap-2">
+          <button type="button" class="btn btn-dark btn-sm" v-show="railMarkers.length" @click.stop.prevent="keepRailMarkersAlive()">Keep Rails loaded</button>
+          <button type="button" class="btn btn-dark btn-sm" v-show="staticData.persistentRailMarkers.length"  @click.stop.prevent="forgetPersistentRailMarkers()">Hide Rails</button>
+        </div>
       </section>
 
       <section class="obj-actor-specific-info">
@@ -38,7 +44,7 @@
           <p v-if="obj.name == 'EventTag'">Activates event <code>{{obj.data['!Parameters'].EventFlowName}}&lt;{{obj.data['!Parameters'].EventFlowEntryName}}&gt;</code> when signalled.</p>
           <p v-if="obj.name == 'SignalFlowchart'">Runs <code>{{obj.data['!Parameters'].EventFlowName}}&lt;{{obj.data['!Parameters'].EventFlowEntryName}}&gt;</code> in a loop and emits a basic signal when a signal is sent from the event flow.</p>
 
-          <a target="_blank" :href="`https://eventviewer.zeldamods.org/viewer.html?data=/d/${obj.data['!Parameters'].EventFlowName}.json&params=1&entry=${obj.data['!Parameters'].EventFlowEntryName}`" class="btn btn-block btn-sm btn-info"><i class="fa fa-external-link-alt"></i> View in EventViewer</a>
+          <a target="_blank" :href="`https://eventviewer.zeldamods.org/viewer.html?data=/d/${obj.data['!Parameters'].EventFlowName}.json&params=1&entry=${obj.data['!Parameters'].EventFlowEntryName}`" class="btn btn-sm btn-info d-block w-100"><i class="fa fa-external-link-alt"></i> View in EventViewer</a>
         </div>
       </section>
 
@@ -76,8 +82,8 @@
 
       <section v-if="dropTableExists()" class="droptable">
         <hr>
-        <h4 class="subsection-heading">Drop table: {{this.dropTables.DropTableName || 'Default'}}</h4>
-        <div v-for="(group, igroup) in this.dropTables.items" :key="igroup">
+        <h4 class="subsection-heading">Drop table: {{dropTables.DropTableName || 'Default'}}</h4>
+        <div v-for="(group, igroup) in dropTables.items" :key="igroup">
           <div v-if="group.DropTableElement && group.DropTableElement.length" class="droptable_content">
             <div class="droptable_group">{{getDropTableGroupCount(group)}}</div>
             <table>
@@ -114,7 +120,7 @@
 
     <section v-if="isSearchResult()">
       <br>
-      <b-btn size="sm" block @click.stop.prevent="emitBackToSearch()"><i class="fa fa-chevron-circle-left"></i> Back to search</b-btn>
+      <button type="button" class="btn btn-secondary btn-sm d-block w-100" @click.stop.prevent="emitBackToSearch()"><i class="fa fa-chevron-circle-left"></i> Back to search</button>
     </section>
 
     <section v-if="railsWithMarkers.length">
@@ -164,7 +170,7 @@
           <h4 class="subsection-heading">Generation group</h4>
         </summary>
         <div class="search-results">
-          <ObjectInfo v-for="otherObj in genGroup" :key="otherObj.objid" :obj="otherObj" :isStatic="false" @click.native.stop.prevent="jumpToObj(otherObj)" />
+          <ObjectInfo v-for="otherObj in genGroup" :key="otherObj.objid" :obj="otherObj" :isStatic="false" @click.stop.prevent="jumpToObj(otherObj)" />
         </div>
       </details>
     </section>

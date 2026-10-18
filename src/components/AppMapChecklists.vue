@@ -4,8 +4,8 @@
 
     <section class="appmapchecklist" v-if="activeList === -1" >
       <div class="clButtonRow">
-        <b-btn size="clButton" variant="link" @click="create()">New List</b-btn>
-        <b-btn size="clButton" variant="link" @click="reset()">Reset</b-btn>
+        <button type="button" class="btn btn-link clButton" @click="create()">New List</button>
+        <button type="button" class="btn btn-link clButton" @click="reset()">Reset</button>
       </div>
       <div class="clListWrap">
         <div v-for="(list) in lists" :key="list.id" class="clListBox"
@@ -13,24 +13,24 @@
           <div class="clListName">{{list.name}}</div>
           <div>{{meta(list)}}</div>
           <div>
-            <b-btn size="sm clButton" variant="link" style="padding: 0"
+            <button type="button" class="btn btn-link btn-sm clButton" style="padding: 0"
                    @click.stop.prevent="show(list)" title="Add items to map">
               Add items to map
-            </b-btn>
+            </button>
           </div>
-          <b-btn size="sm clButton clRemove" variant="link" 
+          <button type="button" class="btn btn-link btn-sm clButton clRemove"
                  @click.prevent.stop="remove(list)" title="Remove checklist">
             <i class="fas fa-times"></i>
-          </b-btn>
+          </button>
         </div>
       </div>
     </section>
     <div v-else class="clDetails">
       <section class="header">
-        <b-btn size="sm" class="back" variant="link" @click="back()"
+        <button type="button" class="btn btn-link btn-sm back" @click="back()"
                title="Back to Checklists">
           <i class="fa fa-arrow-left"></i>
-        </b-btn>
+        </button>
         <section>
           <div class="clListName">{{xlist.name}}</div>
           <div>{{meta(xlist)}}</div>
@@ -49,8 +49,8 @@
         </div>
       </section>
       <section class="clButtonRow">
-        <b-btn size="sm" variant="link" @click="changeQuery(xlist)">Update</b-btn>
-        <b-btn size="sm" variant="link" @click="remove(xlist)">Remove</b-btn>
+        <button type="button" class="btn btn-link btn-sm" @click="changeQuery(xlist)">Update</button>
+        <button type="button" class="btn btn-link btn-sm" @click="remove(xlist)">Remove</button>
       </section>
 
       <ul class="clList">
@@ -61,17 +61,17 @@
           key-field="hash_id"
           >
           <!-- <AppMapChecklistItem class="small" v-for="(item, hash_id) in list.items" :key="hash_id" :item="item" /> -->
-          <template v-slot="{ item, index, active }">
+          <template #default="{ item, index, active }">
             <DynamicScrollerItem
               :item="item"
               :active="active"
-              :data-index="index"
+              :index="index"
               >
               <AppMapChecklistItem
                 class="small"
                 :key="item.hash_id"
                 :item="item"
-                :bus="bus"/>
+                />
             </DynamicScrollerItem>
           </template>
         </DynamicScroller>

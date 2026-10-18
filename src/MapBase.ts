@@ -2,12 +2,10 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-rastercoords';
 import 'leaflet-contextmenu';
 import 'leaflet-contextmenu/dist/leaflet.contextmenu.css';
-import 'leaflet.control.opacity/dist/L.Control.Opacity.css';
 import 'leaflet-mouse-position';
 import '@/util/leaflet_tile_workaround.js';
-import 'leaflet.control.opacity';
 
-import * as L from 'leaflet';
+import L from 'leaflet';
 
 import { CanvasMarker } from '@/util/CanvasMarker';
 import * as map from '@/util/map';
@@ -59,11 +57,11 @@ export class MapBase {
       this.refGrid = this.createMarkers();
     }
     const zoomLevel = this.m.getZoom();
-    let minZoom = [1, 4, 5, 1];
+    const minZoom = [1, 4, 5, 1];
     if (this.refGridOn) {
       this.refGrid.forEach((layer, i) => {
         //for (let i = 0; i < 4; i++) {
-        let visible = this.m.hasLayer(layer);
+        const visible = this.m.hasLayer(layer);
         if (zoomLevel >= minZoom[i]) {
           if (!visible) {
             this.m.addLayer(layer);
@@ -173,7 +171,7 @@ export class MapBase {
           text: 'Copy coordinates',
           callback: ({ latlng }: ui.LeafletContextMenuCbArg) => {
             const [x, y, z] = this.toXYZ(latlng);
-            let s = Settings.getInstance();
+            const s = Settings.getInstance();
             if (s.copyCoordinatesXYZ) {
               // @ts-ignore
               const yv = { Surface: 150, Sky: 1500, Depths: -500 }[this.activeLayer]
@@ -226,6 +224,7 @@ export class MapBase {
       const zarea = (area == "Surface") ? "Ground" : area;
       const baseLayer = L.tileLayer(`${TOTK_MAP}/${zarea}/maptex/{z}/{x}/{y}.webp`, {
         maxNativeZoom: 7,
+        bounds,
       });
       this.baseMapLayers[area] = baseLayer;
     }
@@ -240,12 +239,8 @@ export class MapBase {
     this.m.createPane('front2').style.zIndex = '1002';
 
     // Basic Switching
+    // @ts-ignore
     L.control.layers(this.baseMapLayers).addTo(this.m);
-
-    // Opacity Switching
-    //   Having control over the tile layer opacity is fun, but is it useful
-    //   Left here as an appendage; if requested and there is demand
-    // L.control.opacity(baseMaps, { label: '', collapsed: true }).addTo(this.m);
 
     // Mouse Position (bottom right corner)
     L.control.mousePosition({
@@ -254,6 +249,7 @@ export class MapBase {
       position: 'bottomright',
       latFormatter: (x) => (-x).toFixed(0),
       lngFormatter: (x) => x.toFixed(0),
+    // @ts-ignore
     }).addTo(this.m);
     this.m.on('baselayerchange', (ev: any) => {
       const url = ev.layer._url;
@@ -270,7 +266,7 @@ export class MapBase {
         'F2': 'Surface',
         'F3': 'Depths',
       }
-      var charCode = ev.originalEvent.code;
+      const charCode = ev.originalEvent.code;
       if (charCode in move) {
         this.switchBaseTileLayer(move[charCode]);
       } else if (moveUp.includes(charCode)) {
@@ -295,12 +291,12 @@ preserveAspectRatio="none"  xmlns="http://www.w3.org/2000/svg" >
     const svgIcon = this.svgIconBase(3);
     const svgIcon2 = this.svgIconBase(6);
     const svgIcon3 = this.svgIconBase(12);
-    let size = 125;
-    let markers = [L.layerGroup(), L.layerGroup(), L.layerGroup(), L.layerGroup()];
+    const size = 125;
+    const markers = [L.layerGroup(), L.layerGroup(), L.layerGroup(), L.layerGroup()];
     for (let i = 0; i < 20 * 4; i++) {
       for (let j = 0; j < 16 * 4; j++) {
-        let z = -4000 + j * size + 125 / 2;
-        let x = -5000 + i * size + 125 / 2;
+        const z = -4000 + j * size + 125 / 2;
+        const x = -5000 + i * size + 125 / 2;
         let k = 2;
         let icon = svgIcon;
         if (i % 4 == 0 && j % 4 == 0) {

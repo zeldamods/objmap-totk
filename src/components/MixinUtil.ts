@@ -1,52 +1,51 @@
-import Vue from 'vue';
-
-import Component from 'vue-class-component';
+import { defineComponent } from 'vue';
 
 import { rankUpEnemyForHardMode } from '@/level_scaling';
 import { ObjectMinData } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 import { Settings } from '@/util/settings';
 
-@Component
-export default class MixinUtil extends Vue {
-  getName(name: string) {
-    if (Settings.getInstance().useActorNames)
-      return name;
-    return MsgMgr.getInstance().getName(name) || name;
-  }
+export default defineComponent({
+  methods: {
+    getName(name: string) {
+      if (Settings.getInstance().useActorNames)
+        return name;
+      return MsgMgr.getInstance().getName(name) || name;
+    },
 
-  getRankedUpActorNameForObj(obj: ObjectMinData) {
-    if (!Settings.getInstance().hardMode || obj.disable_rankup_for_hard_mode)
-      return obj.name;
-    return rankUpEnemyForHardMode(obj.name);
-  }
+    getRankedUpActorNameForObj(obj: ObjectMinData) {
+      if (!Settings.getInstance().hardMode || obj.disable_rankup_for_hard_mode)
+        return obj.name;
+      return rankUpEnemyForHardMode(obj.name);
+    },
 
-  getMapNameForObj(obj: ObjectMinData) {
-    if (obj.map_type == 'SmallDungeon') {
-      const uiName = MsgMgr.getInstance().getMsg(`StaticMsg/Dungeon:${obj.map_name}`);
-      return `${uiName} (${obj.map_name})`;
+    getMapNameForObj(obj: ObjectMinData) {
+      if (obj.map_type == 'SmallDungeon') {
+        const uiName = MsgMgr.getInstance().getMsg(`StaticMsg/Dungeon:${obj.map_name}`);
+        return `${uiName} (${obj.map_name})`;
+      }
+
+      if (obj.map_type == 'MainFieldDungeon') {
+        const uiName = MsgMgr.getInstance().getMsg(`StaticMsg/LocationMarker:${obj.map_name}`);
+        return `${uiName} (${obj.map_name})`;
+      }
+
+      return obj.map_name;
+    },
+
+    getMapStaticStringForObj(obj: ObjectMinData) {
+      return obj.map_static ? 'Static' : 'Dynamic';
+    },
+
+    isActuallyRankedUp(obj: ObjectMinData) {
+      return this.getRankedUpActorNameForObj(obj) != obj.name;
+    },
+
+    formatObjId(xid: string) {
+      const id = BigInt(xid);
+      if (!Settings.getInstance().useHexForHashIds)
+        return id.toString(10);
+      return '0x' + id.toString(16).padStart(16, '0');
     }
-
-    if (obj.map_type == 'MainFieldDungeon') {
-      const uiName = MsgMgr.getInstance().getMsg(`StaticMsg/LocationMarker:${obj.map_name}`);
-      return `${uiName} (${obj.map_name})`;
-    }
-
-    return obj.map_name;
-  }
-
-  getMapStaticStringForObj(obj: ObjectMinData) {
-    return obj.map_static ? 'Static' : 'Dynamic';
-  }
-
-  isActuallyRankedUp(obj: ObjectMinData) {
-    return this.getRankedUpActorNameForObj(obj) != obj.name;
-  }
-
-  formatObjId(xid: string) {
-    const id = BigInt(xid);
-    if (!Settings.getInstance().useHexForHashIds)
-      return id.toString(10);
-    return '0x' + id.toString(16).padStart(16, '0');
-  }
-}
+  },
+})

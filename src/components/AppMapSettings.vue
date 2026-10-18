@@ -2,25 +2,47 @@
   <section>
 
     <h4 class="subsection-heading">Map</h4>
-    <b-form-select v-model="s.mapType" class="mb-2" size="sm" :options="optionsMapType" @input="resetMapName"></b-form-select>
-    <b-form-select v-model="s.mapName" class="mb-2" size="sm" :options="optionsMapNameForMapType[s.mapType]"></b-form-select>
+    <select class="form-select form-select-sm mb-2" v-model="s.mapType" @input="resetMapName">
+      <option v-for="o in optionsMapType" :key="o.value" :value="o.value">{{o.text}}</option>
+    </select>
+    <select class="form-select form-select-sm mb-2" v-model="s.mapName">
+      <option v-for="o in optionsMapNameForMapType[s.mapType]" :key="o.value" :value="o.value">{{o.text}}</option>
+    </select>
     This setting only affects search. Objects will be displayed using the main Hyrule map.
     <hr>
 
     <h4 class="subsection-heading">Object Color Mode</h4>
-    <b-radio-group class="mb-4" v-model="colorMode" @change="onColorModeChange">
-      <b-radio value="per-actor">Color by actor type</b-radio>
-      <b-radio value="per-group">Color by search group</b-radio>
-    </b-radio-group>
+    <div role="radiogroup" class="mb-4">
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" name="settings-color-model" id="settings-color-per-actor" value="per-actor" v-model="colorMode" @change="onColorModeChange(colorMode)">
+        <label class="form-check-label" for="settings-color-per-actor">Color by actor type</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" name="settings-color-model" id="settings-color-per-group" value="per-group" v-model="colorMode" @change="onColorModeChange(colorMode)">
+        <label class="form-check-label" for="settings-color-per-group">Color by search group</label>
+      </div>
+    </div>
     <h4 class="subsection-heading">Object Display</h4>
     <p class="mb-1">Some changes only take effect after a reload.</p>
-    <b-checkbox switch v-model="s.useActorNames">Use internal actor names</b-checkbox>
-    <b-checkbox switch v-model="s.useHexForHashIds">Show hash IDs in hex</b-checkbox>
-    <b-checkbox switch  @change="toggleY">Show object heights in tooltips</b-checkbox>
+    <div class="form-check form-switch">
+      <input type="checkbox" class="form-check-input" id="settings-actor-names" v-model="s.useActorNames">
+      <label class="form-check-label" for="settings-actor-names">Use internal actor names</label>
+    </div>
+    <div class="form-check form-switch">
+      <input type="checkbox" class="form-check-input" id="settings-hex-hash-ids" v-model="s.useHexForHashIds">
+      <label class="form-check-label" for="settings-hex-hash-ids">Show hash IDs in hex</label>
+    </div>
+    <div class="form-check form-switch">
+      <input type="checkbox" class="form-check-input" id="settings-tooltip-y" @change="toggleY">
+      <label class="form-check-label" for="settings-tooltip-y">Show object heights in tooltips</label>
+    </div>
     <hr>
     <section>
       <h4 class="subsection-heading">Use In-Game Coordinates</h4>
-      <b-checkbox switch v-model="s.inGameCoordinates">Display Coordinates as those In-Game</b-checkbox>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" id="settings-in-game-coordinates" v-model="s.inGameCoordinates">
+        <label class="form-check-label" for="settings-in-game-coordinates">Display Coordinates as those In-Game</label>
+      </div>
       <p class="small">
         Coordinates here are displayed as East-West, Vertical, North-South (x,z,y). This option converts the coordinates to match those In-Game as East-West, North-South, Vertical - 106 meters (x,y,z).
       </p>
@@ -29,20 +51,27 @@
     <section>
       <h4 class="subsection-heading">Custom Search Presets</h4>
       <div class="d-flex mb-1" v-for="(preset, idx) in s.customSearchPresets" :key="idx">
-        <input placeholder="Label" style="flex: 4" class="form-control form-control-sm mr-2" v-model="s.customSearchPresets[idx][0]">
-        <input placeholder="Query" style="flex: 6" class="form-control form-control-sm mr-2" v-model="s.customSearchPresets[idx][1]">
-        <b-btn size="sm" variant="danger" @click="s.customSearchPresets.splice(idx, 1)"><i class="fa fa-trash"></i></b-btn>
+        <input placeholder="Label" style="flex: 4" class="form-control form-control-sm me-2" v-model="s.customSearchPresets[idx][0]">
+        <input placeholder="Query" style="flex: 6" class="form-control form-control-sm me-2" v-model="s.customSearchPresets[idx][1]">
+        <button type="buttom" class="btn btn-danger btn-sm" @click="s.customSearchPresets.splice(idx, 1)"><i class="fa fa-trash"></i></button>
       </div>
-      <b-btn class="mt-2" size="sm" @click="s.customSearchPresets.push(['', ''])"><i class="fa fa-plus"></i> Add</b-btn>
+      <button type="button" class="btn btn-secondary btn-sm mt-2" @click="s.customSearchPresets.push(['', ''])"><i class="fa fa-plus"></i> Add</button>
     </section>
     <hr>
     <h4 class="subsection-heading">Copy Coordinates</h4>
-    <b-checkbox switch v-model="s.copyCoordinatesXYZ">Copy (x,y,z) instead of (x,z).</b-checkbox>
-      <p class="small">
-        Result of 'Copy coordinates' in the map's context menu, right click, returns (x,y,z) instead of (x,z). Value of y (height) is defined by the active layer.
-      </p>
+    
+    <div class="form-check form-switch">
+      <input type="checkbox" class="form-check-input" id="settings-copy-coordinates-xyz" v-model="s.copyCoordinatesXYZ">
+      <label class="form-check-label" for="settings-copy-coordinates-xyz">Copy (x,y,z) instead of (x,z).</label>
+    </div>
+    <p class="small">
+      Result of 'Copy coordinates' in the map's context menu, right click, returns (x,y,z) instead of (x,z). Value of y (height) is defined by the active layer.
+    </p>
     <h4 class="subsection-heading">Map Drawing</h4>
-    <b-checkbox switch v-model="s.noTouchScreen">Not using a touch screen</b-checkbox>
+    <div class="form-check form-switch">
+      <input type="checkbox" class="form-check-input" id="settings-no-touch-screen" v-model="s.noTouchScreen">
+      <label class="form-check-label" for="settings-no-touch-screen">Not using a touch screen</label>
+    </div>
     <p class="small">
       Allows for clicking and dragging during line creation and markers are a more reasonable size. Reload the page for setting to take effect.
     </p>

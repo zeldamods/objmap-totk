@@ -3,7 +3,7 @@
   <div class="banner" v-show="!settings.decompBannerHidden">
     Help us understand the BotW engine! <a href="https://github.com/zeldaret/botw" target="_blank">Contribute to the decompilation project now</a>
 
-    <button type="button" aria-label="Close" class="close" @click="settings.decompBannerHidden = true">×</button>
+    <button type="button" aria-label="Close" class="btn-close" data-bs-theme="dark" @click="settings.decompBannerHidden = true"></button>
   </div>
 
   <div id="lmap" class="h-100"></div>
@@ -24,8 +24,8 @@
         <li><a href="#spane-settings" role="tab"><i class="fa fa-cog"></i></a></li>
       </ul>
       <ul role="tablist">
-        <li v-show="settings.left" @click.capture.prevent.stop="toggleSidebarSide()"><a href="#toggle-sidebar-side" v-b-tooltip.hover.right title="Move to the right side"><i class="far fa-caret-square-right"></i></a></li>
-        <li v-show="!settings.left" @click.capture.prevent.stop="toggleSidebarSide()"><a href="#toggle-sidebar-side" v-b-tooltip.hover.left title="Move to the left side"><i class="far fa-caret-square-left"></i></a></li>
+        <li v-show="settings.left" @click.capture.prevent.stop="toggleSidebarSide()"><a href="#toggle-sidebar-side" v-tooltip.hover.right="'Move to the right side'"><i class="far fa-caret-square-right"></i></a></li>
+        <li v-show="!settings.left" @click.capture.prevent.stop="toggleSidebarSide()"><a href="#toggle-sidebar-side" v-tooltip.hover.right="'Move to the left side'"><i class="far fa-caret-square-left"></i></a></li>
       </ul>
     </div>
     <div class="leaflet-sidebar-content" id="sidebar-content">
@@ -71,21 +71,25 @@
           <code>TBox_<b>*</b></code> for TBox_Field_Wood, TBox_Field_Iron, etc.
         </p>
 
-        <b-btn block size="sm" variant="primary" @click="switchPane('spane-search')"><i class="fa fa-chevron-left"></i> Back</b-btn>
+        <button type="button" class="btn btn-primary btn-sm d-block w-100" @click="switchPane('spane-search')"><i class="fa fa-chevron-left"></i> Back</button>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-search">
           <div class="search-header">
             <input type="search" class="form-control search-main-input" placeholder="Search" @input="searchOnInput" v-model="searchQuery">
             <div class="d-flex justify-content-end">
-              <b-btn size="sm" variant="link" @click="switchPane('spane-search-help')">Help</b-btn>
-              <b-dropdown v-for="presetGroup in searchPresets" :key="presetGroup.label" size="sm" variant="link">
-                <template slot="button-content"><span v-html="presetGroup.label"></span></template>
-                <b-dd-item v-for="preset in presetGroup.presets" :key="preset.label" @click="searchAddGroup(preset.query, preset.label)">{{preset.label}}</b-dd-item>
-              </b-dropdown>
-              <b-dropdown size="sm" variant="link" text="Custom" v-if="settings && settings.customSearchPresets.length">
-                <b-dd-item v-for="preset in settings.customSearchPresets" :key="preset[0]" @click="searchAddGroup(preset[1], preset[0])">{{preset[0]}}</b-dd-item>
-              </b-dropdown>
+              <button type="button" class="btn btn-link btn-sm" @click="switchPane('spane-search-help')">Help</button>
+              <AppDropdown v-for="presetGroup in searchPresets" :key="presetGroup.label" size="sm" variant="link">
+                <template v-slot:button-content>
+                  <span v-html="presetGroup.label"></span>
+                </template>
+                <li role="presentation" v-for="preset in presetGroup.presets" :key="preset.label">
+                  <a role="menuitem" href="#" class="dropdown-item" @click.prevent="searchAddGroup(preset.query, preset.label)">{{preset.label}}</a>
+                </li>
+              </AppDropdown>
+              <AppDropdown size="sm" variant="link" text="Custom" v-if="settings.customSearchPresets.length">
+                <li role="presentation" v-for="preset in settings.customSearchPresets" :key="preset[0]" @click.prevent="searchAddGroup(preset[1], preset[0])">{{preset[0]}}</li>
+              </AppDropdown>
             </div>
           </div>
 
@@ -93,13 +97,16 @@
 
           <section class="search-groups" v-show="searchGroups.length || searchExcludedSets.length">
             <div class="search-group d-flex align-items-center" v-for="(group, idx) in searchGroups" :key="'searchgroup' + idx">
-              <b-form-checkbox class="ml-2 d-inline-block search-enable-checkbox" v-model="group.enabled" @change="searchToggleGroupEnabledStatus(idx)"></b-form-checkbox>
+              <div class="ms-2 d-inline-block search-enable-checkbox form-check">
+                <input type="checkbox" class="form-check-input" :id="'search-group-enabled-' + idx" v-model="group.enabled" @change="searchToggleGroupEnabledStatus(idx)">
+                <label class="form-check-label" :for="'search-group-enabled-' + idx"></label>
+              </div>
               <span class="d-inline-block">
                 <span>{{group.label}}</span>
-                <a class="ml-2" @click="searchRemoveGroup(idx)"><i class="text-danger fa fa-times"></i></a>
-                <a class="ml-2" style="font-size: 90%" v-if="group.query" @click="searchViewGroup(idx)"><i class="fa fa-edit"></i></a>
-                <span class="ml-2" v-if="settings && !settings.colorPerActor"><input class="marker-color2" type="color" :data-id="`${idx}`" @input="searchColorGroup" :value="group.getFillColor()"></span>
-                <span class="ml-2">({{group.size()}})</span>
+                <a class="ms-2" @click="searchRemoveGroup(idx)"><i class="text-danger fa fa-times"></i></a>
+                <a class="ms-2" style="font-size: 90%" v-if="group.query" @click="searchViewGroup(idx)"><i class="fa fa-edit"></i></a>
+                <span class="ms-2" v-if="settings && !settings.colorPerActor"><input class="marker-color2" type="color" :data-id="`${idx}`" @input="searchColorGroup" :value="group.getFillColor()"></span>
+                <span class="ms-2">({{group.size()}})</span>
               </span>
             </div>
             <div class="search-group" v-for="(set, idx) in searchExcludedSets" :key="'searchexclude' + idx">
@@ -114,14 +121,14 @@
 
             <div v-show="searchResults.length">
               <p class="text-center mb-1">
-                <span v-show="this.searchResults.length >= this.MAX_SEARCH_RESULT_COUNT">Showing only the first {{MAX_SEARCH_RESULT_COUNT}} results.<br></span>
-                <b-btn size="sm" variant="link" @click="searchOnAdd"><i class="fa fa-plus"></i> Add to map</b-btn>
-                <b-btn size="sm" variant="link" @click="searchOnExclude"><i class="far fa-eye-slash"></i> Hide</b-btn>
-                <b-btn size="sm" variant="link" @click="searchSetLink"><i class="fas fa-link"></i> Link</b-btn>
+                <span v-show="searchResults.length >= MAX_SEARCH_RESULT_COUNT">Showing only the first {{MAX_SEARCH_RESULT_COUNT}} results.<br></span>
+                <button class="btn btn-link btn-sm" @click="searchOnAdd"><i class="fa fa-plus"></i> Add to map</button>
+                <button class="btn btn-link btn-sm" @click="searchOnExclude"><i class="far fa-eye-slash"></i> Hide</button>
+                <button class="btn btn-link btn-sm" @click="searchSetLink"><i class="fas fa-link"></i> Link</button>
               </p>
               <div v-for="(result, idx) in searchResults" :key="result.objid">
                 <ObjectInfo v-if="filterResults(result)" :obj="result" :is-static="false"
-                            @click.native="searchJumpToResult(idx)"
+                            @click="searchJumpToResult(idx)"
                             :isChecked="localSearch[result.hash_id]"/>
               </div>
             </div>
@@ -133,40 +140,80 @@
         <div class="row">
           <AppMapFilterMainButton v-for="(v, type) in markerComponents" :key="type" :type="type" :label="v.filterLabel" :icon="v.filterIcon" @toggle="updateMarkers" />
         </div>
-        <b-checkbox switch v-model="showKorokIDs" @change="updateKorokIDs">Show Korok IDs</b-checkbox>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="filter-korok-ids" v-model="showKorokIDs" @change="updateKorokIDs">
+          <label class="form-check-label" for="filter-korok-ids">Show Koroks IDs</label>
+        </div>
         <hr>
 
         <h4 class="subsection-heading">Visible map areas</h4>
-        <b-radio-group stacked class="mb-4" v-model="shownAreaMap" @change="onShownAreaMapChanged">
-          <b-radio value="">None</b-radio>
-          <!-- <b-radio value="FieldMapArea">Field map areas</b-radio> -->
-          <b-radio value="MapTower">Map Tower Areas</b-radio>
-          <b-radio value="Ground">Surface Field Map Areas</b-radio>
-          <b-radio value="MinusField">Depths Field Map Areas</b-radio>
-          <b-radio value="Cave">Cave Field Map Areas</b-radio>
-          <b-radio value="Sky">Sky Field Map Areas</b-radio>
-          <b-radio value="sky_polys">Sky Regions <div style="display: inline; font-size:0.8em">(approximate)</div></b-radio>
-          <b-radio value="cave_polys">Cave Regions <div style="display: inline; font-size:0.8em">(approximate)</div></b-radio>
-          <b-radio value="cave_polys_detail">Cave Regions <div style="display: inline; font-size:0.8em">(detailed)</div></b-radio>
-          <b-radio value="cherry_blossom_trees">Cherry Blossom Trees</b-radio>
-
-          <!-- <b-radio value="LoadBalancer">Load balancer areas</b-radio> -->
-        </b-radio-group>
-
-        <b-form-group label="Filter map areas" label-for="mapareafilter">
-          <div class="d-flex mb-1">
-            <input type="search" style="flex: 1" class="form-control form-control-sm mr-2" id="mapareafilter" placeholder="Example: 1,2,3,64" v-model="areaWhitelist">
-            <b-btn size="sm" variant="primary" @click="updateAreaMapVisibility()"><i class="fa fa-filter"></i></b-btn>
+        <div role="radiogroup" class="mb-4">
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-none" value="" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-none">None</label>
           </div>
-        </b-form-group>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-towers" value="MapTower" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-towers">Map Tower Areas</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-ground" value="Ground" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-ground">Surface Field Map Areas</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-minus-field" value="MinusField" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-minus-field">Depths Field Map Areas</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-cave" value="Cave" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-cave">Cave Field Map Areas</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-sky" value="Sky" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-sky">Sky Field Map Areas</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-sky-polys" value="sky_polys" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-sky-polys">Sky Regions <div style="display: inline; font-size:0.8em">(approximate)</div></label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-cave-polys" value="cave_polys" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-cave-polys">Cave Regions <div style="display: inline; font-size:0.8em">(approximate)</div></label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-cave-polys-detailed" value="cave_polys_detail" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-cave-polys-detailed">Cave Regions <div style="display: inline; font-size:0.8em">(detailed)</div></label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" name="filter-area-map" id="filter-area-map-cherry-blossom" value="cherry_blossom_trees" v-model="shownAreaMap" @change="onShownAreaMapChanged">
+            <label class="form-check-label" for="filter-area-map-cherry-blossom">Cherry Blossom Trees</label>
+          </div>
+          <!-- <input type="radio" value="LoadBalancer">Load balancer areas</div> -->
+        </div>
+
+        <div role="group" class="mb-3">
+          <label for="mapareafilter" class="form-label">Filter map areas</label>
+          <div class="d-flex mb-1">
+            <input type="search" style="flex: 1" class="form-control form-control-sm me-2" id="mapareafilter" placeholder="Example: 1,2,3,64" v-model="areaWhitelist">
+            <button class="btn btn-primary btn-sm" @click="updateAreaMapVisibility()"><i class="fa fa-filter"></i></button>
+          </div>
+        </div>
 
         <h4 class="subsection-heading">Visible map area fill</h4>
-        <b-checkbox switch v-model="showAreaColor" @change="onShownAreaMapChanged">Fill map areas with color</b-checkbox>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="filter-show-area-color" v-model="showAreaColor" @change="onShownAreaMapChanged">
+          <label class="form-check-label" for="filter-show-area-color">Full map areas with color</label>
+        </div>
         <br/>
         <h4 class="subsection-heading">Map grids</h4>
-        <b-checkbox switch v-model="showMapUnitGrid" @change="onShowMapUnitGridChanged">Show map unit grid</b-checkbox>
-        <b-checkbox switch v-model="showRevivalMapUnitGrid" @change="onShowMapUnitGridChanged">Show revival map grid</b-checkbox>
-
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="filter-show-map-unit-grid" v-model="showMapUnitGrid" @change="onShowMapUnitGridChanged">
+          <label class="form-check-label" for="filter-show-map-unit-grid">Show map unit grid</label>
+        </div>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="filter-show-revival-map-grid" v-model="showRevivalMapUnitGrid" @change="onShowMapUnitGridChanged">
+          <label class="form-check-label" for="filter-show-revival-map-grid">Show revival map grid</label>
+        </div>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-dummy">
@@ -174,28 +221,31 @@
       <div class="leaflet-sidebar-pane" id="spane-checklist" >
         <div class="app-checklist">
           <AppMapChecklists :lists="checklists.lists"/>
-          <div class="row" style="margin-left:0.2em;margin-top:1.2em;margin-bottom:1.2em;">
+          <div class="row w-100" style="margin-left:0.2em;margin-top:1.2em;margin-bottom:1.2em;">
             Completed Markers:
             <select v-model="clMarkerVisibility" @change="clUpdateMarkers"
-                    style="flex-grow: 2; margin-left: 1em">
+                    style="flex-grow: 2; margin-left: 0em">
               <option value="never">Never show</option>
               <option value="opacity">Less visible</option>
               <option value="always">Always show</option>
             </select>
           </div>
-          <div class="row no-gutters">
-            <div class="col mr-3">
-              <b-btn size="sm" variant="secondary" block @click="clExport()">
+          <div class="row no-gutters" style="width: 100%;">
+            <div class="col me-3">
+              <button class="btn btn-secondary btn-sm d-block w-100" @click="clExport()">
                 <i class="fas fa-file-export"></i>
                 Export
-              </b-btn>
+              </button>
             </div>
             <div class="col">
-              <b-btn size="sm" variant="danger" block @click="clImport()">
+              <button class="btn btn-danger btn-sm d-block w-100" @click="clImport()">
                 <i class="fas fa-file-import"></i>
                 Import
-              </b-btn>
-              <b-form-checkbox v-model="clImportReplace">Replace existing checklists</b-form-checkbox>
+              </button>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="cl-replace-checklist" v-model="clImportReplace">
+                <label class="form-check-label" for="cl-replace-checklist">Replace existing checklists</label>
+              </div>
             </div>
             <input type="file" id="clFileinput" accept=".json" hidden @change="clImportCb">
           </div>
@@ -203,20 +253,23 @@
       </div>
       <div class="leaflet-sidebar-pane" id="spane-draw">
         <h1 class="leaflet-sidebar-header">Draw</h1>
-        <b-btn size="sm" block variant="primary" @click="toggleDraw()"><i class="fa fa-draw-polygon"></i> Toggle draw controls</b-btn>
+        <button class="btn btn-primary btn-sm w-100" @click="toggleDraw()"><i class="fa fa-draw-polygon"></i> Toggle draw controls</button>
         <hr>
         <h4 class="subsection-heading">Polyline color</h4>
-        <input type="color"  @input="drawOnColorChange" value="#3388ff"> <b-btn size="sm" variant="link" @click="drawLineColor = '#3388ff'">Reset to default</b-btn>
+        <input type="color"  @input="drawOnColorChange" value="#3388ff"> <button class="btn btn-link btn-sm" @click="drawLineColor = '#3388ff'">Reset to default</button>
         <hr>
         <h4 class="subsection-heading">Data import/export</h4>
         <p>Exported data includes search groups and drawn objects.</p>
         <div class="row no-gutters">
-          <div class="col mr-3">
-            <b-btn size="sm" variant="secondary" block @click="drawExport()"><i class="fas fa-file-export"></i> Export</b-btn>
+          <div class="col me-3">
+            <button class="btn btn-secondary btn-sm d-block w-100" @click="drawExport()"><i class="fas fa-file-export"></i> Export</button>
           </div>
           <div class="col">
-            <b-btn size="sm" variant="danger" block @click="drawImport()"><i class="fas fa-file-import"></i> Import</b-btn>
-            <b-form-checkbox v-model="importReplace">Replace existing data</b-form-checkbox>
+            <button class="btn btn-danger btn-sm d-block w-100" @click="drawImport()"><i class="fas fa-file-import"></i> Import</button>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="replace-data" v-model="importReplace">
+              <label class="form-check-label" for="replace-data">Replace existing data</label>
+            </div>
           </div>
         </div>
         <hr/>
@@ -237,10 +290,10 @@
           </select>
           </div>
           <div style="display: flex; flex-flow: row nowrap;">
-            <b-btn size="sm" variant="link" @click="toggleAllLayers(true)">All On</b-btn>
-            <b-btn size="sm" variant="link" @click="toggleAllLayers(false)">All Off</b-btn>
+            <button type="button" class="btn btn-link btn-sm" @click="toggleAllLayers(true)">All On</button>
+            <button type="button" class="btn btn-link btn-sm" @click="toggleAllLayers(false)">All Off</button>
           </div>
-          <draggable v-model="drawLayerOpts" @update="updateDrawLayerOptsIndex">
+          <VueDraggable v-model="drawLayerOpts" @update="updateDrawLayerOptsIndex">
             <div v-for="layer in drawLayerOpts" :key="layer.id" @model="drawLayerOpts" class="marker-row" draggable="true">
               <div>
                 <input type="checkbox" @input="toggleLayerVisibility" :id="layer.id" v-model="layer.visible" >
@@ -252,13 +305,13 @@
               </div>
               <div>{{layer.length}}</div>
             </div>
-          </draggable>
+          </VueDraggable>
         </div>
       </div>
 
       <div class="leaflet-sidebar-pane" id="spane-tools">
         <h1 class="leaflet-sidebar-header">Tools</h1>
-        <b-button size="sm" variant="secondary" block @click="closeSidebar(); $refs.modalGoto.show()">Go to coordinates...</b-button>
+        <button type="button" class="btn btn-secondary btn-sm w-100" @click="closeSidebar(); $refs.modalGoto.show()">Go to coordinates...</button>
         <hr>
         <h4 class="subsection-heading">About this map</h4>
         <p>This object map is an <a href="https://github.com/zeldamods/objmap-totk">open source project</a>. Contributions are welcome.</p>
@@ -272,10 +325,10 @@
 
       <div class="leaflet-sidebar-pane" id="spane-details">
         <div class="leaflet-sidebar-close" @click="closeSidebar()"><i class="fa fa-times"></i></div>
-        <h1 v-if="detailsMarker" class="location-title leaflet-sidebar-header" :title="detailsMarker.data.title"><span>{{detailsMarker.data.title}}</span></h1>
+        <h1 v-if="detailsMarker" class="location-title leaflet-sidebar-header" :title="detailsMarker.title"><span>{{detailsMarker.title}}</span></h1>
         <component v-if="detailsComponent" :is="detailsComponent"
                    v-bind:marker="detailsMarker"
-                   v-bind:is-checked="(detailsMarker.data && detailsMarker.data.obj) ? localDetails[detailsMarker.data.obj.hash_id] : false"
+                   v-bind:is-checked="(detailsMarker && detailsMarker.obj) ? localDetails[detailsMarker.obj.hash_id] : false"
                    ></component>
       </div>
 
@@ -300,8 +353,8 @@
   text-align: center;
 
   .close {
+    font-size: 0.75rem;
     margin-left: 20px;
-    color: white;
   }
 }
 
