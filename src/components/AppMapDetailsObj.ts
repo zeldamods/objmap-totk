@@ -1,5 +1,3 @@
-import 'leaflet-path-transform';
-
 import * as L from 'leaflet';
 import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
@@ -23,6 +21,11 @@ import {
 import { MsgMgr } from '@/services/MsgMgr';
 import { ColorScale } from '@/util/colorscale';
 import * as curves from '@/util/curves';
+import {
+  eulerRotation,
+  footprint,
+  ShapeKind,
+} from '@/util/footprint';
 import { vecAdd } from '@/util/math';
 import * as svg from '@/util/svg';
 
@@ -356,9 +359,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   }
 
   private addAreaMarker(obj: ObjectData) {
-    const shapes = ['Sphere', 'Capsule', 'Box', 'Cylinder'];
-    const mb = this.marker.data.mb;
-    const [x, y, z] = obj.data.Translate;
+    const shapes: ShapeKind[] = ['Sphere', 'Capsule', 'Box', 'Cylinder'];
     const dyn = obj.data.Dynamic;
     let shapeNum = (dyn && dyn.RigidBodyShapeType !== undefined) ? dyn.RigidBodyShapeType : 2;
     if (obj.name.endsWith("Sphere"))
@@ -371,37 +372,10 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
       shapeNum = 2;
     const shape = (shapeNum <= 3) ? shapes[shapeNum] : shapes[2];
     const scale = numOrArrayToArray(obj.data.Scale);
-    const rotate = numOrArrayToArray(obj.data.Rotate);
-
     if (!scale)
       return;
 
-    let areaMarker: L.Path;
-    // Super rough approximation. This could be improved by actually projecting the 3D shape...
-    // A lot of shapes do not use any rotate feature though,
-    // and for those this naïve approach should suffice.
-    if (shape == 'Sphere') {
-      areaMarker = L.circle(mb.fromXYZ([x, 0, z]), { radius: scale[0] }).addTo(mb.m);
-    } else if (shape == 'Cylinder' || shape == 'Capsule') {
-      if (rotate && Math.abs(rotate[0] - 1.57080) <= 0.01) {
-        const southWest = L.latLng(z + scale[2], x - scale[1] - scale[2]);
-        const northEast = L.latLng(z - scale[2], x + scale[1] + scale[2]);
-        areaMarker = L.rectangle(L.latLngBounds(southWest, northEast)).addTo(mb.m);
-      } else {
-        areaMarker = L.circle(mb.fromXYZ([x, 0, z]), { radius: scale[0] }).addTo(mb.m);
-      }
-    } else if (shape == 'Box') {
-      this.addBoxAreaMarker(obj, scale);
-      return;
-    } else if (shape == 'Hull') {
-      // Deliberately unhandled.
-      return;
-    } else {
-      return;
-    }
-
-    areaMarker.bringToBack();
-    this.areaMarkers.push(areaMarker);
+    this.addShapeMarker(obj, shape, scale);
   }
 
   private addAreaCullingMarker(obj: ObjectData) {
@@ -421,43 +395,25 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     if (!MarginPositive)
       return;
 
-    this.addBoxAreaMarker(obj, scale, "AreaCulling", { fillColor: "blue" });
-    this.addBoxAreaMarker(obj, vecAdd(scale, MarginPositive), "AreaCulling + MarginPositive", { fillColor: "green", color: "green" });
-    this.addBoxAreaMarker(obj, vecAdd(scale, MarginNegative), "AreaCulling + MarginNegative", { fillColor: "red", color: "red" });
+    this.addShapeMarker(obj, 'Box', scale, "AreaCulling", { fillColor: "blue" });
+    this.addShapeMarker(obj, 'Box', vecAdd(scale, MarginPositive), "AreaCulling + MarginPositive", { fillColor: "green", color: "green" });
+    this.addShapeMarker(obj, 'Box', vecAdd(scale, MarginNegative), "AreaCulling + MarginNegative", { fillColor: "red", color: "red" });
   }
 
-  private addBoxAreaMarker(obj: ObjectData, scale: [number, number, number], tooltip?: string, options: L.PolylineOptions = {}): L.Path {
+  private addShapeMarker(obj: ObjectData, shape: ShapeKind, halfExtents: [number, number, number], tooltip?: string, options: L.PolylineOptions = {}) {
     const mb = this.marker.data.mb;
-    const [x, _, z] = obj.data.Translate;
-    const rotate = numOrArrayToArray(obj.data.Rotate);
+    const rotation = eulerRotation(numOrArrayToArray(obj.data.Rotate) || [0, 0, 0]);
+    const outline = footprint(shape, obj.data.Translate, halfExtents, rotation);
+    const marker = 'circle' in outline
+      ? L.circle(mb.fromXYZ([outline.circle.center[0], 0, outline.circle.center[1]]), { ...options, radius: outline.circle.radius })
+      : L.polygon(outline.polygon.map(([x, z]) => mb.fromXYZ([x, 0, z])), options);
+    marker.addTo(mb.m);
 
-    // Super rough approximation. This could be improved by actually projecting the 3D shape...
-    // A lot of shapes do not use any rotate feature though,
-    // and for those this naïve approach should suffice.
-    const southWest = L.latLng(z + scale[2], x - scale[0]);
-    const northEast = L.latLng(z - scale[2], x + scale[0]);
-    const marker = L.rectangle(L.latLngBounds(southWest, northEast), {
-      ...options,
-      // @ts-ignore
-      transform: true,
-    }).addTo(mb.m);
-
-    if (tooltip) {
+    if (tooltip)
       marker.bindTooltip(tooltip);
-    }
-
-    if (rotate) {
-      // XXX: horrible hack to rotate a rectangle.
-      // @ts-ignore
-      marker.transform._map = marker._map;
-      const center = (<L.Rectangle>(marker)).getCenter();
-      // @ts-ignore
-      marker.transform._transformPoints(marker, -rotate[1], null, center, center);
-    }
 
     marker.bringToBack();
     this.areaMarkers.push(marker);
-    return marker;
   }
 
   isAreaReprPossiblyWrong(): boolean {
