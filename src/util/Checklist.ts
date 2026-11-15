@@ -1,15 +1,26 @@
 import { openDB } from 'idb';
+import { toRaw  } from 'vue';
 
-export interface ListItem {
+// Singleton db: ChecklistDB at the bottom
+
+export class ListItem {
   hash_id: string;
   name: string;
   map_name: string;
   map_type: string;
   pos: number[];
   marked: boolean;
+  constructor() {
+    this.hash_id = "";
+    this.name = "";
+    this.map_name = "";
+    this.map_type = "";
+    this.pos = [];
+    this.marked = false;
+  }
 }
 
-interface List {
+export interface List {
   id: number | undefined;
   name: string;
   query: string;
@@ -24,46 +35,44 @@ interface ChecklistStore {
 }
 
 export class Checklists {
-  db: ChecklistDB;
   marked: { [key: string]: boolean };
   lists: List[];
 
   constructor() {
-    this.db = new ChecklistDB();
     this.marked = {};
     this.lists = [];
   }
 
   async init() {
-    await this.db.init();
-    this.marked = await this.db.all();
-    this.lists = await this.db.listGetAll();
+    await db.init();
+    this.marked = await db.all();
+    this.lists =  await db.listGetAll() ;
   }
 
   async clear() {
     this.marked = {};
     this.lists = [];
-    this.db.clear();
+    db.clear()
   }
 
   async create() {
     const newList = { name: 'New List', query: '', items: {} } as List;
-    const id = await this.db.listAdd(newList);
-    const list = await this.db.listGet(id);
+    const id = await db.listAdd(newList);
+    const list = await db.listGet(id);
     this.lists.push(list);
   }
 
   async delete(id: number) {
     this.lists = this.lists.filter((list: any) => list.id != id);
-    await this.db.listRemove(id);
+    await db.listRemove(id);
   }
 
   read(id: number) {
-    return this.lists.find((list: any) => list.id == id);
+    return this.lists.find((list: any) => list.id == id) ;
   }
 
   async update(list: List) {
-    await this.db.listUpdate(list);
+    await db.listUpdate(list);
   }
 
   isMarked(hash_id: string) {
@@ -76,7 +85,7 @@ export class Checklists {
 
   async setMarked(hash_id: string, value: boolean) {
     this.marked[hash_id] = value;
-    this.db.setMarked(hash_id, value);
+    db.setMarked(hash_id, value);
     for (const list of this.lists) {
       if (hash_id in list.items) {
         list.items[hash_id].marked = value;
@@ -84,6 +93,12 @@ export class Checklists {
       }
     }
     return value;
+  }
+  import(rawData: ChecklistStore, replace: boolean = false) {
+    db.import(rawData, replace)
+  }
+  async export(): Promise<ChecklistStore> {
+    return db.export()
   }
 }
 
@@ -161,7 +176,7 @@ export class ChecklistDB {
   }
 
   async listUpdate(list: List) {
-    return this.db.put(this.lists, list)
+    return this.db.put(this.lists, toRaw(list))
   }
 
   async listGetAll() {
@@ -188,7 +203,7 @@ export class ChecklistDB {
 
   async all_internal(storeName: string) {
     let cursor = await this.db.transaction(storeName).store.openCursor()
-    let data: any = {};
+    const data: any = {};
     while (cursor) {
       data[cursor.key] = cursor.value;
       cursor = await cursor.continue();
@@ -206,3 +221,6 @@ export class ChecklistDB {
     await this.listRemoveAll();
   }
 }
+
+const db : ChecklistDB = new ChecklistDB()
+

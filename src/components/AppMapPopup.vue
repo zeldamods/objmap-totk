@@ -1,8 +1,8 @@
 <template>
   <div>
-    <input class="w-100" placeholder="Title ..." v-model="title">
-    <textarea class="w-100" placeholder="Description ..." v-model="text"></textarea>
-    <select v-model="map_layer">
+    <input class="w-100" placeholder="Title ..." v-model="currentTitle">
+    <textarea class="w-100" placeholder="Description ..." v-model="currentText"></textarea>
+    <select v-model="currentMapLayer">
       <option>Sky</option>
       <option>Surface</option>
       <option>Depths</option>

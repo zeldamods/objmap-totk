@@ -1,3 +1,4 @@
+import { reactive } from 'vue';
 export type SettingChangeCb = () => void;
 export type SettingBeforeSaveCb = () => void;
 
@@ -6,7 +7,7 @@ export class Settings {
   static getInstance() {
     if (!this.instance) {
       const instance = new this();
-      this.instance = new Proxy(instance, instance.makeProxyHandler());
+      this.instance = reactive( new Proxy(instance, instance.makeProxyHandler()) ) as Settings;
     }
     return this.instance;
   }

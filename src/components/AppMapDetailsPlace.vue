@@ -8,14 +8,14 @@
       Position: {{formatPosition(minobj.pos)}}
     </section>
     <section v-if="shopDataExists()">
-      <ShopData :data="shopData[this.sub]" />
+      <ShopData :data="shopData[sub]" />
     </section>
     <section v-if="shrine && shrineSub && shrineObj">
       <hr>
       <h4 class="subsection-heading">Nearest Shrine</h4>
       <div>
         <div>{{shrine}}</div>
-        <div class="ml-3">
+        <div class="ms-3">
           {{shrineSub}}
           <ObjectInfo :obj="shrineObj" :key="shrineObj.objid" className="obj-main-info"/>
         </div>

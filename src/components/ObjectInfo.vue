@@ -1,5 +1,5 @@
 <template>
-  <div :class="className + (isStatic ? ' static' : '')">
+  <div :class="className + (isStatic ? ' static' : '')" @click="$emit('click', $event)">
     <section class="search-result-name">{{name(true)}}</section>
     <section class="search-result-location">
       <span v-if="obj.map_name.startsWith('Sky')"> <i class="fa fa-cloud fa-fw" style="color: lightblue"></i></span>
@@ -15,16 +15,16 @@
       <i class="fas fa-hashtag fa-fw"></i> ID
       <span v-if="withPermalink"><router-link :to="{ query: { id: `${data.map_type},${data.map_name},${data.hash_id}` } }"
                                               :key="`${data.map_type},${data.map_name},${data.hash_id}`"
-                                              append>{{formatObjId(data.hash_id)}}</router-link></span>
+                                              >{{formatObjId(data.hash_id)}}</router-link></span>
       <span v-if="!withPermalink">{{formatObjId(data.hash_id)}}</span>
-      <b-btn class="checkmark-btn" @click.stop.prevent="toggleCheck()" title="Mark as found or not">
+      <button type="button" class="btn checkmark-btn" @click.stop.prevent="toggleCheck()" title="Mark as found or not">
         <span v-if="isChecked">
           <i class="fa fa-check-circle fa-fw" style="color: white; padding-left: 1em; padding-right:0.5em"></i>
         </span>
         <span v-else>
           <i class="fa fa-check-circle fa-fw" style="color: rgba(255,255,255,0.25); padding-left: 1em; padding-right: 0.5em"></i>
         </span>
-      </b-btn>
+      </button>
     </section>
     <section class="search-result-hard-mode">
       <span style="color: #ff3915" v-if="data.hard_mode"><i class="fa fa-dungeon fa-fw"></i> Master Mode</span>

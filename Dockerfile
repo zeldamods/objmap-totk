@@ -1,5 +1,5 @@
-FROM node:18
+FROM node:26
 WORKDIR /objmap
 COPY . .
-RUN npm install --include=dev
-CMD npm run serve
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
+CMD pnpm run serve --host
