@@ -31,7 +31,7 @@
 <style>
   .beedle-shop-limit-size {
       max-height: 15em;
-      overflow: scroll;
+      overflow: auto;
       padding-right:1em;
   }
   .beedle-shop-table {
