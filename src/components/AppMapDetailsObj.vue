@@ -17,8 +17,6 @@
 
       <p class="my-1" v-if="obj.data.Presence" style="color: orange"><i class="fa fa-exclamation-circle"></i> This object only spawns if the flag <code>{{obj.data.Presence.FlagName}}</code> is {{obj.data.Presence.IsNegation ? "not" : ""}} set.</p>
 
-      <p class="my-1" v-if="isAreaReprPossiblyWrong()"><i class="fa fa-exclamation-circle"></i> Area representation may be inaccurate.</p>
-
       <section class="mt-2" v-show="areaMarkers.length || staticData.persistentAreaMarkers.length">
         <b-btn v-show="areaMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepAreaMarkersAlive()">Keep area representation loaded</b-btn>
         <b-btn v-show="staticData.persistentAreaMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentAreaMarkers()">Hide area representation</b-btn>

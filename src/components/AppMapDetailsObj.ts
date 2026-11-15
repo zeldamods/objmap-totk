@@ -416,14 +416,6 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.areaMarkers.push(marker);
   }
 
-  isAreaReprPossiblyWrong(): boolean {
-    if (!this.obj || !isAreaObject(this.obj))
-      return false;
-
-    // TODO: check object shape correctly
-    return true;
-  }
-
   keepAreaMarkersAlive() {
     this.staticData.persistentAreaMarkers.push(...this.areaMarkers);
     this.areaMarkers = [];
