@@ -17,7 +17,6 @@
         <li class="d-none"><a href="#spane-search-help" role="tab"></a></li>
         <li><a href="#spane-search" role="tab"><i class="fa fa-search"></i></a></li>
         <li><a href="#spane-filter" role="tab"><i class="fa fa-filter"></i></a></li>
-        <li class="disabled"><a href="#spane-dummy" role="tab"><i class="fa fa-tasks"></i></a></li>
         <li><a href="#spane-draw" role="tab"><i class="fa fa-draw-polygon"></i></a></li>
         <li><a href="#spane-checklist" role="tab"><i class="far fa-check-circle"></i></a></li>
         <li><a href="#spane-tools" role="tab"><i class="fa fa-tools"></i></a></li>
@@ -169,8 +168,6 @@
 
       </div>
 
-      <div class="leaflet-sidebar-pane" id="spane-dummy">
-      </div>
       <div class="leaflet-sidebar-pane" id="spane-checklist" >
         <div class="app-checklist">
           <AppMapChecklists :lists="checklists.lists"/>
